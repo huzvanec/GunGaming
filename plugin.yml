@@ -1,0 +1,14 @@
+main: cz.jeme.programu.gungaming.GunGaming
+name: GunGaming
+version: 1.0
+api-version: 1.19
+author: XD_CZ
+description: GunGaming
+website: programu.jeme.cz
+prefix: GunGaming
+commands:
+    gg:
+      description: Main command for operating with GunGaming plugin
+      usage: "Usage: TODO"
+      permission: gungaming.gg
+      permission-message: "No permission! Ask the admin to grant it."

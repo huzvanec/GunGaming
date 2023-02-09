@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="GunGaming" default="build" basedir=".">
+	
+	<target name="remap" description="Create a jar for the project">
+		<mkdir dir="target"/>
+		<echo message="Mapping obfuscated jar..."></echo>
+    	<java classpath="lib/special-source/SpecialSource-1.11.0-shaded.jar:lib/special-source/spigot-server/spigot-1.19.3-R0.1-SNAPSHOT-remapped-mojang.jar" 
+    		classname="net.md_5.specialsource.SpecialSource">
+    		<arg value="--live"/>
+    		<arg value="-i"/>
+    		<arg value="${basedir}/target/${ant.project.name}-mojang.jar"/>
+    		<arg value="-o"/>
+    		<arg value="${basedir}/target/${ant.project.name}-obfuscated.jar"/>
+    		<arg value="-m"/>
+    		<arg value="${basedir}/lib/special-source/mappings/minecraft-server-1.19.3-R0.1-SNAPSHOT-maps-mojang.txt"/>
+    		<arg value="--reverse"/>
+    	</java>
+		<echo message="Mapping spigot jar..."></echo>
+    	<java classpath="lib/special-source/SpecialSource-1.11.0-shaded.jar:lib/special-source/spigot-server/spigot-1.19.3-R0.1-SNAPSHOT-remapped-obf.jar" 
+    		classname="net.md_5.specialsource.SpecialSource">
+    		<arg value="--live"/>
+    		<arg value="-i"/>
+    		<arg value="${basedir}/target/${ant.project.name}-obfuscated.jar"/>
+    		<arg value="-o"/>
+    		<arg value="${basedir}/target/${ant.project.name}-spigot.jar"/>
+    		<arg value="-m"/>
+    		<arg value="${basedir}/lib/special-source/mappings/minecraft-server-1.19.3-R0.1-SNAPSHOT-maps-spigot.csrg"/>
+    	</java>		
+	</target>
+	
+    <target name="makejar" description="Create a jar for the project">
+    	<echo message="Creating jar..."></echo>
+        <mkdir dir="target"></mkdir>
+        <jar destfile="${basedir}/target/${ant.project.name}-mojang.jar">
+            <fileset dir="bin"></fileset>
+            <fileset file="plugin.yml"></fileset>
+        </jar>
+    </target>
+	
+    <target name="build" depends="makejar, remap">
+    </target>
+</project>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-16">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/spigot-api-1.19.3-R0.1-SNAPSHOT-shaded.jar" sourcepath="lib/spigot-api"/>
+	<classpathentry kind="lib" path="lib/spigot-1.19.3-R0.1-SNAPSHOT-remapped-mojang.jar" sourcepath="lib/spigot-server"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
