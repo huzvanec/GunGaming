@@ -6,7 +6,7 @@ public class NineMM extends Ammo {
 
 	@Override
 	protected void setup() {
-		material = Material.GOLD_NUGGET;
+		material = Material.BROWN_DYE;
 		name = "9mm";
 		loreLine = "Basic ammo for most guns";
 	}

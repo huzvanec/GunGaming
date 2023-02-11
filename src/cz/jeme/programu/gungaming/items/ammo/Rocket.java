@@ -6,7 +6,7 @@ public class Rocket extends Ammo {
 
 	@Override
 	protected void setup() {
-		material = Material.IRON_INGOT;
+		material = Material.BLUE_DYE;
 		name = "Rocket";
 		loreLine = "Rocket ammo for Rocket Launcher";
 	}

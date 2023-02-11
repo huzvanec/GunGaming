@@ -6,7 +6,7 @@ public class SevenPointSixTwoMM extends Ammo {
 
 	@Override
 	protected void setup() {
-		material = Material.IRON_NUGGET;
+		material = Material.BLACK_DYE;
 		name = "7.62mm";
 		loreLine = "Common ammo";
 	}
