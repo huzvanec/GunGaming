@@ -3,11 +3,12 @@ package cz.jeme.programu.gungaming.items.guns;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.Color;
+import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.meta.Damageable;
 
 import cz.jeme.programu.gungaming.items.CustomItem;
 import cz.jeme.programu.gungaming.utils.LoreUtils;
@@ -43,9 +44,11 @@ public abstract class Gun extends CustomItem {
 		assert ammoTypeName != null : "No ammo type given!";
 
 		lore.put("Scope", "10");
-		lore.put("Ammo", String.valueOf(maxAmmo) + "/" + String.valueOf(maxAmmo));
+		lore.put("Ammo", "0" + "/" + String.valueOf(maxAmmo));
+		Damageable meta = (Damageable) item.getItemMeta();
+		meta.setDamage(material.getMaxDurability());
+		item.setItemMeta(meta);
 		LoreUtils.addLore(item, lore);
-
 		tags.put("Damage", String.valueOf(damage));
 	}
 
@@ -54,7 +57,7 @@ public abstract class Gun extends CustomItem {
 		Arrow arrow = player.launchProjectile(Arrow.class, player.getLocation().getDirection().multiply(velocity));
 		arrow.setPickupStatus(PickupStatus.DISALLOWED);
 		if (!isRocket) {
-			arrow.setColor(Color.RED);
+			arrow.setColor(Color.fromRGB(97, 10, 0));
 			arrow.setGravity(false);
 			tags.put("Rocket", "true");
 		} else {
