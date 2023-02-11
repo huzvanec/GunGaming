@@ -35,6 +35,10 @@ public class LatinUtils {
 		latin.put('z', 'z');
 
 	}
+	
+	private LatinUtils() {
+		// Only static utils
+	}
 
 	public static String toLatin(String str) {
 		str = str.toLowerCase();
