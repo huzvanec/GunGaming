@@ -10,10 +10,11 @@ public class RocketLauncher extends Gun {
 	protected void setup() {
 		name = "Rocket Launcher";
 		loreLine = "Awesome launchers";
-		shootCooldown = 0;
+		shootCooldown = 5000;
 		reloadCooldown = 10000;
-		damage = 25d;
+		damage = 15d;
 		velocity = 1.5f;
+//		velocity = 0.1f;
 		material = Material.DIAMOND_HOE;
 		maxAmmo = 999;
 		isRocket = false;
