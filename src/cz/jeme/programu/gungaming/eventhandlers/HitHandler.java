@@ -50,8 +50,7 @@ public class HitHandler {
 			double z = location.getZ();
 
 			World world = projectile.getWorld();
-
-			world.createExplosion(x, y, z, 100f, true, true, projectile);
+			world.createExplosion(x, y, z, 5f, true, true, projectile);
 			projectile.remove();
 			return;
 		}
