@@ -1,8 +1,6 @@
-package cz.jeme.programu.gungaming.items.guns.pistols;
+package cz.jeme.programu.gungaming.items.guns;
 
 import org.bukkit.Material;
-
-import cz.jeme.programu.gungaming.items.guns.Gun;
 
 public class RocketLauncher extends Gun {
 
