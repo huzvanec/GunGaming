@@ -1,14 +1,14 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "item/wooden_hoe"
+		"layer0": "item/diamond_hoe"
 	},
 	"overrides": [
 		{
 			"predicate": {
 				"custom_model_data": 1
 			},
-			"model": "item/gungaming/guns/M9"
+			"model": "item/gungaming/guns/Rocket_Launcher"
 		}
 	]
 }
