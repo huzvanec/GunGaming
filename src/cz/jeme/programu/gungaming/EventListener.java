@@ -7,12 +7,14 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 import cz.jeme.programu.gungaming.eventhandlers.HitHandler;
 import cz.jeme.programu.gungaming.eventhandlers.HotbarSlotSwichHandler;
 import cz.jeme.programu.gungaming.eventhandlers.PlayerInteractHandler;
+import cz.jeme.programu.gungaming.eventhandlers.PlayerJoinHandler;
 import cz.jeme.programu.gungaming.eventhandlers.SwapHandsHandler;
 import cz.jeme.programu.gungaming.managers.CooldownManager;
 import cz.jeme.programu.gungaming.managers.ReloadManager;
@@ -27,6 +29,7 @@ public class EventListener implements Listener {
 	private PlayerInteractHandler interactHandler;
 	private SwapHandsHandler swapHandsHandler;
 	private HotbarSlotSwichHandler hotbarSlotSwichHandler;
+	private PlayerJoinHandler playerJoinHandler = new PlayerJoinHandler();
 
 	public EventListener(CooldownManager cooldownManager, ZoomManager zoomManager, ReloadManager reloadManager,
 			ArrowVelocityListener arrowVelocityListener) {
@@ -74,5 +77,10 @@ public class EventListener implements Listener {
 	@EventHandler
 	private void onPlayerLeave(PlayerQuitEvent event) {
 		zoomManager.zoomOut(event.getPlayer());
+	}
+
+	@EventHandler
+	private void onPlayerJoin(PlayerJoinEvent event) {
+		playerJoinHandler.onPlayerJoin(event);
 	}
 }
