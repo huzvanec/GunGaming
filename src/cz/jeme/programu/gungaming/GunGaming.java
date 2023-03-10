@@ -73,13 +73,13 @@ public class GunGaming extends JavaPlugin {
 	}
 
 	private void registerItems() {
-		GunUtils.register(new M9());
-		GunUtils.register(new OT38());
-		GunUtils.register(new RocketLauncher());
-
 		AmmoUtils.register(new NineMM());
 		AmmoUtils.register(new SevenPointSixTwoMM());
 		AmmoUtils.register(new Rocket());
+		
+		GunUtils.register(new M9());
+		GunUtils.register(new OT38());
+		GunUtils.register(new RocketLauncher());
 	}
 
 	@Override
