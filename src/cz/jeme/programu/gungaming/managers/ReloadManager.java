@@ -99,6 +99,7 @@ public class ReloadManager {
 			reload.cancel();
 		}
 		removeReload(player, material);
+		MessageUtils.actionMessage(player, ChatColor.RED + "Reload aborted");
 	}
 
 	public void abortReloads(Player player) {
@@ -117,6 +118,7 @@ public class ReloadManager {
 				reload.cancel();
 			}
 			removeReload(player, material);
+			MessageUtils.actionMessage(player, ChatColor.RED + "Reload aborted");
 		}
 	}
 
