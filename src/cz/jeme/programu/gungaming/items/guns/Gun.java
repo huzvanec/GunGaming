@@ -31,7 +31,7 @@ public abstract class Gun extends CustomItem {
 
 	public Boolean isRocket = true;
 
-	public String ammoTypeName = null;
+	public String ammoName = null;
 
 	public Gun() {
 		setup();
@@ -41,9 +41,9 @@ public abstract class Gun extends CustomItem {
 		assert damage != null : "No damage given!";
 		assert velocity != null : "No bullet speed given!";
 		assert maxAmmo != null : "No max ammo given!";
-		assert ammoTypeName != null : "No ammo type given!";
+		assert ammoName != null : "No ammo name given!";
 
-		lore.put("Scope", "10");
+		lore.put("Scope", "5");
 		lore.put("Ammo", "0" + "/" + String.valueOf(maxAmmo));
 		Damageable meta = (Damageable) item.getItemMeta();
 		meta.setDamage(material.getMaxDurability());
@@ -56,7 +56,7 @@ public abstract class Gun extends CustomItem {
 		Player player = event.getPlayer();
 		Arrow arrow = player.launchProjectile(Arrow.class, player.getLocation().getDirection().multiply(velocity));
 		arrow.setPickupStatus(PickupStatus.DISALLOWED);
-		if (!isRocket) {
+		if (isRocket) {
 			arrow.setColor(Color.fromRGB(97, 10, 0));
 			arrow.setGravity(false);
 			tags.put("Rocket", "true");

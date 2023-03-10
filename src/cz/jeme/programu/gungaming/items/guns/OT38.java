@@ -14,7 +14,7 @@ public class OT38 extends Gun {
 		velocity = 40f;
 		material = Material.STONE_HOE;
 		maxAmmo = 5;
-		isRocket = true;
-		ammoTypeName = "7.62mm";
+		isRocket = false;
+		ammoName = "7.62mm";
 	}
 }

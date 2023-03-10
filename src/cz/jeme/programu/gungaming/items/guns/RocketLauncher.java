@@ -15,7 +15,7 @@ public class RocketLauncher extends Gun {
 //		velocity = 0.1f;
 		material = Material.DIAMOND_HOE;
 		maxAmmo = 999;
-		isRocket = false;
-		ammoTypeName = "Rocket";
+		isRocket = true;
+		ammoName = "Rocket";
 	}
 }

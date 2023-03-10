@@ -14,7 +14,7 @@ public class M9 extends Gun {
 		velocity = 40f;
 		material = Material.WOODEN_HOE;
 		maxAmmo = 15;
-		isRocket = true;
-		ammoTypeName = "9mm";
+		isRocket = false;
+		ammoName = "9mm";
 	}
 }

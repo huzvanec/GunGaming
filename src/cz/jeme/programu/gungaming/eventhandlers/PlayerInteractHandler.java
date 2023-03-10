@@ -3,7 +3,7 @@ package cz.jeme.programu.gungaming.eventhandlers;
 import java.util.Arrays;
 
 import org.bukkit.GameMode;
-import org.bukkit.block.Block;
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -47,13 +47,17 @@ public class PlayerInteractHandler {
 
 		if (action == Action.RIGHT_CLICK_AIR) {
 			onRightClick(event);
+		} else if (action == Action.RIGHT_CLICK_BLOCK) {
+			Material material = event.getClickedBlock().getType();
+			if (!Arrays.asList(Materials.CONTAINERS).contains(material)) {
+				event.setCancelled(true);
+				onRightClick(event);
+			}
 		} else if (action == Action.LEFT_CLICK_AIR) {
 			onLeftClick(event);
-		} else if (action == Action.RIGHT_CLICK_BLOCK) {
-			Block block = event.getClickedBlock();
-			if (!Arrays.asList(Materials.CONTAINERS).contains(block.getType())) {
-				event.setCancelled(true);
-			}
+		} else if (action == Action.LEFT_CLICK_BLOCK) {
+			onLeftClick(event);
+			event.setCancelled(true);
 		}
 	}
 
@@ -76,7 +80,7 @@ public class PlayerInteractHandler {
 			AmmoLoreUtils.removeAmmo(heldItem, 1);
 		}
 		Arrow arrow = gun.shoot(event);
-		if (!gun.isRocket) {
+		if (gun.isRocket) {
 			arrowVelocityListener.addArrow(arrow);
 		}
 		cooldownManager.setCooldown(player, gun.item.getType(), gun.shootCooldown);

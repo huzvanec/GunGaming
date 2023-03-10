@@ -30,6 +30,6 @@ public class AmmoUtils {
 	}
 
 	public static Ammo getAmmo(Gun gun) {
-		return getAmmo(gun.ammoTypeName);
+		return getAmmo(gun.ammoName);
 	}
 }
