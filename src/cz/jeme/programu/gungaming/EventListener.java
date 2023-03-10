@@ -4,6 +4,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -13,9 +15,9 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 import cz.jeme.programu.gungaming.eventhandlers.HitHandler;
 import cz.jeme.programu.gungaming.eventhandlers.HotbarSlotSwichHandler;
+import cz.jeme.programu.gungaming.eventhandlers.InventoryHandler;
 import cz.jeme.programu.gungaming.eventhandlers.PlayerInteractHandler;
 import cz.jeme.programu.gungaming.eventhandlers.PlayerJoinHandler;
-import cz.jeme.programu.gungaming.eventhandlers.SwapHandsHandler;
 import cz.jeme.programu.gungaming.managers.CooldownManager;
 import cz.jeme.programu.gungaming.managers.ReloadManager;
 import cz.jeme.programu.gungaming.managers.ZoomManager;
@@ -27,7 +29,7 @@ public class EventListener implements Listener {
 
 	private HitHandler hitHandler;
 	private PlayerInteractHandler interactHandler;
-	private SwapHandsHandler swapHandsHandler;
+	private InventoryHandler inventoryHandler;
 	private HotbarSlotSwichHandler hotbarSlotSwichHandler;
 	private PlayerJoinHandler playerJoinHandler = new PlayerJoinHandler();
 
@@ -38,7 +40,7 @@ public class EventListener implements Listener {
 
 		hitHandler = new HitHandler(arrowVelocityListener);
 		interactHandler = new PlayerInteractHandler(cooldownManager, arrowVelocityListener, zoomManager);
-		swapHandsHandler = new SwapHandsHandler(reloadManager);
+		inventoryHandler = new InventoryHandler(reloadManager);
 		hotbarSlotSwichHandler = new HotbarSlotSwichHandler(zoomManager, reloadManager);
 	}
 
@@ -71,7 +73,7 @@ public class EventListener implements Listener {
 
 	@EventHandler
 	private void onSwapHands(PlayerSwapHandItemsEvent event) {
-		swapHandsHandler.onSwapHands(event);
+		inventoryHandler.onSwapHands(event);
 	}
 
 	@EventHandler
@@ -82,5 +84,15 @@ public class EventListener implements Listener {
 	@EventHandler
 	private void onPlayerJoin(PlayerJoinEvent event) {
 		playerJoinHandler.onPlayerJoin(event);
+	}
+	
+	@EventHandler
+	private void onInventoryOpen(InventoryOpenEvent event) {
+		inventoryHandler.onInventoryOpen(event);
+	}
+	
+	@EventHandler
+	private void onInventoryClick(InventoryClickEvent event) {
+		inventoryHandler.onInventoryClick(event);
 	}
 }
