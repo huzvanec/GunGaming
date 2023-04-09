@@ -1,7 +1,7 @@
 # GunGaming
 ## This project is still in ALPHA and is not prepared for normal usage.
 ## About
-GunGaming ~~is~~ *will be* an awesome minigame with guns, crates and way more. Readme extension comming soon.
+GunGaming ~~is~~ *will be* an awesome minigame with guns, crates and way more.
 ## Supported versions
 Spigot based servers 1.19.4, Bukkit is **not** supported!
 ## Build

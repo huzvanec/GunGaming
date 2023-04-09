@@ -12,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 
 public class PlayerJoinHandler {
-    private static final String RESOURCEPACK_URL = "https://skladu.jeme.cz/GunGaming.zip";
+    private static final String RESOURCEPACK_URL = "https://github.com/Mandlemankiller/GunGaming/releases/latest/download/resourcepack.zip";
     private static final String RESOURCEPACK_MESSAGE = ChatColor.DARK_BLUE + ChatColor.BOLD.toString()
             + "____________________________________________________________\n\n" + ChatColor.DARK_AQUA
             + ChatColor.BOLD + " Hello! Welcome to " + ChatColor.DARK_RED + ChatColor.BOLD
