@@ -14,7 +14,7 @@ Move to the folder:<br>
 Create a folder for build tools:<br>
 ```mkdir BuildTools``` <br>
 Move to the folder:<br>
-```cd BuildTools```
+```cd BuildTools``` <br>
 Download BuildTools:<br>
 ```wget "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"``` <br>
 Run BuildTools: <br>
