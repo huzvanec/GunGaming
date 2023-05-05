@@ -1,19 +1,23 @@
-package cz.jeme.programu.gungaming.eventhandlers;
+package cz.jeme.programu.gungaming.eventhandler;
 
 import cz.jeme.programu.gungaming.managers.ReloadManager;
+import cz.jeme.programu.gungaming.managers.ZoomManager;
 import cz.jeme.programu.gungaming.utils.GunUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class InventoryHandler {
 
     private final ReloadManager reloadManager;
+    private final ZoomManager zoomManager;
 
-    public InventoryHandler(ReloadManager reloadManager) {
+    public InventoryHandler(ReloadManager reloadManager, ZoomManager zoomManager) {
         this.reloadManager = reloadManager;
+        this.zoomManager = zoomManager;
     }
 
     public void onSwapHands(PlayerSwapHandItemsEvent event) {
@@ -30,6 +34,10 @@ public class InventoryHandler {
             throw new IllegalArgumentException("HumanEntity is not instanceof Player!");
         }
         reloadManager.abortReloads((Player) event.getPlayer());
+    }
+    public void onItemDrop(PlayerDropItemEvent event) {
+        reloadManager.abortReloads(event.getPlayer());
+        zoomManager.zoomOut(event.getPlayer());
     }
 
     public void onInventoryClick(InventoryClickEvent event) {

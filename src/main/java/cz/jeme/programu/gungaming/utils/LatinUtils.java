@@ -12,7 +12,7 @@ public class LatinUtils {
         latin.put('c', 'ᴄ');
         latin.put('d', 'ᴅ');
         latin.put('e', 'ᴇ');
-        latin.put('f', 'ғ');
+        latin.put('f', 'ꜰ');
         latin.put('g', 'ɢ');
         latin.put('h', 'ʜ');
         latin.put('i', 'ɪ');
@@ -33,7 +33,6 @@ public class LatinUtils {
         latin.put('x', 'x');
         latin.put('y', 'ʏ');
         latin.put('z', 'z');
-
     }
 
     private LatinUtils() {

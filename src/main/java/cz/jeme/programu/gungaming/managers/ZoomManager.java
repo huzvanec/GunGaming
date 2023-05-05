@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.managers;
 
+import cz.jeme.programu.gungaming.utils.MessageUtils;
 import cz.jeme.programu.gungaming.utils.PacketUtils;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
@@ -27,6 +28,7 @@ public class ZoomManager {
 
     public ZoomManager() {
         pumpkin.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
+        pumpkin.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 1);
         ItemMeta meta = pumpkin.getItemMeta();
         List<String> lore = new ArrayList<>();
         assert meta != null;
@@ -48,6 +50,10 @@ public class ZoomManager {
 
     public void zoomIn(Player player, double multiplier) {
         if (helmetItems.containsKey(player) && !helmetItems.get(player).equals(pumpkin)) {
+            return;
+        }
+        if (player.isFlying()) {
+            MessageUtils.actionMessage(player, ChatColor.RED + "You can't use scope while flying");
             return;
         }
         setZoom(player, multiplier);

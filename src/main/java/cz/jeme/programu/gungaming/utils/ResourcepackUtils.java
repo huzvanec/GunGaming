@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.utils;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import org.apache.commons.io.FileExistsException;
 
 import java.io.*;
 import java.net.URL;
@@ -12,8 +13,7 @@ import java.util.logging.Level;
 
 public class ResourcepackUtils {
 
-    public static final String TEMP_DIR_PATH = System.getProperty("java.io.tmpdir");
-    public static final String TEMP_FILE_NAME = "GunGaming";
+    public static final String RESOURCEPACK_FILE_NAME = "resourcepack_tmp.zip";
 
     private ResourcepackUtils() {
         // Only static utils
@@ -35,8 +35,8 @@ public class ResourcepackUtils {
         return messageDigest.digest();
     }
 
-    public static byte[] generateSHA1(URL url) throws NoSuchAlgorithmException, IOException {
-        File tempFile = downloadFile(url);
+    public static byte[] generateSHA1(URL url, File dataFolder) throws NoSuchAlgorithmException, IOException {
+        File tempFile = downloadFile(url, dataFolder);
         byte[] digest = generateSHA1(tempFile);
         if (!tempFile.delete()) {
             GunGaming.serverLog(Level.WARNING, "The resourcepack tempfile couldn't be removed!");
@@ -44,12 +44,18 @@ public class ResourcepackUtils {
         return digest;
     }
 
-    public static byte[] generateSHA1(String urlStr) throws NoSuchAlgorithmException, IOException {
-        return generateSHA1(new URL(urlStr));
+    public static byte[] generateSHA1(String urlStr, File dataFolder) throws NoSuchAlgorithmException, IOException {
+        return generateSHA1(new URL(urlStr), dataFolder);
     }
 
-    public static File downloadFile(URL url) throws IOException {
-        File tempFile = new File(TEMP_DIR_PATH + File.separatorChar + TEMP_FILE_NAME);
+    public static File downloadFile(URL url, File datafolder) throws IOException {
+        File tempFile = new File(datafolder.getAbsolutePath() + File.separatorChar + RESOURCEPACK_FILE_NAME);
+        if (tempFile.exists()) {
+            boolean deleted = tempFile.delete();
+            if (!deleted) {
+                throw new FileExistsException("Resourcepack file already exists and cannot be deleted!");
+            }
+        }
         ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
         FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
         fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);

@@ -4,10 +4,8 @@ import cz.jeme.programu.gungaming.items.ammo.Ammo;
 import cz.jeme.programu.gungaming.items.ammo.NineMM;
 import cz.jeme.programu.gungaming.items.ammo.Rocket;
 import cz.jeme.programu.gungaming.items.ammo.SevenPointSixTwoMM;
-import cz.jeme.programu.gungaming.items.guns.Gun;
-import cz.jeme.programu.gungaming.items.guns.M9;
-import cz.jeme.programu.gungaming.items.guns.OT38;
-import cz.jeme.programu.gungaming.items.guns.RocketLauncher;
+import cz.jeme.programu.gungaming.items.guns.*;
+import cz.jeme.programu.gungaming.loot.LootGenerator;
 import cz.jeme.programu.gungaming.managers.CooldownManager;
 import cz.jeme.programu.gungaming.managers.ReloadManager;
 import cz.jeme.programu.gungaming.managers.ZoomManager;
@@ -16,6 +14,8 @@ import cz.jeme.programu.gungaming.utils.AmmoUtils;
 import cz.jeme.programu.gungaming.utils.GunUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
@@ -36,7 +36,7 @@ public class GunGaming extends JavaPlugin {
 
     public static final Map<String, String> GIVE_GROUPS = new HashMap<>();
 
-    // Preifx
+    // Prefix
     public static final String PREFIX = ChatColor.DARK_GRAY + "[" + ChatColor.GOLD + ChatColor.BOLD + "ɢɢ"
             + ChatColor.DARK_GRAY + "]: ";
 
@@ -47,6 +47,8 @@ public class GunGaming extends JavaPlugin {
     private final ZoomManager zoomManager = new ZoomManager();
 
     private final ReloadManager reloadManager = new ReloadManager(cooldownManager);
+
+    private final Map<World, Boolean> immediateRespawns = new HashMap<>();
 
     // Fill the maps
     static {
@@ -62,6 +64,7 @@ public class GunGaming extends JavaPlugin {
     public void onEnable() {
         registerItems();
         GunUtils.setUnmodifiableGuns();
+        LootGenerator.registerLoot();
 
         arrowVelocityTick.runTaskTimer(this, 0, 1);
 
@@ -71,10 +74,16 @@ public class GunGaming extends JavaPlugin {
         }
         gg.setTabCompleter(new CommandTabCompleter());
 
-        EventListener eventListener = new EventListener(cooldownManager, zoomManager, reloadManager, arrowVelocityTick);
+        EventListener eventListener = new EventListener(cooldownManager, zoomManager, reloadManager, arrowVelocityTick, getDataFolder());
 
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
         pluginManager.registerEvents(eventListener, this);
+
+        saveDefaultConfig();
+
+        for (World world : Bukkit.getWorlds()) {
+            immediateRespawns.put(world, world.getGameRuleValue(GameRule.DO_IMMEDIATE_RESPAWN));
+        }
     }
 
     private void registerItems() {
@@ -90,6 +99,9 @@ public class GunGaming extends JavaPlugin {
     @Override
     public void onDisable() {
         zoomManager.zoomOutAll();
+        for (World world : Bukkit.getWorlds()) {
+            world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, immediateRespawns.get(world));
+        }
     }
 
     @Override
@@ -149,7 +161,7 @@ public class GunGaming extends JavaPlugin {
         }
 
         String itemName = args[3].replace("_", " ");
-        ItemStack item = null;
+        ItemStack item;
 
         if (group.equals(GIVE_GROUPS.get("GUNS"))) {
             if (!GunUtils.guns.containsKey(itemName)) {

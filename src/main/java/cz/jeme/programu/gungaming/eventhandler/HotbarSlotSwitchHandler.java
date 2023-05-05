@@ -1,4 +1,4 @@
-package cz.jeme.programu.gungaming.eventhandlers;
+package cz.jeme.programu.gungaming.eventhandler;
 
 import cz.jeme.programu.gungaming.managers.ReloadManager;
 import cz.jeme.programu.gungaming.managers.ZoomManager;

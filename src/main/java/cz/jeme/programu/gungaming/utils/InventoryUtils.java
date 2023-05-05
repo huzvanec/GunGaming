@@ -8,13 +8,13 @@ public class InventoryUtils {
         // Only static utils
     }
 
-    public static int getItemCount(Inventory inventory, ItemStack item) {
+    public static int getItemCount(Inventory inventory, ItemStack searchItem) {
         int count = 0;
         for (ItemStack invItem : inventory) {
             if (invItem == null) {
                 continue;
             }
-            if (invItem.isSimilar(item)) {
+            if (invItem.isSimilar(searchItem)) {
                 count = count + invItem.getAmount();
             }
         }

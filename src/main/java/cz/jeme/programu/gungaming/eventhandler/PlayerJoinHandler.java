@@ -1,4 +1,4 @@
-package cz.jeme.programu.gungaming.eventhandlers;
+package cz.jeme.programu.gungaming.eventhandler;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.utils.LatinUtils;
@@ -7,11 +7,19 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 
 public class PlayerJoinHandler {
+
+    File dataFolder;
+
+    public PlayerJoinHandler(File dataFolder) {
+        this.dataFolder = dataFolder;
+    }
+
     private static final String RESOURCEPACK_URL = "https://github.com/Mandlemankiller/GunGaming/releases/latest/download/resourcepack.zip";
     private static final String RESOURCEPACK_MESSAGE = ChatColor.DARK_BLUE + ChatColor.BOLD.toString()
             + "____________________________________________________________\n\n" + ChatColor.DARK_AQUA
@@ -25,7 +33,7 @@ public class PlayerJoinHandler {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         try {
-            player.setResourcePack(RESOURCEPACK_URL, ResourcepackUtils.generateSHA1(RESOURCEPACK_URL),
+            player.setResourcePack(RESOURCEPACK_URL, ResourcepackUtils.generateSHA1(RESOURCEPACK_URL, dataFolder),
                     RESOURCEPACK_MESSAGE, true);
         } catch (NoSuchAlgorithmException | IOException e) {
             GunGaming.serverLog(Level.SEVERE, "Couldn't set player resourcepack!");

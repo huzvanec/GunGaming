@@ -1,4 +1,4 @@
-package cz.jeme.programu.gungaming.eventhandlers;
+package cz.jeme.programu.gungaming.eventhandler;
 
 import cz.jeme.programu.gungaming.ArrowVelocityListener;
 import cz.jeme.programu.gungaming.utils.Materials;

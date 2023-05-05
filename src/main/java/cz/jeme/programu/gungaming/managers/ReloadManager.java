@@ -97,7 +97,7 @@ public class ReloadManager {
         MessageUtils.actionMessage(player, ChatColor.RED + "Reload aborted");
     }
 
-    public void abortReloads(Player player) {
+    public void abortReloads(Player player, boolean actionNotify) {
         UUID uuid = player.getUniqueId();
         if (!reloads.containsKey(uuid)) {
             return;
@@ -113,8 +113,14 @@ public class ReloadManager {
                 reload.cancel();
             }
             removeReload(player, material);
-            MessageUtils.actionMessage(player, ChatColor.RED + "Reload aborted");
+            if (actionNotify) {
+                MessageUtils.actionMessage(player, ChatColor.RED + "Reload aborted");
+            }
         }
+    }
+
+    public void abortReloads(Player player) {
+        abortReloads(player, true);
     }
 
     public void removeReload(Player player, Material material) {
