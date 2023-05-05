@@ -18,11 +18,11 @@ public final class LoreUtils {
     }
 
     public static List<String> mapToStringList(Map<String, String> map) {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         for (String key : map.keySet()) {
             String value = map.get(key);
-            list.add(ChatColor.DARK_AQUA + ChatColor.ITALIC.toString() + key + SEPARATOR + value);
+            list.add(ChatColor.DARK_AQUA + key + SEPARATOR + value);
         }
         return list;
     }
@@ -46,8 +46,10 @@ public final class LoreUtils {
         assert meta != null;
         List<String> metaLore = meta.getLore();
         assert metaLore != null;
-        String loreLine = metaLore.get(0);
-        lore.add(0, loreLine);
+        String rarity = metaLore.get(0);
+        String loreLine = metaLore.get(1);
+        lore.add(0, rarity);
+        lore.add(1, loreLine);
         meta.setLore(lore);
         item.setItemMeta(meta);
     }
@@ -72,7 +74,7 @@ public final class LoreUtils {
 
     public static Map<String, String> getLore(ItemStack item) {
         if (!item.hasItemMeta() || !item.getItemMeta().hasLore()) {
-            return new HashMap<String, String>();
+            return new HashMap<>();
         }
         return stringListToMap(item.getItemMeta().getLore());
     }

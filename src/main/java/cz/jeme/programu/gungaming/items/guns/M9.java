@@ -1,5 +1,7 @@
 package cz.jeme.programu.gungaming.items.guns;
 
+import cz.jeme.programu.gungaming.loot.Loot;
+import cz.jeme.programu.gungaming.loot.Rarity;
 import org.bukkit.Material;
 
 public class M9 extends Gun {
@@ -16,5 +18,6 @@ public class M9 extends Gun {
         maxAmmo = 15;
         isRocket = false;
         ammoName = "9mm";
+        rarity = Rarity.RARE;
     }
 }

@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.items.guns;
 
+import cz.jeme.programu.gungaming.loot.Rarity;
 import org.bukkit.Material;
 
 public class OT38 extends Gun {
@@ -16,5 +17,6 @@ public class OT38 extends Gun {
         maxAmmo = 5;
         isRocket = false;
         ammoName = "7.62mm";
+        rarity = Rarity.RARE;
     }
 }
