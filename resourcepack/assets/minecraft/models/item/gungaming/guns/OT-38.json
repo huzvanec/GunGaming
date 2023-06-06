@@ -1,6 +1,0 @@
-{
-	"parent": "item/gungaming/guns/gun",
-	"textures": {
-		"layer0": "item/gungaming/guns/OT-38"
-	}
-}
