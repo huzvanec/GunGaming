@@ -12,6 +12,9 @@ target/
 *.iml
 *.ipr
 
+### Paper NMS ###
+.paper-nms/
+
 ### Eclipse ###
 .apt_generated
 .classpath
