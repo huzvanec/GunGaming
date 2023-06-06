@@ -21,10 +21,12 @@ public class PlayerJoinHandler {
 
     private static final String RESOURCEPACK_URL = "https://github.com/Mandlemankiller/GunGaming/releases/latest/download/resourcepack.zip";
     private static final String RESOURCEPACK_MESSAGE =
-            "<bold><dark_blue>____________________________________________________________</dark_blue>" +
-                    "<dark_aqua>Hello! Welcome to <dark_red>GunGaming</dark_red></dark_aqua></bold>!\n\n" +
-                    Messages.latin("<dark_aqua>To play here, we need you to download this resourcepack!" +
-                            "Without it you wouldn't get the awesome gaming expirience!</dark_aqua>") +
+            "<bold><dark_blue>____________________________________________________________</dark_blue>\n\n" +
+                    "<dark_aqua>Hello! Welcome to <dark_red>GunGaming</dark_red>!</dark_aqua></bold>\n\n" +
+                    "<dark_aqua>" +
+                    Messages.latin("To play here, we need you to download this resourcepack!\n" +
+                            "Without it you wouldn't get the awesome gaming expirience!") +
+                    "</dark_aqua>\n" +
                     "<bold><dark_blue>____________________________________________________________</dark_blue></bold>";
 
     public void onPlayerJoin(PlayerJoinEvent event) {
