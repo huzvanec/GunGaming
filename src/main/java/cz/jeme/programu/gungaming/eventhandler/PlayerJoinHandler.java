@@ -31,7 +31,7 @@ public class PlayerJoinHandler {
         Player player = event.getPlayer();
         try {
             player.setResourcePack(RESOURCEPACK_URL, Resourcepacks.generateSHA1(RESOURCEPACK_URL, dataFolder),
-                    Messages.from(RESOURCEPACK_MESSAGE), false);
+                    Messages.from(RESOURCEPACK_MESSAGE), true);
         } catch (NoSuchAlgorithmException | IOException e) {
             GunGaming.serverLog(Level.SEVERE, "Couldn't set player resourcepack!");
             e.printStackTrace();
