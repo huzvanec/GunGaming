@@ -1,11 +1,11 @@
 package cz.jeme.programu.gungaming.eventhandler.interaction;
 
-import cz.jeme.programu.gungaming.ArrowVelocityListener;
-import cz.jeme.programu.gungaming.items.guns.Gun;
+import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.LootGenerator;
-import cz.jeme.programu.gungaming.managers.CooldownManager;
-import cz.jeme.programu.gungaming.utils.*;
-import net.md_5.bungee.api.ChatColor;
+import cz.jeme.programu.gungaming.manager.CooldownManager;
+import cz.jeme.programu.gungaming.util.*;
+import cz.jeme.programu.gungaming.util.item.Ammos;
+import cz.jeme.programu.gungaming.util.item.Guns;
 import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
@@ -14,23 +14,22 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class RightClickHandler {
 
-    private final ArrowVelocityListener arrowVelocityListener;
     private final CooldownManager cooldownManager;
 
-    public RightClickHandler(CooldownManager cooldownManager, ArrowVelocityListener arrowVelocityListener) {
+    public RightClickHandler(CooldownManager cooldownManager) {
         this.cooldownManager = cooldownManager;
-        this.arrowVelocityListener = arrowVelocityListener;
     }
 
     public void air(PlayerInteractEvent event) {
@@ -38,6 +37,7 @@ public class RightClickHandler {
     }
 
     public void block(PlayerInteractEvent event) {
+        if (event.getPlayer().isSneaking()) return;
         Block clickedBlock = event.getClickedBlock();
         if (clickedBlock == null) {
             throw new NullPointerException("Clicked block is null!");
@@ -54,7 +54,7 @@ public class RightClickHandler {
 
     private void crate(Block block) {
         Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
-        for (ItemStack item : LootGenerator.generateCrate(inventory.getSize(), 30)) {
+        for (ItemStack item : LootGenerator.generate(inventory.getSize(), 20)) {
             blockDrop(block, item);
         }
         block.setType(Material.AIR);
@@ -71,28 +71,23 @@ public class RightClickHandler {
     private void shoot(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         ItemStack heldItem = player.getInventory().getItemInMainHand();
-        if (!GunUtils.isGun(heldItem)) {
-            return;
-        }
+        if (!Guns.isGun(heldItem)) return;
         event.setCancelled(true);
 
-        Gun gun = GunUtils.getGun(heldItem);
+        Gun gun = Guns.getGun(heldItem);
         if (player.getCooldown(heldItem.getType()) != 0) {
             return;
         }
-        int heldAmmo = AmmoLoreUtils.getAmmo(heldItem);
+        int heldAmmo = Namespaces.CURRENT_GUN_AMMO.get(heldItem);
         boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
         if (heldAmmo == 0 && !isCreative) {
-            MessageUtils.actionMessage(player, ChatColor.RED + "Reload required");
+            player.sendActionBar(Messages.from("<red>Reload required!</red>"));
             return;
         }
         if (!isCreative) {
-            AmmoLoreUtils.removeAmmo(heldItem, 1);
+            Ammos.remove(heldItem, 1);
         }
-        Arrow arrow = gun.shoot(event);
-        if (gun.isRocket) {
-            arrowVelocityListener.addArrow(arrow);
-        }
+        gun.shoot(event);
         cooldownManager.setCooldown(player, gun.item.getType(), gun.shootCooldown);
         List<Player> players = new ArrayList<>();
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -104,7 +99,6 @@ public class RightClickHandler {
         CraftPlayer craftPlayer = (CraftPlayer) player;
         ServerPlayer serverPlayer = craftPlayer.getHandle();
         ClientboundAnimatePacket packet = new ClientboundAnimatePacket(serverPlayer, ClientboundAnimatePacket.SWING_MAIN_HAND);
-        PacketUtils.sendPacket(players, packet);
+        Packets.sendPacket(players, packet);
     }
-
 }

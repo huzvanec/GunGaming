@@ -1,213 +1,100 @@
 package cz.jeme.programu.gungaming;
 
-import cz.jeme.programu.gungaming.items.ammo.Ammo;
-import cz.jeme.programu.gungaming.items.ammo.NineMM;
-import cz.jeme.programu.gungaming.items.ammo.Rocket;
-import cz.jeme.programu.gungaming.items.ammo.SevenPointSixTwoMM;
-import cz.jeme.programu.gungaming.items.guns.*;
+import cz.jeme.programu.gungaming.item.ammo.NineMM;
+import cz.jeme.programu.gungaming.item.ammo.Rocket;
+import cz.jeme.programu.gungaming.item.ammo.SevenPointSixTwoMM;
+import cz.jeme.programu.gungaming.item.gun.AK47;
+import cz.jeme.programu.gungaming.item.gun.M9;
+import cz.jeme.programu.gungaming.item.gun.OT38;
+import cz.jeme.programu.gungaming.item.gun.RocketLauncher;
+import cz.jeme.programu.gungaming.item.misc.Concrete;
 import cz.jeme.programu.gungaming.loot.LootGenerator;
-import cz.jeme.programu.gungaming.managers.CooldownManager;
-import cz.jeme.programu.gungaming.managers.ReloadManager;
-import cz.jeme.programu.gungaming.managers.ZoomManager;
-import cz.jeme.programu.gungaming.runnables.ArrowVelocityTick;
-import cz.jeme.programu.gungaming.utils.AmmoUtils;
-import cz.jeme.programu.gungaming.utils.GunUtils;
-import net.md_5.bungee.api.ChatColor;
+import cz.jeme.programu.gungaming.manager.CooldownManager;
+import cz.jeme.programu.gungaming.manager.ReloadManager;
+import cz.jeme.programu.gungaming.manager.ZoomManager;
+import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.item.Ammos;
+import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.util.item.Miscs;
 import org.bukkit.Bukkit;
-import org.bukkit.GameRule;
-import org.bukkit.World;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 
 public class GunGaming extends JavaPlugin {
 
-    // Map of all valid arguments
-    public static final Map<String, String> CORRECT_ARGS = new HashMap<>();
-
-    public static final Map<String, String> GIVE_GROUPS = new HashMap<>();
-
-    // Prefix
-    public static final String PREFIX = ChatColor.DARK_GRAY + "[" + ChatColor.GOLD + ChatColor.BOLD + "ɢɢ"
-            + ChatColor.DARK_GRAY + "]: ";
-
     private final CooldownManager cooldownManager = new CooldownManager();
-
-    private final ArrowVelocityTick arrowVelocityTick = new ArrowVelocityTick();
 
     private final ZoomManager zoomManager = new ZoomManager();
 
     private final ReloadManager reloadManager = new ReloadManager(cooldownManager);
 
-    private final Map<World, Boolean> immediateRespawns = new HashMap<>();
-
-    // Fill the maps
-    static {
-        CORRECT_ARGS.put("RELOAD", "reload");
-        CORRECT_ARGS.put("HELP", "help");
-        CORRECT_ARGS.put("GIVE", "give");
-
-        GIVE_GROUPS.put("GUNS", "gun");
-        GIVE_GROUPS.put("AMMO", "ammo");
-    }
-
     @Override
     public void onEnable() {
         registerItems();
-        GunUtils.setUnmodifiableGuns();
         LootGenerator.registerLoot();
 
-        arrowVelocityTick.runTaskTimer(this, 0, 1);
+        new GG().register(); // register the /gg command
 
-        PluginCommand gg = getCommand("gg");
-        if (gg == null) {
-            throw new NullPointerException("Command gg not found!");
-        }
-        gg.setTabCompleter(new CommandTabCompleter());
-
-        EventListener eventListener = new EventListener(cooldownManager, zoomManager, reloadManager, arrowVelocityTick, getDataFolder());
+        EventListener eventListener = new EventListener(cooldownManager, zoomManager, reloadManager, getDataFolder());
 
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
         pluginManager.registerEvents(eventListener, this);
 
         saveDefaultConfig();
-
-        for (World world : Bukkit.getWorlds()) {
-            immediateRespawns.put(world, world.getGameRuleValue(GameRule.DO_IMMEDIATE_RESPAWN));
-        }
     }
 
+    /**
+     * Register all the custom items for GunGaming
+     */
     private void registerItems() {
-        AmmoUtils.register(new NineMM());
-        AmmoUtils.register(new SevenPointSixTwoMM());
-        AmmoUtils.register(new Rocket());
+        Ammos.register(new NineMM());
+        Ammos.register(new SevenPointSixTwoMM());
+        Ammos.register(new Rocket());
 
-        GunUtils.register(new M9());
-        GunUtils.register(new OT38());
-        GunUtils.register(new RocketLauncher());
+        Guns.register(new M9());
+        Guns.register(new OT38());
+        Guns.register(new RocketLauncher());
+        Guns.register(new AK47());
+
+        Miscs.register(new Concrete());
+
+        Guns.setUnmodifiable();
+        Ammos.setUnmodifiable();
+        Miscs.setUnmodifiable();
     }
 
     @Override
     public void onDisable() {
         zoomManager.zoomOutAll();
-        for (World world : Bukkit.getWorlds()) {
-            world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, immediateRespawns.get(world));
-        }
     }
 
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("gg")) { // When command called
-            if (args.length == 0) {
-                help(sender);
-                return true;
-            }
-            if (args[0].equals(CORRECT_ARGS.get("HELP"))) {
-                help(sender);
-                return true;
-            }
-            if (args[0].equals(CORRECT_ARGS.get("RELOAD"))) {
-                sender.sendMessage(PREFIX + ChatColor.GOLD + "Reload TODO!");
-                // TODO Reload
-                return true;
-            }
-            if (args[0].equals(CORRECT_ARGS.get("GIVE"))) {
-                give(sender, args);
-                return true;
-            }
-
-        }
-        sender.sendMessage(PREFIX + ChatColor.RED + "Command not recognized.");
-        return true;
-    }
-
-    private void help(CommandSender sender) {
-        sender.sendMessage(PREFIX + ChatColor.GOLD + "Help!");
-        // TODO Help
-    }
-
-    private void give(CommandSender sender, String[] args) {
-        if (args.length < 4) {
-            sender.sendMessage(PREFIX + ChatColor.RED + "Not enough arguments!");
-            return;
-        }
-
-        if (args.length > 5) {
-            sender.sendMessage(PREFIX + ChatColor.RED + "Too many arguments!");
-            return;
-        }
-
-        String playerName = args[1];
-        Player player = Bukkit.getPlayer(playerName);
-        if (player == null || !player.isOnline()) {
-            // Player not found
-            sender.sendMessage(PREFIX + ChatColor.RED + "This player is not online!");
-            return;
-        }
-
-        String group = args[2];
-        if (!GIVE_GROUPS.containsValue(group)) {
-            sender.sendMessage(PREFIX + ChatColor.RED + "Unknown give group!");
-            return;
-        }
-
-        String itemName = args[3].replace("_", " ");
-        ItemStack item;
-
-        if (group.equals(GIVE_GROUPS.get("GUNS"))) {
-            if (!GunUtils.guns.containsKey(itemName)) {
-                sender.sendMessage(PREFIX + ChatColor.RED + "Unknown gun name!");
-                return;
-            }
-
-            Gun gun = GunUtils.guns.get(itemName);
-            item = gun.item;
-        } else if (group.equals(GIVE_GROUPS.get("AMMO"))) {
-            if (!AmmoUtils.ammos.containsKey(itemName)) {
-                sender.sendMessage(PREFIX + ChatColor.RED + "Unknown ammo name!");
-                return;
-            }
-            Ammo ammo = AmmoUtils.ammos.get(itemName);
-            item = ammo.item;
-        } else {
-            sender.sendMessage(PREFIX + ChatColor.RED + "Wrong item group!");
-            return;
-        }
-        int count = 1;
-        if (args.length == 5) {
-            try {
-                if (Integer.parseInt(args[4]) < 1) {
-                    sender.sendMessage(PREFIX + ChatColor.RED + "Count can not be lower than 1!");
-                    return;
-                }
-            } catch (NullPointerException | NumberFormatException e) {
-                sender.sendMessage(PREFIX + ChatColor.RED + "Count is not valid!");
-                return;
-            }
-            count = Integer.parseInt(args[4]);
-        }
-        for (int i = 0; i < count; i++) {
-            Map<Integer, ItemStack> add = player.getInventory().addItem(item);
-            if (add.size() != 0) {
-                sender.sendMessage(PREFIX + ChatColor.RED + "Count exceeded your inventory size!");
-                return;
-            }
-        }
-    }
-
+    /**
+     * Log a message with the plugin prefix to the console.
+     * @param lvl Message severitiy identifier
+     * @param msg The message to log
+     */
     public static void serverLog(Level lvl, String msg) {
-        if (msg == null) {
-            msg = "null";
-        }
-        Bukkit.getServer().getLogger().log(lvl, ChatColor.stripColor(PREFIX) + msg);
+        if (msg == null) throw new NullPointerException("Message is null!");
+        Bukkit.getLogger().log(lvl, Messages.strip(Messages.PREFIX) + msg);
+    }
+
+    /**
+     * Provides a static and fast access to the plugin object.
+     * @return GunGaming plugin object
+     */
+    public static GunGaming getPlugin() {
+        return JavaPlugin.getPlugin(GunGaming.class);
+    }
+
+    /**
+     * Provides a fast way to create namespaced keys assigned to this plugin.
+     * @param key The namespaced key string key
+     * @return The namespaced key created
+     */
+    public static NamespacedKey namespacedKey(String key) {
+        return new NamespacedKey(getPlugin(), key);
     }
 }
