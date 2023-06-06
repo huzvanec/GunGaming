@@ -1,5 +1,5 @@
 # GunGaming
-## This project is still in ALPHA and is not prepared for normal usage.
+## This project is still in BETA and is not prepared for normal usage.
 ## About
 GunGaming ~~is~~ *will be* an awesome minigame with guns, crates and way more.
 ## Supported versions
