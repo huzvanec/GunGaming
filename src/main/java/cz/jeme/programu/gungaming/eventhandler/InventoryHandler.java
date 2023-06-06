@@ -1,8 +1,8 @@
 package cz.jeme.programu.gungaming.eventhandler;
 
-import cz.jeme.programu.gungaming.manager.ReloadManager;
-import cz.jeme.programu.gungaming.manager.ZoomManager;
-import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.managers.ReloadManager;
+import cz.jeme.programu.gungaming.managers.ZoomManager;
+import cz.jeme.programu.gungaming.utils.GunUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -20,9 +20,9 @@ public class InventoryHandler {
         this.zoomManager = zoomManager;
     }
 
-    public void onPlayerSwapHands(PlayerSwapHandItemsEvent event) {
+    public void onSwapHands(PlayerSwapHandItemsEvent event) {
         ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
-        if (!Guns.isGun(item)) {
+        if (!GunUtils.isGun(item)) {
             return;
         }
         event.setCancelled(true);
@@ -35,16 +35,15 @@ public class InventoryHandler {
         }
         reloadManager.abortReloads((Player) event.getPlayer());
     }
-    public void onPlayerDropItem(PlayerDropItemEvent event) {
+    public void onItemDrop(PlayerDropItemEvent event) {
         reloadManager.abortReloads(event.getPlayer());
         zoomManager.zoomOut(event.getPlayer());
     }
 
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!(event.getWhoClicked() instanceof Player player)) {
+        if (!(event.getWhoClicked() instanceof Player)) {
             throw new IllegalArgumentException("HumanEntity is not instanceof Player!");
         }
-        reloadManager.abortReloads(player);
-        zoomManager.zoomOut(player);
+        reloadManager.abortReloads((Player) event.getWhoClicked());
     }
 }

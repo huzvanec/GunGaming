@@ -1,49 +1,60 @@
 package cz.jeme.programu.gungaming.eventhandler;
 
-import cz.jeme.programu.gungaming.item.gun.Gun;
-import cz.jeme.programu.gungaming.util.Materials;
-import cz.jeme.programu.gungaming.util.Namespaces;
-import cz.jeme.programu.gungaming.util.item.Bullets;
-import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.ArrowVelocityListener;
+import cz.jeme.programu.gungaming.utils.Materials;
+import cz.jeme.programu.gungaming.utils.ScoreboardTagUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
 
 public class HitHandler {
-    private static final List<EntityDamageEvent.DamageCause> ENTITY_CAUSES = List.of(
-            EntityDamageEvent.DamageCause.ENTITY_ATTACK,
-            EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK,
-            EntityDamageEvent.DamageCause.PROJECTILE,
-            EntityDamageEvent.DamageCause.ENTITY_EXPLOSION,
-            EntityDamageEvent.DamageCause.THORNS,
-            EntityDamageEvent.DamageCause.DRAGON_BREATH
-    );
 
+    private final ArrowVelocityListener arrowVelocityListener;
+
+    public HitHandler(ArrowVelocityListener arrowVelocityListener) {
+        this.arrowVelocityListener = arrowVelocityListener;
+    }
 
     public void onProjectileHit(ProjectileHitEvent event) {
-        Projectile bullet = event.getEntity();
+        Projectile projectile = event.getEntity();
 
-        if (!Bullets.isBullet(bullet)) return;
+        if (!projectile.getScoreboardTags().contains(ScoreboardTagUtils.HEADER)) {
+            return;
+        }
+        assert projectile instanceof Arrow : "Projectile not Arrow!";
 
-        assert bullet instanceof Arrow : "Projectile not Arrow!";
+        arrowVelocityListener.removeArrow((Arrow) projectile);
 
-        Gun gun = Guns.getGun((String) Namespaces.BULLET_GUN_NAME.get(bullet));
+        Map<String, String> tags = ScoreboardTagUtils.getScoreboardTags(projectile);
+        boolean isRocket = Boolean.parseBoolean(tags.get("Rocket"));
 
-        gun.onBulletHit(event, bullet);
+        if (isRocket) {
+            Location location = projectile.getLocation();
+            double x = location.getX();
+            double y = location.getY();
+            double z = location.getZ();
 
-        if (event.getHitBlock() == null) {
-            bullet.remove();
+            World world = projectile.getWorld();
+            world.createExplosion(x, y, z, 5f, true, true, projectile);
+            projectile.remove();
             return;
         }
 
-        bullet.setGravity(true);
+        if (event.getHitBlock() == null) {
+            projectile.remove();
+            return;
+        }
+
+        projectile.setGravity(true);
 
         Block block = event.getHitBlock();
         Material type = block.getType();
@@ -55,53 +66,26 @@ public class HitHandler {
                         new ItemStack(type));
                 player.playSound(block.getLocation(), Sound.BLOCK_GLASS_BREAK, 1, 2);
             }
-            bullet.remove();
+            projectile.remove();
         }
     }
 
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        Entity entity = event.getEntity();
-        LivingEntity livingEntity = null;
-        if (entity instanceof LivingEntity) {
-            livingEntity = (LivingEntity) entity;
-        }
-
-        Entity damager = event.getDamager();
-
-        if (damager.getType() != EntityType.ARROW) {
-            resetDamageTicks(livingEntity);
+        if (event.getDamager().getType() != EntityType.ARROW) {
             return;
         }
 
-        Projectile bullet = (Projectile) damager;
+        Projectile arrow = (Projectile) event.getDamager();
 
-        if (!Bullets.isBullet(bullet)) {
-            resetDamageTicks(livingEntity);
+        if (!ScoreboardTagUtils.isCustomTagged(arrow)) {
             return;
         }
 
-        if (livingEntity != null) {
-            livingEntity.setMaximumNoDamageTicks(0);
-        }
+        Map<String, String> tags = ScoreboardTagUtils.getScoreboardTags(arrow);
+        double damage = Double.parseDouble(tags.get("Damage"));
 
-        double damage = Namespaces.BULLET_DAMAGE.get(bullet);
-
-        bullet.remove();
+        arrow.remove();
 
         event.setDamage(damage);
-    }
-
-    public void onEntityDamage(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Player player)) {
-            return;
-        }
-        if (!ENTITY_CAUSES.contains(event.getCause())) {
-            resetDamageTicks(player);
-        }
-    }
-
-    private static void resetDamageTicks(LivingEntity entity) {
-        if (entity == null) return;
-        entity.setMaximumNoDamageTicks(20);
     }
 }

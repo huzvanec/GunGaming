@@ -1,7 +1,8 @@
 package cz.jeme.programu.gungaming.eventhandler.interaction;
 
-import cz.jeme.programu.gungaming.manager.CooldownManager;
-import cz.jeme.programu.gungaming.manager.ZoomManager;
+import cz.jeme.programu.gungaming.ArrowVelocityListener;
+import cz.jeme.programu.gungaming.managers.CooldownManager;
+import cz.jeme.programu.gungaming.managers.ZoomManager;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -10,9 +11,10 @@ public class PlayerInteractHandler {
     private final LeftClickHandler leftClickHandler;
     private final RightClickHandler rightClickHandler;
 
-    public PlayerInteractHandler(CooldownManager cooldownManager, ZoomManager zoomManager) {
+    public PlayerInteractHandler(CooldownManager cooldownManager, ArrowVelocityListener arrowVelocityListener,
+                                 ZoomManager zoomManager) {
         leftClickHandler = new LeftClickHandler(zoomManager);
-        rightClickHandler = new RightClickHandler(cooldownManager);
+        rightClickHandler = new RightClickHandler(cooldownManager, arrowVelocityListener);
     }
 
     public void onPlayerInteract(PlayerInteractEvent event) {

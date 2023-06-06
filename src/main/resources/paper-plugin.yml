@@ -1,4 +1,0 @@
-name: GunGaming
-version: '${project.version}'
-main: cz.jeme.programu.gungaming.GunGaming
-api-version: 1.19

@@ -1,8 +1,9 @@
 package cz.jeme.programu.gungaming.eventhandler;
 
 import cz.jeme.programu.gungaming.GunGaming;
-import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.util.Resourcepacks;
+import cz.jeme.programu.gungaming.utils.LatinUtils;
+import cz.jeme.programu.gungaming.utils.ResourcepackUtils;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -20,18 +21,20 @@ public class PlayerJoinHandler {
     }
 
     private static final String RESOURCEPACK_URL = "https://github.com/Mandlemankiller/GunGaming/releases/latest/download/resourcepack.zip";
-    private static final String RESOURCEPACK_MESSAGE =
-            "<bold><dark_blue>____________________________________________________________</dark_blue>" +
-                    "<dark_aqua>Hello! Welcome to <dark_red>GunGaming</dark_red></dark_aqua></bold>!\n\n" +
-                    Messages.latin("<dark_aqua>To play here, we need you to download this resourcepack!" +
-                            "Without it you wouldn't get the awesome gaming expirience!</dark_aqua>") +
-                    "<bold><dark_blue>____________________________________________________________</dark_blue></bold>";
+    private static final String RESOURCEPACK_MESSAGE = ChatColor.DARK_BLUE + ChatColor.BOLD.toString()
+            + "____________________________________________________________\n\n" + ChatColor.DARK_AQUA
+            + ChatColor.BOLD + " Hello! Welcome to " + ChatColor.DARK_RED + ChatColor.BOLD
+            + "GunGaming" + ChatColor.DARK_AQUA + ChatColor.BOLD + "!\n\n" + ChatColor.DARK_AQUA
+            + LatinUtils.toLatin("To play here, we need you to download this resourcepack!\n"
+            + "Without it you wouldn't get the awesome gaming expirience!\n\n")
+            + ChatColor.DARK_BLUE + ChatColor.BOLD
+            + "____________________________________________________________";
 
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         try {
-            player.setResourcePack(RESOURCEPACK_URL, Resourcepacks.generateSHA1(RESOURCEPACK_URL, dataFolder),
-                    Messages.from(RESOURCEPACK_MESSAGE), true);
+            player.setResourcePack(RESOURCEPACK_URL, ResourcepackUtils.generateSHA1(RESOURCEPACK_URL, dataFolder),
+                    RESOURCEPACK_MESSAGE, true);
         } catch (NoSuchAlgorithmException | IOException e) {
             GunGaming.serverLog(Level.SEVERE, "Couldn't set player resourcepack!");
             e.printStackTrace();

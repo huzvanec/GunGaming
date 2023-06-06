@@ -1,40 +1,27 @@
 package cz.jeme.programu.gungaming.loot;
 
-import cz.jeme.programu.gungaming.util.Messages;
-import net.kyori.adventure.text.Component;
+import net.md_5.bungee.api.ChatColor;
 
 public enum Rarity {
-    COMMON(12, "<white>"),
-    UNCOMMON(10, "<green>"),
-    RARE(5, "<aqua>"),
-    EPIC(2, "<dark_purple>"),
-    LEGENDARY(1, "<rainbow>", "<#FF0000><obf>#</obf></#FF0000> ", " <#FF0000><obf>#</obf></#FF0000>");
+    COMMON(15, ChatColor.WHITE),
+    UNCOMMON(10, ChatColor.GREEN),
+    RARE(3, ChatColor.AQUA),
+    EPIC(2, ChatColor.DARK_PURPLE),
+    LEGENDARY(1, ChatColor.GOLD);
 
-    public final int chance;
-    public final String name;
-    public final String color;
-    public final Component component;
+    private final int chance;
+    private final ChatColor color;
 
-    Rarity(int chance, String color) {
+    Rarity(int chance, ChatColor color) {
         this.chance = chance;
         this.color = color;
-        name = color + this;
-        component = Messages.from(name);
     }
 
-    Rarity(int chance, String color, String prefix, String suffix) {
-        this.chance = chance;
-        this.color = color;
-        name = prefix + color + this + Messages.getEscapeTag(color) + suffix;
-        component = Messages.from(name);
+    public int getChance() {
+        return chance;
     }
 
-    Rarity(int chance, String color, String prefix) {
-        this(chance, color, prefix, "");
-    }
-
-    @Override
-    public String toString() {
-        return name().replace('_', ' ');
+    public ChatColor getColor() {
+        return color;
     }
 }

@@ -1,7 +1,7 @@
 package cz.jeme.programu.gungaming.eventhandler;
 
-import cz.jeme.programu.gungaming.manager.ReloadManager;
-import cz.jeme.programu.gungaming.manager.ZoomManager;
+import cz.jeme.programu.gungaming.managers.ReloadManager;
+import cz.jeme.programu.gungaming.managers.ZoomManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 

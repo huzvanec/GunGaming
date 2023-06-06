@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.loot;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
@@ -10,6 +11,10 @@ public class Loot {
     public int max;
 
     Random random = new Random();
+
+    public Loot(Material material, int min, int max) {
+        this(new ItemStack(material), min, max);
+    }
 
     public Loot(ItemStack item, int min, int max) {
         assert min <= 64 && min > 0;
