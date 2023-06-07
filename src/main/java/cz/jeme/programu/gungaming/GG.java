@@ -10,10 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GG extends Command {
 
@@ -81,23 +78,24 @@ public class GG extends Command {
             return;
         }
 
-        String groupName = args[2];
+        String groupName = args[2].toLowerCase();
         if (!Groups.groups.containsKey(groupName)) {
             sender.sendMessage(Messages.prefix("<red>Unknown group name \"" + groupName + "\"!</red>"));
             return;
         }
 
-        String itemName = args[3].replace("_", " ");
+        String itemName = args[3].toLowerCase();
         ItemStack item;
 
         Map<String, ? extends CustomItem> group = Groups.groups.get(groupName);
 
-        if (!group.containsKey(itemName)) {
+        if (!matchesLowercaseUnderscores(group.keySet(), itemName)) {
             sender.sendMessage(Messages.prefix("<red>Unknown " + groupName + " name!</red>"));
             return;
         }
 
-        CustomItem customItem = group.get(itemName);
+        CustomItem customItem = getLowercaseUnderscores(group, itemName);
+        assert customItem != null;
         item = customItem.item;
 
         int count = 1;
@@ -113,16 +111,13 @@ public class GG extends Command {
             }
             count = Integer.parseInt(args[4]);
         }
-        for (
-                int i = 0;
-                i < count; i++) {
+        for (int j = 0; j < count; j++) {
             Map<Integer, ItemStack> add = player.getInventory().addItem(item);
             if (add.size() != 0) {
                 sender.sendMessage(Messages.prefix("<gold>Count exceeded your inventory size!</gold>"));
                 return;
             }
         }
-
     }
 
     @Override
@@ -148,10 +143,24 @@ public class GG extends Command {
             if (group == null) return new ArrayList<>();
             List<String> itemNames = new ArrayList<>();
             for (CustomItem customItem : group.values()) {
-                itemNames.add(customItem.name.replace(' ', '_'));
+                itemNames.add(customItem.name.replace(' ', '_').toLowerCase());
             }
             return itemNames;
         }
         return new ArrayList<>();
+    }
+
+    private static boolean matchesLowercaseUnderscores(Collection<? extends String> collection, String match) {
+        for (String entry : collection) {
+            if (entry.replace(' ', '_').toLowerCase().equals(match)) return true;
+        }
+        return false;
+    }
+
+    private static <T> T getLowercaseUnderscores(Map<String, T> map, String match) {
+        for (String entry : map.keySet()) {
+            if (entry.replace(' ', '_').toLowerCase().equals(match)) return map.get(entry);
+        }
+        return null;
     }
 }

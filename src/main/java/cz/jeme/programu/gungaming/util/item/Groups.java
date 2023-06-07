@@ -12,7 +12,7 @@ public final class Groups {
     }
 
     public static void register(String groupName, Map<String, ? extends CustomItem> map) {
-        groups.put(groupName, map);
+        groups.put(groupName.replace(' ', '_').toLowerCase(), map);
     }
 
     public static void setUnmodifiable() {
