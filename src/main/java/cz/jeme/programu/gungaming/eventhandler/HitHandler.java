@@ -3,7 +3,7 @@ package cz.jeme.programu.gungaming.eventhandler;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.util.Materials;
 import cz.jeme.programu.gungaming.util.Namespaces;
-import cz.jeme.programu.gungaming.util.item.Bullets;
+import cz.jeme.programu.gungaming.util.item.Ammos;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -30,7 +30,7 @@ public class HitHandler {
     public void onProjectileHit(ProjectileHitEvent event) {
         Projectile bullet = event.getEntity();
 
-        if (!Bullets.isBullet(bullet)) return;
+        if (!Ammos.isBullet(bullet)) return;
 
         assert bullet instanceof Arrow : "Projectile not Arrow!";
 
@@ -75,7 +75,7 @@ public class HitHandler {
 
         Projectile bullet = (Projectile) damager;
 
-        if (!Bullets.isBullet(bullet)) {
+        if (!Ammos.isBullet(bullet)) {
             resetDamageTicks(livingEntity);
             return;
         }

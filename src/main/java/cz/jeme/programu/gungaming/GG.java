@@ -2,8 +2,7 @@ package cz.jeme.programu.gungaming;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.util.item.Ammos;
-import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.util.item.Groups;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -19,17 +18,12 @@ import java.util.Map;
 public class GG extends Command {
 
     public static final Map<String, String> CORRECT_ARGS = new HashMap<>();
-    public static final Map<String, String> GIVE_GROUPS = new HashMap<>();
-
 
     // Fill the maps
     static {
         CORRECT_ARGS.put("RELOAD", "reload");
         CORRECT_ARGS.put("HELP", "help");
         CORRECT_ARGS.put("GIVE", "give");
-
-        GIVE_GROUPS.put("GUNS", "gun");
-        GIVE_GROUPS.put("AMMO", "ammo");
     }
 
     public GG() {
@@ -87,34 +81,25 @@ public class GG extends Command {
             return;
         }
 
-        String group = args[2];
-        if (!GIVE_GROUPS.containsValue(group)) {
-            sender.sendMessage(Messages.prefix("<red>Unknown give group!</red>"));
+        String groupName = args[2];
+        if (!Groups.groups.containsKey(groupName)) {
+            sender.sendMessage(Messages.prefix("<red>Unknown group name \"" + groupName + "\"!</red>"));
             return;
         }
 
         String itemName = args[3].replace("_", " ");
         ItemStack item;
 
-        if (group.equals(GIVE_GROUPS.get("GUNS"))) {
-            if (!Guns.guns.containsKey(itemName)) {
-                sender.sendMessage(Messages.prefix("<red>Unknown gun name!</red>"));
-                return;
-            }
+        Map<String, ? extends CustomItem> group = Groups.groups.get(groupName);
 
-            CustomItem gun = Guns.guns.get(itemName);
-            item = gun.item;
-        } else if (group.equals(GIVE_GROUPS.get("AMMO"))) {
-            if (!Ammos.ammos.containsKey(itemName)) {
-                sender.sendMessage(Messages.prefix("<red>Unknown ammo name!</red>"));
-                return;
-            }
-            CustomItem ammo = Ammos.ammos.get(itemName);
-            item = ammo.item;
-        } else {
-            sender.sendMessage(Messages.prefix("<red>Wrong item group!</red>"));
+        if (!group.containsKey(itemName)) {
+            sender.sendMessage(Messages.prefix("<red>Unknown " + groupName + " name!</red>"));
             return;
         }
+
+        CustomItem customItem = group.get(itemName);
+        item = customItem.item;
+
         int count = 1;
         if (args.length == 5) {
             try {
@@ -128,13 +113,16 @@ public class GG extends Command {
             }
             count = Integer.parseInt(args[4]);
         }
-        for (int i = 0; i < count; i++) {
+        for (
+                int i = 0;
+                i < count; i++) {
             Map<Integer, ItemStack> add = player.getInventory().addItem(item);
             if (add.size() != 0) {
                 sender.sendMessage(Messages.prefix("<gold>Count exceeded your inventory size!</gold>"));
                 return;
             }
         }
+
     }
 
     @Override
@@ -146,39 +134,24 @@ public class GG extends Command {
             return new ArrayList<>();
         }
         if (args.length == 2) {
-            ArrayList<String> playerNames = new ArrayList<String>();
+            ArrayList<String> playerNames = new ArrayList<>();
             for (Player player : Bukkit.getOnlinePlayers()) {
                 playerNames.add(player.getName());
             }
             return playerNames;
         }
         if (args.length == 3) {
-            return new ArrayList<>(GIVE_GROUPS.values());
+            return new ArrayList<>(Groups.groups.keySet());
         }
         if (args.length == 4) {
-            if (args[2].equals(GIVE_GROUPS.get("GUNS"))) {
-                return guns();
+            Map<String, ? extends CustomItem> group = Groups.groups.get(args[2]);
+            if (group == null) return new ArrayList<>();
+            List<String> itemNames = new ArrayList<>();
+            for (CustomItem customItem : group.values()) {
+                itemNames.add(customItem.name.replace(' ', '_'));
             }
-            if (args[2].equals(GIVE_GROUPS.get("AMMO"))) {
-                return ammo();
-            }
+            return itemNames;
         }
         return new ArrayList<>();
-    }
-
-    private List<String> guns() {
-        ArrayList<String> gunNames = new ArrayList<>();
-        for (String gunName : Guns.guns.keySet()) {
-            gunNames.add(gunName.replace(" ", "_"));
-        }
-        return gunNames;
-    }
-
-    private List<String> ammo() {
-        ArrayList<String> ammoNames = new ArrayList<>();
-        for (String ammoName : Ammos.ammos.keySet()) {
-            ammoNames.add(ammoName.replace(" ", "_"));
-        }
-        return ammoNames;
     }
 }

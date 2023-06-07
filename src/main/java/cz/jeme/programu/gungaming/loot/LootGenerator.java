@@ -39,6 +39,7 @@ public class LootGenerator {
             registerLootUnit(ammo, ammo.rarity, ammo.minLoot, ammo.maxLoot);
         }
 
+        // Register miscs
         for (Misc misc : Miscs.miscs.values()) {
             registerLootUnit(misc, misc.rarity, misc.minLoot, misc.maxLoot);
         }
@@ -47,9 +48,7 @@ public class LootGenerator {
     public static List<ItemStack> generate(int slots, int percentage) {
         List<ItemStack> items = new ArrayList<>();
         for (int i = 0; i < slots; i++) {
-            if (random.nextInt(100) + 1 > percentage) {
-                continue;
-            }
+            if (random.nextInt(100) + 1 > percentage) continue;
             Loot lootUnit = loot.get(random.nextInt(loot.size()));
             items.add(lootUnit.getLoot());
         }

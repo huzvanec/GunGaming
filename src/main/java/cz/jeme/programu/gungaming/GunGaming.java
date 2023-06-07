@@ -14,6 +14,7 @@ import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
 import cz.jeme.programu.gungaming.util.Messages;
 import cz.jeme.programu.gungaming.util.item.Ammos;
+import cz.jeme.programu.gungaming.util.item.Groups;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import cz.jeme.programu.gungaming.util.item.Miscs;
 import org.bukkit.Bukkit;
@@ -64,6 +65,12 @@ public class GunGaming extends JavaPlugin {
         Guns.setUnmodifiable();
         Ammos.setUnmodifiable();
         Miscs.setUnmodifiable();
+
+        Groups.register("gun", Guns.guns);
+        Groups.register("ammo", Ammos.ammos);
+        Groups.register("misc", Miscs.miscs);
+
+        Groups.setUnmodifiable();
     }
 
     @Override

@@ -4,6 +4,8 @@ import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.util.Lores;
 import cz.jeme.programu.gungaming.util.Namespaces;
+import cz.jeme.programu.gungaming.util.item.Guns;
+import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 
@@ -35,6 +37,10 @@ public final class Ammos {
 
     public static void setUnmodifiable() {
         ammos = Collections.unmodifiableMap(ammos);
+    }
+
+    public static boolean isBullet(Projectile projectile) {
+        return Namespaces.BULLET.has(projectile);
     }
 
     public static void add(ItemStack item, int count) {

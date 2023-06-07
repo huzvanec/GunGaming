@@ -9,7 +9,8 @@ import java.util.Map;
 public final class Miscs {
     public static Map<String, Misc> miscs = new HashMap<>();
 
-    private Miscs() {}
+    private Miscs() {
+    }
 
     public static Misc getMisc(String name) {
         return miscs.get(name);
