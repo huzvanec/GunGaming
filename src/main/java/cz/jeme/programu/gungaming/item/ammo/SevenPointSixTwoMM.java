@@ -9,7 +9,7 @@ public class SevenPointSixTwoMM extends Ammo {
     protected void setup() {
         material = Material.BLACK_DYE;
         name = "7.62mm";
-        info = "Common ammo";
+        info = "Ammo for better weapons";
         rarity = Rarity.UNCOMMON;
         minLoot = 5;
         maxLoot = 12;

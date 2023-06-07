@@ -8,7 +8,7 @@ public class AK47 extends Gun {
     @Override
     protected void setup() {
         name = "AK-47";
-        info = "Автомат Калашникова";
+        info = "pretty good assault rifle";
         shootCooldown = 200;
         reloadCooldown = 2500;
         damage = 2d;

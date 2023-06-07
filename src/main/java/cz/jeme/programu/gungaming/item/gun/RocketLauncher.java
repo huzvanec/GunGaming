@@ -16,7 +16,7 @@ public class RocketLauncher extends Gun {
     @Override
     protected void setup() {
         name = "Rocket Launcher";
-        info = "One of the deadliest weapons in the game";
+        info = "Everything goes KABOOM";
         shootCooldown = 2000;
         reloadCooldown = 7000;
         damage = 15d;

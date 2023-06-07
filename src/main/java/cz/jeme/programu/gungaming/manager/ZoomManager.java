@@ -1,10 +1,12 @@
 package cz.jeme.programu.gungaming.manager;
 
+import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.util.Messages;
 import cz.jeme.programu.gungaming.util.Packets;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.protocol.game.ClientboundPlayerAbilitiesPacket;
 import net.minecraft.world.entity.player.Abilities;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -24,12 +26,14 @@ public class ZoomManager {
 
     private final Map<Player, ItemStack> helmetItems = new HashMap<>();
 
-    private final ItemStack pumpkin = new ItemStack(Material.CARVED_PUMPKIN);
+    private static final ItemStack PUMPKIN = new ItemStack(Material.CARVED_PUMPKIN);
+    private static final PotionEffect NIGHT_VISION = new PotionEffect(PotionEffectType.NIGHT_VISION, -1, 255, true, false, false);
+
 
     public ZoomManager() {
-        pumpkin.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
-        pumpkin.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 1);
-        ItemMeta meta = pumpkin.getItemMeta();
+        PUMPKIN.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
+        PUMPKIN.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 1);
+        ItemMeta meta = PUMPKIN.getItemMeta();
         List<Component> lore = new ArrayList<>();
         assert meta != null;
         meta.lore(lore);
@@ -37,11 +41,11 @@ public class ZoomManager {
         // This is equivalent to an empty char, minecraft cannot render paragraphs, they are used for colors
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.setCustomModelData(1);
-        pumpkin.setItemMeta(meta);
+        PUMPKIN.setItemMeta(meta);
     }
 
     public void nextZoom(Player player, double multiplier) {
-        if (!helmetItems.containsKey(player) || helmetItems.get(player).equals(pumpkin)) {
+        if (!helmetItems.containsKey(player) || helmetItems.get(player).equals(PUMPKIN)) {
             zoomIn(player, multiplier);
             return;
         }
@@ -49,7 +53,7 @@ public class ZoomManager {
     }
 
     public void zoomIn(Player player, double multiplier) {
-        if (helmetItems.containsKey(player) && !helmetItems.get(player).equals(pumpkin)) {
+        if (helmetItems.containsKey(player) && !helmetItems.get(player).equals(PUMPKIN)) {
             return;
         }
         if (player.isFlying()) {
@@ -57,7 +61,7 @@ public class ZoomManager {
             return;
         }
         setZoom(player, multiplier);
-        player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, -1, 255, true, false, false));
+        Bukkit.getScheduler().runTaskLater(GunGaming.getPlugin(), () -> player.addPotionEffect(NIGHT_VISION), 1L);
         showScope(player);
     }
 
@@ -65,10 +69,10 @@ public class ZoomManager {
         if (!helmetItems.containsKey(player)) {
             return;
         }
-        if (helmetItems.get(player).equals(pumpkin)) {
+        if (helmetItems.get(player).equals(PUMPKIN)) {
             return;
         }
-        player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+        Bukkit.getScheduler().runTaskLater(GunGaming.getPlugin(), () -> player.removePotionEffect(PotionEffectType.NIGHT_VISION), 1L);
         setZoom(player, 1);
         hideScope(player);
     }
@@ -96,13 +100,13 @@ public class ZoomManager {
             helmet = new ItemStack(Material.AIR);
         }
         helmetItems.put(player, helmet);
-        inventory.setHelmet(pumpkin);
+        inventory.setHelmet(PUMPKIN);
     }
 
     private void hideScope(Player player) {
         PlayerInventory inventory = player.getInventory();
         inventory.setHelmet(helmetItems.get(player));
-        helmetItems.put(player, pumpkin);
+        helmetItems.put(player, PUMPKIN);
     }
 
     public void zoomOutAll() {

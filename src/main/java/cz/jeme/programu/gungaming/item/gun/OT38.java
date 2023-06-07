@@ -8,7 +8,7 @@ public class OT38 extends Gun {
     @Override
     protected void setup() {
         name = "OT-38";
-        info = "Common pistol";
+        info = "A lousy revolver";
         shootCooldown = 600;
         reloadCooldown = 1500;
         damage = 8d;

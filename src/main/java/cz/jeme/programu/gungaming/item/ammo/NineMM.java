@@ -9,7 +9,7 @@ public class NineMM extends Ammo {
     protected void setup() {
         material = Material.BROWN_DYE;
         name = "9mm";
-        info = "Basic ammo for most guns";
+        info = "Ammo for basic weapons";
         rarity = Rarity.UNCOMMON;
         minLoot = 5;
         maxLoot = 16;

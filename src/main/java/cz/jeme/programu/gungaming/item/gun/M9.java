@@ -8,7 +8,7 @@ public class M9 extends Gun {
     @Override
     protected void setup() {
         name = "M9";
-        info = "Basic pistol";
+        info = "A Basic pistol";
         shootCooldown = 400;
         reloadCooldown = 1000;
         damage = 4d;

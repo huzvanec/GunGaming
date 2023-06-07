@@ -9,7 +9,7 @@ public class Rocket extends Ammo {
     protected void setup() {
         material = Material.BLUE_DYE;
         name = "Rocket";
-        info = "Rocket ammo for Rocket Launcher";
+        info = "Ammo for the Rocket Launcher";
         rarity = Rarity.EPIC;
         minLoot = 1;
         maxLoot = 3;

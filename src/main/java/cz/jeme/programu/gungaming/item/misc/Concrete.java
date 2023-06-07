@@ -8,7 +8,7 @@ public class Concrete extends Misc {
     protected void setup() {
         material = Material.GRAY_CONCRETE;
         name = "Concrete";
-        info = "A default building block";
+        info = "A basic building block";
         rarity = Rarity.COMMON;
         minLoot = 10;
         maxLoot = 16;
