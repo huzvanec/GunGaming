@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.util.item;
 
 import cz.jeme.programu.gungaming.item.gun.Gun;
+import cz.jeme.programu.gungaming.util.Lores;
 import cz.jeme.programu.gungaming.util.Messages;
 import cz.jeme.programu.gungaming.util.Namespaces;
 import net.kyori.adventure.text.Component;
@@ -43,6 +44,7 @@ public final class Guns {
 
     public static void register(Gun gun) {
         guns.put(gun.name, gun);
+        Lores.update(gun.item);
     }
 
     public static void setUnmodifiable() {

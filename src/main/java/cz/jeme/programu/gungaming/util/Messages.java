@@ -3,6 +3,7 @@ package cz.jeme.programu.gungaming.util;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 

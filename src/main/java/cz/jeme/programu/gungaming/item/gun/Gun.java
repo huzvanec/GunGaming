@@ -43,7 +43,6 @@ public abstract class Gun extends CustomItem {
         Damageable meta = (Damageable) item.getItemMeta();
         meta.setDamage(material.getMaxDurability());
         item.setItemMeta(meta);
-        Lores.update(item);
     }
 
     public Arrow shoot(PlayerInteractEvent event) {
