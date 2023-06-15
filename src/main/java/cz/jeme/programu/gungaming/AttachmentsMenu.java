@@ -21,6 +21,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
 public class AttachmentsMenu {
 
     private static final ItemStack HIDDEN = new ItemStack(Material.BARRIER);
@@ -120,9 +125,25 @@ public class AttachmentsMenu {
 
     private void moveToInventory(ItemStack clickedItem) {
         Attachment attachment = Attachments.getAttachment(clickedItem);
-        player.getInventory().addItem(clickedItem);
+        List<ItemStack> didntFit = new ArrayList<>(player.getInventory().addItem(clickedItem).values());
         inventory.setItem(attachment.id, attachment.placeHolder);
         attachment.nbt.set(gunItem, "");
+
+        if (attachment instanceof Magazine) { // Check that the gun is not overloaded
+            int difference = (int) Namespaces.CURRENT_GUN_AMMO.get(gunItem) - gun.maxAmmo;
+            if (difference > 0) { // It's overloaded, give the ammo back to the player
+                Namespaces.CURRENT_GUN_AMMO.set(gunItem, gun.maxAmmo);
+                ItemStack ammoItem = new ItemStack(Ammos.getAmmo(gun).item);
+                ammoItem.setAmount(difference);
+                didntFit.addAll(player.getInventory().addItem(ammoItem).values());
+            }
+        }
+
+        // Drop all the items that didn't fit
+        // This includes the attachment and the overloaded ammo if it's a magazine
+        for (ItemStack item : didntFit) {
+            player.getWorld().dropItem(player.getLocation(), item);
+        }
     }
 
 
