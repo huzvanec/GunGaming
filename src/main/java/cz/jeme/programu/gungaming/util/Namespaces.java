@@ -9,13 +9,16 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 public enum Namespaces {
+    GG(GunGaming.namespacedKey("gg"), PersistentDataType.BOOLEAN),
     RARITY(GunGaming.namespacedKey("rarity"), PersistentDataType.STRING),
     INFO(GunGaming.namespacedKey("info"), PersistentDataType.STRING),
     // Gun namespaces
     GUN(GunGaming.namespacedKey("gun"), PersistentDataType.STRING),
     CURRENT_GUN_AMMO(GunGaming.namespacedKey("current_gun_ammo"), PersistentDataType.INTEGER),
     MAX_GUN_AMMO(GunGaming.namespacedKey("max_gun_ammo"), PersistentDataType.INTEGER),
-    GUN_SCOPE(GunGaming.namespacedKey("gun_scope"), PersistentDataType.DOUBLE),
+    GUN_SCOPE(GunGaming.namespacedKey("gun_scope"), PersistentDataType.STRING),
+    GUN_MAGAZINE(GunGaming.namespacedKey("gun_magazine"), PersistentDataType.STRING),
+    GUN_STOCK(GunGaming.namespacedKey("gun_stock"), PersistentDataType.STRING),
 
     // Ammo namespaces
     AMMO(GunGaming.namespacedKey("ammo"), PersistentDataType.STRING),
@@ -26,7 +29,9 @@ public enum Namespaces {
     BULLET_GUN_NAME(GunGaming.namespacedKey("bullet_gun_name"), PersistentDataType.STRING),
 
     // Misc namespaces
-    MISC(GunGaming.namespacedKey("misc"), PersistentDataType.STRING);
+    MISC(GunGaming.namespacedKey("misc"), PersistentDataType.STRING),
+    // Attachment namespaces
+    ATTACHMENT(GunGaming.namespacedKey("attachment"), PersistentDataType.STRING);
 
     public final NamespacedKey namespacedKey;
     public final String key;

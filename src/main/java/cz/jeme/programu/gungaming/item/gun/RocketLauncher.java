@@ -2,8 +2,7 @@ package cz.jeme.programu.gungaming.item.gun;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.loot.Rarity;
-import org.bukkit.Color;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -17,7 +16,7 @@ public class RocketLauncher extends Gun {
     protected void setup() {
         name = "Rocket Launcher";
         info = "Everything goes KABOOM";
-        shootCooldown = 2000;
+        shootCooldown = 1000;
         reloadCooldown = 7000;
         damage = 15d;
         velocity = 1.5f;
@@ -37,14 +36,16 @@ public class RocketLauncher extends Gun {
         final Vector velocity = bullet.getVelocity();
 
         new BukkitRunnable() {
-
             int counter = 0;
-
             @Override
             public void run() {
                 counter++;
                 bullet.setVelocity(velocity);
-                if (counter == 200) {
+                Location location = bullet.getLocation();
+                World world = bullet.getWorld();
+                world.spawnParticle(Particle.SMOKE_LARGE, location.getX(), location.getY(), location.getZ(), 30, 0, 0, 0, 0.1, null);
+                world.spawnParticle(Particle.LAVA, location.getX(), location.getY(), location.getZ(), 10);
+                if (counter == 200 || !bullet.isValid()) {
                     bullet.setGravity(true);
                     cancel();
                 }

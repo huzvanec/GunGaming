@@ -11,7 +11,7 @@ public class AK47 extends Gun {
         info = "pretty good assault rifle";
         shootCooldown = 200;
         reloadCooldown = 2500;
-        damage = 2d;
+        damage = 2.5d;
         velocity = 40f;
         material = Material.IRON_HOE;
         maxAmmo = 32;

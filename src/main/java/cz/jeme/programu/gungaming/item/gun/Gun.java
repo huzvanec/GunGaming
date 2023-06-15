@@ -1,7 +1,6 @@
 package cz.jeme.programu.gungaming.item.gun;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
-import cz.jeme.programu.gungaming.util.Lores;
 import cz.jeme.programu.gungaming.util.Namespaces;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.Arrow;
@@ -36,9 +35,13 @@ public abstract class Gun extends CustomItem {
         assert ammoName != null : "No ammo name given!";
 
         Namespaces.GUN.set(item, name);
-        Namespaces.GUN_SCOPE.set(item, 10D);
         Namespaces.MAX_GUN_AMMO.set(item, maxAmmo);
         Namespaces.CURRENT_GUN_AMMO.set(item, 0);
+
+        Namespaces.GUN_SCOPE.set(item, "");
+        Namespaces.GUN_MAGAZINE.set(item, "");
+        Namespaces.GUN_STOCK.set(item, "");
+
 
         Damageable meta = (Damageable) item.getItemMeta();
         meta.setDamage(material.getMaxDurability());

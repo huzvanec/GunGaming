@@ -3,7 +3,10 @@ package cz.jeme.programu.gungaming.eventhandler.interaction;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.LootGenerator;
 import cz.jeme.programu.gungaming.manager.CooldownManager;
-import cz.jeme.programu.gungaming.util.*;
+import cz.jeme.programu.gungaming.util.Materials;
+import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Namespaces;
+import cz.jeme.programu.gungaming.util.Packets;
 import cz.jeme.programu.gungaming.util.item.Ammos;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
@@ -13,7 +16,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
@@ -21,7 +24,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RightClickHandler {
@@ -37,7 +39,6 @@ public class RightClickHandler {
     }
 
     public void block(PlayerInteractEvent event) {
-        if (event.getPlayer().isSneaking()) return;
         Block clickedBlock = event.getClickedBlock();
         if (clickedBlock == null) {
             throw new NullPointerException("Clicked block is null!");
@@ -47,8 +48,12 @@ public class RightClickHandler {
             crate(clickedBlock);
             return;
         }
-        if (!Arrays.asList(Materials.CONTAINERS).contains(material)) {
+        if (!Materials.hasRightClick(material)) {
             shoot(event);
+            ItemStack item = event.getItem();
+            if (item != null && Namespaces.GG.has(item)) {
+                event.setCancelled(true);
+            }
         }
     }
 

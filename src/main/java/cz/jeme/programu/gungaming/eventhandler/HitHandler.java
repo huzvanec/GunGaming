@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.eventhandler;
 
+import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.util.Materials;
 import cz.jeme.programu.gungaming.util.Namespaces;
@@ -13,7 +14,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class HitHandler {
@@ -46,17 +46,21 @@ public class HitHandler {
         bullet.setGravity(true);
 
         Block block = event.getHitBlock();
+        World world = block.getWorld();
         Material type = block.getType();
-        if (Arrays.asList(Materials.GLASSES).contains(type) || Arrays.asList(Materials.GLASS_PANES).contains(type)) {
+
+        if (Materials.isGlass(type)) {
+            Location particleLocation = block.getLocation().add(0.5, 0.5, 0.5);
+            world.spawnParticle(Particle.ITEM_CRACK, particleLocation, 40, 0.2, 0.2, 0.2, 0.1, new ItemStack(type));
             block.setType(Material.AIR);
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                Location particleLocation = block.getLocation().add(0.5, 0.5, 0.5);
-                player.spawnParticle(Particle.ITEM_CRACK, particleLocation, 40, 0.2, 0.2, 0.2, 0.1,
-                        new ItemStack(type));
-                player.playSound(block.getLocation(), Sound.BLOCK_GLASS_BREAK, 1, 2);
-            }
+            world.playSound(block.getLocation(), Sound.BLOCK_GLASS_BREAK, 1, 2);
             bullet.remove();
+            return;
         }
+        Bukkit.getScheduler().runTaskLater(GunGaming.getPlugin(), () -> {
+            Location location = bullet.getLocation();
+            world.spawnParticle(Particle.ITEM_CRACK, location, 5, 0, 0, 0, 0.05, new ItemStack(type));
+        }, 1L);
     }
 
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {

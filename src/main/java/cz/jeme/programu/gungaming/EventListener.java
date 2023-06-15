@@ -5,6 +5,7 @@ import cz.jeme.programu.gungaming.eventhandler.interaction.PlayerInteractHandler
 import cz.jeme.programu.gungaming.manager.CooldownManager;
 import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
+import cz.jeme.programu.gungaming.util.item.Attachments;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +14,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.*;
 
@@ -63,7 +65,7 @@ public class EventListener implements Listener {
 
     @EventHandler
     private void onItemDamage(PlayerItemDamageEvent event) {
-        if (Guns.isGun(event.getItem())) event.setCancelled(true);
+        if (Guns.isGun(event.getItem()) || Attachments.isAttachment(event.getItem())) event.setCancelled(true);
     }
 
     @EventHandler
@@ -104,5 +106,15 @@ public class EventListener implements Listener {
     @EventHandler
     private void onEntityDamage(EntityDamageEvent event) {
         hitHandler.onEntityDamage(event);
+    }
+
+    @EventHandler
+    private void onInventoryClose(InventoryCloseEvent event) {
+        inventoryHandler.onInventoryClose(event);
+    }
+
+    @EventHandler
+    private void onPlayerGamemodeChange(PlayerGameModeChangeEvent event) {
+        zoomManager.zoomOut(event.getPlayer());
     }
 }

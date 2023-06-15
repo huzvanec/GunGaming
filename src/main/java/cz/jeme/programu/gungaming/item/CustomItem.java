@@ -44,6 +44,7 @@ public abstract class CustomItem {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         Namespaces.RARITY.set(meta, rarity.name());
         Namespaces.INFO.set(meta, Messages.latin(info));
+        Namespaces.GG.set(meta, true);
         item.setItemMeta(meta);
         Lores.update(item);
     }

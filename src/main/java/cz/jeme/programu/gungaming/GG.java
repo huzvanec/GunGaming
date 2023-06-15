@@ -25,14 +25,16 @@ public class GG extends Command {
 
     public GG() {
         super("gg");
+        register();
     }
 
-    protected void register() {
+    private void register() {
         Bukkit.getCommandMap().register("gungaming", this);
     }
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+
         if (args.length == 0) {
             help(sender);
             return true;

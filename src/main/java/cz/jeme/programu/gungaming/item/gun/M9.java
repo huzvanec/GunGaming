@@ -11,10 +11,10 @@ public class M9 extends Gun {
         info = "A Basic pistol";
         shootCooldown = 400;
         reloadCooldown = 1000;
-        damage = 4d;
+        damage = 3d;
         velocity = 40f;
         material = Material.WOODEN_HOE;
-        maxAmmo = 15;
+        maxAmmo = 10;
         ammoName = "9mm";
         rarity = Rarity.RARE;
         minLoot = 1;

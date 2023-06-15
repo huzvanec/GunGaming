@@ -3,6 +3,13 @@ package cz.jeme.programu.gungaming;
 import cz.jeme.programu.gungaming.item.ammo.NineMM;
 import cz.jeme.programu.gungaming.item.ammo.Rocket;
 import cz.jeme.programu.gungaming.item.ammo.SevenPointSixTwoMM;
+import cz.jeme.programu.gungaming.item.attachment.magazine.BigMagazine;
+import cz.jeme.programu.gungaming.item.attachment.magazine.HugeMagazine;
+import cz.jeme.programu.gungaming.item.attachment.magazine.SmallMagazine;
+import cz.jeme.programu.gungaming.item.attachment.scope.HighScope;
+import cz.jeme.programu.gungaming.item.attachment.scope.LowScope;
+import cz.jeme.programu.gungaming.item.attachment.scope.MediumScope;
+import cz.jeme.programu.gungaming.item.attachment.stock.WoodenStock;
 import cz.jeme.programu.gungaming.item.gun.AK47;
 import cz.jeme.programu.gungaming.item.gun.M9;
 import cz.jeme.programu.gungaming.item.gun.OT38;
@@ -13,10 +20,7 @@ import cz.jeme.programu.gungaming.manager.CooldownManager;
 import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
 import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.util.item.Ammos;
-import cz.jeme.programu.gungaming.util.item.Groups;
-import cz.jeme.programu.gungaming.util.item.Guns;
-import cz.jeme.programu.gungaming.util.item.Miscs;
+import cz.jeme.programu.gungaming.util.item.*;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.PluginManager;
@@ -37,7 +41,7 @@ public class GunGaming extends JavaPlugin {
         registerItems();
         LootGenerator.registerLoot();
 
-        new GG().register(); // register the /gg command
+        new GG(); // register the /gg command
 
         EventListener eventListener = new EventListener(cooldownManager, zoomManager, reloadManager, getDataFolder());
 
@@ -62,13 +66,23 @@ public class GunGaming extends JavaPlugin {
 
         Miscs.register(new Concrete());
 
+        Attachments.register(new LowScope());
+        Attachments.register(new MediumScope());
+        Attachments.register(new HighScope());
+        Attachments.register(new WoodenStock());
+        Attachments.register(new SmallMagazine());
+        Attachments.register(new BigMagazine());
+        Attachments.register(new HugeMagazine());
+
         Guns.setUnmodifiable();
         Ammos.setUnmodifiable();
         Miscs.setUnmodifiable();
+        Attachments.setUnmodifiable();
 
         Groups.register("gun", Guns.guns);
         Groups.register("ammo", Ammos.ammos);
         Groups.register("misc", Miscs.miscs);
+        Groups.register("attachment", Attachments.attachments);
 
         Groups.setUnmodifiable();
     }
@@ -80,6 +94,7 @@ public class GunGaming extends JavaPlugin {
 
     /**
      * Log a message with the plugin prefix to the console.
+     *
      * @param lvl Message severitiy identifier
      * @param msg The message to log
      */
@@ -90,6 +105,7 @@ public class GunGaming extends JavaPlugin {
 
     /**
      * Provides a static and fast access to the plugin object.
+     *
      * @return GunGaming plugin object
      */
     public static GunGaming getPlugin() {
@@ -98,6 +114,7 @@ public class GunGaming extends JavaPlugin {
 
     /**
      * Provides a fast way to create namespaced keys assigned to this plugin.
+     *
      * @param key The namespaced key string key
      * @return The namespaced key created
      */

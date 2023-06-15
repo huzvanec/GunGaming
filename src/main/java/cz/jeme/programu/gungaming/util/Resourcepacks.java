@@ -1,12 +1,12 @@
 package cz.jeme.programu.gungaming.util;
 
 import cz.jeme.programu.gungaming.GunGaming;
-import org.apache.commons.io.FileExistsException;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.FileAlreadyExistsException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -53,7 +53,7 @@ public class Resourcepacks {
         if (tempFile.exists()) {
             boolean deleted = tempFile.delete();
             if (!deleted) {
-                throw new FileExistsException("Resourcepack file already exists and cannot be deleted!");
+                throw new FileAlreadyExistsException("Resourcepack file already exists and cannot be deleted!");
             }
         }
         ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
