@@ -18,7 +18,7 @@ public abstract class Stock extends Attachment {
 
     static {
         ItemMeta scopeMeta = PLACE_HOLDER.getItemMeta();
-        scopeMeta.displayName(Messages.from("<!italic>Stock</!italic>"));
+        scopeMeta.displayName(Messages.from("<!italic><gray>Stock</gray></!italic>"));
         scopeMeta.setCustomModelData(1);
         PLACE_HOLDER.setItemMeta(scopeMeta);
     }

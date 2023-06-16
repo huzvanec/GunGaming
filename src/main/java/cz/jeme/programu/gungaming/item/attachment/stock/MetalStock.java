@@ -9,7 +9,7 @@ public class MetalStock extends Stock {
     protected void setup() {
         material = Material.IRON_AXE;
         name = "Metal Stock";
-        info = "An awesome stock";
+        info = "Awesome weapon handling";
         rarity = Rarity.LEGENDARY;
         minLoot = 1;
         maxLoot = 1;

@@ -9,7 +9,7 @@ public class WoodenStock extends Stock {
     protected void setup() {
         material = Material.IRON_PICKAXE;
         name = "Wooden Stock";
-        info = "A great stock";
+        info = "Poor weapon stability";
         rarity = Rarity.RARE;
         minLoot = 1;
         maxLoot = 1;

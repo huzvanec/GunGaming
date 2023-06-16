@@ -15,7 +15,7 @@ public abstract class Scope extends Attachment {
 
     static {
         ItemMeta scopeMeta = PLACE_HOLDER.getItemMeta();
-        scopeMeta.displayName(Messages.from("<!italic>Scope</!italic>"));
+        scopeMeta.displayName(Messages.from("<!italic><gray>Scope</gray></!italic>"));
         scopeMeta.setCustomModelData(1);
         PLACE_HOLDER.setItemMeta(scopeMeta);
     }

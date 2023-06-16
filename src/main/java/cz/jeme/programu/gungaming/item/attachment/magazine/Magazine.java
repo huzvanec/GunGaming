@@ -17,7 +17,7 @@ public abstract class Magazine extends Attachment {
 
     static {
         ItemMeta scopeMeta = PLACE_HOLDER.getItemMeta();
-        scopeMeta.displayName(Messages.from("<!italic>Magazine</!italic>"));
+        scopeMeta.displayName(Messages.from("<!italic><gray>Magazine</gray></!italic>"));
         scopeMeta.setCustomModelData(1);
         PLACE_HOLDER.setItemMeta(scopeMeta);
     }

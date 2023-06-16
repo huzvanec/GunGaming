@@ -9,7 +9,7 @@ public class PlasticStock extends Stock {
     protected void setup() {
         material = Material.GOLDEN_AXE;
         name = "Plastic Stock";
-        info = "A better stock";
+        info = "Great weapon stability";
         rarity = Rarity.EPIC;
         minLoot = 1;
         maxLoot = 1;
