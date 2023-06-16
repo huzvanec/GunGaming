@@ -9,6 +9,8 @@ import cz.jeme.programu.gungaming.item.attachment.magazine.SmallMagazine;
 import cz.jeme.programu.gungaming.item.attachment.scope.HighScope;
 import cz.jeme.programu.gungaming.item.attachment.scope.LowScope;
 import cz.jeme.programu.gungaming.item.attachment.scope.MediumScope;
+import cz.jeme.programu.gungaming.item.attachment.stock.MetalStock;
+import cz.jeme.programu.gungaming.item.attachment.stock.PlasticStock;
 import cz.jeme.programu.gungaming.item.attachment.stock.WoodenStock;
 import cz.jeme.programu.gungaming.item.gun.AK47;
 import cz.jeme.programu.gungaming.item.gun.M9;
@@ -69,7 +71,11 @@ public class GunGaming extends JavaPlugin {
         Attachments.register(new LowScope());
         Attachments.register(new MediumScope());
         Attachments.register(new HighScope());
+
         Attachments.register(new WoodenStock());
+        Attachments.register(new PlasticStock());
+        Attachments.register(new MetalStock());
+
         Attachments.register(new SmallMagazine());
         Attachments.register(new BigMagazine());
         Attachments.register(new HugeMagazine());

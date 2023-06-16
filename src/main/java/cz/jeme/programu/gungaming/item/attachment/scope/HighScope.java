@@ -15,6 +15,6 @@ public class HighScope extends Scope {
         maxLoot = 1;
         scope = 10D;
         modifiersInfo = new ModifiersInfo();
-        modifiersInfo.addBuff("2× scope");
+        modifiersInfo.addBuff("10× scope");
     }
 }

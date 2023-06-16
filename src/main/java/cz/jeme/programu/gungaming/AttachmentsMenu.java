@@ -101,7 +101,8 @@ public class AttachmentsMenu {
             moveToInventory(clickedItem);
         }
         updateGun();
-        Magazine.updateReloadCooldown(gunItem);
+        Magazine.updateMagazine(gunItem);
+        Stock.updateStock(gunItem);
     }
 
     private void moveToAttachments(InventoryClickEvent event, ItemStack clickedItem) {

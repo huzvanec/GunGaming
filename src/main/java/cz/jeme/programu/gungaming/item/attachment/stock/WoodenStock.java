@@ -13,7 +13,10 @@ public class WoodenStock extends Stock {
         rarity = Rarity.RARE;
         minLoot = 1;
         maxLoot = 1;
+        recoilPercentage = 80f;
+        inaccuracyPercentage = 70f;
         modifiersInfo = new ModifiersInfo();
-        modifiersInfo.addBuff("wur");
+        modifiersInfo.addBuff("-20% recoil");
+        modifiersInfo.addBuff("+30% accuracy");
     }
 }

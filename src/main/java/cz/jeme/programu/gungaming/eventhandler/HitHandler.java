@@ -13,6 +13,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class HitHandler {
         }
 
         bullet.setGravity(true);
+        bullet.setVelocity(new Vector().zero());
 
         Block block = event.getHitBlock();
         World world = block.getWorld();

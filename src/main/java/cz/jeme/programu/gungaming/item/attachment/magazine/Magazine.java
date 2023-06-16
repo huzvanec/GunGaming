@@ -34,7 +34,7 @@ public abstract class Magazine extends Attachment {
         assert magazinePercentage != null : "Magazine enlarge percentage is null!";
     }
 
-    public static void updateReloadCooldown(ItemStack item) {
+    public static void updateMagazine(ItemStack item) {
         String magazineName = Namespaces.GUN_MAGAZINE.get(item);
         Gun gun = Guns.getGun(item);
         if (magazineName.equals("")) {
