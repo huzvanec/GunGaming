@@ -2,9 +2,11 @@ package cz.jeme.programu.gungaming.loot;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
+import cz.jeme.programu.gungaming.item.attachment.Attachment;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.item.misc.Misc;
 import cz.jeme.programu.gungaming.util.item.Ammos;
+import cz.jeme.programu.gungaming.util.item.Attachments;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import cz.jeme.programu.gungaming.util.item.Miscs;
 import org.bukkit.inventory.ItemStack;
@@ -42,6 +44,11 @@ public class LootGenerator {
         // Register miscs
         for (Misc misc : Miscs.miscs.values()) {
             registerLootUnit(misc, misc.rarity, misc.minLoot, misc.maxLoot);
+        }
+
+        // Register attachments
+        for (Attachment attachment : Attachments.attachments.values()) {
+            registerLootUnit(attachment, attachment.rarity, attachment.minLoot, attachment.maxLoot);
         }
     }
 

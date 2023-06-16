@@ -3,7 +3,7 @@ package cz.jeme.programu.gungaming.eventhandler;
 import cz.jeme.programu.gungaming.AttachmentsMenu;
 import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
-import cz.jeme.programu.gungaming.util.Namespaces;
+import cz.jeme.programu.gungaming.Namespaces;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Material;

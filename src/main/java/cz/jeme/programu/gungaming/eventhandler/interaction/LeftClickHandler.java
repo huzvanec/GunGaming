@@ -3,7 +3,7 @@ package cz.jeme.programu.gungaming.eventhandler.interaction;
 import cz.jeme.programu.gungaming.item.attachment.scope.Scope;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
 import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.util.Namespaces;
+import cz.jeme.programu.gungaming.Namespaces;
 import cz.jeme.programu.gungaming.util.item.Attachments;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import org.bukkit.entity.Player;

@@ -19,5 +19,7 @@ public class OT38 extends Gun {
         rarity = Rarity.RARE;
         minLoot = 1;
         maxLoot = 1;
+        recoil = 0.18f;
+        inaccuracy = 0.9f;
     }
 }

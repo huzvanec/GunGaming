@@ -19,5 +19,7 @@ public class M9 extends Gun {
         rarity = Rarity.RARE;
         minLoot = 1;
         maxLoot = 1;
+        recoil = 0.1f;
+        inaccuracy = 1.2f;
     }
 }

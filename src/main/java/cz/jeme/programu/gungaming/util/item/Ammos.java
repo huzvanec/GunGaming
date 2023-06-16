@@ -3,8 +3,7 @@ package cz.jeme.programu.gungaming.util.item;
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.util.Lores;
-import cz.jeme.programu.gungaming.util.Namespaces;
-import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.Namespaces;
 import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -44,7 +43,7 @@ public final class Ammos {
     }
 
     public static void add(ItemStack item, int count) {
-        set(item, (int) Namespaces.CURRENT_GUN_AMMO.get(item) + count);
+        set(item, (int) Namespaces.GUN_AMMO_CURRENT.get(item) + count);
     }
 
     public static void remove(ItemStack item, int count) {
@@ -52,11 +51,11 @@ public final class Ammos {
     }
 
     public static void set(ItemStack item, int count) {
-        Namespaces.CURRENT_GUN_AMMO.set(item, count);
+        Namespaces.GUN_AMMO_CURRENT.set(item, count);
         Damageable meta = (Damageable) item.getItemMeta();
 
-        int currentAmmo = Namespaces.CURRENT_GUN_AMMO.get(item);
-        int maxAmmo = Namespaces.MAX_GUN_AMMO.get(item);
+        int currentAmmo = Namespaces.GUN_AMMO_CURRENT.get(item);
+        int maxAmmo = Namespaces.GUN_AMMO_MAX.get(item);
 
         int maxDamage = item.getType().getMaxDurability();
         int damage;

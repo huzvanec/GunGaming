@@ -5,7 +5,7 @@ import cz.jeme.programu.gungaming.loot.LootGenerator;
 import cz.jeme.programu.gungaming.manager.CooldownManager;
 import cz.jeme.programu.gungaming.util.Materials;
 import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.util.Namespaces;
+import cz.jeme.programu.gungaming.Namespaces;
 import cz.jeme.programu.gungaming.util.Packets;
 import cz.jeme.programu.gungaming.util.item.Ammos;
 import cz.jeme.programu.gungaming.util.item.Guns;
@@ -83,7 +83,7 @@ public class RightClickHandler {
         if (player.getCooldown(heldItem.getType()) != 0) {
             return;
         }
-        int heldAmmo = Namespaces.CURRENT_GUN_AMMO.get(heldItem);
+        int heldAmmo = Namespaces.GUN_AMMO_CURRENT.get(heldItem);
         boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
         if (heldAmmo == 0 && !isCreative) {
             player.sendActionBar(Messages.from("<red>Reload required!</red>"));
@@ -92,7 +92,7 @@ public class RightClickHandler {
         if (!isCreative) {
             Ammos.remove(heldItem, 1);
         }
-        gun.shoot(event);
+        gun.shoot(event, heldItem);
         cooldownManager.setCooldown(player, gun.item.getType(), gun.shootCooldown);
         List<Player> players = new ArrayList<>();
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {

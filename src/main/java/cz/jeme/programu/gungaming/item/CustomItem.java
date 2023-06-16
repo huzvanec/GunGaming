@@ -3,7 +3,7 @@ package cz.jeme.programu.gungaming.item;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.util.Lores;
 import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.util.Namespaces;
+import cz.jeme.programu.gungaming.Namespaces;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;

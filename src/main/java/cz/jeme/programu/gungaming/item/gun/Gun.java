@@ -1,14 +1,19 @@
 package cz.jeme.programu.gungaming.item.gun;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
-import cz.jeme.programu.gungaming.util.Namespaces;
+import cz.jeme.programu.gungaming.Namespaces;
+import org.bukkit.Location;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.util.Vector;
+
+import java.util.Random;
 
 public abstract class Gun extends CustomItem {
 
@@ -23,6 +28,9 @@ public abstract class Gun extends CustomItem {
     public Integer maxAmmo = null;
 
     public String ammoName = null;
+    public Float recoil = null;
+    public Float inaccuracy = null;
+    private final Random random = new Random();
 
     public Gun() {
         setup();
@@ -33,10 +41,15 @@ public abstract class Gun extends CustomItem {
         assert velocity != null : "No bullet speed given!";
         assert maxAmmo != null : "No max ammo given!";
         assert ammoName != null : "No ammo name given!";
+        assert recoil != null : "No recoil given!";
+        assert inaccuracy != null : "No inaccuracy given!";
 
         Namespaces.GUN.set(item, name);
-        Namespaces.MAX_GUN_AMMO.set(item, maxAmmo);
-        Namespaces.CURRENT_GUN_AMMO.set(item, 0);
+        Namespaces.GUN_AMMO_MAX.set(item, maxAmmo);
+        Namespaces.GUN_AMMO_CURRENT.set(item, 0);
+        Namespaces.GUN_RELOAD_COOLDOWN.set(item, reloadCooldown);
+        Namespaces.GUN_RECOIL.set(item, recoil);
+        Namespaces.GUN_INACCURACY.set(item, inaccuracy);
 
         Namespaces.GUN_SCOPE.set(item, "");
         Namespaces.GUN_MAGAZINE.set(item, "");
@@ -48,9 +61,19 @@ public abstract class Gun extends CustomItem {
         item.setItemMeta(meta);
     }
 
-    public Arrow shoot(PlayerInteractEvent event) {
+    public Arrow shoot(PlayerInteractEvent event, ItemStack heldItem) {
         Player player = event.getPlayer();
-        Arrow bullet = player.launchProjectile(Arrow.class, player.getLocation().getDirection().multiply(velocity));
+        Location location = player.getLocation();
+
+        Vector recoilVector = location.getDirection().multiply((float) Namespaces.GUN_RECOIL.get(heldItem));
+        recoilVector.setY(recoilVector.getY() / 4);
+        player.setVelocity(player.getVelocity().subtract(recoilVector));
+
+        Vector arrowVector = player.getLocation().getDirection();
+        arrowVector.multiply(velocity);
+        randomizeVector(arrowVector, Namespaces.GUN_INACCURACY.get(heldItem));
+
+        Arrow bullet = player.launchProjectile(Arrow.class, arrowVector);
         bullet.setPickupStatus(PickupStatus.DISALLOWED);
 
         Namespaces.BULLET.set(bullet, ammoName);
@@ -60,6 +83,13 @@ public abstract class Gun extends CustomItem {
         bullet.setFallDistance(0);
         onShoot(event, bullet);
         return bullet;
+    }
+
+    private void randomizeVector(Vector vector, float degrees) {
+        float radians = (float) Math.toRadians(degrees);
+        vector.rotateAroundX(random.nextFloat(radians * 2) - radians);
+        vector.rotateAroundY(random.nextFloat(radians * 2) - radians);
+        vector.rotateAroundZ(random.nextFloat(radians * 2) - radians);
     }
 
     protected void onShoot(PlayerInteractEvent event, Arrow bullet) {

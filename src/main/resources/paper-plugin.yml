@@ -1,5 +1,5 @@
 name: GunGaming
 version: '${project.version}'
 main: cz.jeme.programu.gungaming.GunGaming
-api-version: 1.19
+api-version: '1.20'
 description: "„Let's add guns to minecraft!“ - Mandlemankiller"

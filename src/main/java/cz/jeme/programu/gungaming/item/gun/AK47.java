@@ -19,5 +19,7 @@ public class AK47 extends Gun {
         rarity = Rarity.EPIC;
         minLoot = 1;
         maxLoot = 1;
+        recoil = 0.08f;
+        inaccuracy = 1.7f;
     }
 }

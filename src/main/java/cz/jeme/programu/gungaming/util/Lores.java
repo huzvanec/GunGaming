@@ -1,5 +1,7 @@
 package cz.jeme.programu.gungaming.util;
 
+import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.item.attachment.Attachment;
 import cz.jeme.programu.gungaming.item.attachment.magazine.Magazine;
 import cz.jeme.programu.gungaming.item.attachment.scope.Scope;
 import cz.jeme.programu.gungaming.item.gun.Gun;
@@ -33,8 +35,8 @@ public final class Lores {
 
             lore.add(Messages.from(""));
 
-            int currentAmmo = Namespaces.CURRENT_GUN_AMMO.get(meta);
-            int maxAmmo = Namespaces.MAX_GUN_AMMO.get(meta);
+            int currentAmmo = Namespaces.GUN_AMMO_CURRENT.get(meta);
+            int maxAmmo = Namespaces.GUN_AMMO_MAX.get(meta);
             String ammo = "<!italic><#77A5FF>" + Messages.latin("Ammo: ") + "</#77A5FF>" + calcAmmo(currentAmmo, maxAmmo);
 
             String magazineName = Namespaces.GUN_MAGAZINE.get(meta);
@@ -54,6 +56,9 @@ public final class Lores {
                 lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Scope: ") + "</#77A5FF>" + scopeLevel + "× <#6FFD90>(+" + scopeLevel
                         + " " + Messages.latin(scopeName) + ")</#6FFD90></#CADCFF></!italic>"));
             }
+        } else if (Namespaces.ATTACHMENT.has(meta)) {
+            Attachment attachment = Attachments.getAttachment((String) Namespaces.ATTACHMENT.get(meta));
+            lore.addAll(attachment.modifiersInfo);
         }
         meta.lore(lore);
     }

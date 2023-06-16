@@ -26,6 +26,8 @@ public class RocketLauncher extends Gun {
         rarity = Rarity.LEGENDARY;
         minLoot = 1;
         maxLoot = 1;
+        recoil = 2f;
+        inaccuracy = 1f;
     }
 
     @Override

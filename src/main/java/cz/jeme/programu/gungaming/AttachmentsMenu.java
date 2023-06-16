@@ -7,7 +7,6 @@ import cz.jeme.programu.gungaming.item.attachment.stock.Stock;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.util.Lores;
 import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.util.Namespaces;
 import cz.jeme.programu.gungaming.util.item.Ammos;
 import cz.jeme.programu.gungaming.util.item.Attachments;
 import cz.jeme.programu.gungaming.util.item.Guns;
@@ -22,9 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 public class AttachmentsMenu {
 
@@ -104,6 +101,7 @@ public class AttachmentsMenu {
             moveToInventory(clickedItem);
         }
         updateGun();
+        Magazine.updateReloadCooldown(gunItem);
     }
 
     private void moveToAttachments(InventoryClickEvent event, ItemStack clickedItem) {
@@ -130,9 +128,9 @@ public class AttachmentsMenu {
         attachment.nbt.set(gunItem, "");
 
         if (attachment instanceof Magazine) { // Check that the gun is not overloaded
-            int difference = (int) Namespaces.CURRENT_GUN_AMMO.get(gunItem) - gun.maxAmmo;
+            int difference = (int) Namespaces.GUN_AMMO_CURRENT.get(gunItem) - gun.maxAmmo;
             if (difference > 0) { // It's overloaded, give the ammo back to the player
-                Namespaces.CURRENT_GUN_AMMO.set(gunItem, gun.maxAmmo);
+                Namespaces.GUN_AMMO_CURRENT.set(gunItem, gun.maxAmmo);
                 ItemStack ammoItem = new ItemStack(Ammos.getAmmo(gun).item);
                 ammoItem.setAmount(difference);
                 didntFit.addAll(player.getInventory().addItem(ammoItem).values());
@@ -151,15 +149,15 @@ public class AttachmentsMenu {
         String magazineName = Namespaces.GUN_MAGAZINE.get(gunItem);
         Gun gun = Guns.getGun(gunItem);
         if (magazineName.equals("")) {
-            Namespaces.MAX_GUN_AMMO.set(gunItem, gun.maxAmmo);
+            Namespaces.GUN_AMMO_MAX.set(gunItem, gun.maxAmmo);
         } else {
             Magazine magazine = (Magazine) Attachments.getAttachment(magazineName);
             float multiplier = magazine.magazinePercentage / 100f;
             int multipliedMaxAmmo = Math.round(gun.maxAmmo * multiplier);
-            Namespaces.MAX_GUN_AMMO.set(gunItem, multipliedMaxAmmo);
+            Namespaces.GUN_AMMO_MAX.set(gunItem, multipliedMaxAmmo);
         }
         Lores.update(gunItem);
-        Ammos.set(gunItem, Namespaces.CURRENT_GUN_AMMO.get(gunItem));
+        Ammos.set(gunItem, Namespaces.GUN_AMMO_CURRENT.get(gunItem));
     }
 
     public boolean hasOpenInventory(InventoryClickEvent event) {

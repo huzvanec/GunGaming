@@ -1,8 +1,11 @@
 package cz.jeme.programu.gungaming.item.attachment.magazine;
 
+import cz.jeme.programu.gungaming.Namespaces;
 import cz.jeme.programu.gungaming.item.attachment.Attachment;
+import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.util.Namespaces;
+import cz.jeme.programu.gungaming.util.item.Attachments;
+import cz.jeme.programu.gungaming.util.item.Guns;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -29,5 +32,17 @@ public abstract class Magazine extends Attachment {
         setup();
 
         assert magazinePercentage != null : "Magazine enlarge percentage is null!";
+    }
+
+    public static void updateReloadCooldown(ItemStack item) {
+        String magazineName = Namespaces.GUN_MAGAZINE.get(item);
+        Gun gun = Guns.getGun(item);
+        if (magazineName.equals("")) {
+            Namespaces.GUN_RELOAD_COOLDOWN.set(item, gun.reloadCooldown);
+            return;
+        }
+        Magazine magazine = (Magazine) Attachments.getAttachment(magazineName);
+        float newReloadCooldown = gun.reloadCooldown * (magazine.magazinePercentage / 100f);
+        Namespaces.GUN_RELOAD_COOLDOWN.set(item, Math.round(newReloadCooldown));
     }
 }

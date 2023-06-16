@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.item.attachment.stock;
 
+import cz.jeme.programu.gungaming.item.attachment.ModifiersInfo;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import org.bukkit.Material;
 
@@ -12,5 +13,7 @@ public class WoodenStock extends Stock {
         rarity = Rarity.RARE;
         minLoot = 1;
         maxLoot = 1;
+        modifiersInfo = new ModifiersInfo();
+        modifiersInfo.addBuff("wur");
     }
 }

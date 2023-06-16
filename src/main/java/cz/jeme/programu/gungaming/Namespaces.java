@@ -1,6 +1,5 @@
-package cz.jeme.programu.gungaming.util;
+package cz.jeme.programu.gungaming;
 
-import cz.jeme.programu.gungaming.GunGaming;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -14,11 +13,14 @@ public enum Namespaces {
     INFO(GunGaming.namespacedKey("info"), PersistentDataType.STRING),
     // Gun namespaces
     GUN(GunGaming.namespacedKey("gun"), PersistentDataType.STRING),
-    CURRENT_GUN_AMMO(GunGaming.namespacedKey("current_gun_ammo"), PersistentDataType.INTEGER),
-    MAX_GUN_AMMO(GunGaming.namespacedKey("max_gun_ammo"), PersistentDataType.INTEGER),
+    GUN_AMMO_CURRENT(GunGaming.namespacedKey("current_gun_ammo"), PersistentDataType.INTEGER),
+    GUN_AMMO_MAX(GunGaming.namespacedKey("max_gun_ammo"), PersistentDataType.INTEGER),
+    GUN_RELOAD_COOLDOWN(GunGaming.namespacedKey("gun_reload_cooldown"), PersistentDataType.INTEGER),
     GUN_SCOPE(GunGaming.namespacedKey("gun_scope"), PersistentDataType.STRING),
     GUN_MAGAZINE(GunGaming.namespacedKey("gun_magazine"), PersistentDataType.STRING),
     GUN_STOCK(GunGaming.namespacedKey("gun_stock"), PersistentDataType.STRING),
+    GUN_RECOIL(GunGaming.namespacedKey("gun_recoil"), PersistentDataType.FLOAT),
+    GUN_INACCURACY(GunGaming.namespacedKey("gun_accuracy"), PersistentDataType.FLOAT),
 
     // Ammo namespaces
     AMMO(GunGaming.namespacedKey("ammo"), PersistentDataType.STRING),

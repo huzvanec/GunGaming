@@ -3,7 +3,7 @@ package cz.jeme.programu.gungaming.eventhandler;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.util.Materials;
-import cz.jeme.programu.gungaming.util.Namespaces;
+import cz.jeme.programu.gungaming.Namespaces;
 import cz.jeme.programu.gungaming.util.item.Ammos;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import org.bukkit.*;

@@ -6,7 +6,7 @@ import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.runnable.Reload;
 import cz.jeme.programu.gungaming.util.Inventories;
 import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.util.Namespaces;
+import cz.jeme.programu.gungaming.Namespaces;
 import cz.jeme.programu.gungaming.util.item.Ammos;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import org.bukkit.GameMode;
@@ -34,7 +34,7 @@ public class ReloadManager {
             return;
         }
 
-        if ((int) Namespaces.CURRENT_GUN_AMMO.get(item) == (int) Namespaces.MAX_GUN_AMMO.get(item)) {
+        if ((int) Namespaces.GUN_AMMO_CURRENT.get(item) == (int) Namespaces.GUN_AMMO_MAX.get(item)) {
             return;
         }
         Material material = item.getType();
@@ -53,7 +53,7 @@ public class ReloadManager {
         PlayerInventory inventory = player.getInventory();
 
         int ammoFound = Inventories.getItemCount(inventory, ammo.item);
-        int ammoRequired = (int) Namespaces.MAX_GUN_AMMO.get(item) - (int) Namespaces.CURRENT_GUN_AMMO.get(item);
+        int ammoRequired = (int) Namespaces.GUN_AMMO_MAX.get(item) - (int) Namespaces.GUN_AMMO_CURRENT.get(item);
 
         boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
 
@@ -69,10 +69,12 @@ public class ReloadManager {
             ammoAdd = ammoFound;
         }
 
-        cooldownManager.setCooldown(player, gun.item.getType(), gun.reloadCooldown);
+        int reloadCooldown = Namespaces.GUN_RELOAD_COOLDOWN.get(item);
+
+        cooldownManager.setCooldown(player, item.getType(), reloadCooldown);
         Reload reload = new Reload(item, player, this, ammoAdd, ammo.item, isCreative);
         reloads.get(uuid).put(material, reload);
-        reload.runTaskLater(GunGaming.getPlugin(GunGaming.class), gun.reloadCooldown / 50);
+        reload.runTaskLater(GunGaming.getPlugin(GunGaming.class), reloadCooldown / 50);
         player.sendActionBar(Messages.from("<dark_aqua>Reloading...</dark_aqua>"));
     }
 
