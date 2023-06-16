@@ -47,7 +47,7 @@ public final class Guns {
         Lores.update(gun.item);
     }
 
-    public static void setUnmodifiable() {
+    public static void registered() {
         guns = Collections.unmodifiableMap(guns);
     }
 }

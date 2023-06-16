@@ -22,6 +22,7 @@ public abstract class CustomItem {
     public Rarity rarity = null;
     public Integer minLoot = null;
     public Integer maxLoot = null;
+    public Class<? extends CustomItem> group = null;
 
     abstract protected void setup();
 

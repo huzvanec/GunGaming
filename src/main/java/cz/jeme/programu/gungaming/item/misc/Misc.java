@@ -4,4 +4,7 @@ import cz.jeme.programu.gungaming.item.CustomItem;
 
 public abstract class Misc extends CustomItem {
 
+    public Misc() {
+        group = Misc.class;
+    }
 }

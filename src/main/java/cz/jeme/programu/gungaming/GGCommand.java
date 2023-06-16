@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class GG extends Command {
+public class GGCommand extends Command {
 
     public static final Map<String, String> CORRECT_ARGS = new HashMap<>();
 
@@ -23,7 +23,7 @@ public class GG extends Command {
         CORRECT_ARGS.put("GIVE", "give");
     }
 
-    public GG() {
+    public GGCommand() {
         super("gg");
         register();
     }

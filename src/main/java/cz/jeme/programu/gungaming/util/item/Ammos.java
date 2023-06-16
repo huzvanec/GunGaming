@@ -34,7 +34,7 @@ public final class Ammos {
         ammos.put(ammo.name, ammo);
     }
 
-    public static void setUnmodifiable() {
+    public static void registered() {
         ammos = Collections.unmodifiableMap(ammos);
     }
 

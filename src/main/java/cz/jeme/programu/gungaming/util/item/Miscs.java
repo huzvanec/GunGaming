@@ -20,7 +20,7 @@ public final class Miscs {
         miscs.put(misc.name, misc);
     }
 
-    public static void setUnmodifiable() {
+    public static void registered() {
         miscs = Collections.unmodifiableMap(miscs);
     }
 }

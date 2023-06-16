@@ -43,7 +43,7 @@ public class GunGaming extends JavaPlugin {
         registerItems();
         LootGenerator.registerLoot();
 
-        new GG(); // register the /gg command
+        new GGCommand(); // register the /gg command
 
         EventListener eventListener = new EventListener(cooldownManager, zoomManager, reloadManager, getDataFolder());
 
@@ -80,10 +80,10 @@ public class GunGaming extends JavaPlugin {
         Attachments.register(new BigMagazine());
         Attachments.register(new HugeMagazine());
 
-        Guns.setUnmodifiable();
-        Ammos.setUnmodifiable();
-        Miscs.setUnmodifiable();
-        Attachments.setUnmodifiable();
+        Guns.registered();
+        Ammos.registered();
+        Miscs.registered();
+        Attachments.registered();
 
         Groups.register("gun", Guns.guns);
         Groups.register("ammo", Ammos.ammos);

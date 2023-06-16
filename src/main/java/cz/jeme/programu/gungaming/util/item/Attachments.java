@@ -47,7 +47,7 @@ public final class Attachments {
         Lores.update(attachment.item);
     }
 
-    public static void setUnmodifiable() {
+    public static void registered() {
         attachments = Collections.unmodifiableMap(attachments);
     }
 }

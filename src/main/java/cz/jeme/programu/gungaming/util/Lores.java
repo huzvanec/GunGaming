@@ -28,39 +28,49 @@ public final class Lores {
         Rarity rarity = Rarity.valueOf(Namespaces.RARITY.get(meta));
         lore.add(Messages.from("<!italic><bold>" + rarity.name + "</bold></!italic>"));
         lore.add(Messages.from("<!italic><#90FFF1>" + Namespaces.INFO.get(meta) + "</#90FFF1></!italic>"));
+
         if (Namespaces.GUN.has(meta)) {
-            Gun gun = Guns.getGun((String) Namespaces.GUN.get(meta));
-            lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Damage: ") + "</#77A5FF>" + FORMATTER.format(gun.damage) + "</#CADCFF></!italic>"));
-            lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("DPS: ") + "</#77A5FF>" + calcDPS(gun.damage, gun.shootCooldown) + "</#CADCFF></!italic>"));
-
-            lore.add(Messages.from(""));
-
-            int currentAmmo = Namespaces.GUN_AMMO_CURRENT.get(meta);
-            int maxAmmo = Namespaces.GUN_AMMO_MAX.get(meta);
-            String ammo = "<!italic><#77A5FF>" + Messages.latin("Ammo: ") + "</#77A5FF>" + calcAmmo(currentAmmo, maxAmmo);
-
-            String magazineName = Namespaces.GUN_MAGAZINE.get(meta);
-            if (!magazineName.equals("")) {
-                Magazine magazine = (Magazine) Attachments.getAttachment(magazineName);
-                float multiplier = magazine.magazinePercentage / 100f;
-                int addedAmmo = Math.round(gun.maxAmmo * multiplier - gun.maxAmmo);
-                ammo = ammo + " <#6FFD90>(+" + addedAmmo + " " + Messages.latin(magazine.name) + ")</#6FFD90>";
-            }
-
-            lore.add(Messages.from(ammo + "</!italic>"));
-
-            String scopeName = Namespaces.GUN_SCOPE.get(meta);
-            if (!scopeName.equals("")) {
-                Scope scope = (Scope) Attachments.getAttachment(scopeName);
-                String scopeLevel = FORMATTER.format(scope.scope);
-                lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Scope: ") + "</#77A5FF>" + scopeLevel + "× <#6FFD90>(+" + scopeLevel
-                        + " " + Messages.latin(scopeName) + ")</#6FFD90></#CADCFF></!italic>"));
-            }
+            updateGun(meta, lore);
         } else if (Namespaces.ATTACHMENT.has(meta)) {
-            Attachment attachment = Attachments.getAttachment((String) Namespaces.ATTACHMENT.get(meta));
-            lore.addAll(attachment.modifiersInfo);
+            updateAttachment(meta, lore);
         }
+
         meta.lore(lore);
+    }
+
+    private static void updateAttachment(ItemMeta meta, List<Component> lore) {
+        Attachment attachment = Attachments.getAttachment((String) Namespaces.ATTACHMENT.get(meta));
+        lore.addAll(attachment.modifiersInfo);
+    }
+
+    private static void updateGun(ItemMeta meta, List<Component> lore) {
+        Gun gun = Guns.getGun((String) Namespaces.GUN.get(meta));
+        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Damage: ") + "</#77A5FF>" + FORMATTER.format(gun.damage) + "</#CADCFF></!italic>"));
+        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("DPS: ") + "</#77A5FF>" + calcDPS(gun.damage, gun.shootCooldown) + "</#CADCFF></!italic>"));
+
+        lore.add(Messages.from(""));
+
+        int currentAmmo = Namespaces.GUN_AMMO_CURRENT.get(meta);
+        int maxAmmo = Namespaces.GUN_AMMO_MAX.get(meta);
+        String ammo = "<!italic><#77A5FF>" + Messages.latin("Ammo: ") + "</#77A5FF>" + calcAmmo(currentAmmo, maxAmmo);
+
+        String magazineName = Namespaces.GUN_MAGAZINE.get(meta);
+        if (!magazineName.equals("")) {
+            Magazine magazine = (Magazine) Attachments.getAttachment(magazineName);
+            float multiplier = magazine.magazinePercentage / 100f;
+            int addedAmmo = Math.round(gun.maxAmmo * multiplier - gun.maxAmmo);
+            ammo = ammo + " <#6FFD90>(+" + addedAmmo + " " + Messages.latin(magazine.name) + ")</#6FFD90>";
+        }
+
+        lore.add(Messages.from(ammo + "</!italic>"));
+
+        String scopeName = Namespaces.GUN_SCOPE.get(meta);
+        if (!scopeName.equals("")) {
+            Scope scope = (Scope) Attachments.getAttachment(scopeName);
+            String scopeLevel = FORMATTER.format(scope.scope);
+            lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Scope: ") + "</#77A5FF>" + scopeLevel + "× <#6FFD90>(+" + scopeLevel
+                    + " " + Messages.latin(scopeName) + ")</#6FFD90></#CADCFF></!italic>"));
+        }
     }
 
     public static void update(ItemStack item) {

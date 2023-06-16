@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.eventhandler.interaction;
 
 import cz.jeme.programu.gungaming.item.gun.Gun;
+import cz.jeme.programu.gungaming.loot.Loot;
 import cz.jeme.programu.gungaming.loot.LootGenerator;
 import cz.jeme.programu.gungaming.manager.CooldownManager;
 import cz.jeme.programu.gungaming.util.Materials;
@@ -59,8 +60,8 @@ public class RightClickHandler {
 
     private void crate(Block block) {
         Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
-        for (ItemStack item : LootGenerator.generate(inventory.getSize(), 20)) {
-            blockDrop(block, item);
+        for (Loot loot : LootGenerator.generate(inventory.getSize(), 20)) {
+            blockDrop(block, loot.getLoot());
         }
         block.setType(Material.AIR);
         for (Player player : Bukkit.getOnlinePlayers()) {

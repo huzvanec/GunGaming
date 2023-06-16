@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming.item.gun;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.loot.SingleLoot;
 import org.bukkit.Location;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.Arrow;
@@ -15,7 +16,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Random;
 
-public abstract class Gun extends CustomItem {
+public abstract class Gun extends CustomItem implements SingleLoot {
 
     public Integer shootCooldown = null;
 
@@ -34,6 +35,8 @@ public abstract class Gun extends CustomItem {
 
     public Gun() {
         setup();
+
+        group = Gun.class;
 
         assert shootCooldown != null : "No shoot cooldown given!";
         assert reloadCooldown != null : "No reload cooldown given!";
