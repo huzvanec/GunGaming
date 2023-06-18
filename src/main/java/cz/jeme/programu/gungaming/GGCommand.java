@@ -1,9 +1,12 @@
 package cz.jeme.programu.gungaming;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.loot.Crate;
+import cz.jeme.programu.gungaming.loot.CrateGenerator;
 import cz.jeme.programu.gungaming.util.Messages;
 import cz.jeme.programu.gungaming.util.item.Groups;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,14 +17,12 @@ import java.util.*;
 
 public class GGCommand extends Command {
 
-    public static final Map<String, String> CORRECT_ARGS = new HashMap<>();
-
-    // Fill the maps
-    static {
-        CORRECT_ARGS.put("RELOAD", "reload");
-        CORRECT_ARGS.put("HELP", "help");
-        CORRECT_ARGS.put("GIVE", "give");
-    }
+    public static final Map<String, String> CORRECT_ARGS = Map.of(
+            "RELOAD", "reload",
+            "HELP", "help",
+            "GIVE", "give",
+            "GENERATE", "generate"
+    );
 
     public GGCommand() {
         super("gg");
@@ -52,8 +53,21 @@ public class GGCommand extends Command {
             give(sender, args);
             return true;
         }
+        if (args[0].equals(CORRECT_ARGS.get("GENERATE"))) {
+            generate(sender);
+            return true;
+        }
         sender.sendMessage(Messages.prefix("<red>Unknown command!</red>"));
         return true;
+    }
+
+    private void generate(CommandSender sender) {
+        Player player = (Player) sender;
+        Location loc1 = new Location(player.getWorld(), -500, 0, -500);
+        Location loc2 = new Location(player.getWorld(), 500, 0, 500);
+
+        CrateGenerator.generate(Crate.WOODEN_CRATE, loc1, loc2, 0.05f, player);
+        CrateGenerator.generate(Crate.GOLDEN_CRATE, loc1, loc2, 0.005f, player);
     }
 
     private void help(CommandSender sender) {

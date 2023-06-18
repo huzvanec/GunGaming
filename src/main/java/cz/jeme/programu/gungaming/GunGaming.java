@@ -17,7 +17,7 @@ import cz.jeme.programu.gungaming.item.gun.M9;
 import cz.jeme.programu.gungaming.item.gun.OT38;
 import cz.jeme.programu.gungaming.item.gun.RocketLauncher;
 import cz.jeme.programu.gungaming.item.misc.Concrete;
-import cz.jeme.programu.gungaming.loot.LootGenerator;
+import cz.jeme.programu.gungaming.loot.Loot;
 import cz.jeme.programu.gungaming.manager.CooldownManager;
 import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
@@ -41,7 +41,7 @@ public class GunGaming extends JavaPlugin {
     @Override
     public void onEnable() {
         registerItems();
-        LootGenerator.registerLoot();
+        Loot.registerLoot();
 
         new GGCommand(); // register the /gg command
 

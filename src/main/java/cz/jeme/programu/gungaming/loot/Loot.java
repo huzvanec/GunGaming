@@ -1,36 +1,77 @@
 package cz.jeme.programu.gungaming.loot;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.util.item.Ammos;
+import cz.jeme.programu.gungaming.util.item.Attachments;
+import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.util.item.Miscs;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Random;
+import java.util.*;
 
 public class Loot {
-    public final ItemStack item;
-    public final int min;
-    public final int max;
-    public final boolean single;
-    public final CustomItem customItem;
+    private static Map<CustomItem, Rarity> loot = new HashMap<>();
+    private static final Random RANDOM = new Random();
 
-    Random random = new Random();
+    public static void registerLoot() {
+        registerUnit(Ammos.ammos);
+        registerUnit(Attachments.attachments);
+        registerUnit(Guns.guns);
+        registerUnit(Miscs.miscs);
 
-    public Loot(CustomItem customItem, boolean single) {
-        this.customItem = customItem;
-        this.min = customItem.minLoot;
-        this.max = customItem.maxLoot;
-        assert min <= 64 && min > 0;
-        assert max <= 64 && max >= min;
-        this.item = new ItemStack(customItem.item);
-        this.single = single;
+        loot = Collections.unmodifiableMap(loot);
     }
 
-
-    public ItemStack getLoot() {
-        if (min == max) {
-            item.setAmount(min);
-            return item;
+    private static void registerUnit(Map<String, ? extends CustomItem> customItems) {
+        for (CustomItem customItem : customItems.values()) {
+            loot.put(customItem, customItem.rarity);
         }
-        item.setAmount(random.nextInt((max - min) + 1) + min);
-        return new ItemStack(item);
+    }
+
+    public static List<ItemStack> generate(int slots, Crate crate) {
+        List<ItemStack> items = new ArrayList<>();
+        List<CustomItem> crateLoot = new ArrayList<>();
+        Map<Class<? extends CustomItem>, Integer> limits = new HashMap<>(crate.limits);
+
+        for (CustomItem customItem : loot.keySet()) {
+            Rarity rarity = loot.get(customItem);
+            for (int i = 0; i < crate.getChance(rarity); i++) {
+                crateLoot.add(customItem);
+            }
+        }
+        int limited = 0;
+        generate:
+        for (int slot = 0; slot < slots + limited; slot++) {
+            if (RANDOM.nextFloat() * 100 > crate.percentage) {
+                items.add(null);
+                continue;
+            }
+            CustomItem customItem = crateLoot.get(RANDOM.nextInt(crateLoot.size()));
+            for (Class<? extends CustomItem> clazz : limits.keySet()) {
+                if (clazz.isInstance(customItem)) {
+                    if (limits.get(clazz) == 0) {
+                        limited++;
+                        continue generate;
+                    }
+                    limits.put(clazz, limits.get(clazz) - 1);
+                    break;
+                }
+            }
+            ItemStack item = new ItemStack(customItem.item);
+            item.setAmount(getAmount(customItem));
+            items.add(item);
+            if (customItem instanceof SingleLoot) {
+                crateLoot.removeIf(ci -> ci == customItem);
+            }
+        }
+        return items;
+    }
+
+    private static int getAmount(CustomItem customItem) {
+        final int min = customItem.minLoot;
+        final int max = customItem.maxLoot;
+
+        if (min == max) return min;
+        return RANDOM.nextInt((max - min) + 1) + min;
     }
 }

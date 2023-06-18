@@ -18,7 +18,7 @@ public class RocketLauncher extends Gun {
         info = "Everything goes KABOOM";
         shootCooldown = 1000;
         reloadCooldown = 7000;
-        damage = 15d;
+        damage = 18d;
         velocity = 1.5f;
         material = Material.DIAMOND_HOE;
         maxAmmo = 1;
