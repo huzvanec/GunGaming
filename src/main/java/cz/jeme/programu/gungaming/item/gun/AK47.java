@@ -1,7 +1,6 @@
 package cz.jeme.programu.gungaming.item.gun;
 
 import cz.jeme.programu.gungaming.loot.Rarity;
-import org.bukkit.Material;
 
 public class AK47 extends Gun {
 
@@ -13,12 +12,10 @@ public class AK47 extends Gun {
         reloadCooldown = 2500;
         damage = 2.5d;
         velocity = 40f;
-        material = Material.IRON_HOE;
-        maxAmmo = 32;
+        maxAmmo = 30;
         ammoName = "7.62mm";
+        customModelData = 3;
         rarity = Rarity.EPIC;
-        minLoot = 1;
-        maxLoot = 1;
         recoil = 0.08f;
         inaccuracy = 1.7f;
     }

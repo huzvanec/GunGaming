@@ -1,24 +1,21 @@
 package cz.jeme.programu.gungaming.item.gun;
 
 import cz.jeme.programu.gungaming.loot.Rarity;
-import org.bukkit.Material;
 
-public class OT38 extends Gun {
+public class NagantM1895 extends Gun {
 
     @Override
     protected void setup() {
-        name = "OT-38";
+        name = "Nagant M1895";
         info = "A lousy revolver";
-        shootCooldown = 600;
+        shootCooldown = 530;
         reloadCooldown = 1500;
-        damage = 4.5d;
+        damage = 4d;
         velocity = 40f;
-        material = Material.STONE_HOE;
-        maxAmmo = 5;
+        customModelData = 2;
+        maxAmmo = 7;
         ammoName = "7.62mm";
         rarity = Rarity.RARE;
-        minLoot = 1;
-        maxLoot = 1;
         recoil = 0.18f;
         inaccuracy = 0.9f;
     }

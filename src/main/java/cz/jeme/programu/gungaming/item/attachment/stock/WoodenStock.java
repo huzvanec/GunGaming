@@ -1,22 +1,25 @@
 package cz.jeme.programu.gungaming.item.attachment.stock;
 
-import cz.jeme.programu.gungaming.item.attachment.ModifiersInfo;
 import cz.jeme.programu.gungaming.loot.Rarity;
-import org.bukkit.Material;
 
 public class WoodenStock extends Stock {
     @Override
     protected void setup() {
-        material = Material.IRON_PICKAXE;
+        customModelData = 1;
         name = "Wooden Stock";
         info = "Poor weapon stability";
         rarity = Rarity.RARE;
-        minLoot = 1;
-        maxLoot = 1;
         recoilPercentage = 80f;
         inaccuracyPercentage = 70f;
-        modifiersInfo = new ModifiersInfo();
-        modifiersInfo.addBuff("-20% recoil");
-        modifiersInfo.addBuff("+30% accuracy");
+    }
+
+    @Override
+    protected String[] getBuffs() {
+        return new String[]{"-20% recoil", "+30% accuracy"};
+    }
+
+    @Override
+    protected String[] getNerfs() {
+        return new String[0];
     }
 }

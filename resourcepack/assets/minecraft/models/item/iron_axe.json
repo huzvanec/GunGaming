@@ -1,4 +1,5 @@
 {
+	"__gungaming__": "Iron axe represents all the stocks in gungaming",
 	"parent": "item/generated",
 	"textures": {
 		"layer0": "item/iron_axe"
@@ -7,6 +8,18 @@
 		{
 			"predicate": {
 				"custom_model_data": 1
+			},
+			"model": "item/gungaming/attachment/wooden_stock"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 2
+			},
+			"model": "item/gungaming/attachment/plastic_stock"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 3
 			},
 			"model": "item/gungaming/attachment/metal_stock"
 		}

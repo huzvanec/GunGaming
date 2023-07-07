@@ -11,30 +11,33 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public abstract class Magazine extends Attachment {
-    public static final ItemStack PLACE_HOLDER = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
-
     public Float magazinePercentage = null;
-
-    static {
-        ItemMeta scopeMeta = PLACE_HOLDER.getItemMeta();
-        scopeMeta.displayName(Messages.from("<!italic><gray>Magazine</gray></!italic>"));
-        scopeMeta.setCustomModelData(1);
-        PLACE_HOLDER.setItemMeta(scopeMeta);
-    }
-
-    {
-        id = 2;
-        placeHolder = PLACE_HOLDER;
-        nbt = Namespaces.GUN_MAGAZINE;
-    }
 
     public Magazine() {
         setup();
-
         assert magazinePercentage != null : "Magazine enlarge percentage is null!";
+        ItemMeta scopeMeta = placeHolder.getItemMeta();
+        scopeMeta.displayName(Messages.from("<!italic><gray>Magazine</gray></!italic>"));
+        scopeMeta.setCustomModelData(1);
+        placeHolder.setItemMeta(scopeMeta);
     }
 
-    public static void updateMagazine(ItemStack item) {
+    @Override
+    public int getSlotId() {
+        return 1;
+    }
+
+    @Override
+    public Namespaces getNbt() {
+        return Namespaces.GUN_MAGAZINE;
+    }
+
+    @Override
+    protected Material getMaterial() {
+        return Material.WOODEN_AXE;
+    }
+
+    public static void update(ItemStack item) {
         String magazineName = Namespaces.GUN_MAGAZINE.get(item);
         Gun gun = Guns.getGun(item);
         if (magazineName.equals("")) {
@@ -44,5 +47,10 @@ public abstract class Magazine extends Attachment {
         Magazine magazine = (Magazine) Attachments.getAttachment(magazineName);
         float newReloadCooldown = gun.reloadCooldown * (magazine.magazinePercentage / 100f);
         Namespaces.GUN_RELOAD_COOLDOWN.set(item, Math.round(newReloadCooldown));
+    }
+
+    @Override
+    protected Class<? extends Attachment> getGroupClass() {
+        return Magazine.class;
     }
 }

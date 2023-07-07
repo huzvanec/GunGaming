@@ -6,11 +6,24 @@ import org.bukkit.Material;
 public class Concrete extends Misc {
     @Override
     protected void setup() {
-        material = Material.GRAY_CONCRETE;
         name = "Concrete";
         info = "A basic building block";
+        customModelData = 0;
         rarity = Rarity.COMMON;
-        minLoot = 10;
-        maxLoot = 16;
+    }
+
+    @Override
+    protected Material getMaterial() {
+        return Material.GRAY_CONCRETE;
+    }
+
+    @Override
+    public int getMinLoot() {
+        return 10;
+    }
+
+    @Override
+    public int getMaxLoot() {
+        return 16;
     }
 }

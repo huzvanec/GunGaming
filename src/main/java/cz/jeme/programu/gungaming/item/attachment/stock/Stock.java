@@ -11,32 +11,37 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public abstract class Stock extends Attachment {
-    public static final ItemStack PLACE_HOLDER = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
     public Float recoilPercentage = null;
     public Float inaccuracyPercentage = null;
-
-
-    static {
-        ItemMeta scopeMeta = PLACE_HOLDER.getItemMeta();
-        scopeMeta.displayName(Messages.from("<!italic><gray>Stock</gray></!italic>"));
-        scopeMeta.setCustomModelData(1);
-        PLACE_HOLDER.setItemMeta(scopeMeta);
-    }
-
-    {
-        id = 3;
-        placeHolder = PLACE_HOLDER;
-        nbt = Namespaces.GUN_STOCK;
-    }
 
     public Stock() {
         setup();
 
         assert recoilPercentage != null : "Recoil percentage is null!";
         assert inaccuracyPercentage != null : "Inaccuracy percentage is null!";
+
+        ItemMeta scopeMeta = placeHolder.getItemMeta();
+        scopeMeta.displayName(Messages.from("<!italic><gray>Stock</gray></!italic>"));
+        scopeMeta.setCustomModelData(3);
+        placeHolder.setItemMeta(scopeMeta);
     }
 
-    public static void updateStock(ItemStack item) {
+    @Override
+    protected Material getMaterial() {
+        return Material.IRON_AXE;
+    }
+
+    @Override
+    public int getSlotId() {
+        return 3;
+    }
+
+    @Override
+    public Namespaces getNbt() {
+        return Namespaces.GUN_STOCK;
+    }
+
+    public static void update(ItemStack item) {
         String stockName = Namespaces.GUN_STOCK.get(item);
         Gun gun = Guns.getGun(item);
         if (stockName.equals("")) {
@@ -51,5 +56,10 @@ public abstract class Stock extends Attachment {
 
         float newInaccuracy = gun.inaccuracy * (stock.inaccuracyPercentage / 100f);
         Namespaces.GUN_INACCURACY.set(item, newInaccuracy);
+    }
+
+    @Override
+    protected Class<? extends Attachment> getGroupClass() {
+        return Stock.class;
     }
 }

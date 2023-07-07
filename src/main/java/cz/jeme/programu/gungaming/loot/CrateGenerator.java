@@ -41,18 +41,29 @@ public class CrateGenerator {
         final int zSize = zMax - zMin;
 
         new BukkitRunnable() {
-            int counter = 0;
-
+            int blocksCounter = 0;
+            long tickStartStamp = System.currentTimeMillis();
+            int blocksPerSecond = 500;
+            int BPSEnlarger = 1;
             @Override
             public void run() {
-                for (int i = 0; i < 1000; i++) {
-                    if (counter == xSize * zSize) {
+                if (System.currentTimeMillis() - tickStartStamp > 50) {
+                    blocksPerSecond--;
+                    BPSEnlarger = 1;
+                } else {
+                    blocksPerSecond += BPSEnlarger;
+                    BPSEnlarger *= 2;
+                }
+                tickStartStamp = System.currentTimeMillis();
+                for (int i = 0; i < blocksPerSecond; i++) {
+                    if (blocksCounter == xSize * zSize) { // All the blocks were checked
                         cancel();
+                        player.sendMessage(Messages.from(crate.toString() + ": " + CRATES.get(crate).size()));
                         CRATES.put(crate, Collections.unmodifiableList(CRATES.get(crate)));
                         return;
                     }
 
-                    counter++;
+                    blocksCounter++;
 
                     if (RANDOM.nextFloat() * 100 > percentage) continue;
                     final int x = RANDOM.nextInt(xMax - xMin) + xMin;
@@ -63,8 +74,8 @@ public class CrateGenerator {
                     crate(block, crate);
                     CRATES.get(crate).add(new int[]{x, block.getY(), z});
                 }
-                float p = counter / ((xSize * zSize) / 100f);
-                player.sendActionBar(Messages.from(FORMATTER.format(p) + "% generated"));
+                float p = blocksCounter / ((xSize * zSize) / 100f);
+                player.sendActionBar(Messages.from(FORMATTER.format(p) + "% generated " + blocksPerSecond));
             }
         }.runTaskTimer(GunGaming.getPlugin(), 0L, 1L);
     }

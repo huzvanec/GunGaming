@@ -1,4 +1,5 @@
 {
+	"__gungaming__": "Stone axes represent all the scopes in gungaming",
 	"parent": "item/generated",
 	"textures": {
 		"layer0": "item/stone_axe"
@@ -8,7 +9,19 @@
 			"predicate": {
 				"custom_model_data": 1
 			},
-			"model": "item/gungaming/attachment/big_magazine"
+			"model": "item/gungaming/attachment/low_scope"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 2
+			},
+			"model": "item/gungaming/attachment/medium_scope"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 3
+			},
+			"model": "item/gungaming/attachment/high_scope"
 		}
 	]
 }

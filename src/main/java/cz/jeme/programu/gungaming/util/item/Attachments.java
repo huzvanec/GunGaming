@@ -15,6 +15,7 @@ import java.util.Map;
 public final class Attachments {
 
     public static Map<String, Attachment> attachments = new HashMap<>();
+    public static Map<Class<? extends Attachment>, ItemStack> placeHolders = new HashMap<>();
 
     private Attachments() {
     }

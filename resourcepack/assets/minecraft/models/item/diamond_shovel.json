@@ -1,0 +1,33 @@
+{
+	"__gungaming__": "Diamond shovels represent all the guns in gungaming",
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "item/diamond_shovel"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"custom_model_data": 1
+			},
+			"model": "item/gungaming/gun/m9"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 2
+			},
+			"model": "item/gungaming/gun/nagant_m1895"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 3
+			},
+			"model": "item/gungaming/gun/ak-47"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 4
+			},
+			"model": "item/gungaming/gun/rocket_launcher"
+		}
+	]
+}

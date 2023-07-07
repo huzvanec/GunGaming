@@ -1,18 +1,25 @@
 package cz.jeme.programu.gungaming.item.ammo;
 
 import cz.jeme.programu.gungaming.loot.Rarity;
-import org.bukkit.Material;
 
 public class Rocket extends Ammo {
 
     @Override
     protected void setup() {
-        material = Material.BLUE_DYE;
+        customModelData = 3;
         name = "Rocket";
         info = "Ammo for the Rocket Launcher";
         rarity = Rarity.EPIC;
-        minLoot = 1;
-        maxLoot = 3;
+    }
+
+    @Override
+    public int getMinLoot() {
+        return 1;
+    }
+
+    @Override
+    public int getMaxLoot() {
+        return 4;
     }
 
 }

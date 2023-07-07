@@ -25,13 +25,13 @@ import java.util.List;
 
 public class AttachmentsMenu {
 
-    private static final ItemStack HIDDEN = new ItemStack(Material.BARRIER);
+    private static final ItemStack EMPTY = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
 
     static {
-        ItemMeta emptyMeta = HIDDEN.getItemMeta();
+        ItemMeta emptyMeta = EMPTY.getItemMeta();
         emptyMeta.displayName(Messages.from("§"));
-        emptyMeta.setCustomModelData(1);
-        HIDDEN.setItemMeta(emptyMeta);
+        emptyMeta.setCustomModelData(4);
+        EMPTY.setItemMeta(emptyMeta);
     }
 
     private final ItemStack gunItem;
@@ -49,11 +49,16 @@ public class AttachmentsMenu {
         title = Messages.from("<dark_aqua>" + gun.name + " attachments</dark_aqua>");
         inventory = Bukkit.createInventory(player, InventoryType.HOPPER, title);
 
-        inventory.setItem(0, HIDDEN);
-        inventory.setItem(4, HIDDEN);
+        inventory.setItem(0, EMPTY);
+        inventory.setItem(4, EMPTY);
         read();
 
         player.openInventory(inventory);
+    }
+
+    private ItemStack getAttachmentItem(String name, Class<? extends Attachment> clazz) {
+        if (name.equals("")) return Attachments.placeHolders.get(clazz);
+        return Attachments.getAttachment(name).item;
     }
 
     private void read() {
@@ -62,25 +67,13 @@ public class AttachmentsMenu {
         ItemStack stockItem;
 
         String scopeName = Namespaces.GUN_SCOPE.get(gunItem);
-        if (scopeName.equals("")) {
-            scopeItem = Scope.PLACE_HOLDER;
-        } else {
-            scopeItem = Attachments.getAttachment(scopeName).item;
-        }
+        scopeItem = getAttachmentItem(scopeName, Scope.class);
 
         String magazineName = Namespaces.GUN_MAGAZINE.get(gunItem);
-        if (magazineName.equals("")) {
-            magazineItem = Magazine.PLACE_HOLDER;
-        } else {
-            magazineItem = Attachments.getAttachment(magazineName).item;
-        }
+        magazineItem = getAttachmentItem(magazineName, Magazine.class);
 
         String stockName = Namespaces.GUN_STOCK.get(gunItem);
-        if (stockName.equals("")) {
-            stockItem = Stock.PLACE_HOLDER;
-        } else {
-            stockItem = Attachments.getAttachment(stockName).item;
-        }
+        stockItem = getAttachmentItem(stockName, Stock.class);
 
         inventory.setItem(1, scopeItem);
         inventory.setItem(2, magazineItem);
@@ -101,13 +94,13 @@ public class AttachmentsMenu {
             moveToInventory(clickedItem);
         }
         updateGun();
-        Magazine.updateMagazine(gunItem);
-        Stock.updateStock(gunItem);
+        Magazine.update(gunItem);
+        Stock.update(gunItem);
     }
 
     private void moveToAttachments(InventoryClickEvent event, ItemStack clickedItem) {
         Attachment attachment = Attachments.getAttachment(clickedItem);
-        int index = attachment.id;
+        int index = attachment.getSlotId();
 
         ItemStack currentItem = inventory.getItem(index);
         assert currentItem != null;
@@ -119,14 +112,14 @@ public class AttachmentsMenu {
         }
 
         inventory.setItem(index, clickedItem);
-        attachment.nbt.set(gunItem, attachment.name);
+        attachment.getNbt().set(gunItem, attachment.name);
     }
 
     private void moveToInventory(ItemStack clickedItem) {
         Attachment attachment = Attachments.getAttachment(clickedItem);
         List<ItemStack> didntFit = new ArrayList<>(player.getInventory().addItem(clickedItem).values());
-        inventory.setItem(attachment.id, attachment.placeHolder);
-        attachment.nbt.set(gunItem, "");
+        inventory.setItem(attachment.getSlotId(), attachment.placeHolder);
+        attachment.getNbt().set(gunItem, "");
 
         if (attachment instanceof Magazine) { // Check that the gun is not overloaded
             int difference = (int) Namespaces.GUN_AMMO_CURRENT.get(gunItem) - gun.maxAmmo;

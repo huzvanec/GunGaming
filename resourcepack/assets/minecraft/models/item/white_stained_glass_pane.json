@@ -1,0 +1,33 @@
+{
+	"__gungaming__": "White stained glass panes represent all the attachment menu buttons in gungaming",
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "minecraft:block/white_stained_glass"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"custom_model_data": 1
+			},
+			"model": "item/gungaming/attachment_menu/magazine"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 2
+			},
+			"model": "item/gungaming/attachment_menu/scope"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 3
+			},
+			"model": "item/gungaming/attachment_menu/stock"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 4
+			},
+			"model": "item/gungaming/attachment_menu/empty"
+		}
+	]
+}

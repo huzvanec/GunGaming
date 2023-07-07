@@ -13,35 +13,33 @@ public abstract class CustomItem {
 
     public ItemStack item;
 
-    public Material material = null;
+    public Integer customModelData = null;
 
     public String name = null;
 
     public String info = null;
 
     public Rarity rarity = null;
-    public Integer minLoot = null;
-    public Integer maxLoot = null;
-    public Class<? extends CustomItem> group = null;
 
     abstract protected void setup();
+    abstract protected Material getMaterial();
+    abstract public int getMinLoot();
+    abstract public int getMaxLoot();
 
     public CustomItem() {
         setup();
 
-        assert material != null : "Material not given!";
+        assert customModelData != null : "Cusom model data not given!";
         assert name != null : "Name not given!";
         assert info != null : "Info not given!";
         assert rarity != null : "No rarity given!";
-        assert minLoot != null : "No minimal loot given!";
-        assert maxLoot != null : "No maximal loot given!";
 
-        item = new ItemStack(material);
+        item = new ItemStack(getMaterial());
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
         String coloredName = rarity.color + name + Messages.getEscapeTag(rarity.color);
         meta.displayName(Messages.from("<!italic>" + coloredName + "</!italic>"));
-        meta.setCustomModelData(1);
+        meta.setCustomModelData(customModelData);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         Namespaces.RARITY.set(meta, rarity.name());
         Namespaces.INFO.set(meta, Messages.latin(info));

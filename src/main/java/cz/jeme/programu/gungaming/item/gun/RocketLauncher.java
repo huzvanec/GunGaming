@@ -20,12 +20,10 @@ public class RocketLauncher extends Gun {
         reloadCooldown = 7000;
         damage = 18d;
         velocity = 1.5f;
-        material = Material.DIAMOND_HOE;
+        customModelData = 4;
         maxAmmo = 1;
         ammoName = "Rocket";
         rarity = Rarity.LEGENDARY;
-        minLoot = 1;
-        maxLoot = 1;
         recoil = 2f;
         inaccuracy = 1f;
     }

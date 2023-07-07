@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Boat;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -27,6 +28,7 @@ public class GGCommand extends Command {
     public GGCommand() {
         super("gg");
         register();
+        setPermission("gungaming.gg");
     }
 
     private void register() {
@@ -54,8 +56,19 @@ public class GGCommand extends Command {
             return true;
         }
         if (args[0].equals(CORRECT_ARGS.get("GENERATE"))) {
-            generate(sender);
+            Player player = (Player) sender;
+            if (player.getName().equals("kopikiadu")) {
+                sender.sendMessage(Messages.prefix("FUCK YOU ADAM"));
+                return true;
+            }
+            Boat boat = player.getWorld().spawn(player.getLocation(), Boat.class);
+            boat.setBoatType(Boat.Type.BAMBOO);
+            boat.setGlowing(true);
+            boat.setInvulnerable(true);
+            boat.setGravity(false);
             return true;
+//            generate(sender);
+//            return true;
         }
         sender.sendMessage(Messages.prefix("<red>Unknown command!</red>"));
         return true;
@@ -63,11 +76,11 @@ public class GGCommand extends Command {
 
     private void generate(CommandSender sender) {
         Player player = (Player) sender;
-        Location loc1 = new Location(player.getWorld(), -500, 0, -500);
-        Location loc2 = new Location(player.getWorld(), 500, 0, 500);
+        Location loc1 = new Location(player.getWorld(), -250, 0, -250);
+        Location loc2 = new Location(player.getWorld(), 250, 0, 250);
 
-        CrateGenerator.generate(Crate.WOODEN_CRATE, loc1, loc2, 0.05f, player);
-        CrateGenerator.generate(Crate.GOLDEN_CRATE, loc1, loc2, 0.005f, player);
+        CrateGenerator.generate(Crate.WOODEN_CRATE, loc1, loc2, 0.1f, player);
+        CrateGenerator.generate(Crate.GOLDEN_CRATE, loc1, loc2, 0.02f, player);
     }
 
     private void help(CommandSender sender) {
@@ -139,7 +152,7 @@ public class GGCommand extends Command {
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
         if (args.length == 1) {
-            return new ArrayList<>(CORRECT_ARGS.values());
+            return contains(new ArrayList<>(CORRECT_ARGS.values()), args[0]);
         }
         if (!args[0].equals(CORRECT_ARGS.get("GIVE"))) {
             return new ArrayList<>();
@@ -149,10 +162,10 @@ public class GGCommand extends Command {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 playerNames.add(player.getName());
             }
-            return playerNames;
+            return contains(playerNames, args[1]);
         }
         if (args.length == 3) {
-            return new ArrayList<>(Groups.groups.keySet());
+            return contains(new ArrayList<>(Groups.groups.keySet()), args[2]);
         }
         if (args.length == 4) {
             Map<String, ? extends CustomItem> group = Groups.groups.get(args[2]);
@@ -161,9 +174,17 @@ public class GGCommand extends Command {
             for (CustomItem customItem : group.values()) {
                 itemNames.add(customItem.name.replace(' ', '_').toLowerCase());
             }
-            return itemNames;
+            return contains(itemNames, args[3]);
         }
         return new ArrayList<>();
+    }
+
+    private static List<String> contains(List<String> list, String pattern) {
+        List<String> patternedList = new ArrayList<>();
+        for (String string : list) {
+            if (string.contains(pattern)) patternedList.add(string);
+        }
+        return patternedList;
     }
 
     private static boolean matchesLowercaseUnderscores(Collection<? extends String> collection, String match) {

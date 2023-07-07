@@ -12,10 +12,7 @@ import cz.jeme.programu.gungaming.item.attachment.scope.MediumScope;
 import cz.jeme.programu.gungaming.item.attachment.stock.MetalStock;
 import cz.jeme.programu.gungaming.item.attachment.stock.PlasticStock;
 import cz.jeme.programu.gungaming.item.attachment.stock.WoodenStock;
-import cz.jeme.programu.gungaming.item.gun.AK47;
-import cz.jeme.programu.gungaming.item.gun.M9;
-import cz.jeme.programu.gungaming.item.gun.OT38;
-import cz.jeme.programu.gungaming.item.gun.RocketLauncher;
+import cz.jeme.programu.gungaming.item.gun.*;
 import cz.jeme.programu.gungaming.item.misc.Concrete;
 import cz.jeme.programu.gungaming.loot.Loot;
 import cz.jeme.programu.gungaming.manager.CooldownManager;
@@ -62,7 +59,7 @@ public class GunGaming extends JavaPlugin {
         Ammos.register(new Rocket());
 
         Guns.register(new M9());
-        Guns.register(new OT38());
+        Guns.register(new NagantM1895());
         Guns.register(new RocketLauncher());
         Guns.register(new AK47());
 

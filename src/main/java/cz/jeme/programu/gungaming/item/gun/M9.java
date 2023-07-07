@@ -1,7 +1,6 @@
 package cz.jeme.programu.gungaming.item.gun;
 
 import cz.jeme.programu.gungaming.loot.Rarity;
-import org.bukkit.Material;
 
 public class M9 extends Gun {
 
@@ -13,12 +12,10 @@ public class M9 extends Gun {
         reloadCooldown = 1000;
         damage = 3d;
         velocity = 40f;
-        material = Material.WOODEN_HOE;
-        maxAmmo = 10;
+        customModelData = 1;
+        maxAmmo = 15;
         ammoName = "9mm";
         rarity = Rarity.RARE;
-        minLoot = 1;
-        maxLoot = 1;
         recoil = 0.1f;
         inaccuracy = 1.2f;
     }

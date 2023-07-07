@@ -1,4 +1,5 @@
 {
+	"__gungaming__": "Carved pumpkin is used for the scope overlay in gungaming",
 	"parent": "minecraft:block/carved_pumpkin",
 	"overrides": [
 		{

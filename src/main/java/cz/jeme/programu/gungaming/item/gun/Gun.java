@@ -4,6 +4,7 @@ import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.Namespaces;
 import cz.jeme.programu.gungaming.loot.SingleLoot;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -36,8 +37,6 @@ public abstract class Gun extends CustomItem implements SingleLoot {
     public Gun() {
         setup();
 
-        group = Gun.class;
-
         assert shootCooldown != null : "No shoot cooldown given!";
         assert reloadCooldown != null : "No reload cooldown given!";
         assert damage != null : "No damage given!";
@@ -60,8 +59,13 @@ public abstract class Gun extends CustomItem implements SingleLoot {
 
 
         Damageable meta = (Damageable) item.getItemMeta();
-        meta.setDamage(material.getMaxDurability());
+        meta.setDamage(getMaterial().getMaxDurability());
         item.setItemMeta(meta);
+    }
+
+    @Override
+    protected Material getMaterial() {
+        return Material.DIAMOND_SHOVEL;
     }
 
     public Arrow shoot(PlayerInteractEvent event, ItemStack heldItem) {
@@ -69,7 +73,7 @@ public abstract class Gun extends CustomItem implements SingleLoot {
         Location location = player.getLocation();
 
         Vector recoilVector = location.getDirection().multiply((float) Namespaces.GUN_RECOIL.get(heldItem));
-        recoilVector.setY(recoilVector.getY() / 4);
+        recoilVector.setY(recoilVector.getY() / 2.5f);
         player.setVelocity(player.getVelocity().subtract(recoilVector));
 
         Vector arrowVector = player.getLocation().getDirection();
@@ -99,5 +103,15 @@ public abstract class Gun extends CustomItem implements SingleLoot {
     }
 
     public void onBulletHit(ProjectileHitEvent event, Projectile bullet) {
+    }
+
+    @Override
+    public int getMinLoot() {
+        return 1;
+    }
+
+    @Override
+    public int getMaxLoot() {
+        return 1;
     }
 }

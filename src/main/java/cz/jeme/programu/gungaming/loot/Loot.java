@@ -68,8 +68,8 @@ public class Loot {
     }
 
     private static int getAmount(CustomItem customItem) {
-        final int min = customItem.minLoot;
-        final int max = customItem.maxLoot;
+        final int min = customItem.getMinLoot();
+        final int max = customItem.getMaxLoot();
 
         if (min == max) return min;
         return RANDOM.nextInt((max - min) + 1) + min;
