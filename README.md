@@ -3,7 +3,7 @@
 ## About
 GunGaming ~~is~~ *will be* an awesome minigame with guns, crates and way more.
 ## Supported versions
-Paper based servers 1.19.4<br>
+Paper based servers 1.20.1<br>
 **Bukkit and Spigot are not supported!**
 ## Build
 Requirements: <br>
