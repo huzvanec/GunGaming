@@ -48,7 +48,7 @@ public final class Lores {
         Gun gun = Guns.getGun((String) Namespaces.GUN.get(meta));
         lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Damage: ") + "</#77A5FF>" + FORMATTER.format(gun.damage) + "</#CADCFF></!italic>"));
         lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("DPS: ") + "</#77A5FF>" + calcDPS(gun.damage, gun.shootCooldown, gun.bulletsPerShot) + "</#CADCFF></!italic>"));
-        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Ammo type: ") + "</#77A5FF>" + gun.ammoType + "</#CADCFF></!italic>"));
+        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Ammo type: ") + "</#77A5FF>" + gun.ammo.name + "</#CADCFF></!italic>"));
 
         lore.add(Messages.from(""));
 

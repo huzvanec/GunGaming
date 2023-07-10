@@ -114,7 +114,7 @@ public abstract class Gun extends CustomItem implements SingleLoot {
         Arrow bullet = player.launchProjectile(Arrow.class, arrowVector);
         bullet.setPickupStatus(PickupStatus.DISALLOWED);
 
-        Namespaces.BULLET.set(bullet, ammoType);
+        Namespaces.BULLET.set(bullet, ammo.name);
         Namespaces.BULLET_DAMAGE.set(bullet, damage);
         Namespaces.BULLET_GUN_NAME.set(bullet, name);
 
