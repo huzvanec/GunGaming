@@ -1,6 +1,6 @@
 package cz.jeme.programu.gungaming.item.gun;
 
-import cz.jeme.programu.gungaming.item.ammo.SeventSixTwoMm;
+import cz.jeme.programu.gungaming.item.ammo.SevenSixTwoMm;
 import cz.jeme.programu.gungaming.item.attachment.NoMagazine;
 import cz.jeme.programu.gungaming.item.attachment.NoScope;
 import cz.jeme.programu.gungaming.item.attachment.NoStock;
@@ -17,7 +17,7 @@ public class M134Minigun extends Gun implements NoMagazine, NoStock, NoScope {
         damage = 1d;
         velocity = 40f;
         maxAmmo = 200;
-        ammoType = SeventSixTwoMm.class;
+        ammoType = SevenSixTwoMm.class;
         customModelData = 5;
         rarity = Rarity.LEGENDARY;
         recoil = 0.05f;

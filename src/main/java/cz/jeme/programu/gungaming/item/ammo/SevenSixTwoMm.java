@@ -2,7 +2,7 @@ package cz.jeme.programu.gungaming.item.ammo;
 
 import cz.jeme.programu.gungaming.loot.Rarity;
 
-public class SeventSixTwoMm extends Ammo {
+public class SevenSixTwoMm extends Ammo {
 
     @Override
     protected void setup() {

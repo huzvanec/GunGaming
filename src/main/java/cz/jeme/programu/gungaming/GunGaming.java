@@ -2,7 +2,7 @@ package cz.jeme.programu.gungaming;
 
 import cz.jeme.programu.gungaming.item.ammo.NineMm;
 import cz.jeme.programu.gungaming.item.ammo.Rocket;
-import cz.jeme.programu.gungaming.item.ammo.SeventSixTwoMm;
+import cz.jeme.programu.gungaming.item.ammo.SevenSixTwoMm;
 import cz.jeme.programu.gungaming.item.ammo.TwelveGauge;
 import cz.jeme.programu.gungaming.item.attachment.magazine.BigMagazine;
 import cz.jeme.programu.gungaming.item.attachment.magazine.HugeMagazine;
@@ -55,7 +55,7 @@ public class GunGaming extends JavaPlugin {
      */
     private void registerItems() {
         Ammos.register(new NineMm());
-        Ammos.register(new SeventSixTwoMm());
+        Ammos.register(new SevenSixTwoMm());
         Ammos.register(new Rocket());
         Ammos.register(new TwelveGauge());
 
