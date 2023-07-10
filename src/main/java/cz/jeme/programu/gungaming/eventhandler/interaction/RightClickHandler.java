@@ -6,22 +6,13 @@ import cz.jeme.programu.gungaming.loot.Crate;
 import cz.jeme.programu.gungaming.manager.CooldownManager;
 import cz.jeme.programu.gungaming.util.Materials;
 import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.util.Packets;
-import cz.jeme.programu.gungaming.util.item.Ammos;
 import cz.jeme.programu.gungaming.util.item.Guns;
-import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
-import net.minecraft.server.level.ServerPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RightClickHandler {
 
@@ -74,27 +65,14 @@ public class RightClickHandler {
         if (player.getCooldown(heldItem.getType()) != 0) {
             return;
         }
+
         int heldAmmo = Namespaces.GUN_AMMO_CURRENT.get(heldItem);
         boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
         if (heldAmmo == 0 && !isCreative) {
             player.sendActionBar(Messages.from("<red>Reload required!</red>"));
             return;
         }
-        if (!isCreative) {
-            Ammos.remove(heldItem, 1);
-        }
         gun.shoot(event, heldItem);
         cooldownManager.setCooldown(player, gun.item.getType(), gun.shootCooldown);
-        List<Player> players = new ArrayList<>();
-        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            if (onlinePlayer.getUniqueId().equals(player.getUniqueId())) {
-                continue;
-            }
-            players.add(onlinePlayer);
-        }
-        CraftPlayer craftPlayer = (CraftPlayer) player;
-        ServerPlayer serverPlayer = craftPlayer.getHandle();
-        ClientboundAnimatePacket packet = new ClientboundAnimatePacket(serverPlayer, ClientboundAnimatePacket.SWING_MAIN_HAND);
-        Packets.sendPacket(players, packet);
     }
 }

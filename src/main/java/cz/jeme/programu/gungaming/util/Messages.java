@@ -45,7 +45,7 @@ public final class Messages {
     public static final String PREFIX = "<dark_gray>[</dark_gray><bold><#485C86>ɢɢ</#485C86></bold><dark_gray>]: </dark_gray>";
 
     private Messages() {
-        // Only static utils
+        // Static class cannot be initialized
     }
 
     public static Component from(String text) {

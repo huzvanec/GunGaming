@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.item.gun;
 
+import cz.jeme.programu.gungaming.item.ammo.SevenPointSixTwoMM;
 import cz.jeme.programu.gungaming.loot.Rarity;
 
 public class NagantM1895 extends Gun {
@@ -14,7 +15,7 @@ public class NagantM1895 extends Gun {
         velocity = 40f;
         customModelData = 2;
         maxAmmo = 7;
-        ammoName = "7.62mm";
+        ammoType = SevenPointSixTwoMM.class;
         rarity = Rarity.RARE;
         recoil = 0.18f;
         inaccuracy = 0.9f;

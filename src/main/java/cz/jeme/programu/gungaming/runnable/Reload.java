@@ -11,7 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class Reload extends BukkitRunnable {
 
     private final Material material;
-    private final ItemStack item;
+    public final ItemStack item;
     private final Player player;
     private final int ammoCount;
     private final ReloadManager reloadManager;

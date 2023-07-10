@@ -20,6 +20,7 @@ public final class Lores {
     private static final DecimalFormat FORMATTER = new DecimalFormat("#0.##");
 
     private Lores() {
+        // Static class cannot be initialized
     }
 
     public static void update(ItemMeta meta) {
@@ -46,8 +47,8 @@ public final class Lores {
     private static void updateGun(ItemMeta meta, List<Component> lore) {
         Gun gun = Guns.getGun((String) Namespaces.GUN.get(meta));
         lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Damage: ") + "</#77A5FF>" + FORMATTER.format(gun.damage) + "</#CADCFF></!italic>"));
-        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("DPS: ") + "</#77A5FF>" + calcDPS(gun.damage, gun.shootCooldown) + "</#CADCFF></!italic>"));
-        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Ammo type: ") + "</#77A5FF>" + gun.ammoName + "</#CADCFF></!italic>"));
+        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("DPS: ") + "</#77A5FF>" + calcDPS(gun.damage, gun.shootCooldown, gun.bulletsPerShot) + "</#CADCFF></!italic>"));
+        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Ammo type: ") + "</#77A5FF>" + gun.ammoType + "</#CADCFF></!italic>"));
 
         lore.add(Messages.from(""));
 
@@ -86,8 +87,8 @@ public final class Lores {
         return "<transition:#FF0000:#1FFF00:" + phase + ">" + currentAmmo + "/" + maxAmmo + "</transition>";
     }
 
-    private static String calcDPS(double damage, int shootCooldown) {
-        double DPS = damage / (shootCooldown / 1000D);
+    private static String calcDPS(double damage, int shootCooldown, int bulletsPerShot) {
+        double DPS = (damage / (shootCooldown / 1000D)) * bulletsPerShot;
         return FORMATTER.format(DPS);
     }
 }

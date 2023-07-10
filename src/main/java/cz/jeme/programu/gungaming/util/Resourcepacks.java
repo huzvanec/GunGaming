@@ -11,12 +11,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 
-public class Resourcepacks {
+public final class Resourcepacks {
 
     public static final String RESOURCEPACK_FILE_NAME = "resourcepack_tmp.zip";
 
     private Resourcepacks() {
-        // Only static utils
+        // Static class cannot be initialized
     }
 
     public static byte[] generateSHA1(File file) throws NoSuchAlgorithmException, IOException {

@@ -3,9 +3,9 @@ package cz.jeme.programu.gungaming.util;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class Inventories {
+public final class Inventories {
     private Inventories() {
-        // Only static utils
+        // Static class cannot be initialized
     }
 
     public static int getItemCount(Inventory inventory, ItemStack searchItem) {

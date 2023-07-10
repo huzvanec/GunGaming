@@ -1,6 +1,6 @@
 package cz.jeme.programu.gungaming.eventhandler;
 
-import cz.jeme.programu.gungaming.AttachmentsMenu;
+import cz.jeme.programu.gungaming.item.attachment.AttachmentMenu;
 import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
 import cz.jeme.programu.gungaming.Namespaces;
@@ -22,7 +22,7 @@ public class InventoryHandler {
 
     private final ReloadManager reloadManager;
     private final ZoomManager zoomManager;
-    private static final Map<UUID, AttachmentsMenu> ATTACHMENT_MENUS = new HashMap<>();
+    private static final Map<UUID, AttachmentMenu> ATTACHMENT_MENUS = new HashMap<>();
 
     public InventoryHandler(ReloadManager reloadManager, ZoomManager zoomManager) {
         this.reloadManager = reloadManager;
@@ -78,10 +78,10 @@ public class InventoryHandler {
             event.setCancelled(true);
             ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
             serverPlayer.inventoryMenu.sendAllDataToRemote();
-            ATTACHMENT_MENUS.put(player.getUniqueId(), new AttachmentsMenu(event));
+            ATTACHMENT_MENUS.put(player.getUniqueId(), new AttachmentMenu(event));
             return;
         }
-        AttachmentsMenu menu = ATTACHMENT_MENUS.get(player.getUniqueId());
+        AttachmentMenu menu = ATTACHMENT_MENUS.get(player.getUniqueId());
         if (menu == null) return;
         if (menu.hasOpenInventory(event)) {
             menu.click(event);

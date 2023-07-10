@@ -10,6 +10,7 @@ public final class Miscs {
     public static Map<String, Misc> miscs = new HashMap<>();
 
     private Miscs() {
+        // Static class cannot be initialized
     }
 
     public static Misc getMisc(String name) {

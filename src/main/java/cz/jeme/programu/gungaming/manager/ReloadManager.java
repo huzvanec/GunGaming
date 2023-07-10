@@ -1,12 +1,13 @@
 package cz.jeme.programu.gungaming.manager;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.Namespaces;
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.runnable.Reload;
 import cz.jeme.programu.gungaming.util.Inventories;
 import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.util.Sounds;
 import cz.jeme.programu.gungaming.util.item.Ammos;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import org.bukkit.GameMode;
@@ -71,6 +72,8 @@ public class ReloadManager {
 
         int reloadCooldown = Namespaces.GUN_RELOAD_COOLDOWN.get(item);
 
+        player.getWorld().playSound(Sounds.getGunReloadSound(gun));
+
         cooldownManager.setCooldown(player, item.getType(), reloadCooldown);
         Reload reload = new Reload(item, player, this, ammoAdd, ammo.item, isCreative);
         reloads.get(uuid).put(material, reload);
@@ -114,9 +117,8 @@ public class ReloadManager {
         for (Material material : reloadMap.keySet()) {
             cooldownManager.setCooldown(player, material, 0);
             Reload reload = reloadMap.get(material);
-            if (reload != null) {
-                reload.cancel();
-            }
+            player.getWorld().stopSound(Sounds.getGunReloadSound(Guns.getGun(reload.item)));
+            reload.cancel();
             removeReload(player, material);
             if (actionNotify) {
                 player.sendActionBar(Messages.from("<red>Reload aborted!</red>"));

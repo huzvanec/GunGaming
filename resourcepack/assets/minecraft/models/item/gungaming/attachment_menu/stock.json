@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"layer0": "item/gungaming/menu/stock"
+		"layer0": "item/gungaming/attachment_menu/stock"
 	}
 }

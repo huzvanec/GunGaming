@@ -4,7 +4,7 @@ import org.bukkit.Material;
 
 import java.util.Arrays;
 
-public class Materials {
+public final class Materials {
 
     private static final Material[] OTHERS = {
             Material.BARREL, Material.SMOKER, Material.DISPENSER,
@@ -16,6 +16,7 @@ public class Materials {
     };
 
     private Materials() {
+        // Static class cannot be initialized
     }
 
     public static boolean isGlass(Material material) {

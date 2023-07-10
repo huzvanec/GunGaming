@@ -28,6 +28,24 @@
 				"custom_model_data": 4
 			},
 			"model": "item/gungaming/gun/rocket_launcher"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 5
+			},
+			"model": "item/gungaming/gun/m134_minigun"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 6
+			},
+			"model": "item/gungaming/gun/remington_m870"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 7
+			},
+			"model": "item/gungaming/gun/dragunov_svu"
 		}
 	]
 }

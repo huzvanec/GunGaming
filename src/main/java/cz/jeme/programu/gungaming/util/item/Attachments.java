@@ -18,6 +18,7 @@ public final class Attachments {
     public static Map<Class<? extends Attachment>, ItemStack> placeHolders = new HashMap<>();
 
     private Attachments() {
+        // Static class cannot be initialized
     }
 
     public static boolean isAttachment(ItemStack item) {

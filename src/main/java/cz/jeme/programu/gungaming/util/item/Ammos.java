@@ -16,6 +16,7 @@ public final class Ammos {
     public static Map<String, Ammo> ammos = new HashMap<>();
 
     private Ammos() {
+        // Static class cannot be initialized
     }
 
     public static Ammo getAmmo(String name) {
@@ -27,7 +28,16 @@ public final class Ammos {
     }
 
     public static Ammo getAmmo(Gun gun) {
-        return getAmmo(gun.ammoName);
+        return getAmmo(gun.ammoType);
+    }
+
+    public static Ammo getAmmo(Class<? extends Ammo> ammoType) {
+        for (Ammo ammo : ammos.values()) {
+            if (ammo.getClass().equals(ammoType)) {
+                return ammo;
+            }
+        }
+        return null;
     }
 
     public static void register(Ammo ammo) {

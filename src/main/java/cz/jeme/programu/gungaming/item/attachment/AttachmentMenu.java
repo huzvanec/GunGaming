@@ -1,6 +1,6 @@
-package cz.jeme.programu.gungaming;
+package cz.jeme.programu.gungaming.item.attachment;
 
-import cz.jeme.programu.gungaming.item.attachment.Attachment;
+import cz.jeme.programu.gungaming.Namespaces;
 import cz.jeme.programu.gungaming.item.attachment.magazine.Magazine;
 import cz.jeme.programu.gungaming.item.attachment.scope.Scope;
 import cz.jeme.programu.gungaming.item.attachment.stock.Stock;
@@ -23,15 +23,21 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AttachmentsMenu {
+public final class AttachmentMenu {
 
     private static final ItemStack EMPTY = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
+    private static final ItemStack INAPLICABLE = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
 
     static {
         ItemMeta emptyMeta = EMPTY.getItemMeta();
         emptyMeta.displayName(Messages.from("§"));
         emptyMeta.setCustomModelData(4);
         EMPTY.setItemMeta(emptyMeta);
+
+        ItemMeta inaplicableMeta = INAPLICABLE.getItemMeta();
+        inaplicableMeta.displayName(Messages.from("<!italic><red>Inaplicable for this weapon</red></!italic>"));
+        inaplicableMeta.setCustomModelData(5);
+        INAPLICABLE.setItemMeta(inaplicableMeta);
     }
 
     private final ItemStack gunItem;
@@ -41,7 +47,7 @@ public class AttachmentsMenu {
     private final Inventory inventory;
 
 
-    public AttachmentsMenu(InventoryClickEvent event) {
+    public AttachmentMenu(InventoryClickEvent event) {
         gunItem = event.getCurrentItem();
         gun = Guns.getGun(gunItem);
         if (gun == null) throw new NullPointerException("The attachment item is not a gun!");
@@ -66,17 +72,29 @@ public class AttachmentsMenu {
         ItemStack magazineItem;
         ItemStack stockItem;
 
-        String scopeName = Namespaces.GUN_SCOPE.get(gunItem);
-        scopeItem = getAttachmentItem(scopeName, Scope.class);
+        if (gun instanceof NoScope) {
+            scopeItem = INAPLICABLE;
+        } else {
+            String scopeName = Namespaces.GUN_SCOPE.get(gunItem);
+            scopeItem = getAttachmentItem(scopeName, Scope.class);
+        }
+        inventory.setItem(2, scopeItem);
 
-        String magazineName = Namespaces.GUN_MAGAZINE.get(gunItem);
-        magazineItem = getAttachmentItem(magazineName, Magazine.class);
+        if (gun instanceof NoMagazine) {
+            magazineItem = INAPLICABLE;
+        } else {
+            String magazineName = Namespaces.GUN_MAGAZINE.get(gunItem);
+            magazineItem = getAttachmentItem(magazineName, Magazine.class);
+        }
 
-        String stockName = Namespaces.GUN_STOCK.get(gunItem);
-        stockItem = getAttachmentItem(stockName, Stock.class);
+        inventory.setItem(1, magazineItem);
 
-        inventory.setItem(1, scopeItem);
-        inventory.setItem(2, magazineItem);
+        if (gun instanceof NoStock) {
+            stockItem = INAPLICABLE;
+        } else {
+            String stockName = Namespaces.GUN_STOCK.get(gunItem);
+            stockItem = getAttachmentItem(stockName, Stock.class);
+        }
         inventory.setItem(3, stockItem);
     }
 
@@ -104,6 +122,8 @@ public class AttachmentsMenu {
 
         ItemStack currentItem = inventory.getItem(index);
         assert currentItem != null;
+
+        if (currentItem.equals(INAPLICABLE)) return;
 
         if (currentItem.equals(attachment.placeHolder)) {
             event.setCurrentItem(null);

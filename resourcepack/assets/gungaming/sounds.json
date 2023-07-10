@@ -1,0 +1,17 @@
+{
+    "gun.shoot.m9": {
+        "sounds": [
+            "gungaming:gun/shoot/m9"
+        ]
+    },
+    "gun.reload.m9": {
+        "sounds": [
+            "gungaming:gun/reload/m9"
+        ]
+    },
+    "gun.switch.m9": {
+        "sounds": [
+            "gungaming:gun/switch/m9"
+        ]
+    }
+}

@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"layer0": "item/gungaming/menu/empty"
+		"layer0": "item/gungaming/attachment_menu/empty"
 	},
 	"display": {
 		"thirdperson_righthand": {

@@ -3,6 +3,7 @@ package cz.jeme.programu.gungaming;
 import cz.jeme.programu.gungaming.item.ammo.NineMM;
 import cz.jeme.programu.gungaming.item.ammo.Rocket;
 import cz.jeme.programu.gungaming.item.ammo.SevenPointSixTwoMM;
+import cz.jeme.programu.gungaming.item.ammo.TwelveGauge;
 import cz.jeme.programu.gungaming.item.attachment.magazine.BigMagazine;
 import cz.jeme.programu.gungaming.item.attachment.magazine.HugeMagazine;
 import cz.jeme.programu.gungaming.item.attachment.magazine.SmallMagazine;
@@ -39,7 +40,6 @@ public class GunGaming extends JavaPlugin {
     public void onEnable() {
         registerItems();
         Loot.registerLoot();
-
         new GGCommand(); // register the /gg command
 
         EventListener eventListener = new EventListener(cooldownManager, zoomManager, reloadManager, getDataFolder());
@@ -57,11 +57,15 @@ public class GunGaming extends JavaPlugin {
         Ammos.register(new NineMM());
         Ammos.register(new SevenPointSixTwoMM());
         Ammos.register(new Rocket());
+        Ammos.register(new TwelveGauge());
 
         Guns.register(new M9());
         Guns.register(new NagantM1895());
         Guns.register(new RocketLauncher());
         Guns.register(new AK47());
+        Guns.register(new M134Minigun());
+        Guns.register(new RemingtonM870());
+        Guns.register(new DragunovSVU());
 
         Miscs.register(new Concrete());
 

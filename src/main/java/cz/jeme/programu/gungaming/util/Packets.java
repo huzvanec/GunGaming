@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 
 import java.util.Collection;
 
-public class Packets {
+public final class Packets {
 
     private Packets() {
-        // Only static utils
+        // Static class cannot be initialized
     }
 
     public static void sendPacket(Player player, Packet<? extends PacketListener> packet) {

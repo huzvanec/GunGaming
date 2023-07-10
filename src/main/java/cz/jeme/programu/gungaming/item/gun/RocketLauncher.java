@@ -1,6 +1,10 @@
 package cz.jeme.programu.gungaming.item.gun;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.item.ammo.Rocket;
+import cz.jeme.programu.gungaming.item.attachment.NoMagazine;
+import cz.jeme.programu.gungaming.item.attachment.NoScope;
+import cz.jeme.programu.gungaming.item.attachment.NoStock;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import org.bukkit.*;
 import org.bukkit.entity.Arrow;
@@ -10,7 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-public class RocketLauncher extends Gun {
+public class RocketLauncher extends Gun implements NoStock, NoScope, NoMagazine {
 
     @Override
     protected void setup() {
@@ -22,7 +26,7 @@ public class RocketLauncher extends Gun {
         velocity = 1.5f;
         customModelData = 4;
         maxAmmo = 1;
-        ammoName = "Rocket";
+        ammoType = Rocket.class;
         rarity = Rarity.LEGENDARY;
         recoil = 2f;
         inaccuracy = 1f;

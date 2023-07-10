@@ -1,10 +1,17 @@
 package cz.jeme.programu.gungaming.item.gun;
 
+import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.loot.SingleLoot;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import cz.jeme.programu.gungaming.util.Packets;
+import cz.jeme.programu.gungaming.util.Sounds;
+import cz.jeme.programu.gungaming.util.item.Ammos;
+import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
+import net.minecraft.server.level.ServerPlayer;
+import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -15,6 +22,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public abstract class Gun extends CustomItem implements SingleLoot {
@@ -29,9 +38,12 @@ public abstract class Gun extends CustomItem implements SingleLoot {
 
     public Integer maxAmmo = null;
 
-    public String ammoName = null;
+    public Class<? extends Ammo> ammoType = null;
+    public final Ammo ammo;
     public Float recoil = null;
     public Float inaccuracy = null;
+    public Integer bulletsPerShot = 1;
+    public Integer bulletCooldown = 1;
     private final Random random = new Random();
 
     public Gun() {
@@ -42,9 +54,11 @@ public abstract class Gun extends CustomItem implements SingleLoot {
         assert damage != null : "No damage given!";
         assert velocity != null : "No bullet speed given!";
         assert maxAmmo != null : "No max ammo given!";
-        assert ammoName != null : "No ammo name given!";
+        assert ammoType != null : "No ammo type given!";
         assert recoil != null : "No recoil given!";
         assert inaccuracy != null : "No inaccuracy given!";
+
+        ammo = Ammos.getAmmo(ammoType);
 
         Namespaces.GUN.set(item, name);
         Namespaces.GUN_AMMO_MAX.set(item, maxAmmo);
@@ -68,12 +82,29 @@ public abstract class Gun extends CustomItem implements SingleLoot {
         return Material.DIAMOND_SHOVEL;
     }
 
-    public Arrow shoot(PlayerInteractEvent event, ItemStack heldItem) {
+    public void shoot(PlayerInteractEvent event, ItemStack heldItem) {
+        shoot(event, heldItem, 1);
+    }
+
+    private void shoot(PlayerInteractEvent event, ItemStack heldItem, int round) {
         Player player = event.getPlayer();
+
+        boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
+        int heldAmmo = Namespaces.GUN_AMMO_CURRENT.get(heldItem);
+        if (heldAmmo == 0 && !isCreative) return;
+
+        if (!isCreative && (bulletCooldown != 0 || round == 1)) {
+            Ammos.remove(heldItem, 1);
+        }
+
         Location location = player.getLocation();
 
+        if (bulletCooldown != 0 || round == 1) {
+            location.getWorld().playSound(Sounds.getGunShootSound(this));
+        }
+
         Vector recoilVector = location.getDirection().multiply((float) Namespaces.GUN_RECOIL.get(heldItem));
-        recoilVector.setY(recoilVector.getY() / 2.5f);
+        recoilVector.setY(recoilVector.getY() / 3.5f);
         player.setVelocity(player.getVelocity().subtract(recoilVector));
 
         Vector arrowVector = player.getLocation().getDirection();
@@ -83,13 +114,28 @@ public abstract class Gun extends CustomItem implements SingleLoot {
         Arrow bullet = player.launchProjectile(Arrow.class, arrowVector);
         bullet.setPickupStatus(PickupStatus.DISALLOWED);
 
-        Namespaces.BULLET.set(bullet, ammoName);
+        Namespaces.BULLET.set(bullet, ammoType);
         Namespaces.BULLET_DAMAGE.set(bullet, damage);
         Namespaces.BULLET_GUN_NAME.set(bullet, name);
 
         bullet.setFallDistance(0);
         onShoot(event, bullet);
-        return bullet;
+
+        List<Player> players = new ArrayList<>();
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            if (onlinePlayer.getUniqueId().equals(player.getUniqueId())) {
+                continue;
+            }
+            players.add(onlinePlayer);
+        }
+        CraftPlayer craftPlayer = (CraftPlayer) player;
+        ServerPlayer serverPlayer = craftPlayer.getHandle();
+        ClientboundAnimatePacket packet = new ClientboundAnimatePacket(serverPlayer, ClientboundAnimatePacket.SWING_MAIN_HAND);
+        Packets.sendPacket(players, packet);
+
+        if (round < bulletsPerShot) {
+            Bukkit.getScheduler().runTaskLater(GunGaming.getPlugin(), () -> shoot(event, heldItem, round + 1), bulletCooldown);
+        }
     }
 
     private void randomizeVector(Vector vector, float degrees) {

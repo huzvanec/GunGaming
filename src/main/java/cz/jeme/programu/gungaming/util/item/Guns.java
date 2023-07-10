@@ -17,6 +17,7 @@ public final class Guns {
     public static Map<String, Gun> guns = new HashMap<>();
 
     private Guns() {
+        // Static class cannot be initialized
     }
 
     public static boolean isGun(ItemStack item) {
