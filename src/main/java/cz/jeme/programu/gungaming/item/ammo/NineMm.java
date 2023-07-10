@@ -2,13 +2,13 @@ package cz.jeme.programu.gungaming.item.ammo;
 
 import cz.jeme.programu.gungaming.loot.Rarity;
 
-public class SevenPointSixTwoMM extends Ammo {
+public class NineMm extends Ammo {
 
     @Override
     protected void setup() {
-        customModelData = 2;
-        name = "7.62mm";
-        info = "Ammo for better weapons";
+        customModelData = 1;
+        name = "9mm";
+        info = "Ammo for basic weapons";
         rarity = Rarity.UNCOMMON;
     }
 
@@ -19,7 +19,7 @@ public class SevenPointSixTwoMM extends Ammo {
 
     @Override
     public int getMaxLoot() {
-        return 12;
+        return 16;
     }
 
 }

@@ -1,6 +1,6 @@
 package cz.jeme.programu.gungaming.item.gun;
 
-import cz.jeme.programu.gungaming.item.ammo.SevenPointSixTwoMM;
+import cz.jeme.programu.gungaming.item.ammo.SeventSixTwoMm;
 import cz.jeme.programu.gungaming.loot.Rarity;
 
 public class DragunovSVU extends Gun {
@@ -15,7 +15,7 @@ public class DragunovSVU extends Gun {
         velocity = 40f;
         customModelData = 7;
         maxAmmo = 10;
-        ammoType = SevenPointSixTwoMM.class;
+        ammoType = SeventSixTwoMm.class;
         rarity = Rarity.EPIC;
         recoil = 0.22f;
         inaccuracy = 0.7f;
