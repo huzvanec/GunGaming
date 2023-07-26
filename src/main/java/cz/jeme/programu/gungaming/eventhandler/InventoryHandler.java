@@ -4,7 +4,9 @@ import cz.jeme.programu.gungaming.item.attachment.AttachmentMenu;
 import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
 import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.util.Sounds;
 import cz.jeme.programu.gungaming.util.item.Guns;
+import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
@@ -96,5 +98,17 @@ public class InventoryHandler {
         // Took like 3 days to discover.
         ServerPlayer serverPlayer = ((CraftPlayer) event.getPlayer()).getHandle();
         serverPlayer.inventoryMenu.resumeRemoteUpdates();
+    }
+
+    public void onPlayerInventorySlotChange(PlayerInventorySlotChangeEvent event) {
+        Player player = event.getPlayer();
+        if (player.getInventory().getHeldItemSlot() != event.getSlot()) return;
+        ItemStack newItem = event.getNewItemStack();
+        ItemStack oldItem = event.getOldItemStack();
+        if (!Guns.isGun(newItem)) return;
+        if (Guns.isGun(oldItem)) {
+            if (Guns.getGun(oldItem) == Guns.getGun(newItem)) return;
+        }
+        player.playSound(Sounds.getGunSwitchSound(Guns.getGun(newItem)));
     }
 }

@@ -9,10 +9,10 @@ public class DragunovSVU extends Gun {
     protected void setup() {
         name = "Dragunov SVU";
         info = "AK-47 but it's a sniper rifle";
-        shootCooldown = 600;
-        reloadCooldown = 3500;
-        damage = 8d;
-        velocity = 40f;
+        shootCooldown = 900;
+        reloadCooldown = 2050;
+        damage = 10.5d;
+        velocity = 60f;
         customModelData = 7;
         maxAmmo = 10;
         ammoType = SevenSixTwoMm.class;

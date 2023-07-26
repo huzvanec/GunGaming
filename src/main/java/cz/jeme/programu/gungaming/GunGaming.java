@@ -66,6 +66,7 @@ public class GunGaming extends JavaPlugin {
         Guns.register(new M134Minigun());
         Guns.register(new RemingtonM870());
         Guns.register(new DragunovSVU());
+        Guns.register(new SV98());
 
         Miscs.register(new Concrete());
 

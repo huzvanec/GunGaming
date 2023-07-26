@@ -13,5 +13,105 @@
         "sounds": [
             "gungaming:gun/switch/m9"
         ]
+    },
+    "gun.shoot.nagant_m1895": {
+        "sounds": [
+            "gungaming:gun/shoot/nagant_m1895"
+        ]
+    },
+    "gun.reload.nagant_m1895": {
+        "sounds": [
+            "gungaming:gun/reload/nagant_m1895"
+        ]
+    },
+    "gun.switch.nagant_m1895": {
+        "sounds": [
+            "gungaming:gun/switch/nagant_m1895"
+        ]
+    },
+    "gun.shoot.m134_minigun": {
+        "sounds": [
+            "gungaming:gun/shoot/m134_minigun"
+        ]
+    },
+    "gun.reload.m134_minigun": {
+        "sounds": [
+            "gungaming:gun/reload/m134_minigun"
+        ]
+    },
+    "gun.switch.m134_minigun": {
+        "sounds": [
+            "gungaming:gun/switch/m134_minigun"
+        ]
+    },
+    "gun.shoot.remington_m870": {
+        "sounds": [
+            "gungaming:gun/shoot/remington_m870"
+        ]
+    },
+    "gun.reload.remington_m870": {
+        "sounds": [
+            "gungaming:gun/reload/remington_m870"
+        ]
+    },
+    "gun.switch.remington_m870": {
+        "sounds": [
+            "gungaming:gun/switch/remington_m870"
+        ]
+    },
+    "gun.shoot.ak-47": {
+        "sounds": [
+            "gungaming:gun/shoot/ak-47"
+        ]
+    },
+    "gun.reload.ak-47": {
+        "sounds": [
+            "gungaming:gun/reload/ak-47"
+        ]
+    },
+    "gun.switch.ak-47": {
+        "sounds": [
+            "gungaming:gun/switch/ak-47"
+        ]
+    },
+    "gun.out_of_ammo": {
+        "sounds": [
+            "gungaming:gun/out_of_ammo"
+        ]
+    },
+    "gun.reload_required": {
+        "sounds": [
+            "gungaming:gun/reload_required"
+        ]
+    },
+    "gun.shoot.dragunov_svu": {
+        "sounds": [
+            "gungaming:gun/shoot/dragunov_svu"
+        ]
+    },
+    "gun.reload.dragunov_svu": {
+        "sounds": [
+            "gungaming:gun/reload/dragunov_svu"
+        ]
+    },
+    "gun.switch.dragunov_svu": {
+        "sounds": [
+            "gungaming:gun/switch/dragunov_svu"
+        ]
+    },
+    "gun.shoot.sv-98": {
+        "sounds": [
+            "gungaming:gun/shoot/sv-98"
+        ]
+    },
+    "gun.reload.sv-98": {
+        "sounds": [
+            "gungaming:gun/reload/sv-98"
+        ]
+    },
+    "gun.switch.sv-98": {
+        "sounds": [
+            "gungaming:gun/switch/sv-98"
+        ]
     }
 }

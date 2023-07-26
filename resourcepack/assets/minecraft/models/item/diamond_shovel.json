@@ -46,6 +46,12 @@
 				"custom_model_data": 7
 			},
 			"model": "item/gungaming/gun/dragunov_svu"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 8
+			},
+			"model": "item/gungaming/gun/sv-98"
 		}
 	]
 }

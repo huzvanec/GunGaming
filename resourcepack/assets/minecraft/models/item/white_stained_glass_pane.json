@@ -34,6 +34,12 @@
 				"custom_model_data": 5
 			},
 			"model": "item/gungaming/attachment_menu/inaplicable"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 6
+			},
+			"model": "item/gungaming/attachment_menu/stock_shotgun"
 		}
 	]
 }

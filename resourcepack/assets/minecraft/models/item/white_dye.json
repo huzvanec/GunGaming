@@ -22,6 +22,12 @@
 				"custom_model_data": 3
 			},
 			"model": "item/gungaming/ammo/rocket"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 4
+			},
+			"model": "item/gungaming/ammo/12_gauge"
 		}
 	]
 }

@@ -10,14 +10,16 @@ public class AK47 extends Gun {
         name = "AK-47";
         info = "pretty good assault rifle";
         shootCooldown = 200;
-        reloadCooldown = 2500;
-        damage = 2.5d;
+        reloadCooldown = 2250;
+        damage = 1.2d;
         velocity = 40f;
         maxAmmo = 30;
         ammoType = SevenSixTwoMm.class;
         customModelData = 3;
         rarity = Rarity.EPIC;
-        recoil = 0.08f;
+        recoil = 0.05f;
         inaccuracy = 1.7f;
+        bulletsPerShot = 2;
+        bulletCooldown = 3;
     }
 }

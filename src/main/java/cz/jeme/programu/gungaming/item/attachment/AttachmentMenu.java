@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.item.attachment;
 
 import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.item.ammo.TwelveGauge;
 import cz.jeme.programu.gungaming.item.attachment.magazine.Magazine;
 import cz.jeme.programu.gungaming.item.attachment.scope.Scope;
 import cz.jeme.programu.gungaming.item.attachment.stock.Stock;
@@ -88,11 +89,13 @@ public final class AttachmentMenu {
         }
 
         inventory.setItem(1, magazineItem);
+        String stockName = Namespaces.GUN_STOCK.get(gunItem);
 
         if (gun instanceof NoStock) {
             stockItem = INAPLICABLE;
+        } else if (gun.ammoType.equals(TwelveGauge.class) && stockName.equals("")) {
+            stockItem = Stock.SHOTGUN_STOCK_PLACEHOLDER;
         } else {
-            String stockName = Namespaces.GUN_STOCK.get(gunItem);
             stockItem = getAttachmentItem(stockName, Stock.class);
         }
         inventory.setItem(3, stockItem);
@@ -125,7 +128,7 @@ public final class AttachmentMenu {
 
         if (currentItem.equals(INAPLICABLE)) return;
 
-        if (currentItem.equals(attachment.placeHolder)) {
+        if (currentItem.equals(attachment.getPlaceHolder(gun))) {
             event.setCurrentItem(null);
         } else {
             event.setCurrentItem(currentItem);
@@ -138,7 +141,7 @@ public final class AttachmentMenu {
     private void moveToInventory(ItemStack clickedItem) {
         Attachment attachment = Attachments.getAttachment(clickedItem);
         List<ItemStack> didntFit = new ArrayList<>(player.getInventory().addItem(clickedItem).values());
-        inventory.setItem(attachment.getSlotId(), attachment.placeHolder);
+        inventory.setItem(attachment.getSlotId(), attachment.getPlaceHolder(gun));
         attachment.getNbt().set(gunItem, "");
 
         if (attachment instanceof Magazine) { // Check that the gun is not overloaded

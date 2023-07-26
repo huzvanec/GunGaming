@@ -11,10 +11,10 @@ public class M134Minigun extends Gun implements NoMagazine, NoStock, NoScope {
     @Override
     protected void setup() {
         name = "M134 Minigun";
-        info = "a legendary gatling-like rotary minigun";
+        info = "A legendary gatling-like rotary minigun";
         shootCooldown = 200;
-        reloadCooldown = 8000;
-        damage = 1d;
+        reloadCooldown = 4900;
+        damage = 2.5d;
         velocity = 40f;
         maxAmmo = 200;
         ammoType = SevenSixTwoMm.class;
@@ -22,7 +22,7 @@ public class M134Minigun extends Gun implements NoMagazine, NoStock, NoScope {
         rarity = Rarity.LEGENDARY;
         recoil = 0.05f;
         inaccuracy = 1.3f;
-        bulletsPerShot = 4;
-        bulletCooldown = 1;
+        bulletsPerShot = 2;
+        bulletCooldown = 3;
     }
 }

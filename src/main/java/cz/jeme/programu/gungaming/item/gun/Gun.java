@@ -93,7 +93,7 @@ public abstract class Gun extends CustomItem implements SingleLoot {
         int heldAmmo = Namespaces.GUN_AMMO_CURRENT.get(heldItem);
         if (heldAmmo == 0 && !isCreative) return;
 
-        if (!isCreative && (bulletCooldown != 0 || round == 1)) {
+        if (!isCreative && (bulletCooldown > 0 || round == 1)) {
             Ammos.remove(heldItem, 1);
         }
 

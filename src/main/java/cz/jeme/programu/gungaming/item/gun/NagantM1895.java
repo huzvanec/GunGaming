@@ -10,7 +10,7 @@ public class NagantM1895 extends Gun {
         name = "Nagant M1895";
         info = "A lousy revolver";
         shootCooldown = 530;
-        reloadCooldown = 1500;
+        reloadCooldown = 1850;
         damage = 4d;
         velocity = 40f;
         customModelData = 2;

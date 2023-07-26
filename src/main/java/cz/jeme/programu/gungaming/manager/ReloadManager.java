@@ -60,6 +60,7 @@ public class ReloadManager {
 
         if (ammoFound == 0 && !isCreative) {
             player.sendActionBar(Messages.from("<red>Out of ammo!</red>"));
+            player.playSound(Sounds.getSound("gun.out_of_ammo", Float.MAX_VALUE));
             return;
         }
 
@@ -72,13 +73,9 @@ public class ReloadManager {
 
         int reloadCooldown = Namespaces.GUN_RELOAD_COOLDOWN.get(item);
 
-        player.getWorld().playSound(Sounds.getGunReloadSound(gun));
-
-        cooldownManager.setCooldown(player, item.getType(), reloadCooldown);
-        Reload reload = new Reload(item, player, this, ammoAdd, ammo.item, isCreative);
+        Reload reload = new Reload(item, player, this,  ammoAdd, ammo, gun,  isCreative, cooldownManager, reloadCooldown);
         reloads.get(uuid).put(material, reload);
-        reload.runTaskLater(GunGaming.getPlugin(GunGaming.class), reloadCooldown / 50);
-        player.sendActionBar(Messages.from("<dark_aqua>Reloading...</dark_aqua>"));
+        reload.runTaskTimer(GunGaming.getPlugin(GunGaming.class), 0, reloadCooldown / 50);
     }
 
     public void abortReload(Player player, ItemStack item) {
@@ -117,7 +114,7 @@ public class ReloadManager {
         for (Material material : reloadMap.keySet()) {
             cooldownManager.setCooldown(player, material, 0);
             Reload reload = reloadMap.get(material);
-            player.getWorld().stopSound(Sounds.getGunReloadSound(Guns.getGun(reload.item)));
+            player.getWorld().stopSound(Sounds.getGunReloadSound(reload.item));
             reload.cancel();
             removeReload(player, material);
             if (actionNotify) {

@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.item.attachment.magazine;
 
 import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.item.ammo.TwelveGauge;
 import cz.jeme.programu.gungaming.item.attachment.Attachment;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.util.Messages;
@@ -45,8 +46,10 @@ public abstract class Magazine extends Attachment {
             return;
         }
         Magazine magazine = (Magazine) Attachments.getAttachment(magazineName);
-        float newReloadCooldown = gun.reloadCooldown * (magazine.magazinePercentage / 100f);
-        Namespaces.GUN_RELOAD_COOLDOWN.set(item, Math.round(newReloadCooldown));
+        if (!gun.ammoType.equals(TwelveGauge.class)) {
+            float newReloadCooldown = gun.reloadCooldown * (magazine.magazinePercentage / 100f);
+            Namespaces.GUN_RELOAD_COOLDOWN.set(item, Math.round(newReloadCooldown));
+        }
     }
 
     @Override

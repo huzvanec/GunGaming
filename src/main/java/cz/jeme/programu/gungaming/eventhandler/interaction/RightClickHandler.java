@@ -4,8 +4,10 @@ import cz.jeme.programu.gungaming.Namespaces;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Crate;
 import cz.jeme.programu.gungaming.manager.CooldownManager;
+import cz.jeme.programu.gungaming.util.Inventories;
 import cz.jeme.programu.gungaming.util.Materials;
 import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Sounds;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -69,7 +71,13 @@ public class RightClickHandler {
         int heldAmmo = Namespaces.GUN_AMMO_CURRENT.get(heldItem);
         boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
         if (heldAmmo == 0 && !isCreative) {
-            player.sendActionBar(Messages.from("<red>Reload required!</red>"));
+            if (Inventories.getItemCount(player.getInventory(), gun.ammo.item) == 0) {
+                player.sendActionBar(Messages.from("<red>Out of ammo!</red>"));
+                player.playSound(Sounds.getSound("gun.out_of_ammo", Float.MAX_VALUE));
+            } else {
+                player.sendActionBar(Messages.from("<red>Press F to reload!</red>"));
+                player.playSound(Sounds.getSound("gun.reload_required", Float.MAX_VALUE));
+            }
             return;
         }
         gun.shoot(event, heldItem);

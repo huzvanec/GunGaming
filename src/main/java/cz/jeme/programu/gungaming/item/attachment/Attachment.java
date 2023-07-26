@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming.item.attachment;
 
 import cz.jeme.programu.gungaming.Namespaces;
 import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.SingleLoot;
 import cz.jeme.programu.gungaming.util.Messages;
 import cz.jeme.programu.gungaming.util.item.Attachments;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public abstract class Attachment extends CustomItem implements SingleLoot {
     public final List<Component> modifiersInfo = new ArrayList<>();
-    public final ItemStack placeHolder = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
+    protected final ItemStack placeHolder = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
     public Attachment() {
         setup();
 
@@ -60,6 +61,10 @@ public abstract class Attachment extends CustomItem implements SingleLoot {
         if (!Attachments.placeHolders.containsKey(getGroupClass())) {
             Attachments.placeHolders.put(getGroupClass(), placeHolder);
         }
+    }
+
+    public ItemStack getPlaceHolder(Gun gun) {
+        return placeHolder;
     }
 
     abstract protected Class<? extends Attachment> getGroupClass();

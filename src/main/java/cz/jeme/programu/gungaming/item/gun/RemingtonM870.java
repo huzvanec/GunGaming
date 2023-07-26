@@ -9,8 +9,8 @@ public class RemingtonM870 extends Gun {
     protected void setup() {
         name = "Remington M870";
         info = "a common shotgun";
-        shootCooldown = 1000;
-        reloadCooldown = 2000;
+        shootCooldown = 1250;
+        reloadCooldown = 560;
         damage = 2.3d;
         velocity = 40f;
         maxAmmo = 5;
