@@ -5,6 +5,8 @@ import cz.jeme.programu.gungaming.item.attachment.Attachment;
 import cz.jeme.programu.gungaming.item.attachment.magazine.Magazine;
 import cz.jeme.programu.gungaming.item.attachment.scope.Scope;
 import cz.jeme.programu.gungaming.item.gun.Gun;
+import cz.jeme.programu.gungaming.item.throwable.grenade.MIRVGrenade;
+import cz.jeme.programu.gungaming.item.throwable.grenade.SmallGrenade;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.util.item.Attachments;
@@ -81,7 +83,11 @@ public final class Lores {
 
     private static void updateThrowable(ItemMeta meta, List<Component> lore) {
         Throwable throwable = Throwables.getThrowable((String) Namespaces.THROWABLE.get(meta));
-        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Damage: ") + "</#77A5FF>" + FORMATTER.format(throwable.damage) + "</#CADCFF></!italic>"));
+        String damage = FORMATTER.format(throwable.damage);
+        if (throwable instanceof MIRVGrenade) {
+            damage += " + 8×" + FORMATTER.format(SmallGrenade.DAMAGE);
+        }
+        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Damage: ") + "</#77A5FF>" + damage + "</#CADCFF></!italic>"));
     }
 
     public static void update(ItemStack item) {

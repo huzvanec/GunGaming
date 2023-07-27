@@ -8,7 +8,8 @@ public enum Rarity {
     UNCOMMON(10, "<green>"),
     RARE(5, "<aqua>"),
     EPIC(2, "<dark_purple>"),
-    LEGENDARY(1, "<rainbow>", "<#FF0000><obf>#</obf></#FF0000> ", " <#FF0000><obf>#</obf></#FF0000>");
+    LEGENDARY(1, "<rainbow>", "<#FF0000><obf>#</obf></#FF0000> ", " <#FF0000><obf>#</obf></#FF0000>"),
+    UNOBTAINABLE(0, "<dark_red>");
 
     public final int chance;
     public final String name;

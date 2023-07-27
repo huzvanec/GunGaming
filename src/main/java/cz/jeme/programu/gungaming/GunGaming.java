@@ -15,7 +15,11 @@ import cz.jeme.programu.gungaming.item.attachment.stock.PlasticStock;
 import cz.jeme.programu.gungaming.item.attachment.stock.WoodenStock;
 import cz.jeme.programu.gungaming.item.gun.*;
 import cz.jeme.programu.gungaming.item.misc.Concrete;
-import cz.jeme.programu.gungaming.item.throwable.Grenade;
+import cz.jeme.programu.gungaming.item.throwable.MolotovCocktail;
+import cz.jeme.programu.gungaming.item.throwable.grenade.FragGrenade;
+import cz.jeme.programu.gungaming.item.throwable.grenade.MIRVGrenade;
+import cz.jeme.programu.gungaming.item.throwable.grenade.SmallGrenade;
+import cz.jeme.programu.gungaming.item.throwable.grenade.SmokeGrenade;
 import cz.jeme.programu.gungaming.loot.Loot;
 import cz.jeme.programu.gungaming.manager.CooldownManager;
 import cz.jeme.programu.gungaming.manager.ReloadManager;
@@ -83,7 +87,11 @@ public class GunGaming extends JavaPlugin {
         Attachments.register(new BigMagazine());
         Attachments.register(new HugeMagazine());
 
-        Throwables.register(new Grenade());
+        Throwables.register(new FragGrenade());
+        Throwables.register(new SmokeGrenade());
+        Throwables.register(new MIRVGrenade());
+        Throwables.register(new SmallGrenade());
+        Throwables.register(new MolotovCocktail());
 
         Guns.registered();
         Ammos.registered();

@@ -133,5 +133,40 @@
         "sounds": [
             "gungaming:bullet/rocket"
         ]
+    },
+    "throwable.explosion.frag_grenade": {
+        "sounds": [
+            "gungaming:throwable/explosion/frag_grenade"
+        ]
+    },
+    "throwable.explosion.mirv_grenade": {
+        "sounds": [
+            "gungaming:throwable/explosion/mirv_grenade"
+        ]
+    },
+    "throwable.explosion.small_grenade": {
+        "sounds": [
+            "gungaming:throwable/explosion/small_grenade"
+        ]
+    },
+    "throwable.explosion.smoke_grenade": {
+        "sounds": [
+            "gungaming:throwable/explosion/smoke_grenade"
+        ]
+    },
+    "throwable.throw.grenade": {
+        "sounds": [
+            "gungaming:throwable/throw/grenade"
+        ]
+    },
+    "throwable.throw.molotov_cocktail": {
+        "sounds": [
+            "gungaming:throwable/throw/molotov_cocktail"
+        ]
+    },
+    "throwable.explosion.molotov_cocktail": {
+        "sounds": [
+            "gungaming:throwable/explosion/molotov_cocktail"
+        ]
     }
 }

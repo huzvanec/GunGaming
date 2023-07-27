@@ -82,7 +82,7 @@ public abstract class Gun extends CustomItem implements SingleLoot {
         return Material.DIAMOND_SHOVEL;
     }
 
-    public void shoot(PlayerInteractEvent event, ItemStack heldItem) {
+    public final void shoot(PlayerInteractEvent event, ItemStack heldItem) {
         shoot(event, heldItem, 1);
     }
 
@@ -145,7 +145,7 @@ public abstract class Gun extends CustomItem implements SingleLoot {
         vector.rotateAroundZ(random.nextFloat(radians * 2) - radians);
     }
 
-    public void bulletHit(ProjectileHitEvent event, Projectile bullet) {
+    public final void bulletHit(ProjectileHitEvent event, Projectile bullet) {
         bullet.remove();
         onBulletHit(event, bullet);
     }

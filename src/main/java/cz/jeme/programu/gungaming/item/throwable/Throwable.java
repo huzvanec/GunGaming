@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming.item.throwable;
 
 import cz.jeme.programu.gungaming.Namespaces;
 import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.util.Sounds;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -32,7 +33,7 @@ public abstract class Throwable extends CustomItem {
         return Material.SNOWBALL;
     }
 
-    public void doThrow(PlayerInteractEvent event, ItemStack heldItem) {
+    public final void doThrow(PlayerInteractEvent event, ItemStack heldItem) {
         Player player = event.getPlayer();
 
         boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
@@ -44,12 +45,15 @@ public abstract class Throwable extends CustomItem {
         Namespaces.THROWN.set(thrown, name);
         Namespaces.THROWN_DAMAGE.set(thrown, damage);
 
+        player.getWorld().playSound(Sounds.getThrowableThrowSound(this), player);
+
         onDoThrow(event, heldItem, thrown);
     }
 
-    public void thrownHit(ProjectileHitEvent event, Projectile thrown) {
+    public final void thrownHit(ProjectileHitEvent event, Projectile thrown) {
         thrown.remove();
         onThrownHit(event, thrown);
+        thrown.getWorld().playSound(Sounds.getThrowableExplosionSound(this));
     }
 
     protected void onDoThrow(PlayerInteractEvent event, ItemStack heldItem, Projectile thrown) {
