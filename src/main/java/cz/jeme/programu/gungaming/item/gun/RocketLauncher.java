@@ -6,6 +6,7 @@ import cz.jeme.programu.gungaming.item.attachment.NoMagazine;
 import cz.jeme.programu.gungaming.item.attachment.NoScope;
 import cz.jeme.programu.gungaming.item.attachment.NoStock;
 import cz.jeme.programu.gungaming.loot.Rarity;
+import cz.jeme.programu.gungaming.util.Sounds;
 import org.bukkit.*;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Projectile;
@@ -20,9 +21,9 @@ public class RocketLauncher extends Gun implements NoStock, NoScope, NoMagazine 
     protected void setup() {
         name = "Rocket Launcher";
         info = "Everything goes KABOOM";
-        shootCooldown = 1000;
-        reloadCooldown = 7000;
-        damage = 18d;
+        shootCooldown = 600;
+        reloadCooldown = 4300;
+        damage = 20d;
         velocity = 1.5f;
         customModelData = 4;
         maxAmmo = 1;
@@ -38,6 +39,7 @@ public class RocketLauncher extends Gun implements NoStock, NoScope, NoMagazine 
         bullet.setGravity(false);
 
         final Vector velocity = bullet.getVelocity();
+        bullet.getWorld().playSound(Sounds.getSound("bullet.rocket", 2f), bullet);
 
         new BukkitRunnable() {
             int counter = 0;
@@ -54,7 +56,7 @@ public class RocketLauncher extends Gun implements NoStock, NoScope, NoMagazine 
                     cancel();
                 }
             }
-        }.runTaskTimer(GunGaming.getPlugin(), 0L, 1L);
+        }.runTaskTimer(GunGaming.getPlugin(), 0L, 5L);
     }
 
     @Override

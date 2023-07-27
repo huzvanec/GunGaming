@@ -2,8 +2,8 @@ package cz.jeme.programu.gungaming.runnable;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
-import cz.jeme.programu.gungaming.item.ammo.TwelveGauge;
 import cz.jeme.programu.gungaming.item.gun.Gun;
+import cz.jeme.programu.gungaming.item.gun.Magazineless;
 import cz.jeme.programu.gungaming.manager.CooldownManager;
 import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.util.Inventories;
@@ -25,7 +25,7 @@ public class Reload extends BukkitRunnable {
     private final CooldownManager cooldownManager;
     private final Ammo ammo;
     private final boolean isCreative;
-    private final boolean isShotgun;
+    private final boolean magazineless;
     private final int reloadCooldown;
     private int ammoCounter = -1;
     private final Gun gun;
@@ -58,9 +58,10 @@ public class Reload extends BukkitRunnable {
         this.ammo = ammo;
         this.isCreative = isCreative;
         this.cooldownManager = cooldownManager;
-        this.reloadCooldown = reloadCooldown;
         this.gun = gun;
-        isShotgun = ammo.getClass().equals(TwelveGauge.class);
+        magazineless = gun instanceof Magazineless;
+        if (magazineless) reloadCooldown += 50; // To prevent shoot glitching when reloading per magazine add one tick
+        this.reloadCooldown = reloadCooldown;
     }
 
     @Override
@@ -73,9 +74,9 @@ public class Reload extends BukkitRunnable {
             return;
         }
 
-        if (ammoCount > ammoCounter && isShotgun) newReload();
+        if (ammoCount > ammoCounter && magazineless) newReload();
 
-        if (isShotgun) {
+        if (magazineless) {
             shotgun();
         } else {
             normal();
@@ -102,7 +103,7 @@ public class Reload extends BukkitRunnable {
 
     private void newReload() {
         cooldownManager.setCooldown(player, item.getType(), reloadCooldown);
-        player.getWorld().playSound(Sounds.getGunReloadSound(item));
+        player.getWorld().playSound(Sounds.getGunReloadSound(item), player);
     }
 
     @Override

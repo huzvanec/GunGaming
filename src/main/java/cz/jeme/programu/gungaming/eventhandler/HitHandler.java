@@ -2,10 +2,12 @@ package cz.jeme.programu.gungaming.eventhandler;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.gun.Gun;
+import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.util.Materials;
 import cz.jeme.programu.gungaming.Namespaces;
 import cz.jeme.programu.gungaming.util.item.Ammos;
 import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.util.item.Throwables;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
@@ -29,15 +31,32 @@ public class HitHandler {
 
 
     public void onProjectileHit(ProjectileHitEvent event) {
-        Projectile bullet = event.getEntity();
+        Projectile projectile = event.getEntity();
 
-        if (!Ammos.isBullet(bullet)) return;
+        if (Ammos.isBullet(projectile)) {
+            onBulletHit(event, projectile);
+            return;
+        }
+        if (Throwables.isThrown(projectile)) {
+            onThrownHit(event, projectile);
+            return;
+        }
+    }
 
+    private void onThrownHit(ProjectileHitEvent event, Projectile thrown) {
+        assert thrown instanceof ThrowableProjectile : "Thrown projectile is not a ThrowableProjectile  !";
+
+        Throwable throwable = Throwables.getThrowable((String) Namespaces.THROWN.get(thrown));
+
+        throwable.thrownHit(event, thrown);
+    }
+
+    private void onBulletHit(ProjectileHitEvent event, Projectile bullet) {
         assert bullet instanceof Arrow : "Projectile not Arrow!";
 
         Gun gun = Guns.getGun((String) Namespaces.BULLET_GUN_NAME.get(bullet));
 
-        gun.onBulletHit(event, bullet);
+        gun.bulletHit(event, bullet);
 
         if (event.getHitBlock() == null) {
             bullet.remove();
@@ -56,7 +75,6 @@ public class HitHandler {
             world.spawnParticle(Particle.ITEM_CRACK, particleLocation, 40, 0.2, 0.2, 0.2, 0.1, new ItemStack(type));
             block.setType(Material.AIR);
             world.playSound(block.getLocation(), Sound.BLOCK_GLASS_BREAK, 1, 2);
-            bullet.remove();
             return;
         }
         Bukkit.getScheduler().runTaskLater(GunGaming.getPlugin(), () -> {
@@ -66,34 +84,32 @@ public class HitHandler {
     }
 
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        Entity entity = event.getEntity();
-        LivingEntity livingEntity = null;
-        if (entity instanceof LivingEntity) {
-            livingEntity = (LivingEntity) entity;
-        }
+        if (!(event.getEntity() instanceof LivingEntity hurt)) return;
 
         Entity damager = event.getDamager();
 
-        if (damager.getType() != EntityType.ARROW) {
-            resetDamageTicks(livingEntity);
+        if (damager.getType() == EntityType.ARROW && Ammos.isBullet((Arrow) damager)) {
+            onBulletDamage(event, (Arrow) damager, hurt);
             return;
         }
-
-        Projectile bullet = (Projectile) damager;
-
-        if (!Ammos.isBullet(bullet)) {
-            resetDamageTicks(livingEntity);
+        if (damager.getType() == EntityType.SNOWBALL && Throwables.isThrown((Snowball) damager)) {
+            onThrownDamage(event, (Snowball) damager, hurt);
             return;
         }
+        resetDamageTicks(hurt);
+    }
 
-        if (livingEntity != null) {
-            livingEntity.setMaximumNoDamageTicks(0);
-        }
+    private void onBulletDamage(EntityDamageByEntityEvent event, Arrow bullet, LivingEntity hurt) {
+        hurt.setMaximumNoDamageTicks(0);
 
         double damage = Namespaces.BULLET_DAMAGE.get(bullet);
+        event.setDamage(damage);
+    }
 
-        bullet.remove();
+    private void onThrownDamage(EntityDamageByEntityEvent event, Snowball thrown, LivingEntity hurt) {
+        hurt.setMaximumNoDamageTicks(0);
 
+        double damage = Namespaces.THROWN_DAMAGE.get(thrown);
         event.setDamage(damage);
     }
 

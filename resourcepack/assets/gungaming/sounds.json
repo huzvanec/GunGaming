@@ -113,5 +113,25 @@
         "sounds": [
             "gungaming:gun/switch/sv-98"
         ]
+    },
+    "gun.shoot.rocket_launcher": {
+        "sounds": [
+            "gungaming:gun/shoot/rocket_launcher"
+        ]
+    },
+    "gun.reload.rocket_launcher": {
+        "sounds": [
+            "gungaming:gun/reload/rocket_launcher"
+        ]
+    },
+    "gun.switch.rocket_launcher": {
+        "sounds": [
+            "gungaming:gun/switch/rocket_launcher"
+        ]
+    },
+    "bullet.rocket": {
+        "sounds": [
+            "gungaming:bullet/rocket"
+        ]
     }
 }

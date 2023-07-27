@@ -100,7 +100,7 @@ public abstract class Gun extends CustomItem implements SingleLoot {
         Location location = player.getLocation();
 
         if (bulletCooldown != 0 || round == 1) {
-            location.getWorld().playSound(Sounds.getGunShootSound(this));
+            location.getWorld().playSound(Sounds.getGunShootSound(this), player);
         }
 
         Vector recoilVector = location.getDirection().multiply((float) Namespaces.GUN_RECOIL.get(heldItem));
@@ -145,10 +145,15 @@ public abstract class Gun extends CustomItem implements SingleLoot {
         vector.rotateAroundZ(random.nextFloat(radians * 2) - radians);
     }
 
+    public void bulletHit(ProjectileHitEvent event, Projectile bullet) {
+        bullet.remove();
+        onBulletHit(event, bullet);
+    }
+
     protected void onShoot(PlayerInteractEvent event, Arrow bullet) {
     }
 
-    public void onBulletHit(ProjectileHitEvent event, Projectile bullet) {
+    protected void onBulletHit(ProjectileHitEvent event, Projectile bullet) {
     }
 
     @Override

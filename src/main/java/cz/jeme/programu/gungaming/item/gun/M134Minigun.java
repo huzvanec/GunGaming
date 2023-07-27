@@ -23,6 +23,6 @@ public class M134Minigun extends Gun implements NoMagazine, NoStock, NoScope {
         recoil = 0.05f;
         inaccuracy = 1.3f;
         bulletsPerShot = 2;
-        bulletCooldown = 3;
+        bulletCooldown = 2;
     }
 }

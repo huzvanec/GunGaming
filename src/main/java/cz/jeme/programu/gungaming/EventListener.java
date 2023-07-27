@@ -7,10 +7,12 @@ import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
 import cz.jeme.programu.gungaming.util.item.Attachments;
 import cz.jeme.programu.gungaming.util.item.Guns;
-import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -114,10 +116,5 @@ public class EventListener implements Listener {
     @EventHandler
     private void onPlayerGamemodeChange(PlayerGameModeChangeEvent event) {
         zoomManager.zoomOut(event.getPlayer());
-    }
-
-    @EventHandler
-    private void onPlayerInventorySlotChange(PlayerInventorySlotChangeEvent event) {
-        inventoryHandler.onPlayerInventorySlotChange(event);
     }
 }

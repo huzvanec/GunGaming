@@ -60,7 +60,7 @@ public class ReloadManager {
 
         if (ammoFound == 0 && !isCreative) {
             player.sendActionBar(Messages.from("<red>Out of ammo!</red>"));
-            player.playSound(Sounds.getSound("gun.out_of_ammo", Float.MAX_VALUE));
+            player.getWorld().playSound(Sounds.getSound("gun.out_of_ammo", 1f), player);
             return;
         }
 

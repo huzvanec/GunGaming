@@ -25,7 +25,7 @@ public enum Namespaces {
     // Ammo namespaces
     AMMO(GunGaming.namespacedKey("ammo"), PersistentDataType.STRING),
 
-    // Bullet (entity) namespaces
+    // Bullet (entity ammo) namespaces
     BULLET(GunGaming.namespacedKey("bullet"), PersistentDataType.STRING),
     BULLET_DAMAGE(GunGaming.namespacedKey("bullet_damage"), PersistentDataType.DOUBLE),
     BULLET_GUN_NAME(GunGaming.namespacedKey("bullet_gun_name"), PersistentDataType.STRING),
@@ -33,7 +33,12 @@ public enum Namespaces {
     // Misc namespaces
     MISC(GunGaming.namespacedKey("misc"), PersistentDataType.STRING),
     // Attachment namespaces
-    ATTACHMENT(GunGaming.namespacedKey("attachment"), PersistentDataType.STRING);
+    ATTACHMENT(GunGaming.namespacedKey("attachment"), PersistentDataType.STRING),
+    // Throwable namespaces
+    THROWABLE(GunGaming.namespacedKey("throwable"), PersistentDataType.STRING),
+    // Thrown (entity throwable) namespaces
+    THROWN(GunGaming.namespacedKey("thrown"), PersistentDataType.STRING),
+    THROWN_DAMAGE(GunGaming.namespacedKey("thrown_damage"), PersistentDataType.DOUBLE);
 
     public final NamespacedKey namespacedKey;
     public final String key;
@@ -46,8 +51,7 @@ public enum Namespaces {
     }
 
     @SuppressWarnings("unchecked")
-    public <T, Z> void set(PersistentDataHolder holder, @NotNull Z value) {
-        if (holder == null) throw new IllegalArgumentException("Holder is null!");
+    public <T, Z> void set(@NotNull PersistentDataHolder holder, @NotNull Z value) {
         holder.getPersistentDataContainer().set(namespacedKey, (PersistentDataType<T, Z>) type, value);
     }
 
@@ -59,7 +63,7 @@ public enum Namespaces {
 
     @SuppressWarnings("unchecked")
     public <T, Z> Z get(PersistentDataHolder holder) {
-        if (holder == null) throw new IllegalArgumentException("Holder is null!");
+        if (holder == null) return null;
         return holder.getPersistentDataContainer().get(namespacedKey, (PersistentDataType<T, Z>) type);
     }
 
@@ -68,7 +72,7 @@ public enum Namespaces {
     }
 
     public boolean has(PersistentDataHolder holder) {
-        if (holder == null) throw new IllegalArgumentException("Holder is null!");
+        if (holder == null) return false;
         return holder.getPersistentDataContainer().has(namespacedKey);
     }
 

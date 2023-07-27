@@ -26,8 +26,7 @@ public class HotbarSlotSwitchHandler {
         ItemStack heldItem = player.getInventory().getItem(event.getNewSlot());
         if (Guns.isGun(heldItem)) {
             Gun gun = Guns.getGun(heldItem);
-            player.playSound(Sounds.getGunSwitchSound(gun));
+            player.playSound(Sounds.getGunSwitchSound(gun), player);
         }
     }
-
 }

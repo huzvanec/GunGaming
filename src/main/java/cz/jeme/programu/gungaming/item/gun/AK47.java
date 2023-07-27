@@ -20,6 +20,6 @@ public class AK47 extends Gun {
         recoil = 0.05f;
         inaccuracy = 1.7f;
         bulletsPerShot = 2;
-        bulletCooldown = 3;
+        bulletCooldown = 2;
     }
 }
