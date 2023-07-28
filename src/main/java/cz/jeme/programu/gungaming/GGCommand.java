@@ -9,12 +9,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Boat;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public class GGCommand extends Command {
 
@@ -56,19 +58,8 @@ public class GGCommand extends Command {
             return true;
         }
         if (args[0].equals(CORRECT_ARGS.get("GENERATE"))) {
-            Player player = (Player) sender;
-            if (player.getName().equals("kopikiadu")) {
-                sender.sendMessage(Messages.prefix("FUCK YOU ADAM"));
-                return true;
-            }
-            Boat boat = player.getWorld().spawn(player.getLocation(), Boat.class);
-            boat.setBoatType(Boat.Type.BAMBOO);
-            boat.setGlowing(true);
-            boat.setInvulnerable(true);
-            boat.setGravity(false);
+            generate(sender);
             return true;
-//            generate(sender);
-//            return true;
         }
         sender.sendMessage(Messages.prefix("<red>Unknown command!</red>"));
         return true;
@@ -99,12 +90,18 @@ public class GGCommand extends Command {
             return;
         }
 
-        String playerName = args[1];
-        Player player = Bukkit.getPlayer(playerName);
-        if (player == null || !player.isOnline()) {
-            // Player not found
-            sender.sendMessage(Messages.prefix("<red>This player is not online!</red>"));
-            return;
+        List<Player> players = new ArrayList<>();
+        if (args[1].equals("@everyone")) {
+            players = new ArrayList<>(Bukkit.getOnlinePlayers());
+        } else {
+            String playerName = args[1];
+            Player player = Bukkit.getPlayer(playerName);
+            if (player == null || !player.isOnline()) {
+                // Player not found
+                sender.sendMessage(Messages.prefix("<red>This player is not online!</red>"));
+                return;
+            }
+            players.add(player);
         }
 
         String groupName = args[2].toLowerCase();
@@ -141,10 +138,12 @@ public class GGCommand extends Command {
             count = Integer.parseInt(args[4]);
         }
         for (int j = 0; j < count; j++) {
-            Map<Integer, ItemStack> add = player.getInventory().addItem(item);
-            if (add.size() != 0) {
-                sender.sendMessage(Messages.prefix("<gold>Count exceeded your inventory size!</gold>"));
-                return;
+            for (Player player : players) {
+                Map<Integer, ItemStack> exceeded = player.getInventory().addItem(item);
+                if (exceeded.size() != 0) {
+                    sender.sendMessage(Messages.prefix("<gold>Count exceeded the inventory size!</gold>"));
+                    return;
+                }
             }
         }
     }
@@ -162,6 +161,7 @@ public class GGCommand extends Command {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 playerNames.add(player.getName());
             }
+            playerNames.add("@everyone");
             return contains(playerNames, args[1]);
         }
         if (args.length == 3) {
