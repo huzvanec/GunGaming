@@ -65,17 +65,17 @@ public class RightClickHandler {
 
     private void activateInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        ItemStack heldItem = player.getInventory().getItemInMainHand();
+        ItemStack item = event.getItem();
 
-        if (Guns.isGun(heldItem)) {
-            shoot(event, player, heldItem);
+        if (Guns.isGun(item)) {
+            shoot(event, player, item);
             return;
         }
-        if (Throwables.isThrowable(heldItem)) {
-            doThrow(event, player, heldItem);
+        if (Throwables.isThrowable(item)) {
+            doThrow(event, player, item);
             return;
         }
-        if (Consumables.isConsumable(heldItem)) {
+        if (Consumables.isConsumable(item)) {
             consumeHandler.onStartConsume(event);
             return;
         }
