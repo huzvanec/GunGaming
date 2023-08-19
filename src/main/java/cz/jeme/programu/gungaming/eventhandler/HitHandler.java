@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming.eventhandler;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.gun.Gun;
+import cz.jeme.programu.gungaming.item.misc.GraplingHook;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.util.Materials;
 import cz.jeme.programu.gungaming.Namespace;
@@ -127,6 +128,12 @@ public class HitHandler {
     public void onEntityDamage(@NotNull EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player player)) {
             return;
+        }
+        Long grappleSubtract = Namespace.GRAPPLE_LAST_SUBTRACT.get(player);
+        if (grappleSubtract != null && event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+            if (System.currentTimeMillis() - grappleSubtract <= GraplingHook.FALL_RESISTANCE_MILLIS) {
+                event.setCancelled(true);
+            }
         }
         if (!ENTITY_CAUSES.contains(event.getCause())) {
             resetDamageTicks(player);

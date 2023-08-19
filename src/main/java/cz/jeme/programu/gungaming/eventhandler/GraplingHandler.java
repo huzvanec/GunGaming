@@ -13,8 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
@@ -40,15 +38,17 @@ public class GraplingHandler {
                     List<Boolean> air = List.of(
                             world.getBlockAt(hook.getLocation().add(0, 0, RANGE)).getType().isAir(),
                             world.getBlockAt(hook.getLocation().add(RANGE, 0, 0)).getType().isAir(),
+                            world.getBlockAt(hook.getLocation().add(0, RANGE, 0)).getType().isAir(),
                             world.getBlockAt(hook.getLocation().subtract(0, 0, RANGE)).getType().isAir(),
-                            world.getBlockAt(hook.getLocation().subtract(RANGE, 0, 0)).getType().isAir()
+                            world.getBlockAt(hook.getLocation().subtract(RANGE, 0, 0)).getType().isAir(),
+                            world.getBlockAt(hook.getLocation().subtract(0, RANGE, 0)).getType().isAir()
                     );
                     if (air.contains(false) || hook.isOnGround()) {
                         hooked = true;
                         Namespace.HOOKED.set(hook, true);
                     }
                 } else {
-                    hook.setVelocity(new Vector(0f, 0.03f, 0f));
+                    hook.setVelocity(new Vector(0f, 0.0302f, 0f));
                 }
             }
         }.runTaskTimer(GunGaming.getPlugin(), 0L, 1L);
@@ -83,6 +83,6 @@ public class GraplingHandler {
         double zD = hookLoc.getZ() - playerLoc.getZ();
 
         player.setVelocity(new Vector(xD, yD, zD).multiply(0.5));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 120, 999, false, false, false));
+        Namespace.GRAPPLE_LAST_SUBTRACT.set(player, System.currentTimeMillis());
     }
 }

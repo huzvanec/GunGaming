@@ -43,7 +43,8 @@ public enum Namespace {
     // Consumable namespaces
     CONSUMABLE(PersistentDataType.STRING),
     // Grapling Hook namespaces
-    HOOKED(PersistentDataType.BOOLEAN);
+    HOOKED(PersistentDataType.BOOLEAN),
+    GRAPPLE_LAST_SUBTRACT(PersistentDataType.LONG);
 
     public final @NotNull NamespacedKey namespacedKey;
     public final @NotNull PersistentDataType<?, ?> type;

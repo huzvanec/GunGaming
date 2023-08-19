@@ -8,7 +8,6 @@ import cz.jeme.programu.gungaming.util.Packets;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -23,7 +22,7 @@ public class DeathHandler {
         zoomManager.zoomOut(dead);
         reloadManager.abortReloads(dead, false);
         Player killer = dead.getKiller();
-        dead.setGameMode(GameMode.SPECTATOR);
+//        dead.setGameMode(GameMode.SPECTATOR);
 
         Packets.sendPacket(dead, new ClientboundGameEventPacket(
                 ClientboundGameEventPacket.IMMEDIATE_RESPAWN,

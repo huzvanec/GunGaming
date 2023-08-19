@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 
 public class GraplingHook extends Misc {
+    public static final long FALL_RESISTANCE_MILLIS = 5200;
     @Override
     protected void setup() {
         name = "Grapling Hook";
