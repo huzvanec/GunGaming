@@ -3,5 +3,6 @@
 	"parent": "item/gungaming/gun/gun",
 	"textures": {
 		"layer0": "item/gungaming/gun/m9"
-	}
+	},
+	"display": {}
 }

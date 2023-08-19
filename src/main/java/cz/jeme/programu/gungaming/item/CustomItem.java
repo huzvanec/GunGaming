@@ -42,6 +42,7 @@ public abstract class CustomItem {
         meta.displayName(Messages.from("<!italic>" + coloredName + "</!italic>"));
         meta.setCustomModelData(customModelData);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS);
         Namespace.RARITY.set(meta, rarity.name());
         Namespace.INFO.set(meta, Messages.latin(info));
         Namespace.GG.set(meta, true);

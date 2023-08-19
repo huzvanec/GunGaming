@@ -17,20 +17,17 @@ public class LeftClickHandler {
     }
 
     public void block(PlayerInteractEvent event) {
-        zoom(event);
+        ItemStack item = event.getItem();
+        if (Attachments.isAttachment(item)) {
+            event.setCancelled(true);
+        }
     }
 
     private void zoom(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        ItemStack item = player.getInventory().getItemInMainHand();
+        ItemStack item = event.getItem();
 
-        if (!Guns.isGun(item)) {
-            if (Attachments.isAttachment(item)) {
-                event.setCancelled(true);
-            }
-            return;
-        }
-        event.setCancelled(true);
+        if (!Guns.isGun(item)) return;
         String scopeName = Namespace.GUN_SCOPE.get(item);
         assert scopeName != null : "Scope name is null!";
         Scope scope = (Scope) Attachments.getAttachment(scopeName);
