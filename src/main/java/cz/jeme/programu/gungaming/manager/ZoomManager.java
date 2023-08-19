@@ -16,6 +16,8 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,13 +26,14 @@ import java.util.Map;
 
 public class ZoomManager {
 
-    private final Map<Player, ItemStack> helmetItems = new HashMap<>();
+    private final @NotNull Map<Player, ItemStack> helmetItems = new HashMap<>();
 
-    private static final ItemStack PUMPKIN = new ItemStack(Material.CARVED_PUMPKIN);
-    private static final PotionEffect NIGHT_VISION = new PotionEffect(PotionEffectType.NIGHT_VISION, -1, 255, true, false, false);
+    private static @Nullable ZoomManager instance = null;
 
+    private static final @NotNull ItemStack PUMPKIN = new ItemStack(Material.CARVED_PUMPKIN);
+    private static final @NotNull PotionEffect NIGHT_VISION = new PotionEffect(PotionEffectType.NIGHT_VISION, -1, 255, true, false, false);
 
-    public ZoomManager() {
+    static {
         PUMPKIN.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
         PUMPKIN.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 1);
         ItemMeta meta = PUMPKIN.getItemMeta();
@@ -44,7 +47,11 @@ public class ZoomManager {
         PUMPKIN.setItemMeta(meta);
     }
 
-    public void nextZoom(Player player, double multiplier) {
+    private ZoomManager() {
+        // Singleton class
+    }
+
+    public void nextZoom(@NotNull Player player, double multiplier) {
         if (!helmetItems.containsKey(player) || helmetItems.get(player).equals(PUMPKIN)) {
             zoomIn(player, multiplier);
             return;
@@ -52,7 +59,7 @@ public class ZoomManager {
         zoomOut(player);
     }
 
-    public void zoomIn(Player player, double multiplier) {
+    public void zoomIn(@NotNull Player player, double multiplier) {
         if (helmetItems.containsKey(player) && !helmetItems.get(player).equals(PUMPKIN)) {
             return;
         }
@@ -65,7 +72,7 @@ public class ZoomManager {
         showScope(player);
     }
 
-    public void zoomOut(Player player) {
+    public void zoomOut(@NotNull Player player) {
         if (!helmetItems.containsKey(player)) {
             return;
         }
@@ -77,7 +84,7 @@ public class ZoomManager {
         hideScope(player);
     }
 
-    public void setZoom(Player player, double multiplier) {
+    public void setZoom(@NotNull Player player, double multiplier) {
         Abilities abilities = new Abilities();
         abilities.walkingSpeed = calcZoom(multiplier);
         // Modifying walking speed in ability NMS packet causes bad behavior to flying!
@@ -93,7 +100,7 @@ public class ZoomManager {
         return (float) (1.0 / (20 / multiplier - 10));
     }
 
-    private void showScope(Player player) {
+    private void showScope(@NotNull Player player) {
         PlayerInventory inventory = player.getInventory();
         ItemStack helmet = inventory.getHelmet();
         if (helmet == null) {
@@ -103,7 +110,7 @@ public class ZoomManager {
         inventory.setHelmet(PUMPKIN);
     }
 
-    private void hideScope(Player player) {
+    private void hideScope(@NotNull Player player) {
         PlayerInventory inventory = player.getInventory();
         inventory.setHelmet(helmetItems.get(player));
         helmetItems.put(player, PUMPKIN);
@@ -113,5 +120,10 @@ public class ZoomManager {
         for (Player player : helmetItems.keySet()) {
             zoomOut(player);
         }
+    }
+
+    public static synchronized @NotNull ZoomManager getInstance() {
+        if (instance == null) instance = new ZoomManager();
+        return instance;
     }
 }

@@ -2,13 +2,14 @@ package cz.jeme.programu.gungaming.util;
 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public final class Inventories {
     private Inventories() {
         // Static class cannot be initialized
     }
 
-    public static int getItemCount(Inventory inventory, ItemStack searchItem) {
+    public static int getItemCount(@NotNull Inventory inventory, @NotNull ItemStack searchItem) {
         int count = 0;
         for (ItemStack invItem : inventory) {
             if (invItem == null) {
@@ -21,7 +22,7 @@ public final class Inventories {
         return count;
     }
 
-    public static void removeItems(Inventory inventory, ItemStack item, int count) {
+    public static void removeItems(@NotNull Inventory inventory, @NotNull ItemStack item, int count) {
         assert count <= getItemCount(inventory, item) : "Player has less items!";
 
         for (ItemStack invItem : inventory.getContents()) {

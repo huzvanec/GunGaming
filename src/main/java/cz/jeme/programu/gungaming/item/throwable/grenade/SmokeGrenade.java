@@ -1,8 +1,18 @@
 package cz.jeme.programu.gungaming.item.throwable.grenade;
 
+import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.loot.Rarity;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 public class SmokeGrenade extends Grenade {
     @Override
@@ -11,7 +21,7 @@ public class SmokeGrenade extends Grenade {
         info = "throwable weapon that blinds enemies";
         customModelData = 2;
         rarity = Rarity.UNCOMMON;
-        throwCooldown = 1000;
+        throwCooldown = 3000;
         damage = 0d;
     }
 
@@ -26,7 +36,24 @@ public class SmokeGrenade extends Grenade {
     }
 
     @Override
-    public void onThrownHit(ProjectileHitEvent event, Projectile thrown) {
-//        thrown.getWorld().createExplosion(thrown, thrown.getLocation(), 3f, false, true);
+    public void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
+        Location location = thrown.getLocation();
+        new BukkitRunnable() {
+            private int counter = 0;
+            @Override
+            public void run() {
+                if (counter == 130) {
+                    cancel();
+                    return;
+                }
+                World world = location.getWorld();
+                world.spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, location, 25, 2, 2, 2, 0.02);
+                for (Entity entity : world.getNearbyEntities(location, 4, 4, 4)) {
+                    if (!(entity instanceof LivingEntity livingEntity)) continue;
+                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20, 0, false, false, false));
+                }
+                counter++;
+            }
+        }.runTaskTimer(GunGaming.getPlugin(), 0L, 1L);
     }
 }

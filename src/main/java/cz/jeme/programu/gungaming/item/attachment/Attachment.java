@@ -1,6 +1,6 @@
 package cz.jeme.programu.gungaming.item.attachment;
 
-import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.SingleLoot;
@@ -9,51 +9,52 @@ import cz.jeme.programu.gungaming.util.item.Attachments;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public abstract class Attachment extends CustomItem implements SingleLoot {
-    public final List<Component> modifiersInfo = new ArrayList<>();
-    protected final ItemStack placeHolder = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
+    public final @NotNull List<Component> modifiersInfo = new ArrayList<>();
+    protected final @NotNull ItemStack placeHolder = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
     public Attachment() {
         setup();
 
         addBuffs(getBuffs());
         addNerfs(getNerfs());
 
-        Namespaces.ATTACHMENT.set(item, name);
+        Namespace.ATTACHMENT.set(item, name);
         addPlaceHolder();
     }
 
     @Override
-    public int getMinLoot() {
+    public final int getMinLoot() {
         return 1;
     }
 
     @Override
-    public int getMaxLoot() {
+    public final int getMaxLoot() {
         return 1;
     }
 
-    private void addBuffs(String[] buffArray) {
+    private void addBuffs(@NotNull String[] buffArray) {
         for (String buff : buffArray) {
             addModifier(buff);
         }
     }
 
-    private void addNerfs(String[] nerfArray) {
+    private void addNerfs(@NotNull String[] nerfArray) {
         for (String nerf : nerfArray) {
             addNerf(nerf);
         }
     }
 
-    private void addModifier(String buff) {
+    private void addModifier(@NotNull String buff) {
         modifiersInfo.add(Messages.from("<!italic><green>" + Messages.latin(buff) + "</green></!italic>"));
     }
 
-    private void addNerf(String nerf) {
+    private void addNerf(@NotNull String nerf) {
         modifiersInfo.add(Messages.from("<!italic><red>" + Messages.latin(nerf) + "</red></!italic>"));
     }
 
@@ -63,13 +64,13 @@ public abstract class Attachment extends CustomItem implements SingleLoot {
         }
     }
 
-    public ItemStack getPlaceHolder(Gun gun) {
+    public @NotNull ItemStack getPlaceHolder(@NotNull Gun gun) {
         return placeHolder;
     }
 
-    abstract protected Class<? extends Attachment> getGroupClass();
+    abstract protected @NotNull Class<? extends Attachment> getGroupClass();
     abstract public int getSlotId();
-    abstract public Namespaces getNbt();
-    abstract protected String[] getBuffs();
-    abstract protected String[] getNerfs();
+    abstract public @NotNull Namespace getNbt();
+    abstract protected @NotNull String[] getBuffs();
+    abstract protected @NotNull String[] getNerfs();
 }

@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming.item.misc;
 
 import cz.jeme.programu.gungaming.loot.Rarity;
 import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 
 public class Concrete extends Misc {
     @Override
@@ -13,7 +14,7 @@ public class Concrete extends Misc {
     }
 
     @Override
-    protected Material getMaterial() {
+    protected @NotNull Material getMaterial() {
         return Material.GRAY_CONCRETE;
     }
 

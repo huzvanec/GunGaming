@@ -16,7 +16,7 @@ public class M9 extends Gun {
         customModelData = 1;
         maxAmmo = 15;
         ammoType = NineMm.class;
-        rarity = Rarity.RARE;
+        rarity = Rarity.UNCOMMON;
         recoil = 0.1f;
         inaccuracy = 1.2f;
     }

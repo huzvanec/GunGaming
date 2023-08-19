@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.util;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.net.URL;
@@ -13,13 +14,13 @@ import java.util.logging.Level;
 
 public final class Resourcepacks {
 
-    public static final String RESOURCEPACK_FILE_NAME = "resourcepack_tmp.zip";
+    public static final @NotNull String RESOURCEPACK_FILE_NAME = "resourcepack_tmp.zip";
 
     private Resourcepacks() {
         // Static class cannot be initialized
     }
 
-    public static byte[] generateSHA1(File file) throws NoSuchAlgorithmException, IOException {
+    public static byte @NotNull [] generateSHA1(@NotNull File file) throws NoSuchAlgorithmException, IOException {
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
         InputStream fileInputStream = new FileInputStream(file);
         int i = 0;
@@ -35,7 +36,7 @@ public final class Resourcepacks {
         return messageDigest.digest();
     }
 
-    public static byte[] generateSHA1(URL url, File dataFolder) throws NoSuchAlgorithmException, IOException {
+    public static byte @NotNull [] generateSHA1(@NotNull URL url, @NotNull File dataFolder) throws NoSuchAlgorithmException, IOException {
         File tempFile = downloadFile(url, dataFolder);
         byte[] digest = generateSHA1(tempFile);
         if (!tempFile.delete()) {
@@ -44,11 +45,11 @@ public final class Resourcepacks {
         return digest;
     }
 
-    public static byte[] generateSHA1(String urlStr, File dataFolder) throws NoSuchAlgorithmException, IOException {
+    public static byte @NotNull [] generateSHA1(@NotNull String urlStr, @NotNull File dataFolder) throws NoSuchAlgorithmException, IOException {
         return generateSHA1(new URL(urlStr), dataFolder);
     }
 
-    public static File downloadFile(URL url, File datafolder) throws IOException {
+    public static @NotNull File downloadFile(@NotNull URL url, @NotNull File datafolder) throws IOException {
         File tempFile = new File(datafolder.getAbsolutePath() + File.separatorChar + RESOURCEPACK_FILE_NAME);
         if (tempFile.exists()) {
             boolean deleted = tempFile.delete();

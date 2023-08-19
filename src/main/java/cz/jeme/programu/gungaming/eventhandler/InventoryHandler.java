@@ -1,6 +1,6 @@
 package cz.jeme.programu.gungaming.eventhandler;
 
-import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.attachment.AttachmentMenu;
 import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
@@ -13,6 +13,7 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,16 +21,11 @@ import java.util.UUID;
 
 public class InventoryHandler {
 
-    private final ReloadManager reloadManager;
-    private final ZoomManager zoomManager;
-    private static final Map<UUID, AttachmentMenu> ATTACHMENT_MENUS = new HashMap<>();
+    private final @NotNull ReloadManager reloadManager = ReloadManager.getInstance();
+    private final @NotNull ZoomManager zoomManager = ZoomManager.getInstance();
+    private static final @NotNull Map<UUID, AttachmentMenu> ATTACHMENT_MENUS = new HashMap<>();
 
-    public InventoryHandler(ReloadManager reloadManager, ZoomManager zoomManager) {
-        this.reloadManager = reloadManager;
-        this.zoomManager = zoomManager;
-    }
-
-    public void onPlayerSwapHands(PlayerSwapHandItemsEvent event) {
+    public void onPlayerSwapHands(@NotNull PlayerSwapHandItemsEvent event) {
         ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
         if (!Guns.isGun(item)) {
             return;
@@ -38,19 +34,19 @@ public class InventoryHandler {
         reloadManager.reload(event.getPlayer(), item);
     }
 
-    public void onInventoryOpen(InventoryOpenEvent event) {
+    public void onInventoryOpen(@NotNull InventoryOpenEvent event) {
         if (!(event.getPlayer() instanceof Player)) {
             throw new IllegalArgumentException("HumanEntity is not instanceof Player!");
         }
         reloadManager.abortReloads((Player) event.getPlayer());
     }
 
-    public void onPlayerDropItem(PlayerDropItemEvent event) {
+    public void onPlayerDropItem(@NotNull PlayerDropItemEvent event) {
         reloadManager.abortReloads(event.getPlayer());
         zoomManager.zoomOut(event.getPlayer());
     }
 
-    public void onInventoryClick(InventoryClickEvent event) {
+    public void onInventoryClick(@NotNull InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player player)) {
             throw new IllegalArgumentException("HumanEntity is not instanceof Player!");
         }
@@ -64,7 +60,7 @@ public class InventoryHandler {
         if (event.getInventory().getType() == InventoryType.ANVIL) {
             if (item == null) return;
             if (item.getItemMeta() == null) return;
-            if (Namespaces.GG.has(item)) {
+            if (Namespace.GG.has(item)) {
                 event.setCancelled(true);
                 return;
             }
@@ -90,7 +86,7 @@ public class InventoryHandler {
         }
     }
 
-    public void onInventoryClose(InventoryCloseEvent event) {
+    public void onInventoryClose(@NotNull InventoryCloseEvent event) {
         // When the AttachmentMenu is closed, it doesn't start remote updates to the player's inventory
         // This leads to client-server desync. This starts the updates again.
         // Took like 3 days to discover.

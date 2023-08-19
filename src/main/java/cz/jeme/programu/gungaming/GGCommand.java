@@ -2,7 +2,7 @@ package cz.jeme.programu.gungaming;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.loot.Crate;
-import cz.jeme.programu.gungaming.loot.CrateGenerator;
+import cz.jeme.programu.gungaming.loot.generation.CrateGenerator;
 import cz.jeme.programu.gungaming.util.Messages;
 import cz.jeme.programu.gungaming.util.item.Groups;
 import org.bukkit.Bukkit;
@@ -12,15 +12,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GGCommand extends Command {
 
-    public static final Map<String, String> CORRECT_ARGS = Map.of(
+    public static final @NotNull Map<String, String> CORRECT_ARGS = Map.of(
             "RELOAD", "reload",
             "HELP", "help",
             "GIVE", "give",
@@ -28,18 +26,13 @@ public class GGCommand extends Command {
     );
 
     public GGCommand() {
-        super("gg");
-        register();
+        super("gg", "Main command for gungaming", "false", Collections.emptyList());
         setPermission("gungaming.gg");
-    }
-
-    private void register() {
         Bukkit.getCommandMap().register("gungaming", this);
     }
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-
         if (args.length == 0) {
             help(sender);
             return true;
@@ -65,21 +58,23 @@ public class GGCommand extends Command {
         return true;
     }
 
-    private void generate(CommandSender sender) {
+    private void generate(@NotNull CommandSender sender) {
         Player player = (Player) sender;
         Location loc1 = new Location(player.getWorld(), -250, 0, -250);
         Location loc2 = new Location(player.getWorld(), 250, 0, 250);
 
-        CrateGenerator.generate(Crate.WOODEN_CRATE, loc1, loc2, 0.1f, player);
-        CrateGenerator.generate(Crate.GOLDEN_CRATE, loc1, loc2, 0.02f, player);
+        CrateGenerator.generateCrates(Map.of(
+                Crate.WOODEN_CRATE, 0.1f,
+                Crate.GOLDEN_CRATE, 0.02f
+        ), loc1, loc2, player);
     }
 
-    private void help(CommandSender sender) {
+    private void help(@NotNull CommandSender sender) {
         sender.sendMessage(Messages.prefix("<red>Help TODO!</red>"));
         // TODO Help
     }
 
-    private void give(CommandSender sender, String[] args) {
+    private void give(@NotNull CommandSender sender, @NotNull String[] args) {
         if (args.length < 4) {
             sender.sendMessage(Messages.prefix("<red>Not enough arguments!</red>"));
             return;
@@ -140,7 +135,7 @@ public class GGCommand extends Command {
         for (int j = 0; j < count; j++) {
             for (Player player : players) {
                 Map<Integer, ItemStack> exceeded = player.getInventory().addItem(item);
-                if (exceeded.size() != 0) {
+                if (!exceeded.isEmpty()) {
                     sender.sendMessage(Messages.prefix("<gold>Count exceeded the inventory size!</gold>"));
                     return;
                 }
@@ -151,7 +146,7 @@ public class GGCommand extends Command {
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
         if (args.length == 1) {
-            return contains(new ArrayList<>(CORRECT_ARGS.values()), args[0]);
+            return containsFilter(new ArrayList<>(CORRECT_ARGS.values()), args[0]);
         }
         if (!args[0].equals(CORRECT_ARGS.get("GIVE"))) {
             return new ArrayList<>();
@@ -162,10 +157,10 @@ public class GGCommand extends Command {
                 playerNames.add(player.getName());
             }
             playerNames.add("@everyone");
-            return contains(playerNames, args[1]);
+            return containsFilter(playerNames, args[1]);
         }
         if (args.length == 3) {
-            return contains(new ArrayList<>(Groups.groups.keySet()), args[2]);
+            return containsFilter(new ArrayList<>(Groups.groups.keySet()), args[2]);
         }
         if (args.length == 4) {
             Map<String, ? extends CustomItem> group = Groups.groups.get(args[2]);
@@ -174,27 +169,25 @@ public class GGCommand extends Command {
             for (CustomItem customItem : group.values()) {
                 itemNames.add(customItem.name.replace(' ', '_').toLowerCase());
             }
-            return contains(itemNames, args[3]);
+            return containsFilter(itemNames, args[3]);
         }
         return new ArrayList<>();
     }
 
-    private static List<String> contains(List<String> list, String pattern) {
-        List<String> patternedList = new ArrayList<>();
-        for (String string : list) {
-            if (string.contains(pattern)) patternedList.add(string);
-        }
-        return patternedList;
+    private static @NotNull List<String> containsFilter(@NotNull Collection<String> collection, @NotNull String pattern) {
+        return collection.stream()
+                .filter(item -> item.contains(pattern))
+                .toList();
     }
 
-    private static boolean matchesLowercaseUnderscores(Collection<? extends String> collection, String match) {
+    private static boolean matchesLowercaseUnderscores(@NotNull Collection<? extends String> collection, @NotNull String match) {
         for (String entry : collection) {
             if (entry.replace(' ', '_').toLowerCase().equals(match)) return true;
         }
         return false;
     }
 
-    private static <T> T getLowercaseUnderscores(Map<String, T> map, String match) {
+    private static @Nullable <T> T getLowercaseUnderscores(Map<String, T> map, String match) {
         for (String entry : map.keySet()) {
             if (entry.replace(' ', '_').toLowerCase().equals(match)) return map.get(entry);
         }

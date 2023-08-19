@@ -1,12 +1,11 @@
 package cz.jeme.programu.gungaming.util.item;
 
+import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.attachment.Attachment;
 import cz.jeme.programu.gungaming.util.Lores;
-import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.Namespaces;
-import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,37 +13,30 @@ import java.util.Map;
 
 public final class Attachments {
 
-    public static Map<String, Attachment> attachments = new HashMap<>();
-    public static Map<Class<? extends Attachment>, ItemStack> placeHolders = new HashMap<>();
+    public static @NotNull Map<String, Attachment> attachments = new HashMap<>();
+    public static @NotNull Map<Class<? extends Attachment>, ItemStack> placeHolders = new HashMap<>();
 
     private Attachments() {
         // Static class cannot be initialized
     }
 
-    public static boolean isAttachment(ItemStack item) {
-        if (item == null) return false;
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return false;
-        return Namespaces.ATTACHMENT.has(meta);
+    public static boolean isAttachment(@Nullable ItemStack item) {
+        return Namespace.ATTACHMENT.has(item);
     }
 
-    public static Attachment getAttachment(String name) {
+    public static @Nullable Attachment getAttachment(@NotNull String name) {
         return attachments.get(name);
     }
 
-    public static Attachment getAttachment(Component component) {
-        return getAttachment(Messages.strip(component));
+    public static @NotNull Attachment getAttachment(@NotNull ItemStack item) {
+        String name = Namespace.ATTACHMENT.get(item);
+        assert name != null : "This item is not an Attachment!";
+        Attachment attachment = getAttachment(name);
+        assert attachment != null : "This item has an Attachment tag, that doesn't represent any registered Attachment!";
+        return attachment;
     }
 
-    public static Attachment getAttachment(ItemStack item) {
-        if (item == null) return null;
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return null;
-
-        return getAttachment(meta.displayName());
-    }
-
-    public static void register(Attachment attachment) {
+    public static void register(@NotNull Attachment attachment) {
         attachments.put(attachment.name, attachment);
         Lores.update(attachment.item);
     }

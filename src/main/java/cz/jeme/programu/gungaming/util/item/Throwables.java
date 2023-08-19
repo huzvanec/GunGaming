@@ -1,13 +1,12 @@
 package cz.jeme.programu.gungaming.util.item;
 
-import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.util.Lores;
-import cz.jeme.programu.gungaming.util.Messages;
-import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,40 +14,33 @@ import java.util.Map;
 
 public final class Throwables {
 
-    public static Map<String, Throwable> throwables = new HashMap<>();
+    public static @NotNull Map<String, Throwable> throwables = new HashMap<>();
 
     private Throwables() {
         // Static class cannot be initialized
     }
 
-    public static boolean isThrowable(ItemStack item) {
-        if (item == null) return false;
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return false;
-        return Namespaces.THROWABLE.has(meta);
+    public static boolean isThrowable(@Nullable ItemStack item) {
+        return Namespace.THROWABLE.has(item);
     }
 
-    public static boolean isThrown(Projectile projectile) {
-        return Namespaces.THROWN.has(projectile);
+    public static boolean isThrown(@Nullable Projectile projectile) {
+        return Namespace.THROWN.has(projectile);
     }
 
-    public static Throwable getThrowable(String name) {
+    public static @Nullable Throwable getThrowable(@NotNull String name) {
         return throwables.get(name);
     }
 
-    public static Throwable getThrowable(Component component) {
-        return getThrowable(Messages.strip(component));
+    public static @NotNull Throwable getThrowable(@NotNull ItemStack item) {
+        String name = Namespace.THROWABLE.get(item);
+        assert name != null : "This item is not a Throwable!";
+        Throwable throwable = getThrowable(name);
+        assert throwable != null : "This item has a Throwable tag, that doesn't represent any registered Throwable!";
+        return throwable;
     }
 
-    public static Throwable getThrowable(ItemStack item) {
-        if (item == null) return null;
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return null;
-
-        return getThrowable(meta.displayName());
-    }
-
-    public static void register(Throwable throwable) {
+    public static void register(@NotNull Throwable throwable) {
         throwables.put(throwable.name, throwable);
         Lores.update(throwable.item);
     }

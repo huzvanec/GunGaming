@@ -16,7 +16,7 @@ public class RemingtonM870 extends Gun implements Magazineless {
         maxAmmo = 5;
         ammoType = TwelveGauge.class;
         customModelData = 6;
-        rarity = Rarity.EPIC;
+        rarity = Rarity.RARE;
         recoil = 0.05f;
         inaccuracy = 3f;
         bulletsPerShot = 9;

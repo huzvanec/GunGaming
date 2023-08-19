@@ -2,7 +2,7 @@ package cz.jeme.programu.gungaming.item.gun;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.CustomItem;
-import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.loot.SingleLoot;
 import cz.jeme.programu.gungaming.util.Packets;
@@ -21,6 +21,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,23 +29,23 @@ import java.util.Random;
 
 public abstract class Gun extends CustomItem implements SingleLoot {
 
-    public Integer shootCooldown = null;
+    public @NotNull Integer shootCooldown;
 
-    public Integer reloadCooldown = null;
+    public @NotNull Integer reloadCooldown;
 
-    public Double damage = null;
+    public @NotNull Double damage;
 
-    public Float velocity = null;
+    public @NotNull Float velocity;
 
-    public Integer maxAmmo = null;
+    public @NotNull Integer maxAmmo;
 
-    public Class<? extends Ammo> ammoType = null;
-    public final Ammo ammo;
-    public Float recoil = null;
-    public Float inaccuracy = null;
-    public Integer bulletsPerShot = 1;
-    public Integer bulletCooldown = 1;
-    private final Random random = new Random();
+    public @NotNull Class<? extends Ammo> ammoType;
+    public final @NotNull Ammo ammo;
+    public @NotNull Float recoil;
+    public @NotNull Float inaccuracy;
+    public @NotNull Integer bulletsPerShot = 1;
+    public @NotNull Integer bulletCooldown = 1;
+    private static final @NotNull Random RANDOM = new Random();
 
     public Gun() {
         setup();
@@ -60,16 +61,16 @@ public abstract class Gun extends CustomItem implements SingleLoot {
 
         ammo = Ammos.getAmmo(ammoType);
 
-        Namespaces.GUN.set(item, name);
-        Namespaces.GUN_AMMO_MAX.set(item, maxAmmo);
-        Namespaces.GUN_AMMO_CURRENT.set(item, 0);
-        Namespaces.GUN_RELOAD_COOLDOWN.set(item, reloadCooldown);
-        Namespaces.GUN_RECOIL.set(item, recoil);
-        Namespaces.GUN_INACCURACY.set(item, inaccuracy);
+        Namespace.GUN.set(item, name);
+        Namespace.GUN_AMMO_MAX.set(item, maxAmmo);
+        Namespace.GUN_AMMO_CURRENT.set(item, 0);
+        Namespace.GUN_RELOAD_COOLDOWN.set(item, reloadCooldown);
+        Namespace.GUN_RECOIL.set(item, recoil);
+        Namespace.GUN_INACCURACY.set(item, inaccuracy);
 
-        Namespaces.GUN_SCOPE.set(item, "");
-        Namespaces.GUN_MAGAZINE.set(item, "");
-        Namespaces.GUN_STOCK.set(item, "");
+        Namespace.GUN_SCOPE.set(item, "");
+        Namespace.GUN_MAGAZINE.set(item, "");
+        Namespace.GUN_STOCK.set(item, "");
 
 
         Damageable meta = (Damageable) item.getItemMeta();
@@ -78,19 +79,20 @@ public abstract class Gun extends CustomItem implements SingleLoot {
     }
 
     @Override
-    protected Material getMaterial() {
+    protected @NotNull Material getMaterial() {
         return Material.DIAMOND_SHOVEL;
     }
 
-    public final void shoot(PlayerInteractEvent event, ItemStack heldItem) {
+    public final void shoot(@NotNull PlayerInteractEvent event, @NotNull ItemStack heldItem) {
         shoot(event, heldItem, 1);
     }
 
-    private void shoot(PlayerInteractEvent event, ItemStack heldItem, int round) {
+    private void shoot(@NotNull PlayerInteractEvent event, @NotNull ItemStack heldItem, int round) {
         Player player = event.getPlayer();
 
         boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
-        int heldAmmo = Namespaces.GUN_AMMO_CURRENT.get(heldItem);
+        Integer heldAmmo = Namespace.GUN_AMMO_CURRENT.get(heldItem);
+        assert heldAmmo != null : "Held ammo is null!";
         if (heldAmmo == 0 && !isCreative) return;
 
         if (!isCreative && (bulletCooldown > 0 || round == 1)) {
@@ -103,20 +105,27 @@ public abstract class Gun extends CustomItem implements SingleLoot {
             location.getWorld().playSound(Sounds.getGunShootSound(this), player);
         }
 
-        Vector recoilVector = location.getDirection().multiply((float) Namespaces.GUN_RECOIL.get(heldItem));
+        Float gunRecoil = Namespace.GUN_RECOIL.get(heldItem);
+        assert gunRecoil != null : "Gun recoil is null!";
+
+        Vector recoilVector = location.getDirection().multiply(gunRecoil);
         recoilVector.setY(recoilVector.getY() / 3.5f);
         player.setVelocity(player.getVelocity().subtract(recoilVector));
 
         Vector arrowVector = player.getLocation().getDirection();
         arrowVector.multiply(velocity);
-        randomizeVector(arrowVector, Namespaces.GUN_INACCURACY.get(heldItem));
+
+        Float gunInaccuracy = Namespace.GUN_INACCURACY.get(heldItem);
+        assert gunInaccuracy != null : "Gun inaccuracy is null!";
+
+        randomizeVector(arrowVector, gunInaccuracy);
 
         Arrow bullet = player.launchProjectile(Arrow.class, arrowVector);
         bullet.setPickupStatus(PickupStatus.DISALLOWED);
 
-        Namespaces.BULLET.set(bullet, ammo.name);
-        Namespaces.BULLET_DAMAGE.set(bullet, damage);
-        Namespaces.BULLET_GUN_NAME.set(bullet, name);
+        Namespace.BULLET.set(bullet, ammo.name);
+        Namespace.BULLET_DAMAGE.set(bullet, damage);
+        Namespace.BULLET_GUN_NAME.set(bullet, name);
 
         bullet.setFallDistance(0);
         onShoot(event, bullet);
@@ -138,31 +147,31 @@ public abstract class Gun extends CustomItem implements SingleLoot {
         }
     }
 
-    private void randomizeVector(Vector vector, float degrees) {
+    private void randomizeVector(@NotNull Vector vector, float degrees) {
         float radians = (float) Math.toRadians(degrees);
-        vector.rotateAroundX(random.nextFloat(radians * 2) - radians);
-        vector.rotateAroundY(random.nextFloat(radians * 2) - radians);
-        vector.rotateAroundZ(random.nextFloat(radians * 2) - radians);
+        vector.rotateAroundX(RANDOM.nextFloat(radians * 2) - radians);
+        vector.rotateAroundY(RANDOM.nextFloat(radians * 2) - radians);
+        vector.rotateAroundZ(RANDOM.nextFloat(radians * 2) - radians);
     }
 
-    public final void bulletHit(ProjectileHitEvent event, Projectile bullet) {
+    public final void bulletHit(@NotNull ProjectileHitEvent event, @NotNull Projectile bullet) {
         bullet.remove();
         onBulletHit(event, bullet);
     }
 
-    protected void onShoot(PlayerInteractEvent event, Arrow bullet) {
+    protected void onShoot(@NotNull PlayerInteractEvent event, @NotNull Arrow bullet) {
     }
 
-    protected void onBulletHit(ProjectileHitEvent event, Projectile bullet) {
+    protected void onBulletHit(@NotNull ProjectileHitEvent event, @NotNull Projectile bullet) {
     }
 
     @Override
-    public int getMinLoot() {
+    public final int getMinLoot() {
         return 1;
     }
 
     @Override
-    public int getMaxLoot() {
+    public final int getMaxLoot() {
         return 1;
     }
 }

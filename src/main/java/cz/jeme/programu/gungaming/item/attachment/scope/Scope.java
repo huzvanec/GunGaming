@@ -1,14 +1,15 @@
 package cz.jeme.programu.gungaming.item.attachment.scope;
 
-import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.attachment.Attachment;
 import cz.jeme.programu.gungaming.util.Messages;
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class Scope extends Attachment {
 
-    public Double scope = null;
+    public @NotNull Double scope;
 
     public Scope() {
         setup();
@@ -22,7 +23,7 @@ public abstract class Scope extends Attachment {
     }
 
     @Override
-    protected Material getMaterial() {
+    protected @NotNull Material getMaterial() {
         return Material.STONE_AXE;
     }
 
@@ -32,11 +33,11 @@ public abstract class Scope extends Attachment {
     }
 
     @Override
-    public Namespaces getNbt() {
-        return Namespaces.GUN_SCOPE;
+    public @NotNull Namespace getNbt() {
+        return Namespace.GUN_SCOPE;
     }
     @Override
-    protected Class<? extends Attachment> getGroupClass() {
+    protected @NotNull Class<? extends Attachment> getGroupClass() {
         return Scope.class;
     }
 }

@@ -4,7 +4,7 @@ import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.util.Materials;
-import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.util.item.Ammos;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import cz.jeme.programu.gungaming.util.item.Throwables;
@@ -16,11 +16,12 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class HitHandler {
-    private static final List<EntityDamageEvent.DamageCause> ENTITY_CAUSES = List.of(
+    private static final @NotNull List<EntityDamageEvent.DamageCause> ENTITY_CAUSES = List.of(
             EntityDamageEvent.DamageCause.ENTITY_ATTACK,
             EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK,
             EntityDamageEvent.DamageCause.PROJECTILE,
@@ -30,7 +31,7 @@ public class HitHandler {
     );
 
 
-    public void onProjectileHit(ProjectileHitEvent event) {
+    public void onProjectileHit(@NotNull ProjectileHitEvent event) {
         Projectile projectile = event.getEntity();
 
         if (Ammos.isBullet(projectile)) {
@@ -43,18 +44,26 @@ public class HitHandler {
         }
     }
 
-    private void onThrownHit(ProjectileHitEvent event, Projectile thrown) {
+    private void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
         assert thrown instanceof ThrowableProjectile : "Thrown projectile is not a ThrowableProjectile  !";
 
-        Throwable throwable = Throwables.getThrowable((String) Namespaces.THROWN.get(thrown));
+        String name = Namespace.THROWN.get(thrown);
+        assert name != null : "Name is null!";
+
+        Throwable throwable = Throwables.getThrowable(name);
+        assert throwable != null : "Throwable is null!";
 
         throwable.thrownHit(event, thrown);
     }
 
-    private void onBulletHit(ProjectileHitEvent event, Projectile bullet) {
+    private void onBulletHit(@NotNull ProjectileHitEvent event, @NotNull Projectile bullet) {
         assert bullet instanceof Arrow : "Projectile not Arrow!";
 
-        Gun gun = Guns.getGun((String) Namespaces.BULLET_GUN_NAME.get(bullet));
+        String gunName = Namespace.BULLET_GUN_NAME.get(bullet);
+        assert gunName != null : "Gun name is null!";
+
+        Gun gun = Guns.getGun(gunName);
+        assert gun != null : "Gun is null!";
 
         gun.bulletHit(event, bullet);
 
@@ -83,7 +92,7 @@ public class HitHandler {
         }, 1L);
     }
 
-    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+    public void onEntityDamageByEntity(@NotNull EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof LivingEntity hurt)) return;
 
         Entity damager = event.getDamager();
@@ -99,21 +108,23 @@ public class HitHandler {
         resetDamageTicks(hurt);
     }
 
-    private void onBulletDamage(EntityDamageByEntityEvent event, Arrow bullet, LivingEntity hurt) {
+    private void onBulletDamage(@NotNull EntityDamageByEntityEvent event, @NotNull Arrow bullet, @NotNull LivingEntity hurt) {
         hurt.setMaximumNoDamageTicks(0);
 
-        double damage = Namespaces.BULLET_DAMAGE.get(bullet);
+        Double damage = Namespace.BULLET_DAMAGE.get(bullet);
+        assert damage != null : "Bullet damage is null!";
         event.setDamage(damage);
     }
 
-    private void onThrownDamage(EntityDamageByEntityEvent event, Snowball thrown, LivingEntity hurt) {
+    private void onThrownDamage(@NotNull EntityDamageByEntityEvent event, @NotNull Snowball thrown, @NotNull LivingEntity hurt) {
         hurt.setMaximumNoDamageTicks(0);
 
-        double damage = Namespaces.THROWN_DAMAGE.get(thrown);
+        Double damage = Namespace.THROWN_DAMAGE.get(thrown);
+        assert damage != null : "Thrown damage is null!";
         event.setDamage(damage);
     }
 
-    public void onEntityDamage(EntityDamageEvent event) {
+    public void onEntityDamage(@NotNull EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }
@@ -122,8 +133,7 @@ public class HitHandler {
         }
     }
 
-    private static void resetDamageTicks(LivingEntity entity) {
-        if (entity == null) return;
+    private static void resetDamageTicks(@NotNull LivingEntity entity) {
         entity.setMaximumNoDamageTicks(20);
     }
 }

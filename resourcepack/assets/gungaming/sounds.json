@@ -168,5 +168,45 @@
         "sounds": [
             "gungaming:throwable/explosion/molotov_cocktail"
         ]
+    },
+    "consumable.eat.soda": {
+        "sounds": [
+            "gungaming:consumable/eat/soda"
+        ]
+    },
+    "consumable.eat.pills": {
+        "sounds": [
+            "gungaming:consumable/eat/pills"
+        ]
+    },
+    "consumable.eat.medkit": {
+        "sounds": [
+            "gungaming:consumable/eat/medkit"
+        ]
+    },
+    "consumable.eat.bandage": {
+        "sounds": [
+            "gungaming:consumable/eat/bandage"
+        ]
+    },
+    "consumable.burp.soda": {
+        "sounds": [
+            "gungaming:consumable/burp/soda"
+        ]
+    },
+    "consumable.burp.pills": {
+        "sounds": [
+            "gungaming:consumable/burp/pills"
+        ]
+    },
+    "consumable.burp.medkit": {
+        "sounds": [
+            "gungaming:consumable/burp/medkit"
+        ]
+    },
+    "consumable.burp.bandage": {
+        "sounds": [
+            "gungaming:consumable/burp/bandage"
+        ]
     }
 }

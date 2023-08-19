@@ -1,28 +1,29 @@
 package cz.jeme.programu.gungaming.item;
 
+import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.util.Lores;
 import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.Namespaces;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class CustomItem {
 
-    public ItemStack item;
+    public @NotNull ItemStack item;
 
-    public Integer customModelData = null;
+    public @NotNull Integer customModelData;
 
-    public String name = null;
+    public @NotNull String name;
 
-    public String info = null;
+    public @NotNull String info;
 
-    public Rarity rarity = null;
+    public @NotNull Rarity rarity;
 
     abstract protected void setup();
-    abstract protected Material getMaterial();
+    abstract protected @NotNull Material getMaterial();
     abstract public int getMinLoot();
     abstract public int getMaxLoot();
 
@@ -41,9 +42,9 @@ public abstract class CustomItem {
         meta.displayName(Messages.from("<!italic>" + coloredName + "</!italic>"));
         meta.setCustomModelData(customModelData);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        Namespaces.RARITY.set(meta, rarity.name());
-        Namespaces.INFO.set(meta, Messages.latin(info));
-        Namespaces.GG.set(meta, true);
+        Namespace.RARITY.set(meta, rarity.name());
+        Namespace.INFO.set(meta, Messages.latin(info));
+        Namespace.GG.set(meta, true);
         item.setItemMeta(meta);
         Lores.update(item);
     }

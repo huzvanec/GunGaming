@@ -2,8 +2,7 @@ package cz.jeme.programu.gungaming.eventhandler.interaction;
 
 import cz.jeme.programu.gungaming.item.attachment.scope.Scope;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
-import cz.jeme.programu.gungaming.util.Messages;
-import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.util.item.Attachments;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import org.bukkit.entity.Player;
@@ -11,11 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class LeftClickHandler {
-    private final ZoomManager zoomManager;
-
-    public LeftClickHandler(ZoomManager zoomManager) {
-        this.zoomManager = zoomManager;
-    }
+    private final ZoomManager zoomManager = ZoomManager.getInstance();
 
     public void air(PlayerInteractEvent event) {
         zoom(event);
@@ -36,11 +31,10 @@ public class LeftClickHandler {
             return;
         }
         event.setCancelled(true);
-        Scope scope = (Scope) Attachments.getAttachment((String) Namespaces.GUN_SCOPE.get(item));
-        if (scope == null) {
-            player.sendActionBar(Messages.from("<red>This gun has no scope equipped!</red>"));
-            return;
-        }
+        String scopeName = Namespace.GUN_SCOPE.get(item);
+        assert scopeName != null : "Scope name is null!";
+        Scope scope = (Scope) Attachments.getAttachment(scopeName);
+        assert scope != null : "Scope is null!";
         zoomManager.nextZoom(player, scope.scope);
     }
 }

@@ -16,7 +16,7 @@ public class NagantM1895 extends Gun {
         customModelData = 2;
         maxAmmo = 7;
         ammoType = SevenSixTwoMm.class;
-        rarity = Rarity.RARE;
+        rarity = Rarity.UNCOMMON;
         recoil = 0.18f;
         inaccuracy = 0.9f;
     }

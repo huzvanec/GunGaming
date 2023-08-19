@@ -9,7 +9,7 @@ public class SevenSixTwoMm extends Ammo {
         customModelData = 2;
         name = "7.62mm";
         info = "Ammo for better weapons";
-        rarity = Rarity.UNCOMMON;
+        rarity = Rarity.COMMON;
     }
 
     @Override

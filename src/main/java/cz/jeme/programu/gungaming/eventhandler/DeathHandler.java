@@ -5,23 +5,20 @@ import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
 import cz.jeme.programu.gungaming.util.Messages;
 import cz.jeme.programu.gungaming.util.Packets;
+import net.kyori.adventure.text.Component;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class DeathHandler {
-    ReloadManager reloadManager;
-    ZoomManager zoomManager;
+    private final @NotNull ReloadManager reloadManager = ReloadManager.getInstance();
+    private final @NotNull ZoomManager zoomManager = ZoomManager.getInstance();
 
-    public DeathHandler(ReloadManager reloadManager, ZoomManager zoomManager) {
-        this.reloadManager = reloadManager;
-        this.zoomManager = zoomManager;
-    }
-
-    public void onPlayerDeath(PlayerDeathEvent event) {
+    public void onPlayerDeath(@NotNull PlayerDeathEvent event) {
         Player dead = event.getEntity();
         zoomManager.zoomOut(dead);
         reloadManager.abortReloads(dead, false);
@@ -38,10 +35,13 @@ public class DeathHandler {
             dead.teleport(new Location(dead.getWorld(), 0, 100, 0));
         }, 1L);
 
+        Component deathMessage = event.deathMessage();
+        if (deathMessage == null) return;
+
         if (killer == null || dead.getUniqueId().equals(killer.getUniqueId())) {
-            event.deathMessage(Messages.from("<red>" + Messages.to(event.deathMessage()) + "</red>"));
+            event.deathMessage(Messages.from("<red>" + Messages.to(deathMessage) + "</red>"));
             return;
         }
-        event.deathMessage(Messages.from("<dark_red>" + Messages.to(event.deathMessage()) + "</dark_red>"));
+        event.deathMessage(Messages.from("<dark_red>" + Messages.to(deathMessage) + "</dark_red>"));
     }
 }

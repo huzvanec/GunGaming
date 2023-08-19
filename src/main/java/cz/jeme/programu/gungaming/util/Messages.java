@@ -2,12 +2,13 @@ package cz.jeme.programu.gungaming.util;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public final class Messages {
-    public static final Map<Character, Character> LATIN = new HashMap<>();
+    public static final @NotNull Map<Character, Character> LATIN = new HashMap<>();
 
     static {
         LATIN.put('a', 'ᴀ');
@@ -38,41 +39,41 @@ public final class Messages {
         LATIN.put('z', 'z');
     }
 
-    public static final MiniMessage MESSAGE = MiniMessage.miniMessage();
+    public static final @NotNull MiniMessage MESSAGE = MiniMessage.miniMessage();
 
     // Plugin prefix
     // [ɢɢ]:
-    public static final String PREFIX = "<dark_gray>[</dark_gray><bold><#485C86>ɢɢ</#485C86></bold><dark_gray>]: </dark_gray>";
+    public static final @NotNull String PREFIX = "<dark_gray>[<bold><#485C86>ɢɢ</#485C86></bold>] </dark_gray>";
 
     private Messages() {
         // Static class cannot be initialized
     }
 
-    public static Component from(String text) {
+    public static @NotNull Component from(@NotNull String text) {
         return MESSAGE.deserialize(text);
     }
 
-    public static Component prefix(String text) {
+    public static @NotNull Component prefix(@NotNull String text) {
         return MESSAGE.deserialize(PREFIX + text);
     }
 
-    public static Component prefix(Component component) {
+    public static @NotNull Component prefix(@NotNull Component component) {
         return from(PREFIX).append(component);
     }
 
-    public static String strip(String text) {
+    public static @NotNull String strip(@NotNull String text) {
         return MESSAGE.stripTags(text);
     }
 
-    public static String strip(Component component) {
+    public static @NotNull String strip(@NotNull Component component) {
         return strip(to(component));
     }
 
-    public static String to(Component component) {
+    public static @NotNull String to(@NotNull Component component) {
         return MESSAGE.serialize(component);
     }
 
-    public static String latin(String string) {
+    public static @NotNull String latin(@NotNull String string) {
         string = string.toLowerCase();
         StringBuilder builder = new StringBuilder(100);
         for (int i = 0; i < string.length(); i++) {
@@ -83,7 +84,7 @@ public final class Messages {
         return builder.toString();
     }
 
-    public static String getEscapeTag(String string) {
+    public static @NotNull String getEscapeTag(@NotNull String string) {
         return string.replace("<", "</");
     }
 

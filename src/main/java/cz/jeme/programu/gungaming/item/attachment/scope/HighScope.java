@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.item.attachment.scope;
 
 import cz.jeme.programu.gungaming.loot.Rarity;
+import org.jetbrains.annotations.NotNull;
 
 public class HighScope extends Scope {
     @Override
@@ -13,12 +14,12 @@ public class HighScope extends Scope {
     }
 
     @Override
-    protected String[] getBuffs() {
+    protected @NotNull String[] getBuffs() {
         return new String[]{"10× scope"};
     }
 
     @Override
-    protected String[] getNerfs() {
+    protected @NotNull String[] getNerfs() {
         return new String[0];
     }
 }

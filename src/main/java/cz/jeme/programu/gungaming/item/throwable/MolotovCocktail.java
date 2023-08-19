@@ -3,6 +3,7 @@ package cz.jeme.programu.gungaming.item.throwable;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class MolotovCocktail extends Throwable {
     @Override
@@ -11,7 +12,7 @@ public class MolotovCocktail extends Throwable {
         info = "spreads fire everywhere";
         customModelData = 4;
         rarity = Rarity.RARE;
-        throwCooldown = 1000;
+        throwCooldown = 500;
         damage = 2d;
     }
 
@@ -26,7 +27,7 @@ public class MolotovCocktail extends Throwable {
     }
 
     @Override
-    public void onThrownHit(ProjectileHitEvent event, Projectile thrown) {
+    public void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
         thrown.getWorld().createExplosion(thrown, thrown.getLocation(), 5f, true, false);
     }
 }

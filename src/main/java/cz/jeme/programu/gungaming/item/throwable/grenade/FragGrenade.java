@@ -3,6 +3,7 @@ package cz.jeme.programu.gungaming.item.throwable.grenade;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class FragGrenade extends Grenade {
     @Override
@@ -26,7 +27,7 @@ public class FragGrenade extends Grenade {
     }
 
     @Override
-    public void onThrownHit(ProjectileHitEvent event, Projectile thrown) {
+    public void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
         thrown.getWorld().createExplosion(thrown, thrown.getLocation(), 3f, false, true);
     }
 }

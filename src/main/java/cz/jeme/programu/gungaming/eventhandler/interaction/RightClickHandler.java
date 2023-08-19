@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.eventhandler.interaction;
 
-import cz.jeme.programu.gungaming.Namespaces;
+import cz.jeme.programu.gungaming.Namespace;
+import cz.jeme.programu.gungaming.eventhandler.PlayerItemConsumeHandler;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.loot.Crate;
@@ -9,6 +10,8 @@ import cz.jeme.programu.gungaming.util.Inventories;
 import cz.jeme.programu.gungaming.util.Materials;
 import cz.jeme.programu.gungaming.util.Messages;
 import cz.jeme.programu.gungaming.util.Sounds;
+import cz.jeme.programu.gungaming.util.item.Attachments;
+import cz.jeme.programu.gungaming.util.item.Consumables;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import cz.jeme.programu.gungaming.util.item.Throwables;
 import org.bukkit.GameMode;
@@ -20,10 +23,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class RightClickHandler {
 
-    private final CooldownManager cooldownManager;
+    private final CooldownManager cooldownManager = CooldownManager.getInstance();
+    private final PlayerItemConsumeHandler consumeHandler;
 
-    public RightClickHandler(CooldownManager cooldownManager) {
-        this.cooldownManager = cooldownManager;
+    public RightClickHandler(PlayerItemConsumeHandler consumeHandler) {
+        this.consumeHandler = consumeHandler;
     }
 
     public void air(PlayerInteractEvent event) {
@@ -49,7 +53,7 @@ public class RightClickHandler {
         if (!Materials.hasRightClick(material)) {
             activateInteract(event);
             ItemStack item = event.getItem();
-            if (item != null && Namespaces.GG.has(item)) {
+            if (Guns.isGun(item) || Attachments.isAttachment(item)) {
                 event.setCancelled(true);
             }
         }
@@ -69,6 +73,11 @@ public class RightClickHandler {
         }
         if (Throwables.isThrowable(heldItem)) {
             doThrow(event, player, heldItem);
+            return;
+        }
+        if (Consumables.isConsumable(heldItem)) {
+            consumeHandler.onStartConsume(event);
+            return;
         }
     }
 
@@ -80,20 +89,22 @@ public class RightClickHandler {
             return;
         }
 
-        int heldAmmo = Namespaces.GUN_AMMO_CURRENT.get(heldItem);
+        Integer heldAmmo = Namespace.GUN_AMMO_CURRENT.get(heldItem);
+        assert heldAmmo != null : "Held gun current ammo is null!";
         boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
         if (heldAmmo == 0 && !isCreative) {
             if (Inventories.getItemCount(player.getInventory(), gun.ammo.item) == 0) {
                 player.sendActionBar(Messages.from("<red>Out of ammo!</red>"));
-                player.playSound(Sounds.getSound("gun.out_of_ammo", Float.MAX_VALUE));
+                player.playSound(Sounds.getSound("gun.out_of_ammo", 2.5f));
             } else {
                 player.sendActionBar(Messages.from("<red>Press F to reload!</red>"));
-                player.playSound(Sounds.getSound("gun.reload_required", Float.MAX_VALUE));
+                player.playSound(Sounds.getSound("gun.reload_required", 2.5f));
             }
             return;
         }
-        gun.shoot(event, heldItem);
+
         cooldownManager.setCooldown(player, heldItem.getType(), gun.shootCooldown);
+        gun.shoot(event, heldItem);
     }
 
     private void doThrow(PlayerInteractEvent event, Player player, ItemStack heldItem) {
@@ -103,7 +114,7 @@ public class RightClickHandler {
 
         Throwable throwable = Throwables.getThrowable(heldItem);
 
-        throwable.doThrow(event, heldItem);
         cooldownManager.setCooldown(player, heldItem.getType(), throwable.throwCooldown);
+        throwable.doThrow(event, heldItem);
     }
 }

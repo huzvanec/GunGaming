@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.item.attachment.stock;
 
 import cz.jeme.programu.gungaming.loot.Rarity;
+import org.jetbrains.annotations.NotNull;
 
 public class MetalStock extends Stock {
     @Override
@@ -14,12 +15,12 @@ public class MetalStock extends Stock {
     }
 
     @Override
-    protected String[] getBuffs() {
+    protected @NotNull String[] getBuffs() {
         return new String[]{"-80% recoil", "+90% accuracy"};
     }
 
     @Override
-    protected String[] getNerfs() {
+    protected @NotNull String[] getNerfs() {
         return new String[0];
     }
 }

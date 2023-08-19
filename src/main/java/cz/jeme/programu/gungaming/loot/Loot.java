@@ -1,34 +1,38 @@
 package cz.jeme.programu.gungaming.loot;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
-import cz.jeme.programu.gungaming.util.item.Ammos;
-import cz.jeme.programu.gungaming.util.item.Attachments;
-import cz.jeme.programu.gungaming.util.item.Guns;
-import cz.jeme.programu.gungaming.util.item.Miscs;
+import cz.jeme.programu.gungaming.util.item.*;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class Loot {
-    private static Map<CustomItem, Rarity> loot = new HashMap<>();
-    private static final Random RANDOM = new Random();
+    private static @NotNull Map<CustomItem, Rarity> loot = new HashMap<>();
+    private static final @NotNull Random RANDOM = new Random();
+
+    private Loot() {
+        // Static class cannot be initialized
+    }
 
     public static void registerLoot() {
         registerUnit(Ammos.ammos);
         registerUnit(Attachments.attachments);
         registerUnit(Guns.guns);
         registerUnit(Miscs.miscs);
+        registerUnit(Throwables.throwables);
+        registerUnit(Consumables.consumables);
 
         loot = Collections.unmodifiableMap(loot);
     }
 
-    private static void registerUnit(Map<String, ? extends CustomItem> customItems) {
+    private static void registerUnit(@NotNull Map<String, ? extends CustomItem> customItems) {
         for (CustomItem customItem : customItems.values()) {
             loot.put(customItem, customItem.rarity);
         }
     }
 
-    public static List<ItemStack> generate(int slots, Crate crate) {
+    public static @NotNull List<ItemStack> generate(int slots, @NotNull Crate crate) {
         List<ItemStack> items = new ArrayList<>();
         List<CustomItem> crateLoot = new ArrayList<>();
         Map<Class<? extends CustomItem>, Integer> limits = new HashMap<>(crate.limits);
@@ -67,7 +71,7 @@ public class Loot {
         return items;
     }
 
-    private static int getAmount(CustomItem customItem) {
+    private static int getAmount(@NotNull CustomItem customItem) {
         final int min = customItem.getMinLoot();
         final int max = customItem.getMaxLoot();
 

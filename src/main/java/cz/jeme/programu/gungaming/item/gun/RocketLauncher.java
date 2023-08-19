@@ -3,19 +3,22 @@ package cz.jeme.programu.gungaming.item.gun;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.ammo.Rocket;
 import cz.jeme.programu.gungaming.item.attachment.NoMagazine;
-import cz.jeme.programu.gungaming.item.attachment.NoScope;
 import cz.jeme.programu.gungaming.item.attachment.NoStock;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.util.Sounds;
-import org.bukkit.*;
+import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
-public class RocketLauncher extends Gun implements NoStock, NoScope, NoMagazine {
+public class RocketLauncher extends Gun implements NoStock, NoMagazine {
 
     @Override
     protected void setup() {
@@ -34,12 +37,12 @@ public class RocketLauncher extends Gun implements NoStock, NoScope, NoMagazine 
     }
 
     @Override
-    protected final void onShoot(PlayerInteractEvent event, Arrow bullet) {
+    protected final void onShoot(@NotNull PlayerInteractEvent event, @NotNull Arrow bullet) {
         bullet.setColor(Color.fromRGB(97, 10, 0));
         bullet.setGravity(false);
 
         final Vector velocity = bullet.getVelocity();
-        bullet.getWorld().playSound(Sounds.getSound("bullet.rocket", 2f), bullet);
+        bullet.getWorld().playSound(Sounds.getSound("bullet.rocket", 2f), event.getPlayer());
 
         new BukkitRunnable() {
             int counter = 0;
@@ -60,7 +63,7 @@ public class RocketLauncher extends Gun implements NoStock, NoScope, NoMagazine 
     }
 
     @Override
-    public final void onBulletHit(ProjectileHitEvent event, Projectile bullet) {
+    public final void onBulletHit(@NotNull ProjectileHitEvent event, @NotNull Projectile bullet) {
         bullet.getWorld().createExplosion(bullet, bullet.getLocation(), 5f, true, true);
         bullet.remove();
     }

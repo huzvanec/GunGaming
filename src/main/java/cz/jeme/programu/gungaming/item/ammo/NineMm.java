@@ -9,17 +9,17 @@ public class NineMm extends Ammo {
         customModelData = 1;
         name = "9mm";
         info = "Ammo for basic weapons";
-        rarity = Rarity.UNCOMMON;
+        rarity = Rarity.COMMON;
     }
 
     @Override
     public int getMinLoot() {
-        return 5;
+        return 7;
     }
 
     @Override
     public int getMaxLoot() {
-        return 16;
+        return 18;
     }
 
 }

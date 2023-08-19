@@ -1,0 +1,27 @@
+{
+	"__gungaming__": "Golden apple represents bandage, soda and pills in gungaming",
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "item/golden_apple"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"custom_model_data": 1
+			},
+			"model": "item/gungaming/consumable/bandage"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 2
+			},
+			"model": "item/gungaming/consumable/soda"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 3
+			},
+			"model": "item/gungaming/consumable/pills"
+		}
+	]
+}

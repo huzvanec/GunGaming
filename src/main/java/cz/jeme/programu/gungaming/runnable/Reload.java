@@ -14,23 +14,23 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 public class Reload extends BukkitRunnable {
 
-    private final Material material;
-    public final ItemStack item;
-    private final Player player;
+    private final @NotNull Material material;
+    public final @NotNull ItemStack item;
+    private final @NotNull Player player;
     private final int ammoCount;
-    private final ReloadManager reloadManager;
-    private final CooldownManager cooldownManager;
-    private final Ammo ammo;
+    private final @NotNull ReloadManager reloadManager = ReloadManager.getInstance();
+    private final @NotNull CooldownManager cooldownManager = CooldownManager.getInstance();
+    private final @NotNull Ammo ammo;
     private final boolean isCreative;
     private final boolean magazineless;
     private final int reloadCooldown;
     private int ammoCounter = -1;
-    private final Gun gun;
 
-    private final BukkitRunnable actionRunnable = new BukkitRunnable() {
+    private final @NotNull BukkitRunnable actionRunnable = new BukkitRunnable() {
         private int dotsCount = 1;
 
         @Override
@@ -48,17 +48,14 @@ public class Reload extends BukkitRunnable {
         }
     };
 
-    public Reload(ItemStack gunItem, Player player, ReloadManager reloadManager, int ammoCount, Ammo ammo, Gun gun,
-                  boolean isCreative, CooldownManager cooldownManager, int reloadCooldown) {
+    public Reload(@NotNull ItemStack gunItem, @NotNull Player player, int ammoCount, @NotNull Ammo ammo,
+                  @NotNull Gun gun, boolean isCreative, int reloadCooldown) {
         this.item = gunItem;
         this.material = gunItem.getType();
-        this.reloadManager = reloadManager;
         this.player = player;
         this.ammoCount = ammoCount;
         this.ammo = ammo;
         this.isCreative = isCreative;
-        this.cooldownManager = cooldownManager;
-        this.gun = gun;
         magazineless = gun instanceof Magazineless;
         if (magazineless) reloadCooldown += 50; // To prevent shoot glitching when reloading per magazine add one tick
         this.reloadCooldown = reloadCooldown;

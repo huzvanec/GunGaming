@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming.loot;
 
 import cz.jeme.programu.gungaming.util.Messages;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 
 public enum Rarity {
     COMMON(12, "<white>"),
@@ -12,30 +13,30 @@ public enum Rarity {
     UNOBTAINABLE(0, "<dark_red>");
 
     public final int chance;
-    public final String name;
-    public final String color;
-    public final Component component;
+    public final @NotNull String name;
+    public final @NotNull String color;
+    public final @NotNull Component component;
 
-    Rarity(int chance, String color) {
+    Rarity(int chance, @NotNull String color) {
         this.chance = chance;
         this.color = color;
         name = color + this;
         component = Messages.from(name);
     }
 
-    Rarity(int chance, String color, String prefix, String suffix) {
+    Rarity(int chance, @NotNull String color, @NotNull String prefix, @NotNull String suffix) {
         this.chance = chance;
         this.color = color;
         name = prefix + color + this + Messages.getEscapeTag(color) + suffix;
         component = Messages.from(name);
     }
 
-    Rarity(int chance, String color, String prefix) {
+    Rarity(int chance, @NotNull String color, @NotNull String prefix) {
         this(chance, color, prefix, "");
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return name().replace('_', ' ');
     }
 }

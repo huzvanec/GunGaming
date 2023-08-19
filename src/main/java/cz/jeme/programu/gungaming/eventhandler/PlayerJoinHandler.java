@@ -5,6 +5,7 @@ import cz.jeme.programu.gungaming.util.Messages;
 import cz.jeme.programu.gungaming.util.Resourcepacks;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,14 +14,14 @@ import java.util.logging.Level;
 
 public class PlayerJoinHandler {
 
-    File dataFolder;
+    private final @NotNull File dataFolder;
 
-    public PlayerJoinHandler(File dataFolder) {
+    public PlayerJoinHandler(@NotNull File dataFolder) {
         this.dataFolder = dataFolder;
     }
 
-    private static final String RESOURCEPACK_URL = "https://github.com/Mandlemankiller/GunGaming/releases/latest/download/resourcepack.zip";
-    private static final String RESOURCEPACK_MESSAGE =
+    private static final @NotNull String RESOURCEPACK_URL = "https://github.com/Mandlemankiller/GunGaming/releases/latest/download/resourcepack.zip";
+    private static final @NotNull String RESOURCEPACK_MESSAGE =
             "<bold><dark_blue>____________________________________________________________</dark_blue>\n\n" +
                     "<dark_aqua>Hello! Welcome to <dark_red>GunGaming</dark_red>!</dark_aqua></bold>\n\n" +
                     "<dark_aqua>" +
@@ -29,7 +30,7 @@ public class PlayerJoinHandler {
                     "</dark_aqua>\n" +
                     "<bold><dark_blue>____________________________________________________________</dark_blue></bold>";
 
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
         Player player = event.getPlayer();
         try {
             player.setResourcePack(RESOURCEPACK_URL, Resourcepacks.generateSHA1(RESOURCEPACK_URL, dataFolder),
