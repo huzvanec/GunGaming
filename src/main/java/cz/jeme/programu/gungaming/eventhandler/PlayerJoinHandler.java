@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
 
 public class PlayerJoinHandler {
 
@@ -36,8 +35,7 @@ public class PlayerJoinHandler {
             player.setResourcePack(RESOURCEPACK_URL, Resourcepacks.generateSHA1(RESOURCEPACK_URL, dataFolder),
                     Messages.from(RESOURCEPACK_MESSAGE), true);
         } catch (NoSuchAlgorithmException | IOException e) {
-            GunGaming.serverLog(Level.SEVERE, "Couldn't apply player resourcepack!");
-            e.printStackTrace();
+            GunGaming.serverLog("Couldn't apply player resourcepack!", e);
         }
     }
 }

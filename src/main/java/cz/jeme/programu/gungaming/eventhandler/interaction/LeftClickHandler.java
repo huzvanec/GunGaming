@@ -34,7 +34,7 @@ public class LeftClickHandler {
         String scopeName = Namespace.GUN_SCOPE.get(item);
         assert scopeName != null : "Scope name is null!";
         Scope scope = (Scope) Attachments.getAttachment(scopeName);
-        assert scope != null : "Scope is null!";
+        if (scope == null) return;
         zoomManager.nextZoom(player, scope.scope);
     }
 }

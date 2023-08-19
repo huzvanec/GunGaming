@@ -35,6 +35,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.logging.Level;
 
 public class GunGaming extends JavaPlugin {
@@ -127,6 +129,18 @@ public class GunGaming extends JavaPlugin {
      */
     public static void serverLog(@NotNull Level level, @NotNull String message) {
         Bukkit.getLogger().log(level, Messages.strip(Messages.PREFIX) + message);
+    }
+
+    public static void serverLog(@NotNull Level level, @NotNull String message, @NotNull Exception exception) {
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        exception.printStackTrace(printWriter);
+        String stackTraceStr = stringWriter.toString();
+        serverLog(level, message + "\n" + stackTraceStr);
+    }
+
+    public static void serverLog(@NotNull String message, @NotNull Exception exception) {
+        serverLog(Level.SEVERE, message, exception);
     }
 
     /**

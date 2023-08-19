@@ -40,7 +40,7 @@ public final class Sounds {
         Integer reloadCooldown = Namespace.GUN_RELOAD_COOLDOWN.get(gunItem);
         assert reloadCooldown != null : "Reload cooldown is null!";
         if (gun.reloadCooldown != reloadCooldown.intValue() && !gun.ammoType.equals(TwelveGauge.class)) {
-            pitch = 1.2f - ((reloadCooldown * 100f) / gun.reloadCooldown - 100f) / 100f;
+            pitch = 1.1f - ((reloadCooldown * 100f) / gun.reloadCooldown - 100f) / 100f;
         }
 
         return getSound("gun.reload." + formatName(gun), 2.5f, pitch);
