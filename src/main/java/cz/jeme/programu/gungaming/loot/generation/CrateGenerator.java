@@ -23,16 +23,12 @@ import org.joml.Vector3f;
 
 import java.util.*;
 
-public final class CrateGenerator {
-    static final @NotNull Map<Crate, List<int[]>> CRATES = new HashMap<>();
-    static @Nullable CrateGenerationTask generationTask = null;
-
-    private CrateGenerator() {
-        // Static class cannot be initialized
-    }
-
-    public static void generateCrates(@NotNull Map<Crate, Float> crateMap, @NotNull Location loc1,
-                                      @NotNull Location loc2, @NotNull Player player) {
+public enum CrateGenerator {
+    INSTANCE;
+    final @NotNull Map<Crate, List<int[]>> CRATES = new HashMap<>();
+    @Nullable CrateGenerationTask generationTask = null;
+    public void generateCrates(@NotNull Map<Crate, Float> crateMap, @NotNull Location loc1,
+                               @NotNull Location loc2, @NotNull Player player) {
         if (generationTask != null) return;
         final World world = loc1.getWorld();
 
@@ -64,7 +60,7 @@ public final class CrateGenerator {
         }.runTaskTimer(GunGaming.getPlugin(), 0L, 1L);
     }
 
-    static void initCrate(@NotNull Block block, @NotNull Crate crate) {
+    void initCrate(@NotNull Block block, @NotNull Crate crate) {
         if (!(block.getState() instanceof InventoryHolder inventoryHolder)) return;
 
         BlockDisplay blockDisplay = block.getWorld().spawn(block.getLocation(), BlockDisplay.class);

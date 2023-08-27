@@ -1,19 +1,28 @@
 package cz.jeme.programu.gungaming.eventhandler;
 
+import cz.jeme.programu.gungaming.Game;
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.item.misc.GraplingHook;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
+import cz.jeme.programu.gungaming.manager.ReloadManager;
+import cz.jeme.programu.gungaming.manager.ZoomManager;
+import cz.jeme.programu.gungaming.runnable.Respawn;
 import cz.jeme.programu.gungaming.util.Materials;
-import cz.jeme.programu.gungaming.Namespace;
+import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Packets;
 import cz.jeme.programu.gungaming.util.item.Ammos;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import cz.jeme.programu.gungaming.util.item.Throwables;
+import net.kyori.adventure.text.Component;
+import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -21,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class HitHandler {
+public final class HitHandler {
     private static final @NotNull List<EntityDamageEvent.DamageCause> ENTITY_CAUSES = List.of(
             EntityDamageEvent.DamageCause.ENTITY_ATTACK,
             EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK,
@@ -31,8 +40,11 @@ public class HitHandler {
             EntityDamageEvent.DamageCause.DRAGON_BREATH
     );
 
+    private HitHandler() {
+        throw new AssertionError();
+    }
 
-    public void onProjectileHit(@NotNull ProjectileHitEvent event) {
+    public static void onProjectileHit(@NotNull ProjectileHitEvent event) {
         Projectile projectile = event.getEntity();
 
         if (Ammos.isBullet(projectile)) {
@@ -45,7 +57,7 @@ public class HitHandler {
         }
     }
 
-    private void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
+    private static void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
         assert thrown instanceof ThrowableProjectile : "Thrown projectile is not a ThrowableProjectile  !";
 
         String name = Namespace.THROWN.get(thrown);
@@ -57,7 +69,7 @@ public class HitHandler {
         throwable.thrownHit(event, thrown);
     }
 
-    private void onBulletHit(@NotNull ProjectileHitEvent event, @NotNull Projectile bullet) {
+    private static void onBulletHit(@NotNull ProjectileHitEvent event, @NotNull Projectile bullet) {
         assert bullet instanceof Arrow : "Projectile not Arrow!";
 
         String gunName = Namespace.BULLET_GUN_NAME.get(bullet);
@@ -93,7 +105,7 @@ public class HitHandler {
         }, 1L);
     }
 
-    public void onEntityDamageByEntity(@NotNull EntityDamageByEntityEvent event) {
+    public static void onEntityDamageByEntity(@NotNull EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof LivingEntity hurt)) return;
 
         Entity damager = event.getDamager();
@@ -109,7 +121,7 @@ public class HitHandler {
         resetDamageTicks(hurt);
     }
 
-    private void onBulletDamage(@NotNull EntityDamageByEntityEvent event, @NotNull Arrow bullet, @NotNull LivingEntity hurt) {
+    private static void onBulletDamage(@NotNull EntityDamageByEntityEvent event, @NotNull Arrow bullet, @NotNull LivingEntity hurt) {
         hurt.setMaximumNoDamageTicks(0);
 
         Double damage = Namespace.BULLET_DAMAGE.get(bullet);
@@ -117,7 +129,7 @@ public class HitHandler {
         event.setDamage(damage);
     }
 
-    private void onThrownDamage(@NotNull EntityDamageByEntityEvent event, @NotNull Snowball thrown, @NotNull LivingEntity hurt) {
+    private static void onThrownDamage(@NotNull EntityDamageByEntityEvent event, @NotNull Snowball thrown, @NotNull LivingEntity hurt) {
         hurt.setMaximumNoDamageTicks(0);
 
         Double damage = Namespace.THROWN_DAMAGE.get(thrown);
@@ -125,7 +137,7 @@ public class HitHandler {
         event.setDamage(damage);
     }
 
-    public void onEntityDamage(@NotNull EntityDamageEvent event) {
+    public static void onEntityDamage(@NotNull EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }
@@ -138,6 +150,35 @@ public class HitHandler {
         if (!ENTITY_CAUSES.contains(event.getCause())) {
             resetDamageTicks(player);
         }
+    }
+
+    public static void onPlayerDeath(@NotNull PlayerDeathEvent event) {
+        Player dead = event.getEntity();
+        ZoomManager.INSTANCE.zoomOut(dead);
+        ReloadManager.INSTANCE.abortReloads(dead, false);
+        if (Game.game == null) return;
+        Player killer = dead.getKiller();
+
+        new Respawn(dead);
+
+        Packets.sendPacket(dead, new ClientboundGameEventPacket(
+                ClientboundGameEventPacket.IMMEDIATE_RESPAWN,
+                1F
+        ));
+
+        Bukkit.getScheduler().runTaskLater(GunGaming.getPlugin(), () -> {
+            dead.spigot().respawn();
+            dead.teleport(new Location(dead.getWorld(), 0, dead.getWorld().getHighestBlockYAt(0, 0) + 1, 0));
+        }, 1L);
+
+        Component deathMessage = event.deathMessage();
+        if (deathMessage == null) return;
+
+        if (killer == null || dead.getUniqueId().equals(killer.getUniqueId())) {
+            event.deathMessage(Messages.from("<red>" + Messages.to(deathMessage) + "</red>"));
+            return;
+        }
+        event.deathMessage(Messages.from("<dark_red>" + Messages.to(deathMessage) + "</dark_red>"));
     }
 
     private static void resetDamageTicks(@NotNull LivingEntity entity) {

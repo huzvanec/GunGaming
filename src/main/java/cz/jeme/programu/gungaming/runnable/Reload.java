@@ -16,14 +16,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
-public class Reload extends BukkitRunnable {
+public final class Reload extends BukkitRunnable {
 
     private final @NotNull Material material;
     public final @NotNull ItemStack item;
     private final @NotNull Player player;
     private final int ammoCount;
-    private final @NotNull ReloadManager reloadManager = ReloadManager.getInstance();
-    private final @NotNull CooldownManager cooldownManager = CooldownManager.getInstance();
+    private final @NotNull ReloadManager reloadManager = ReloadManager.INSTANCE;
+    private final @NotNull CooldownManager cooldownManager = CooldownManager.INSTANCE;
     private final @NotNull Ammo ammo;
     private final boolean isCreative;
     private final boolean magazineless;

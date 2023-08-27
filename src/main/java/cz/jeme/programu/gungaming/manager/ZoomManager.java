@@ -17,19 +17,16 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ZoomManager {
+public enum ZoomManager {
+    INSTANCE;
 
     private final @NotNull Map<Player, ItemStack> helmetItems = new HashMap<>();
-
-    private static @Nullable ZoomManager instance = null;
-
     private static final @NotNull ItemStack PUMPKIN = new ItemStack(Material.CARVED_PUMPKIN);
     private static final @NotNull PotionEffect NIGHT_VISION = new PotionEffect(PotionEffectType.NIGHT_VISION, -1, 255, true, false, false);
 
@@ -46,11 +43,6 @@ public class ZoomManager {
         meta.setCustomModelData(1);
         PUMPKIN.setItemMeta(meta);
     }
-
-    private ZoomManager() {
-        // Singleton class
-    }
-
     public void nextZoom(@NotNull Player player, double multiplier) {
         if (!helmetItems.containsKey(player) || helmetItems.get(player).equals(PUMPKIN)) {
             zoomIn(player, multiplier);
@@ -120,10 +112,5 @@ public class ZoomManager {
         for (Player player : helmetItems.keySet()) {
             zoomOut(player);
         }
-    }
-
-    public static synchronized @NotNull ZoomManager getInstance() {
-        if (instance == null) instance = new ZoomManager();
-        return instance;
     }
 }

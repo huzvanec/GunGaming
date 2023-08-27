@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.eventhandler;
 
+import cz.jeme.programu.gungaming.Game;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
@@ -9,29 +10,35 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerHealHandler {
-    private final @NotNull Map<UUID, Integer> healing = new HashMap<>();
-    public void onFoodLevelChange(@NotNull FoodLevelChangeEvent event) {
+public final class PlayerHealHandler {
+    private static final @NotNull Map<UUID, Integer> HEALING = new HashMap<>();
+    private PlayerHealHandler() {
+        throw new AssertionError();
+    }
+
+    public static void onFoodLevelChange(@NotNull FoodLevelChangeEvent event) {
+        if (Game.game == null) return;
         event.setCancelled(true);
     }
-    public void onEntityRegainHealth(@NotNull EntityRegainHealthEvent event) {
+    public static void onEntityRegainHealth(@NotNull EntityRegainHealthEvent event) {
         if (event.getRegainReason() != EntityRegainHealthEvent.RegainReason.SATIATED) return;
         if (!(event.getEntity() instanceof Player player)) return;
+        if (Game.game == null) return;
 
         UUID uuid = player.getUniqueId();
 
-        if (!healing.containsKey(uuid)) {
+        if (!HEALING.containsKey(uuid)) {
             event.setCancelled(true);
-            healing.put(uuid, 1);
+            HEALING.put(uuid, 1);
             return;
         }
 
-        if (healing.get(uuid) == 4) {
-            healing.put(uuid, 0);
+        if (HEALING.get(uuid) == 4) {
+            HEALING.put(uuid, 0);
             return;
         }
 
         event.setCancelled(true);
-        healing.put(uuid, healing.get(uuid) + 1);
+        HEALING.put(uuid, HEALING.get(uuid) + 1);
     }
 }

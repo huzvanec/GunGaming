@@ -18,15 +18,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerItemConsumeHandler {
-    private final @NotNull Map<UUID, BukkitRunnable> soundBoard = new HashMap<>();
+public final class PlayerItemConsumeHandler {
+    private static final @NotNull Map<UUID, BukkitRunnable> SOUND_BOARD = new HashMap<>();
+    private PlayerItemConsumeHandler() {
+        throw new AssertionError();
+    }
 
-    public void onFinishConsume(@NotNull PlayerItemConsumeEvent event) {
+    public static void onFinishConsume(@NotNull PlayerItemConsumeEvent event) {
         Player player = event.getPlayer();
         ItemStack item = player.getInventory().getItem(event.getHand());
 
         if (!Consumables.isConsumable(item)) return;
-        soundBoard.get(player.getUniqueId()).cancel();
+        SOUND_BOARD.get(player.getUniqueId()).cancel();
 
         Consumable consumable = Consumables.getConsumable(item);
         event.setCancelled(true);
@@ -42,7 +45,8 @@ public class PlayerItemConsumeHandler {
         );
     }
 
-    public void onStartConsume(@NotNull PlayerInteractEvent event) {
+    public static void onStartConsume(@NotNull PlayerInteractEvent event) {
+        System.out.println("aa");
         ItemStack item = event.getItem();
         assert item != null : "Item is null!";
         Consumable consumable = Consumables.getConsumable(item);
@@ -59,15 +63,15 @@ public class PlayerItemConsumeHandler {
                 counter++;
             }
         };
-        soundBoard.put(player.getUniqueId(), eatRunnable);
+        SOUND_BOARD.put(player.getUniqueId(), eatRunnable);
         eatRunnable.runTaskTimer(GunGaming.getPlugin(), 9L, 4L);
     }
 
-    public void onStopConsume(@NotNull PlayerStopUsingItemEvent event) {
+    public static void onStopConsume(@NotNull PlayerStopUsingItemEvent event) {
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
 
         if (!Consumables.isConsumable(item)) return;
-        soundBoard.get(player.getUniqueId()).cancel();
+        SOUND_BOARD.get(player.getUniqueId()).cancel();
     }
 }

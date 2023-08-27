@@ -4,7 +4,6 @@ import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.eventhandler.PlayerItemConsumeHandler;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
-import cz.jeme.programu.gungaming.loot.Crate;
 import cz.jeme.programu.gungaming.manager.CooldownManager;
 import cz.jeme.programu.gungaming.util.Inventories;
 import cz.jeme.programu.gungaming.util.Materials;
@@ -20,36 +19,23 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
-public class RightClickHandler {
-
-    private final CooldownManager cooldownManager = CooldownManager.getInstance();
-    private final PlayerItemConsumeHandler consumeHandler;
-
-    public RightClickHandler(PlayerItemConsumeHandler consumeHandler) {
-        this.consumeHandler = consumeHandler;
+public final class RightClickHandler {
+    private RightClickHandler() {
+        throw new AssertionError();
     }
 
-    public void air(PlayerInteractEvent event) {
+    public static void air(@NotNull PlayerInteractEvent event) {
         activateInteract(event);
     }
 
-    public void block(PlayerInteractEvent event) {
+    public static void block(@NotNull PlayerInteractEvent event) {
         Block clickedBlock = event.getClickedBlock();
         if (clickedBlock == null) {
             throw new NullPointerException("Clicked block is null!");
         }
         Material material = clickedBlock.getType();
-        switch (material) {
-            case BARREL -> {
-                crate(clickedBlock, Crate.WOODEN_CRATE);
-                return;
-            }
-            case CHEST -> {
-                crate(clickedBlock, Crate.GOLDEN_CRATE);
-                return;
-            }
-        }
         if (!Materials.hasRightClick(material)) {
             activateInteract(event);
             ItemStack item = event.getItem();
@@ -59,11 +45,7 @@ public class RightClickHandler {
         }
     }
 
-    private void crate(Block block, Crate crate) {
-
-    }
-
-    private void activateInteract(PlayerInteractEvent event) {
+    private static void activateInteract(@NotNull PlayerInteractEvent event) {
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
 
@@ -76,20 +58,20 @@ public class RightClickHandler {
             return;
         }
         if (Consumables.isConsumable(item)) {
-            consumeHandler.onStartConsume(event);
+            PlayerItemConsumeHandler.onStartConsume(event);
             return;
         }
     }
 
-    private void shoot(PlayerInteractEvent event, Player player, ItemStack heldItem) {
+    private static void shoot(@NotNull PlayerInteractEvent event, @NotNull Player player, @NotNull ItemStack item) {
         event.setCancelled(true);
 
-        Gun gun = Guns.getGun(heldItem);
-        if (player.getCooldown(heldItem.getType()) != 0) {
+        Gun gun = Guns.getGun(item);
+        if (player.getCooldown(item.getType()) != 0) {
             return;
         }
 
-        Integer heldAmmo = Namespace.GUN_AMMO_CURRENT.get(heldItem);
+        Integer heldAmmo = Namespace.GUN_AMMO_CURRENT.get(item);
         assert heldAmmo != null : "Held gun current ammo is null!";
         boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
         if (heldAmmo == 0 && !isCreative) {
@@ -103,18 +85,18 @@ public class RightClickHandler {
             return;
         }
 
-        cooldownManager.setCooldown(player, heldItem.getType(), gun.shootCooldown);
-        gun.shoot(event, heldItem);
+        CooldownManager.INSTANCE.setCooldown(player, item.getType(), gun.shootCooldown);
+        gun.shoot(event, item);
     }
 
-    private void doThrow(PlayerInteractEvent event, Player player, ItemStack heldItem) {
+    private static void doThrow(@NotNull PlayerInteractEvent event, @NotNull Player player, @NotNull ItemStack heldItem) {
         event.setCancelled(true);
 
         if (player.getCooldown(heldItem.getType()) != 0) return;
 
         Throwable throwable = Throwables.getThrowable(heldItem);
 
-        cooldownManager.setCooldown(player, heldItem.getType(), throwable.throwCooldown);
+        CooldownManager.INSTANCE.setCooldown(player, heldItem.getType(), throwable.throwCooldown);
         throwable.doThrow(event, heldItem);
     }
 }

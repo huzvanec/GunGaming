@@ -15,21 +15,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public final class ReloadManager {
-    private final @NotNull CooldownManager cooldownManager = CooldownManager.getInstance();
-
+public enum ReloadManager {
+    INSTANCE;
     private final @NotNull Map<UUID, Map<Material, Reload>> reloads = new HashMap<>();
-    private static @Nullable ReloadManager instance = null;
-
-    private ReloadManager() {
-        // Singleton class
-    }
 
     public void reload(@NotNull Player player, @NotNull ItemStack item) {
         UUID uuid = player.getUniqueId();
@@ -102,7 +95,7 @@ public final class ReloadManager {
             return;
         }
 
-        cooldownManager.setCooldown(player, gun.item.getType(), 0);
+        CooldownManager.INSTANCE.setCooldown(player, gun.item.getType(), 0);
         Reload reload = reloadMap.get(material);
         if (reload != null) {
             reload.cancel();
@@ -119,7 +112,7 @@ public final class ReloadManager {
         Map<Material, Reload> reloadMap = reloads.get(uuid);
         if (reloadMap.isEmpty()) return;
         for (Material material : reloadMap.keySet()) {
-            cooldownManager.setCooldown(player, material, 0);
+            CooldownManager.INSTANCE.setCooldown(player, material, 0);
             Reload reload = reloadMap.get(material);
             player.getWorld().stopSound(Sounds.getGunReloadSound(reload.item));
             reload.cancel();
@@ -140,10 +133,5 @@ public final class ReloadManager {
         if (reloadMap.isEmpty()) return;
         reloadMap.remove(material);
         player.sendActionBar(Messages.from(""));
-    }
-
-    public static synchronized @NotNull ReloadManager getInstance() {
-        if (instance == null) instance = new ReloadManager();
-        return instance;
     }
 }

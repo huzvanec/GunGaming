@@ -16,16 +16,19 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class GGCommand extends Command {
+public final class GGCommand extends Command {
+
+    private static @Nullable GGCommand instance;
 
     public static final @NotNull Map<String, String> CORRECT_ARGS = Map.of(
             "RELOAD", "reload",
             "HELP", "help",
             "GIVE", "give",
-            "GENERATE", "generate"
+            "GENERATE", "generate",
+            "START", "start"
     );
 
-    public GGCommand() {
+    private GGCommand() {
         super("gg", "Main command for gungaming", "false", Collections.emptyList());
         setPermission("gungaming.gg");
         Bukkit.getCommandMap().register("gungaming", this);
@@ -54,6 +57,10 @@ public class GGCommand extends Command {
             generate(sender);
             return true;
         }
+        if (args[0].equals(CORRECT_ARGS.get("START"))) {
+            start(sender, args);
+            return true;
+        }
         sender.sendMessage(Messages.prefix("<red>Unknown command!</red>"));
         return true;
     }
@@ -63,7 +70,7 @@ public class GGCommand extends Command {
         Location loc1 = new Location(player.getWorld(), -250, 0, -250);
         Location loc2 = new Location(player.getWorld(), 250, 0, 250);
 
-        CrateGenerator.generateCrates(Map.of(
+        CrateGenerator.INSTANCE.generateCrates(Map.of(
                 Crate.WOODEN_CRATE, 0.1f,
                 Crate.GOLDEN_CRATE, 0.02f
         ), loc1, loc2, player);
@@ -143,6 +150,34 @@ public class GGCommand extends Command {
         }
     }
 
+    private void start(@NotNull CommandSender sender, @NotNull String[] args) {
+        if (args.length < 4) {
+            sender.sendMessage(Messages.prefix("<red>Not enough arguments!</red>"));
+            return;
+        }
+        if (args.length > 4) {
+            sender.sendMessage(Messages.prefix("<red>Too many arguments!</red>"));
+            return;
+        }
+        int size;
+        int centerX;
+        int centerZ;
+        try {
+            size = Integer.parseInt(args[1]);
+            centerX = Integer.parseInt(args[2]);
+            centerZ = Integer.parseInt(args[3]);
+        } catch (NumberFormatException e) {
+            sender.sendMessage(Messages.prefix("<red>That is not a valid number!</red>"));
+            return;
+        }
+        if (Game.game == null) {
+            Game.game = new Game(size, centerX, centerZ, sender);
+            sender.sendMessage(Messages.prefix("<green>Game started successfully!</green>"));
+        } else {
+            sender.sendMessage(Messages.prefix("<red>There is a game already running!</red>"));
+        }
+    }
+
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
         if (args.length == 1) {
@@ -192,5 +227,10 @@ public class GGCommand extends Command {
             if (entry.replace(' ', '_').toLowerCase().equals(match)) return map.get(entry);
         }
         return null;
+    }
+
+    public static synchronized @NotNull GGCommand getInstance() {
+        if (instance == null) instance = new GGCommand();
+        return instance;
     }
 }

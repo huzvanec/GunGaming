@@ -50,7 +50,8 @@ public class SmokeGrenade extends Grenade {
                 world.spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, location, 25, 2, 2, 2, 0.02);
                 for (Entity entity : world.getNearbyEntities(location, 4, 4, 4)) {
                     if (!(entity instanceof LivingEntity livingEntity)) continue;
-                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20, 0, false, false, false));
+                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 30, 0, false, false, false));
+                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 255, false, false, false));
                 }
                 counter++;
             }

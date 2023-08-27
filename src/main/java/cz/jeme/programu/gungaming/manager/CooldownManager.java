@@ -4,20 +4,14 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public final class CooldownManager {
-    private static @Nullable CooldownManager instance = null;
+public enum CooldownManager {
+    INSTANCE;
     private final @NotNull Map<UUID, Map<Material, Long>> cooldowns = new HashMap<>();
-
-    private CooldownManager() {
-        // Singleton class
-    }
-
     public void setCooldown(@NotNull Player player, @NotNull Material material, int duration) {
         UUID uuid = player.getUniqueId();
         if (!cooldowns.containsKey(player.getUniqueId())) {
@@ -48,10 +42,5 @@ public final class CooldownManager {
         }
 
         return endTimeStamp - System.currentTimeMillis();
-    }
-
-    public static synchronized @NotNull CooldownManager getInstance() {
-        if (instance == null) instance = new CooldownManager();
-        return instance;
     }
 }

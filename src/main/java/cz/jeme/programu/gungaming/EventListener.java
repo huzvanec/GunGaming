@@ -18,47 +18,26 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-
-public class EventListener implements Listener {
-
-    private final @NotNull ZoomManager zoomManager = ZoomManager.getInstance();
-    private final @NotNull HitHandler hitHandler = new HitHandler();
-    private final @NotNull PlayerInteractHandler interactHandler;
-    private final @NotNull InventoryHandler inventoryHandler = new InventoryHandler();
-    private final @NotNull HotbarSlotSwitchHandler hotbarSlotSwichHandler = new HotbarSlotSwitchHandler();
-    private final @NotNull PlayerJoinHandler playerJoinHandler;
-    private final @NotNull DeathHandler deathHandler = new DeathHandler();
-    private final @NotNull PlayerItemConsumeHandler consumeHandler = new PlayerItemConsumeHandler();
-    private final @NotNull PlayerHealHandler foodHandler = new PlayerHealHandler();
-    private final @NotNull GraplingHandler graplingHandler = new GraplingHandler();
-
-    {
-        interactHandler = new PlayerInteractHandler(consumeHandler);
-    }
-
-    public EventListener(File dataFolder) {
-        playerJoinHandler = new PlayerJoinHandler(dataFolder);
-    }
-
+public enum EventListener implements Listener {
+    INSTANCE;
     @EventHandler
     private void onPlayerInteract(@NotNull PlayerInteractEvent event) {
-        interactHandler.onPlayerInteract(event);
+        PlayerInteractHandler.onPlayerInteract(event);
     }
 
     @EventHandler
     private void onEntityDamageByEntity(@NotNull EntityDamageByEntityEvent event) {
-        hitHandler.onEntityDamageByEntity(event);
+        HitHandler.onEntityDamageByEntity(event);
     }
 
     @EventHandler
     private void onPlayerDeath(@NotNull PlayerDeathEvent event) {
-        deathHandler.onPlayerDeath(event);
+        HitHandler.onPlayerDeath(event);
     }
 
     @EventHandler
     private void onProjectileHit(@NotNull ProjectileHitEvent event) {
-        hitHandler.onProjectileHit(event);
+        HitHandler.onProjectileHit(event);
     }
 
     @EventHandler
@@ -72,81 +51,86 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    private void onHotbarSlotSwichHandler(@NotNull PlayerItemHeldEvent event) {
-        hotbarSlotSwichHandler.onHotbarSlotSwitch(event);
+    private void onHotbarSlotSwich(@NotNull PlayerItemHeldEvent event) {
+        InventoryHandler.onHotbarSlotSwitch(event);
     }
 
     @EventHandler
     private void onPlayerSwapHands(@NotNull PlayerSwapHandItemsEvent event) {
-        inventoryHandler.onPlayerSwapHands(event);
+        InventoryHandler.onPlayerSwapHands(event);
     }
 
     @EventHandler
     private void onPlayerLeave(@NotNull PlayerQuitEvent event) {
-        zoomManager.zoomOut(event.getPlayer());
+        ZoomManager.INSTANCE.zoomOut(event.getPlayer());
     }
 
     @EventHandler
     private void onPlayerJoin(@NotNull PlayerJoinEvent event) {
-        playerJoinHandler.onPlayerJoin(event);
+        PlayerTrafficHandler.onPlayerJoin(event);
     }
 
     @EventHandler
     private void onInventoryOpen(@NotNull InventoryOpenEvent event) {
-        inventoryHandler.onInventoryOpen(event);
+        InventoryHandler.onInventoryOpen(event);
     }
 
     @EventHandler
     private void onInventoryClick(@NotNull InventoryClickEvent event) {
-        inventoryHandler.onInventoryClick(event);
+        InventoryHandler.onInventoryClick(event);
     }
 
     @EventHandler
     private void onPlayerDropItem(@NotNull PlayerDropItemEvent event) {
-        inventoryHandler.onPlayerDropItem(event);
+        InventoryHandler.onPlayerDropItem(event);
     }
 
     @EventHandler
     private void onEntityDamage(@NotNull EntityDamageEvent event) {
-        hitHandler.onEntityDamage(event);
+        HitHandler.onEntityDamage(event);
     }
 
     @EventHandler
     private void onInventoryClose(@NotNull InventoryCloseEvent event) {
-        inventoryHandler.onInventoryClose(event);
+        InventoryHandler.onInventoryClose(event);
     }
 
     @EventHandler
     private void onPlayerGamemodeChange(@NotNull PlayerGameModeChangeEvent event) {
-        zoomManager.zoomOut(event.getPlayer());
+        ZoomManager.INSTANCE.zoomOut(event.getPlayer());
     }
 
     @EventHandler
     private void onPlayerItemConsume(@NotNull PlayerItemConsumeEvent event) {
-        consumeHandler.onFinishConsume(event);
+        PlayerItemConsumeHandler.onFinishConsume(event);
     }
 
     @EventHandler
     private void onFoodLevelChange(@NotNull FoodLevelChangeEvent event) {
-        foodHandler.onFoodLevelChange(event);
+        PlayerHealHandler.onFoodLevelChange(event);
     }
 
     @EventHandler
     private void onEntityRegainHealth(@NotNull EntityRegainHealthEvent event) {
-        foodHandler.onEntityRegainHealth(event);
+        PlayerHealHandler.onEntityRegainHealth(event);
     }
 
     @EventHandler
     private void onPlayerStopUsingItem(@NotNull PlayerStopUsingItemEvent event) {
-        consumeHandler.onStopConsume(event);
+        PlayerItemConsumeHandler.onStopConsume(event);
     }
 
     @EventHandler
     private void onPlayerFish(@NotNull PlayerFishEvent event) {
         if (event.getState() == PlayerFishEvent.State.FISHING) {
-            graplingHandler.onThrow(event);
+            GraplingHandler.onThrow(event);
             return;
         }
-        graplingHandler.onSubtract(event);
+        GraplingHandler.onSubtract(event);
+    }
+
+    @EventHandler
+    private void onPlayerResourcePackStatus(@NotNull PlayerResourcePackStatusEvent event) {
+        PlayerTrafficHandler.onPlayerResourcePackStatus(event);
     }
 }

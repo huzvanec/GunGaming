@@ -1,29 +1,32 @@
 package cz.jeme.programu.gungaming.eventhandler.interaction;
 
+import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.attachment.scope.Scope;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
-import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.util.item.Attachments;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
-public class LeftClickHandler {
-    private final ZoomManager zoomManager = ZoomManager.getInstance();
+public final class LeftClickHandler {
+    private LeftClickHandler() {
+        throw new AssertionError();
+    }
 
-    public void air(PlayerInteractEvent event) {
+    public static void air(@NotNull PlayerInteractEvent event) {
         zoom(event);
     }
 
-    public void block(PlayerInteractEvent event) {
+    public static void block(@NotNull PlayerInteractEvent event) {
         ItemStack item = event.getItem();
         if (Attachments.isAttachment(item)) {
             event.setCancelled(true);
         }
     }
 
-    private void zoom(PlayerInteractEvent event) {
+    private static void zoom(@NotNull PlayerInteractEvent event) {
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
 
@@ -32,6 +35,6 @@ public class LeftClickHandler {
         assert scopeName != null : "Scope name is null!";
         Scope scope = (Scope) Attachments.getAttachment(scopeName);
         if (scope == null) return;
-        zoomManager.nextZoom(player, scope.scope);
+        ZoomManager.INSTANCE.nextZoom(player, scope.scope);
     }
 }

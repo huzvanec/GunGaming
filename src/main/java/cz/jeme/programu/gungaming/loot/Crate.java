@@ -6,18 +6,14 @@ import cz.jeme.programu.gungaming.item.gun.Gun;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public enum Crate {
     WOODEN_CRATE(
-            Map.of(
-                    Rarity.COMMON, 12,
-                    Rarity.UNCOMMON, 10,
-                    Rarity.RARE, 5,
-                    Rarity.EPIC, 2,
-                    Rarity.LEGENDARY, 1,
-                    Rarity.UNOBTAINABLE, 0),
+            Collections.emptyMap(),
             Map.of(
                     Gun.class, 1,
                     Attachment.class, 2
@@ -31,11 +27,10 @@ public enum Crate {
                     Rarity.UNCOMMON, 5,
                     Rarity.RARE, 5,
                     Rarity.EPIC, 9,
-                    Rarity.LEGENDARY, 8,
-                    Rarity.UNOBTAINABLE, 0),
+                    Rarity.LEGENDARY, 8),
             Map.of(
                     Gun.class, 2,
-                    Attachment.class, 4
+                    Attachment.class, 3
             ),
             40,
             Material.GOLD_BLOCK
@@ -47,16 +42,19 @@ public enum Crate {
     public final @NotNull Material material;
 
     Crate(@NotNull Map<Rarity, Integer> chances, @NotNull Map<Class<? extends CustomItem>, Integer> limits, float percentage, @NotNull Material material) {
-        for (Rarity rarity : Rarity.values()) {
-            assert chances.containsKey(rarity) : "There is a rarity declaration missing in " + this + "!";
-        }
         for (Integer chance : chances.values()) {
             assert chance != null : "Chance is null in " + this + "!";
             assert chance >= 0 : "Chance is invalid in " + this + "!";
         }
+
+        Map<Rarity, Integer> tempChances = new HashMap<>(chances);
+        Arrays.stream(Rarity.values())
+                .filter(rarity -> !tempChances.containsKey(rarity))
+                .forEach(rarity -> tempChances.put(rarity, rarity.chance));
+
         assert percentage >= 0 && percentage <= 100 : "Invalid percentage in " + this + "!";
 
-        this.chances = Collections.unmodifiableMap(chances);
+        this.chances = Collections.unmodifiableMap(tempChances);
         this.limits = Collections.unmodifiableMap(limits);
         this.percentage = percentage;
         this.material = material;

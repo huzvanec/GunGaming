@@ -39,18 +39,21 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.logging.Level;
 
-public class GunGaming extends JavaPlugin {
+public final class GunGaming extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        try {
+            Class.forName("cz.jeme.programu.gungaming.eventhandler.PlayerTrafficHandler");
+        } catch (ClassNotFoundException ignored) {
+
+        }
         registerItems();
         Loot.registerLoot();
-        new GGCommand(); // register the /gg command
-
-        EventListener eventListener = new EventListener(getDataFolder());
+        GGCommand.getInstance(); // register the /gg command
 
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
-        pluginManager.registerEvents(eventListener, this);
+        pluginManager.registerEvents(EventListener.INSTANCE, this);
 
         saveDefaultConfig();
     }
@@ -118,7 +121,7 @@ public class GunGaming extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        ZoomManager.getInstance().zoomOutAll();
+        ZoomManager.INSTANCE.zoomOutAll();
     }
 
     /**

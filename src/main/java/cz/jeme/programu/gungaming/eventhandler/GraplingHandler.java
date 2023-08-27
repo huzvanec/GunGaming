@@ -19,8 +19,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GraplingHandler {
-    public void onThrow(@NotNull PlayerFishEvent event) {
+public final class GraplingHandler {
+    private GraplingHandler() {
+        throw new AssertionError();
+    }
+    public static void onThrow(@NotNull PlayerFishEvent event) {
         FishHook hook = event.getHook();
         hook.setVelocity(hook.getVelocity().multiply(1.4));
         new BukkitRunnable() {
@@ -54,7 +57,7 @@ public class GraplingHandler {
         }.runTaskTimer(GunGaming.getPlugin(), 0L, 1L);
     }
 
-    public void onSubtract(@NotNull PlayerFishEvent event) {
+    public static void onSubtract(@NotNull PlayerFishEvent event) {
         ItemStack fishingRod = event.getPlayer().getInventory().getItemInMainHand();
         if (!Miscs.isMisc(fishingRod)) return;
         Misc misc = Miscs.getMisc(fishingRod);
