@@ -7,8 +7,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,6 +49,7 @@ public final class PlayerTrafficHandler {
 
     public static void onPlayerJoin(@NotNull PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        player.setGameMode(GameMode.SPECTATOR);
         player.setResourcePack(RESOURCEPACK_URL, HASH, true, Messages.from(RESOURCEPACK_MESSAGE));
     }
 
@@ -59,6 +62,14 @@ public final class PlayerTrafficHandler {
         if (event.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
             player.kick(Messages.from("<#FF0000>Failed to load resource pack!</#FF0000>"));
             return;
+        }
+        if (event.getStatus() == PlayerResourcePackStatusEvent.Status.SUCCESSFULLY_LOADED) {
+            player.setGameMode(GameMode.SURVIVAL);
+        }
+    }
+    public static void onPlayerMove(@NotNull PlayerMoveEvent event) {
+        if (!event.getPlayer().hasResourcePack()) {
+            event.setCancelled(true);
         }
     }
 }

@@ -133,4 +133,9 @@ public enum EventListener implements Listener {
     private void onPlayerResourcePackStatus(@NotNull PlayerResourcePackStatusEvent event) {
         PlayerTrafficHandler.onPlayerResourcePackStatus(event);
     }
+
+    @EventHandler
+    private void onPlayerMoves(@NotNull PlayerMoveEvent event) {
+        PlayerTrafficHandler.onPlayerMove(event);
+    }
 }
