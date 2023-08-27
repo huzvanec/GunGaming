@@ -26,19 +26,17 @@ public final class PlayerTrafficHandler {
     private static final @NotNull String VERSION = "BETAv2.2";
     private static final @NotNull String RESOURCEPACK_URL = "https://github.com/Mandlemankiller/GunGaming/releases/download/" + VERSION + "/resource-pack.zip";
     private static final @NotNull String HASH_URL = "https://github.com/Mandlemankiller/GunGaming/releases/download/" + VERSION + "/resource-pack.hash";
-    private static final byte @NotNull [] HASH;
+    private static final @NotNull String HASH;
 
     static {
-        System.out.println(VERSION);
-        byte @NotNull [] tempHash;
+        String tempHash;
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet(HASH_URL);
-        try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
-            String hashString = EntityUtils.toString(response.getEntity());
-            tempHash = hashString.getBytes(); // Convert the hash string to byte array
+        HttpGet get = new HttpGet(HASH_URL);
+        try (CloseableHttpResponse response = httpClient.execute(get)) {
+            tempHash = EntityUtils.toString(response.getEntity());
         } catch (IOException e) {
             GunGaming.serverLog("Couldn't download resourcepack hash!", e);
-            tempHash = new byte[]{};
+            tempHash = "";
         }
         HASH = tempHash;
     }
@@ -49,17 +47,17 @@ public final class PlayerTrafficHandler {
 
     public static void onPlayerJoin(@NotNull PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        player.setResourcePack(RESOURCEPACK_URL, HASH, Messages.from(RESOURCEPACK_MESSAGE), true);
+        player.setResourcePack(RESOURCEPACK_URL, HASH, true, Messages.from(RESOURCEPACK_MESSAGE));
     }
 
     public static void onPlayerResourcePackStatus(@NotNull PlayerResourcePackStatusEvent event) {
         Player player = event.getPlayer();
         if (event.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED) {
-            player.kick(Messages.from("<#FF0000>You can't decline the resourcepack!</#FF0000>"));
+            player.kick(Messages.from("<#FF0000>You can't decline the resource pack!</#FF0000>"));
             return;
         }
         if (event.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
-            player.kick(Messages.from("<#FF0000>Failed to load resourcepack!</#FF0000>"));
+            player.kick(Messages.from("<#FF0000>Failed to load resource pack!</#FF0000>"));
             return;
         }
     }
