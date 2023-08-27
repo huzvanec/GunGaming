@@ -11,7 +11,7 @@ public class SV98 extends Gun {
         info = "A powerfull sniper rifle";
         shootCooldown = 1400;
         reloadCooldown = 2400;
-        damage = 25d;
+        damage = 20d;
         velocity = 80f;
         customModelData = 8;
         maxAmmo = 10;
