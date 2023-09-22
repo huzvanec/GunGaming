@@ -1,6 +1,9 @@
 package cz.jeme.programu.gungaming;
 
-import cz.jeme.programu.gungaming.eventhandler.*;
+import cz.jeme.programu.gungaming.eventhandler.HitHandler;
+import cz.jeme.programu.gungaming.eventhandler.InventoryHandler;
+import cz.jeme.programu.gungaming.eventhandler.PlayerHealHandler;
+import cz.jeme.programu.gungaming.eventhandler.PlayerItemConsumeHandler;
 import cz.jeme.programu.gungaming.eventhandler.interaction.PlayerInteractHandler;
 import cz.jeme.programu.gungaming.item.misc.GraplingHook;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
@@ -118,11 +121,7 @@ public enum EventListener implements Listener {
 
     @EventHandler
     private void onPlayerFish(@NotNull PlayerFishEvent event) {
-        if (event.getState() == PlayerFishEvent.State.FISHING) {
-            GraplingHandler.onThrow(event);
-            return;
-        }
-        GraplingHandler.onSubtract(event);
+        GraplingHook.onPlayerFish(event);
     }
 
     //    @EventHandler
