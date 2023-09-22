@@ -1,0 +1,16 @@
+{
+    "__gungaming__": "Filled map is used for Radar in GunGaming",
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "item/filled_map",
+        "layer1": "item/filled_map_markings"
+    },
+	"overrides": [
+		{
+			"predicate": {
+				"custom_model_data": 1
+			},
+			"model": "item/gungaming/misc/radar"
+		}
+	]
+}
