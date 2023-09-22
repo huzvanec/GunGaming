@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -102,6 +103,7 @@ public enum ReloadManager {
         }
         removeReload(player, material);
         player.sendActionBar(Messages.from("<red>Reload aborted!</red>"));
+        player.playSound(Sounds.getSound("gun.reload_required", 2.5f));
     }
 
     public void abortReloads(@NotNull Player player, boolean actionNotify) {
@@ -118,6 +120,7 @@ public enum ReloadManager {
             reload.cancel();
             removeReload(player, material);
             if (actionNotify) {
+                player.playSound(Sounds.getSound("gun.reload_required", 2.5f));
                 player.sendActionBar(Messages.from("<red>Reload aborted!</red>"));
             }
         }
@@ -133,5 +136,10 @@ public enum ReloadManager {
         if (reloadMap.isEmpty()) return;
         reloadMap.remove(material);
         player.sendActionBar(Messages.from(""));
+    }
+
+    public @Nullable Reload getReload(@NotNull UUID uuid, @NotNull Material material) {
+        if (!reloads.containsKey(uuid)) return null;
+        return reloads.get(uuid).get(material);
     }
 }

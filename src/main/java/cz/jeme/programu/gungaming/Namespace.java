@@ -44,7 +44,9 @@ public enum Namespace {
     CONSUMABLE(PersistentDataType.STRING),
     // Grapling Hook namespaces
     HOOKED(PersistentDataType.BOOLEAN),
-    GRAPPLE_LAST_SUBTRACT(PersistentDataType.LONG);
+    GRAPPLE_LAST_SUBTRACT(PersistentDataType.LONG),
+    // Player namespaces
+    FROZEN(PersistentDataType.BOOLEAN);
 
     public final @NotNull NamespacedKey namespacedKey;
     public final @NotNull PersistentDataType<?, ?> type;

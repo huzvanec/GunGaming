@@ -170,8 +170,9 @@ public final class GGCommand extends Command {
             sender.sendMessage(Messages.prefix("<red>That is not a valid number!</red>"));
             return;
         }
-        if (Game.game == null) {
-            Game.game = new Game(size, centerX, centerZ, sender);
+        Game.Builder gameBuilder = new Game.Builder(size, centerX, centerZ, sender);
+        gameBuilder.build();
+        if (gameBuilder.succeeded()) {
             sender.sendMessage(Messages.prefix("<green>Game started successfully!</green>"));
         } else {
             sender.sendMessage(Messages.prefix("<red>There is a game already running!</red>"));

@@ -28,6 +28,12 @@
 				"custom_model_data": 4
 			},
 			"model": "item/gungaming/ammo/12_gauge"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 5
+			},
+			"model": "item/gungaming/ammo/308_subsonic_winchester"
 		}
 	]
 }

@@ -1,9 +1,6 @@
 package cz.jeme.programu.gungaming;
 
-import cz.jeme.programu.gungaming.item.ammo.NineMm;
-import cz.jeme.programu.gungaming.item.ammo.Rocket;
-import cz.jeme.programu.gungaming.item.ammo.SevenSixTwoMm;
-import cz.jeme.programu.gungaming.item.ammo.TwelveGauge;
+import cz.jeme.programu.gungaming.item.ammo.*;
 import cz.jeme.programu.gungaming.item.attachment.magazine.BigMagazine;
 import cz.jeme.programu.gungaming.item.attachment.magazine.HugeMagazine;
 import cz.jeme.programu.gungaming.item.attachment.magazine.SmallMagazine;
@@ -20,6 +17,7 @@ import cz.jeme.programu.gungaming.item.consumable.Soda;
 import cz.jeme.programu.gungaming.item.gun.*;
 import cz.jeme.programu.gungaming.item.misc.Concrete;
 import cz.jeme.programu.gungaming.item.misc.GraplingHook;
+import cz.jeme.programu.gungaming.item.misc.Radar;
 import cz.jeme.programu.gungaming.item.throwable.MolotovCocktail;
 import cz.jeme.programu.gungaming.item.throwable.grenade.FragGrenade;
 import cz.jeme.programu.gungaming.item.throwable.grenade.MIRVGrenade;
@@ -66,6 +64,7 @@ public final class GunGaming extends JavaPlugin {
         Ammos.register(new SevenSixTwoMm());
         Ammos.register(new Rocket());
         Ammos.register(new TwelveGauge());
+        Ammos.register(new ThreeZeroEightSubsonicWinchester());
 
         Guns.register(new M9());
         Guns.register(new NagantM1895());
@@ -75,9 +74,11 @@ public final class GunGaming extends JavaPlugin {
         Guns.register(new RemingtonM870());
         Guns.register(new DragunovSVU());
         Guns.register(new SV98());
+        Guns.register(new Prickskyttegevar90());
 
         Miscs.register(new Concrete());
         Miscs.register(new GraplingHook());
+        Miscs.register(new Radar());
 
         Attachments.register(new LowScope());
         Attachments.register(new MediumScope());

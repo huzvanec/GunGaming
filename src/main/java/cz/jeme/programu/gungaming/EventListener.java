@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 public enum EventListener implements Listener {
     INSTANCE;
+
     @EventHandler
     private void onPlayerInteract(@NotNull PlayerInteractEvent event) {
         PlayerInteractHandler.onPlayerInteract(event);
@@ -63,11 +64,6 @@ public enum EventListener implements Listener {
     @EventHandler
     private void onPlayerLeave(@NotNull PlayerQuitEvent event) {
         ZoomManager.INSTANCE.zoomOut(event.getPlayer());
-    }
-
-    @EventHandler
-    private void onPlayerJoin(@NotNull PlayerJoinEvent event) {
-        PlayerTrafficHandler.onPlayerJoin(event);
     }
 
     @EventHandler
@@ -129,13 +125,20 @@ public enum EventListener implements Listener {
         GraplingHandler.onSubtract(event);
     }
 
+    //    @EventHandler
+//    private void onPlayerResourcePackStatus(@NotNull PlayerResourcePackStatusEvent event) {
+//        PlayerTrafficHandler.onPlayerResourcePackStatus(event);
+//    }
+//
     @EventHandler
-    private void onPlayerResourcePackStatus(@NotNull PlayerResourcePackStatusEvent event) {
-        PlayerTrafficHandler.onPlayerResourcePackStatus(event);
+    private void onPlayerMove(@NotNull PlayerMoveEvent event) {
+        Boolean frozen = Namespace.FROZEN.get(event.getPlayer());
+        if (frozen != null && frozen) event.setCancelled(true);
+//        PlayerTrafficHandler.onPlayerMove(event);
     }
-
-    @EventHandler
-    private void onPlayerMoves(@NotNull PlayerMoveEvent event) {
-        PlayerTrafficHandler.onPlayerMove(event);
-    }
+//
+//    @EventHandler
+//    private void onPlayerJoin(@NotNull PlayerJoinEvent event) {
+//        PlayerTrafficHandler.onPlayerJoin(event);
+//    }
 }

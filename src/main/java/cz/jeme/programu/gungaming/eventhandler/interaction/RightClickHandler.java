@@ -5,6 +5,7 @@ import cz.jeme.programu.gungaming.eventhandler.PlayerItemConsumeHandler;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.manager.CooldownManager;
+import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.util.Inventories;
 import cz.jeme.programu.gungaming.util.Materials;
 import cz.jeme.programu.gungaming.util.Messages;
@@ -68,7 +69,8 @@ public final class RightClickHandler {
 
         Gun gun = Guns.getGun(item);
         if (player.getCooldown(item.getType()) != 0) {
-            return;
+            if (ReloadManager.INSTANCE.getReload(player.getUniqueId(), item.getType()) == null) return;
+            ReloadManager.INSTANCE.abortReloads(player, false);
         }
 
         Integer heldAmmo = Namespace.GUN_AMMO_CURRENT.get(item);

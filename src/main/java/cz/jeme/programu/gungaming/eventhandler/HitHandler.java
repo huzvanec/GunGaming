@@ -156,7 +156,7 @@ public final class HitHandler {
         Player dead = event.getEntity();
         ZoomManager.INSTANCE.zoomOut(dead);
         ReloadManager.INSTANCE.abortReloads(dead, false);
-        if (Game.game == null) return;
+        if (!Game.isRunning()) return;
         Player killer = dead.getKiller();
 
         new Respawn(dead);

@@ -208,5 +208,20 @@
         "sounds": [
             "gungaming:consumable/burp/bandage"
         ]
+    },
+    "gun.shoot.prickskyttegevar_90": {
+        "sounds": [
+            "gungaming:gun/shoot/prickskyttegevar_90"
+        ]
+    },
+    "gun.reload.prickskyttegevar_90": {
+        "sounds": [
+            "gungaming:gun/reload/prickskyttegevar_90"
+        ]
+    },
+    "gun.switch.prickskyttegevar_90": {
+        "sounds": [
+            "gungaming:gun/switch/prickskyttegevar_90"
+        ]
     }
 }

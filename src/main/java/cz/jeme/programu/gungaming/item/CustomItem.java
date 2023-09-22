@@ -17,14 +17,18 @@ public abstract class CustomItem {
     public @NotNull Integer customModelData;
 
     public @NotNull String name;
+    public @NotNull String displayName;
 
     public @NotNull String info;
 
     public @NotNull Rarity rarity;
 
     abstract protected void setup();
+
     abstract protected @NotNull Material getMaterial();
+
     abstract public int getMinLoot();
+
     abstract public int getMaxLoot();
 
     public CustomItem() {
@@ -33,12 +37,14 @@ public abstract class CustomItem {
         assert customModelData != null : "Cusom model data not given!";
         assert name != null : "Name not given!";
         assert info != null : "Info not given!";
-        assert rarity != null : "No rarity given!";
+        assert rarity != null : "Rarity not given!";
+
+        if (displayName == null) displayName = name;
 
         item = new ItemStack(getMaterial());
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        String coloredName = rarity.color + name + Messages.getEscapeTag(rarity.color);
+        String coloredName = rarity.color + displayName + Messages.getEscapeTag(rarity.color);
         meta.displayName(Messages.from("<!italic>" + coloredName + "</!italic>"));
         meta.setCustomModelData(customModelData);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

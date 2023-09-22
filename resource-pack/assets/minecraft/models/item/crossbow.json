@@ -122,6 +122,12 @@
 				"custom_model_data": 8
 			},
 			"model": "item/gungaming/gun/sv-98"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 9
+			},
+			"model": "item/gungaming/gun/prickskyttegevar_90"
 		}
 	]
 }

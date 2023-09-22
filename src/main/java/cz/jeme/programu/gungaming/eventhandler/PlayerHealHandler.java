@@ -17,13 +17,13 @@ public final class PlayerHealHandler {
     }
 
     public static void onFoodLevelChange(@NotNull FoodLevelChangeEvent event) {
-        if (Game.game == null) return;
+        if (!Game.isRunning()) return;
         event.setCancelled(true);
     }
     public static void onEntityRegainHealth(@NotNull EntityRegainHealthEvent event) {
         if (event.getRegainReason() != EntityRegainHealthEvent.RegainReason.SATIATED) return;
         if (!(event.getEntity() instanceof Player player)) return;
-        if (Game.game == null) return;
+        if (!Game.isRunning()) return;
 
         UUID uuid = player.getUniqueId();
 
