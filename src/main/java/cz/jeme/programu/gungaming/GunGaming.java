@@ -41,11 +41,6 @@ public final class GunGaming extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        try {
-            Class.forName("cz.jeme.programu.gungaming.eventhandler.PlayerTrafficHandler");
-        } catch (ClassNotFoundException ignored) {
-
-        }
         registerItems();
         Loot.registerLoot();
         GGCommand.getInstance(); // register the /gg command
