@@ -63,9 +63,11 @@ public class Radar extends Misc {
             MapCursorCollection cursors = canvas.getCursors();
             Location location = player.getLocation();
             final int size = cursors.size();
+
             for (int i = 0; i < size; i++) {
                 cursors.removeCursor(cursors.getCursor(0));
             }
+
             cursors.addCursor(
                     new MapCursor(
                             (byte) 0,
@@ -75,9 +77,11 @@ public class Radar extends Misc {
                             true
                     )
             );
+
             List<? extends Player> players = Bukkit.getOnlinePlayers().stream()
                     .filter(p -> p.getUniqueId() != player.getUniqueId())
                     .toList();
+
             for (Player p : players) {
                 if (!p.isValid()) continue;
                 Location entityLocation = p.getLocation();
