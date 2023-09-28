@@ -3,7 +3,7 @@ package cz.jeme.programu.gungaming;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.loot.Crate;
 import cz.jeme.programu.gungaming.loot.generation.CrateGenerator;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.item.Groups;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -45,7 +45,7 @@ public final class GGCommand extends Command {
             return true;
         }
         if (args[0].equals(CORRECT_ARGS.get("RELOAD"))) {
-            sender.sendMessage(Messages.prefix("<red>Reload TODO!</red>"));
+            sender.sendMessage(Message.prefix("<red>Reload TODO!</red>"));
             // TODO Reload
             return true;
         }
@@ -61,7 +61,7 @@ public final class GGCommand extends Command {
             start(sender, args);
             return true;
         }
-        sender.sendMessage(Messages.prefix("<red>Unknown command!</red>"));
+        sender.sendMessage(Message.prefix("<red>Unknown command!</red>"));
         return true;
     }
 
@@ -77,18 +77,18 @@ public final class GGCommand extends Command {
     }
 
     private void help(@NotNull CommandSender sender) {
-        sender.sendMessage(Messages.prefix("<red>Help TODO!</red>"));
+        sender.sendMessage(Message.prefix("<red>Help TODO!</red>"));
         // TODO Help
     }
 
     private void give(@NotNull CommandSender sender, @NotNull String[] args) {
         if (args.length < 4) {
-            sender.sendMessage(Messages.prefix("<red>Not enough arguments!</red>"));
+            sender.sendMessage(Message.prefix("<red>Not enough arguments!</red>"));
             return;
         }
 
         if (args.length > 5) {
-            sender.sendMessage(Messages.prefix("<red>Too many arguments!</red>"));
+            sender.sendMessage(Message.prefix("<red>Too many arguments!</red>"));
             return;
         }
 
@@ -100,7 +100,7 @@ public final class GGCommand extends Command {
             Player player = Bukkit.getPlayer(playerName);
             if (player == null || !player.isOnline()) {
                 // Player not found
-                sender.sendMessage(Messages.prefix("<red>This player is not online!</red>"));
+                sender.sendMessage(Message.prefix("<red>This player is not online!</red>"));
                 return;
             }
             players.add(player);
@@ -108,7 +108,7 @@ public final class GGCommand extends Command {
 
         String groupName = args[2].toLowerCase();
         if (!Groups.groups.containsKey(groupName)) {
-            sender.sendMessage(Messages.prefix("<red>Unknown group name \"" + groupName + "\"!</red>"));
+            sender.sendMessage(Message.prefix("<red>Unknown group name \"" + groupName + "\"!</red>"));
             return;
         }
 
@@ -118,7 +118,7 @@ public final class GGCommand extends Command {
         Map<String, ? extends CustomItem> group = Groups.groups.get(groupName);
 
         if (!matchesLowercaseUnderscores(group.keySet(), itemName)) {
-            sender.sendMessage(Messages.prefix("<red>Unknown " + groupName + " name!</red>"));
+            sender.sendMessage(Message.prefix("<red>Unknown " + groupName + " name!</red>"));
             return;
         }
 
@@ -130,11 +130,11 @@ public final class GGCommand extends Command {
         if (args.length == 5) {
             try {
                 if (Integer.parseInt(args[4]) < 1) {
-                    sender.sendMessage(Messages.prefix("<red>Count can not be lower than 1!</red>"));
+                    sender.sendMessage(Message.prefix("<red>Count can not be lower than 1!</red>"));
                     return;
                 }
             } catch (NullPointerException | NumberFormatException e) {
-                sender.sendMessage(Messages.prefix("<red>Count is not valid!</red>"));
+                sender.sendMessage(Message.prefix("<red>Count is not valid!</red>"));
                 return;
             }
             count = Integer.parseInt(args[4]);
@@ -143,7 +143,7 @@ public final class GGCommand extends Command {
             for (Player player : players) {
                 Map<Integer, ItemStack> exceeded = player.getInventory().addItem(item);
                 if (!exceeded.isEmpty()) {
-                    sender.sendMessage(Messages.prefix("<gold>Count exceeded the inventory size!</gold>"));
+                    sender.sendMessage(Message.prefix("<gold>Count exceeded the inventory size!</gold>"));
                     return;
                 }
             }
@@ -152,11 +152,11 @@ public final class GGCommand extends Command {
 
     private void start(@NotNull CommandSender sender, @NotNull String[] args) {
         if (args.length < 4) {
-            sender.sendMessage(Messages.prefix("<red>Not enough arguments!</red>"));
+            sender.sendMessage(Message.prefix("<red>Not enough arguments!</red>"));
             return;
         }
         if (args.length > 4) {
-            sender.sendMessage(Messages.prefix("<red>Too many arguments!</red>"));
+            sender.sendMessage(Message.prefix("<red>Too many arguments!</red>"));
             return;
         }
         int size;
@@ -167,14 +167,14 @@ public final class GGCommand extends Command {
             centerX = Integer.parseInt(args[2]);
             centerZ = Integer.parseInt(args[3]);
         } catch (NumberFormatException e) {
-            sender.sendMessage(Messages.prefix("<red>That is not a valid number!</red>"));
+            sender.sendMessage(Message.prefix("<red>That is not a valid number!</red>"));
             return;
         }
         Game game = Game.newInstance(size, centerX, centerZ, sender);
         if (game == null) {
-            sender.sendMessage(Messages.prefix("<red>There is a game already running!</red>"));
+            sender.sendMessage(Message.prefix("<red>There is a game already running!</red>"));
         } else {
-            sender.sendMessage(Messages.prefix("<green>Game started successfully!</green>"));
+            sender.sendMessage(Message.prefix("<green>Game started successfully!</green>"));
         }
     }
 

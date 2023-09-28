@@ -1,6 +1,6 @@
 package cz.jeme.programu.gungaming.loot;
 
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,14 +21,14 @@ public enum Rarity {
         this.chance = chance;
         this.color = color;
         name = color + this;
-        component = Messages.from(name);
+        component = Message.from(name);
     }
 
     Rarity(int chance, @NotNull String color, @NotNull String prefix, @NotNull String suffix) {
         this.chance = chance;
         this.color = color;
-        name = prefix + color + this + Messages.getEscapeTag(color) + suffix;
-        component = Messages.from(name);
+        name = prefix + color + this + Message.getEscapeTag(color) + suffix;
+        component = Message.from(name);
     }
 
     Rarity(int chance, @NotNull String color, @NotNull String prefix) {

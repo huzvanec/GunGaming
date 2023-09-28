@@ -8,7 +8,7 @@ import cz.jeme.programu.gungaming.manager.CooldownManager;
 import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.util.Inventories;
 import cz.jeme.programu.gungaming.util.Materials;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.Sounds;
 import cz.jeme.programu.gungaming.util.item.Attachments;
 import cz.jeme.programu.gungaming.util.item.Consumables;
@@ -78,10 +78,10 @@ public final class RightClickHandler {
         boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
         if (heldAmmo == 0 && !isCreative) {
             if (Inventories.getItemCount(player.getInventory(), gun.ammo.item) == 0) {
-                player.sendActionBar(Messages.from("<red>Out of ammo!</red>"));
+                player.sendActionBar(Message.from("<red>Out of ammo!</red>"));
                 player.playSound(Sounds.getSound("gun.out_of_ammo", 2.5f));
             } else {
-                player.sendActionBar(Messages.from("<red>Press F to reload!</red>"));
+                player.sendActionBar(Message.from("<red>Press F to reload!</red>"));
                 player.playSound(Sounds.getSound("gun.reload_required", 2.5f));
             }
             return;

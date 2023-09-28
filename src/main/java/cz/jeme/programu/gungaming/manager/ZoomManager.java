@@ -1,7 +1,7 @@
 package cz.jeme.programu.gungaming.manager;
 
 import cz.jeme.programu.gungaming.GunGaming;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.Packets;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.protocol.game.ClientboundPlayerAbilitiesPacket;
@@ -37,7 +37,7 @@ public enum ZoomManager {
         List<Component> lore = new ArrayList<>();
         assert meta != null;
         meta.lore(lore);
-        meta.displayName(Messages.from("§"));
+        meta.displayName(Message.from("§"));
         // This is equivalent to an empty char, minecraft cannot render paragraphs, they are used for colors
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.setCustomModelData(1);
@@ -56,7 +56,7 @@ public enum ZoomManager {
             return;
         }
         if (player.isFlying()) {
-            player.sendActionBar(Messages.from("<red>You can't use scope while flying!</red>"));
+            player.sendActionBar(Message.from("<red>You can't use scope while flying!</red>"));
             return;
         }
         setZoom(player, multiplier);
@@ -82,7 +82,7 @@ public enum ZoomManager {
         // Modifying walking speed in ability NMS packet causes bad behavior to flying!
 
         Packets.sendPacket(player, new ClientboundPlayerAbilitiesPacket(abilities));
-        player.sendActionBar(Messages.from("<gold>zoom: </gold><aqua>" + multiplier + "×</aqua>"));
+        player.sendActionBar(Message.from("<gold>zoom: </gold><aqua>" + multiplier + "×</aqua>"));
     }
 
     private float calcZoom(double multiplier) {

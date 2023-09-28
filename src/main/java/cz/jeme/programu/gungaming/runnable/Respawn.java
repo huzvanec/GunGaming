@@ -1,7 +1,7 @@
 package cz.jeme.programu.gungaming.runnable;
 
 import cz.jeme.programu.gungaming.GunGaming;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import net.kyori.adventure.title.Title;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -9,7 +9,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
-import java.util.Random;
 
 public final class Respawn extends BukkitRunnable {
 
@@ -34,8 +33,8 @@ public final class Respawn extends BukkitRunnable {
         final float phase = (float) counter / COUNTER_START;
         Title.Times times = Title.Times.times(Duration.ZERO, Duration.ofSeconds(5), Duration.ZERO);
         Title title = Title.title(
-                Messages.from("<transition:#FF0000:#00FF00:" + phase + ">" + counter + "</transition>"),
-                Messages.from("Respawning..."),
+                Message.from("<transition:#FF0000:#00FF00:" + phase + ">" + counter + "</transition>"),
+                Message.from("Respawning..."),
                 times
         );
         player.showTitle(title);

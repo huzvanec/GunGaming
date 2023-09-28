@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class Messages {
+public final class Message {
     public static final @NotNull Map<Character, Character> LATIN = new HashMap<>();
 
     static {
@@ -45,7 +45,7 @@ public final class Messages {
     // [ɢɢ]:
     public static final @NotNull String PREFIX = "<dark_gray>[<bold><#485C86>ɢɢ</#485C86></bold>] </dark_gray>";
 
-    private Messages() {
+    private Message() {
         // Static class cannot be initialized
     }
 

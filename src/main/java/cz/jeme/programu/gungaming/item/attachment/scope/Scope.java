@@ -2,7 +2,7 @@ package cz.jeme.programu.gungaming.item.attachment.scope;
 
 import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.attachment.Attachment;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +17,7 @@ public abstract class Scope extends Attachment {
         assert scope != null : "Scope level is null!";
 
         ItemMeta scopeMeta = placeHolder.getItemMeta();
-        scopeMeta.displayName(Messages.from("<!italic><gray>Scope</gray></!italic>"));
+        scopeMeta.displayName(Message.from("<!italic><gray>Scope</gray></!italic>"));
         scopeMeta.setCustomModelData(2);
         placeHolder.setItemMeta(scopeMeta);
     }

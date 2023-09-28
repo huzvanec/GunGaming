@@ -7,7 +7,7 @@ import cz.jeme.programu.gungaming.item.gun.Magazineless;
 import cz.jeme.programu.gungaming.manager.CooldownManager;
 import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.util.Inventories;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.Sounds;
 import cz.jeme.programu.gungaming.util.item.Ammos;
 import org.bukkit.Material;
@@ -36,7 +36,7 @@ public final class Reload extends BukkitRunnable {
         @Override
         public void run() {
             String dots = ".".repeat(dotsCount);
-            player.sendActionBar(Messages.from(
+            player.sendActionBar(Message.from(
                     "<dark_aqua>Reloading" + dots + "</dark_aqua>"
             ));
 

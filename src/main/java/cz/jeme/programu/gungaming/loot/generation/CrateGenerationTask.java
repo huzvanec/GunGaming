@@ -1,7 +1,7 @@
 package cz.jeme.programu.gungaming.loot.generation;
 
 import cz.jeme.programu.gungaming.loot.Crate;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -17,7 +17,7 @@ import java.util.Random;
 
 public final class CrateGenerationTask extends BukkitRunnable {
     private static final @NotNull Random RANDOM = new Random();
-    private final @NotNull DecimalFormat FORMATTER = new DecimalFormat("#0.00");
+    private static final @NotNull DecimalFormat FORMATTER = new DecimalFormat("#0.00");
     private final @NotNull CrateGenerator crateGenerator = CrateGenerator.INSTANCE;
     private int blocksCounter = 0;
     private long tickStartStamp = System.currentTimeMillis();
@@ -72,8 +72,8 @@ public final class CrateGenerationTask extends BukkitRunnable {
             if (blocksCounter == xSize * zSize) { // All the blocks were checked
                 cancel();
                 String finishInfo = "<#0CFF00>Generated " + crateGenerator.CRATES.get(crate).size() + " crates of type " + crate + "</#0CFF00>";
-                player.sendMessage(Messages.from(finishInfo));
-                player.sendActionBar(Messages.from(""));
+                player.sendMessage(Message.from(finishInfo));
+                player.sendActionBar(Message.from(""));
                 crateGenerator.CRATES.put(crate, Collections.unmodifiableList(crateGenerator.CRATES.get(crate)));
                 if (crateGenerator.generationTask == this) {
                     crateGenerator.generationTask = null;
@@ -116,6 +116,6 @@ public final class CrateGenerationTask extends BukkitRunnable {
         }
         float generatePercentage = blocksCounter / ((xSize * zSize) / 100f);
         String info = "<transition:#FF0000:#0CFF00:" + generatePercentage / 100f + ">[" + FORMATTER.format(generatePercentage) + "%] Generation: " + crate + "; Speed: " + blocksPerSecond + "b/s</transition>";
-        player.sendActionBar(Messages.from(info));
+        player.sendActionBar(Message.from(info));
     }
 }

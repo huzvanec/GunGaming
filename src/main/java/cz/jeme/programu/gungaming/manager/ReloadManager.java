@@ -6,7 +6,7 @@ import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.runnable.Reload;
 import cz.jeme.programu.gungaming.util.Inventories;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.Sounds;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import org.bukkit.GameMode;
@@ -64,7 +64,7 @@ public enum ReloadManager {
         boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
 
         if (ammoFound == 0 && !isCreative) {
-            player.sendActionBar(Messages.from("<red>Out of ammo!</red>"));
+            player.sendActionBar(Message.from("<red>Out of ammo!</red>"));
             player.getWorld().playSound(Sounds.getSound("gun.out_of_ammo", 2.5f), player);
             return;
         }
@@ -102,7 +102,7 @@ public enum ReloadManager {
             reload.cancel();
         }
         removeReload(player, material);
-        player.sendActionBar(Messages.from("<red>Reload aborted!</red>"));
+        player.sendActionBar(Message.from("<red>Reload aborted!</red>"));
         player.playSound(Sounds.getSound("gun.reload_required", 2.5f));
     }
 
@@ -121,7 +121,7 @@ public enum ReloadManager {
             removeReload(player, material);
             if (actionNotify) {
                 player.playSound(Sounds.getSound("gun.reload_required", 2.5f));
-                player.sendActionBar(Messages.from("<red>Reload aborted!</red>"));
+                player.sendActionBar(Message.from("<red>Reload aborted!</red>"));
             }
         }
     }
@@ -135,7 +135,7 @@ public enum ReloadManager {
         Map<Material, Reload> reloadMap = reloads.get(uuid);
         if (reloadMap.isEmpty()) return;
         reloadMap.remove(material);
-        player.sendActionBar(Messages.from(""));
+        player.sendActionBar(Message.from(""));
     }
 
     public @Nullable Reload getReload(@NotNull UUID uuid, @NotNull Material material) {

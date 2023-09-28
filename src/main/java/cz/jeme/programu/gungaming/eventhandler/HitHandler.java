@@ -10,7 +10,7 @@ import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
 import cz.jeme.programu.gungaming.runnable.Respawn;
 import cz.jeme.programu.gungaming.util.Materials;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.Packets;
 import cz.jeme.programu.gungaming.util.item.Ammos;
 import cz.jeme.programu.gungaming.util.item.Guns;
@@ -175,10 +175,10 @@ public final class HitHandler {
         if (deathMessage == null) return;
 
         if (killer == null || dead.getUniqueId().equals(killer.getUniqueId())) {
-            event.deathMessage(Messages.from("<red>" + Messages.to(deathMessage) + "</red>"));
+            event.deathMessage(Message.from("<red>" + Message.to(deathMessage) + "</red>"));
             return;
         }
-        event.deathMessage(Messages.from("<dark_red>" + Messages.to(deathMessage) + "</dark_red>"));
+        event.deathMessage(Message.from("<dark_red>" + Message.to(deathMessage) + "</dark_red>"));
     }
 
     private static void resetDamageTicks(@NotNull LivingEntity entity) {

@@ -31,8 +31,8 @@ public final class Lores {
     public static void update(@NotNull ItemMeta meta) {
         List<Component> lore = new ArrayList<>();
         Rarity rarity = Rarity.valueOf(Namespace.RARITY.get(meta));
-        lore.add(Messages.from("<!italic><bold>" + rarity.name + "</bold></!italic>"));
-        lore.add(Messages.from("<!italic><#90FFF1>" + Namespace.INFO.get(meta) + "</#90FFF1></!italic>"));
+        lore.add(Message.from("<!italic><bold>" + rarity.name + "</bold></!italic>"));
+        lore.add(Message.from("<!italic><#90FFF1>" + Namespace.INFO.get(meta) + "</#90FFF1></!italic>"));
 
         if (Namespace.GUN.has(meta)) {
             updateGun(meta, lore);
@@ -58,17 +58,17 @@ public final class Lores {
         assert name != null : "Gun name is null!";
         Gun gun = Guns.getGun(name);
         assert gun != null : "Gun is null!";
-        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Damage: ") + "</#77A5FF>" + FORMATTER.format(gun.damage) + "</#CADCFF></!italic>"));
-        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("DPS: ") + "</#77A5FF>" + calcDPS(gun.damage, gun.shootCooldown, gun.bulletsPerShot) + "</#CADCFF></!italic>"));
-        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Ammo type: ") + "</#77A5FF>" + gun.ammo.name + "</#CADCFF></!italic>"));
+        lore.add(Message.from("<!italic><#CADCFF><#77A5FF>" + Message.latin("Damage: ") + "</#77A5FF>" + FORMATTER.format(gun.damage) + "</#CADCFF></!italic>"));
+        lore.add(Message.from("<!italic><#CADCFF><#77A5FF>" + Message.latin("DPS: ") + "</#77A5FF>" + calcDPS(gun.damage, gun.shootCooldown, gun.bulletsPerShot) + "</#CADCFF></!italic>"));
+        lore.add(Message.from("<!italic><#CADCFF><#77A5FF>" + Message.latin("Ammo type: ") + "</#77A5FF>" + gun.ammo.name + "</#CADCFF></!italic>"));
 
-        lore.add(Messages.from(""));
+        lore.add(Message.from(""));
 
         Integer currentAmmo = Namespace.GUN_AMMO_CURRENT.get(meta);
         Integer maxAmmo = Namespace.GUN_AMMO_MAX.get(meta);
         assert currentAmmo != null : "Current ammo is null!";
         assert maxAmmo != null : "Max ammo is null!";
-        String ammo = "<!italic><#77A5FF>" + Messages.latin("Ammo: ") + "</#77A5FF>" + calcAmmo(currentAmmo, maxAmmo);
+        String ammo = "<!italic><#77A5FF>" + Message.latin("Ammo: ") + "</#77A5FF>" + calcAmmo(currentAmmo, maxAmmo);
 
         String magazineName = Namespace.GUN_MAGAZINE.get(meta);
         assert magazineName != null : "Magazine name is null!";
@@ -77,10 +77,10 @@ public final class Lores {
             assert magazine != null : "Magazine is null!";
             float multiplier = magazine.magazinePercentage / 100f;
             int addedAmmo = Math.round(gun.maxAmmo * multiplier - gun.maxAmmo);
-            ammo = ammo + " <#6FFD90>(+" + addedAmmo + " " + Messages.latin(magazine.name) + ")</#6FFD90>";
+            ammo = ammo + " <#6FFD90>(+" + addedAmmo + " " + Message.latin(magazine.name) + ")</#6FFD90>";
         }
 
-        lore.add(Messages.from(ammo + "</!italic>"));
+        lore.add(Message.from(ammo + "</!italic>"));
 
         String scopeName = Namespace.GUN_SCOPE.get(meta);
         assert scopeName != null : "Scope name is null!";
@@ -88,8 +88,8 @@ public final class Lores {
             Scope scope = (Scope) Attachments.getAttachment(scopeName);
             assert scope != null : "Scope is null!";
             String scopeLevel = FORMATTER.format(scope.scope);
-            lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Scope: ") + "</#77A5FF>" + scopeLevel + "× <#6FFD90>(+" + scopeLevel
-                    + " " + Messages.latin(scopeName) + ")</#6FFD90></#CADCFF></!italic>"));
+            lore.add(Message.from("<!italic><#CADCFF><#77A5FF>" + Message.latin("Scope: ") + "</#77A5FF>" + scopeLevel + "× <#6FFD90>(+" + scopeLevel
+                    + " " + Message.latin(scopeName) + ")</#6FFD90></#CADCFF></!italic>"));
         }
     }
 
@@ -102,7 +102,7 @@ public final class Lores {
         if (throwable instanceof MIRVGrenade) {
             damage += " + 8×" + FORMATTER.format(SmallGrenade.DAMAGE);
         }
-        lore.add(Messages.from("<!italic><#CADCFF><#77A5FF>" + Messages.latin("Damage: ") + "</#77A5FF>" + damage + "</#CADCFF></!italic>"));
+        lore.add(Message.from("<!italic><#CADCFF><#77A5FF>" + Message.latin("Damage: ") + "</#77A5FF>" + damage + "</#CADCFF></!italic>"));
     }
 
     public static void update(@NotNull ItemStack item) {

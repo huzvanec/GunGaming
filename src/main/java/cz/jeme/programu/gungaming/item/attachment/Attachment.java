@@ -4,7 +4,7 @@ import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.SingleLoot;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.item.Attachments;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -51,11 +51,11 @@ public abstract class Attachment extends CustomItem implements SingleLoot {
     }
 
     private void addModifier(@NotNull String buff) {
-        modifiersInfo.add(Messages.from("<!italic><green>" + Messages.latin(buff) + "</green></!italic>"));
+        modifiersInfo.add(Message.from("<!italic><green>" + Message.latin(buff) + "</green></!italic>"));
     }
 
     private void addNerf(@NotNull String nerf) {
-        modifiersInfo.add(Messages.from("<!italic><red>" + Messages.latin(nerf) + "</red></!italic>"));
+        modifiersInfo.add(Message.from("<!italic><red>" + Message.latin(nerf) + "</red></!italic>"));
     }
 
     private void addPlaceHolder() {

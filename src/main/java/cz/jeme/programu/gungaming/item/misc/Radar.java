@@ -2,7 +2,7 @@ package cz.jeme.programu.gungaming.item.misc;
 
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.util.Maps;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.Packets;
 import net.minecraft.network.protocol.game.ClientboundMapItemDataPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -95,7 +95,7 @@ public class Radar extends Misc {
                         MapCursor.Type.RED_POINTER,
                         true
                 );
-                cursor.caption(Messages.from(p.getName()));
+                cursor.caption(Message.from(p.getName()));
                 cursors.addCursor(cursor);
             }
             ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();

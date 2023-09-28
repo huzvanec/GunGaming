@@ -4,7 +4,7 @@ import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.ammo.TwelveGauge;
 import cz.jeme.programu.gungaming.item.attachment.Attachment;
 import cz.jeme.programu.gungaming.item.gun.Gun;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.item.Attachments;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import org.bukkit.Material;
@@ -21,8 +21,8 @@ public abstract class Stock extends Attachment {
 
     static {
         ItemMeta meta = SHOTGUN_STOCK_PLACEHOLDER.getItemMeta();
-        meta.displayName(Messages.from("<!italic><gray>Stock</gray></!italic>"));
-        meta.lore(List.of(Messages.from("<!italic><red>Stocks only have quarter effects on shotguns!</red></!italic>")));
+        meta.displayName(Message.from("<!italic><gray>Stock</gray></!italic>"));
+        meta.lore(List.of(Message.from("<!italic><red>Stocks only have quarter effects on shotguns!</red></!italic>")));
         meta.setCustomModelData(6);
         SHOTGUN_STOCK_PLACEHOLDER.setItemMeta(meta);
     }
@@ -34,7 +34,7 @@ public abstract class Stock extends Attachment {
         assert inaccuracyPercentage != null : "Inaccuracy percentage is null!";
 
         ItemMeta scopeMeta = placeHolder.getItemMeta();
-        scopeMeta.displayName(Messages.from("<!italic><gray>Stock</gray></!italic>"));
+        scopeMeta.displayName(Message.from("<!italic><gray>Stock</gray></!italic>"));
         scopeMeta.setCustomModelData(3);
         placeHolder.setItemMeta(scopeMeta);
     }

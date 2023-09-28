@@ -4,7 +4,7 @@ import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.ammo.TwelveGauge;
 import cz.jeme.programu.gungaming.item.attachment.Attachment;
 import cz.jeme.programu.gungaming.item.gun.Gun;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.item.Attachments;
 import cz.jeme.programu.gungaming.util.item.Guns;
 import org.bukkit.Material;
@@ -19,7 +19,7 @@ public abstract class Magazine extends Attachment {
         setup();
         assert magazinePercentage != null : "Magazine enlarge percentage is null!";
         ItemMeta scopeMeta = placeHolder.getItemMeta();
-        scopeMeta.displayName(Messages.from("<!italic><gray>Magazine</gray></!italic>"));
+        scopeMeta.displayName(Message.from("<!italic><gray>Magazine</gray></!italic>"));
         scopeMeta.setCustomModelData(1);
         placeHolder.setItemMeta(scopeMeta);
     }

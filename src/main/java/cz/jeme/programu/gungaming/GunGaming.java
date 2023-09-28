@@ -17,6 +17,7 @@ import cz.jeme.programu.gungaming.item.consumable.Soda;
 import cz.jeme.programu.gungaming.item.gun.*;
 import cz.jeme.programu.gungaming.item.misc.Concrete;
 import cz.jeme.programu.gungaming.item.misc.GraplingHook;
+import cz.jeme.programu.gungaming.item.misc.PlayerTracker;
 import cz.jeme.programu.gungaming.item.misc.Radar;
 import cz.jeme.programu.gungaming.item.throwable.MolotovCocktail;
 import cz.jeme.programu.gungaming.item.throwable.grenade.FragGrenade;
@@ -25,7 +26,7 @@ import cz.jeme.programu.gungaming.item.throwable.grenade.SmallGrenade;
 import cz.jeme.programu.gungaming.item.throwable.grenade.SmokeGrenade;
 import cz.jeme.programu.gungaming.loot.Loot;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.item.*;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -74,6 +75,7 @@ public final class GunGaming extends JavaPlugin {
         Miscs.register(new Concrete());
         Miscs.register(new GraplingHook());
         Miscs.register(new Radar());
+        Miscs.register(new PlayerTracker());
 
         Attachments.register(new LowScope());
         Attachments.register(new MediumScope());
@@ -127,7 +129,7 @@ public final class GunGaming extends JavaPlugin {
      * @param message The message to log
      */
     public static void serverLog(@NotNull Level level, @NotNull String message) {
-        Bukkit.getLogger().log(level, Messages.strip(Messages.PREFIX) + message);
+        Bukkit.getLogger().log(level, Message.strip(Message.PREFIX) + message);
     }
 
     public static void serverLog(@NotNull Level level, @NotNull String message, @NotNull Exception exception) {

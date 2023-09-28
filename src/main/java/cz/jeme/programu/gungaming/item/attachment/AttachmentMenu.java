@@ -7,7 +7,7 @@ import cz.jeme.programu.gungaming.item.attachment.scope.Scope;
 import cz.jeme.programu.gungaming.item.attachment.stock.Stock;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.util.Lores;
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.item.Ammos;
 import cz.jeme.programu.gungaming.util.item.Attachments;
 import cz.jeme.programu.gungaming.util.item.Guns;
@@ -32,12 +32,12 @@ public final class AttachmentMenu {
 
     static {
         ItemMeta emptyMeta = EMPTY.getItemMeta();
-        emptyMeta.displayName(Messages.from("§"));
+        emptyMeta.displayName(Message.from("§"));
         emptyMeta.setCustomModelData(4);
         EMPTY.setItemMeta(emptyMeta);
 
         ItemMeta inaplicableMeta = INAPLICABLE.getItemMeta();
-        inaplicableMeta.displayName(Messages.from("<!italic><red>Inaplicable for this weapon</red></!italic>"));
+        inaplicableMeta.displayName(Message.from("<!italic><red>Inaplicable for this weapon</red></!italic>"));
         inaplicableMeta.setCustomModelData(5);
         INAPLICABLE.setItemMeta(inaplicableMeta);
     }
@@ -55,7 +55,7 @@ public final class AttachmentMenu {
         this.gunItem = gunItem;
         gun = Guns.getGun(gunItem);
         player = (Player) event.getWhoClicked();
-        title = Messages.from(gun.rarity.color + gun.name + Messages.getEscapeTag(gun.rarity.color) + " attachments");
+        title = Message.from(gun.rarity.color + gun.name + Message.getEscapeTag(gun.rarity.color) + " attachments");
         inventory = Bukkit.createInventory(player, InventoryType.HOPPER, title);
 
         inventory.setItem(0, EMPTY);

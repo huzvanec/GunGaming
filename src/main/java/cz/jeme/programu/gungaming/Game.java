@@ -1,6 +1,6 @@
 package cz.jeme.programu.gungaming;
 
-import cz.jeme.programu.gungaming.util.Messages;
+import cz.jeme.programu.gungaming.util.Message;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -29,10 +29,7 @@ public final class Game {
         this.centerX = centerX;
         this.centerZ = centerZ;
 
-        final World overworld = Bukkit.getWorlds().stream()
-                .filter(w -> w.getEnvironment() == World.Environment.NORMAL)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No overworld found!"));
+        final World overworld = Bukkit.getWorlds().stream().filter(w -> w.getEnvironment() == World.Environment.NORMAL).findFirst().orElseThrow(() -> new IllegalArgumentException("No overworld found!"));
 
         players = List.copyOf(Bukkit.getOnlinePlayers());
 
@@ -68,13 +65,7 @@ public final class Game {
                 cancel();
                 return;
             }
-            Title title = Title.title(
-                    Messages.from("<transition:#00FF00:#FF0000:"
-                            + counterStart / (float) counter + ">"
-                            + counter + "</transition>"),
-                    Messages.from("<gold>Game is starting...</gold>"),
-                    Title.Times.times(Duration.ZERO, Duration.ofSeconds(1), Duration.ZERO)
-            );
+            Title title = Title.title(Message.from("<transition:#00FF00:#FF0000:" + counterStart / (float) counter + ">" + counter + "</transition>"), Message.from("<gold>Game is starting...</gold>"), Title.Times.times(Duration.ZERO, Duration.ofSeconds(1), Duration.ZERO));
             for (Player player : players) {
                 player.showTitle(title);
 //                player.playSound();
