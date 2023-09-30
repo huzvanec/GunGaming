@@ -8,7 +8,7 @@ public class ThreeZeroEightSubsonicWinchester extends Ammo {
         customModelData = 5;
         name = ".308 Subsonic Winchester";
         info = "Ammo for the best sniper rifles";
-        rarity = Rarity.RARE;
+        rarity = Rarity.EPIC;
     }
 
     @Override
