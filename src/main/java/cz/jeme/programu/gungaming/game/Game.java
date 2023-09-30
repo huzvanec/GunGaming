@@ -31,6 +31,7 @@ public final class Game {
     private final int centerZ;
     private final @NotNull CommandSender sender;
     private final @NotNull List<Player> players;
+    private static @Nullable World world;
     private static final @NotNull BossBar BOSS_BAR = BossBar.bossBar(
             Message.from("<b><#6786C8>Gun</#6786C8><#4C618D>Gaming</#4C618D> <#717B95>v"
                     + GunGaming.getPlugin().getPluginMeta().getVersion()
@@ -63,21 +64,21 @@ public final class Game {
 
         players = List.copyOf(Bukkit.getOnlinePlayers());
 
-        GunGaming.WORLD.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-        GunGaming.WORLD.setTime(1000);
-        GunGaming.WORLD.setClearWeatherDuration(1);
+        getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        getWorld().setTime(1000);
+        getWorld().setClearWeatherDuration(1);
 
-        GunGaming.WORLD.getEntities().stream()
+        getWorld().getEntities().stream()
                 .filter(e -> e.getType() != EntityType.PLAYER)
                 .forEach(Entity::remove);
 
-        WorldBorder worldBorder = GunGaming.WORLD.getWorldBorder();
+        WorldBorder worldBorder = getWorld().getWorldBorder();
         worldBorder.setCenter(centerX, centerZ);
         worldBorder.setSize(size);
 
         for (Player player : players) {
             Location location = player.getLocation();
-            location.setWorld(GunGaming.WORLD);
+            location.setWorld(getWorld());
             player.teleport(location.set(centerX, 330, centerZ));
             player.setGameMode(GameMode.SPECTATOR);
             Namespace.FROZEN.set(player, true);
@@ -207,5 +208,15 @@ public final class Game {
             }
             return time;
         }
+    }
+
+    public static @NotNull World getWorld() {
+        if (world == null) {
+            world = Bukkit.getWorlds().stream()
+                    .filter(w -> w.getEnvironment() == World.Environment.NORMAL)
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("No overworld found!"));
+        }
+        return world;
     }
 }

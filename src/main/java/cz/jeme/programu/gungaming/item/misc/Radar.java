@@ -1,6 +1,6 @@
 package cz.jeme.programu.gungaming.item.misc;
 
-import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.loot.SingletonLoot;
 import cz.jeme.programu.gungaming.util.Maps;
@@ -31,7 +31,7 @@ public class Radar extends Misc implements SingletonLoot {
         meta.setMapId(0);
         MapView map = meta.getMapView();
         if (map == null) {
-            map = Bukkit.createMap(GunGaming.WORLD);
+            map = Bukkit.createMap(Game.getWorld());
         }
         map.getRenderers().forEach(map::removeRenderer);
         map.addRenderer(new Renderer());

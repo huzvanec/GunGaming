@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming;
 
+import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.item.ammo.*;
 import cz.jeme.programu.gungaming.item.attachment.magazine.BigMagazine;
 import cz.jeme.programu.gungaming.item.attachment.magazine.HugeMagazine;
@@ -33,7 +34,6 @@ import cz.jeme.programu.gungaming.util.registry.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.NamespacedKey;
-import org.bukkit.World;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -43,12 +43,6 @@ import java.io.StringWriter;
 import java.util.logging.Level;
 
 public final class GunGaming extends JavaPlugin {
-
-    public static final World WORLD = Bukkit.getWorlds().stream()
-            .filter(w -> w.getEnvironment() == World.Environment.NORMAL)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("No overworld found!"));
-
     @Override
     public void onEnable() {
         registerItems();
@@ -146,9 +140,9 @@ public final class GunGaming extends JavaPlugin {
     @Override
     public void onDisable() {
         ZoomManager.INSTANCE.zoomOutAll();
-        Boolean daylightCycle = WORLD.getGameRuleDefault(GameRule.DO_DAYLIGHT_CYCLE);
+        Boolean daylightCycle = Game.getWorld().getGameRuleDefault(GameRule.DO_DAYLIGHT_CYCLE);
         assert daylightCycle != null : "Daylight cycle default value is null!";
-        WORLD.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, daylightCycle);
+        Game.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, daylightCycle);
     }
 
     /**

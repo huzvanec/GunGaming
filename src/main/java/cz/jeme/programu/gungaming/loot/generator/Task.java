@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.loot.generator;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.loot.LootManager;
 import cz.jeme.programu.gungaming.loot.crate.Crate;
 import cz.jeme.programu.gungaming.util.Message;
@@ -40,8 +41,8 @@ public final class Task extends BukkitRunnable {
     private int crateCounter = 0;
     private int x;
     private int z;
-    private final int minHeight = GunGaming.WORLD.getMinHeight();
-    private final int maxHeight = GunGaming.WORLD.getMaxHeight();
+    private final int minHeight = Game.getWorld().getMinHeight();
+    private final int maxHeight = Game.getWorld().getMaxHeight();
 
     Task(@NotNull Crate crate, @NotNull Audience audience, int xMin, int zMin, int xMax, int zMax) {
         this.crate = crate;
@@ -125,7 +126,7 @@ public final class Task extends BukkitRunnable {
             List<Integer> validHeights = new ArrayList<>();
             boolean lastBlockCollidable = false;
             for (int y = minHeight; y < maxHeight - 1; y++) {
-                if (GunGaming.WORLD.getBlockAt(x, y, z).getType().isCollidable()) {
+                if (Game.getWorld().getBlockAt(x, y, z).getType().isCollidable()) {
                     lastBlockCollidable = true;
                 } else if (lastBlockCollidable) {
                     validHeights.add(y);
@@ -134,7 +135,7 @@ public final class Task extends BukkitRunnable {
             }
 
             final int y = validHeights.size() == 1 ? validHeights.get(0) : validHeights.get(RANDOM.nextInt(validHeights.size() - 1));
-            final Block block = GunGaming.WORLD.getBlockAt(x, y, z);
+            final Block block = Game.getWorld().getBlockAt(x, y, z);
             block.setType(crate.getBlock());
             generateCrate(block, crate);
         }
