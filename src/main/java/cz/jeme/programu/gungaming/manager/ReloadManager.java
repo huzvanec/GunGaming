@@ -8,7 +8,7 @@ import cz.jeme.programu.gungaming.runnable.Reload;
 import cz.jeme.programu.gungaming.util.Inventories;
 import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.Sounds;
-import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.util.registry.Guns;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

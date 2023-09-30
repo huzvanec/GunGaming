@@ -9,9 +9,9 @@ import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.item.throwable.grenade.MIRVGrenade;
 import cz.jeme.programu.gungaming.item.throwable.grenade.SmallGrenade;
 import cz.jeme.programu.gungaming.loot.Rarity;
-import cz.jeme.programu.gungaming.util.item.Attachments;
-import cz.jeme.programu.gungaming.util.item.Guns;
-import cz.jeme.programu.gungaming.util.item.Throwables;
+import cz.jeme.programu.gungaming.util.registry.Attachments;
+import cz.jeme.programu.gungaming.util.registry.Guns;
+import cz.jeme.programu.gungaming.util.registry.Throwables;
 import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -31,7 +31,7 @@ public final class Lores {
     public static void update(@NotNull ItemMeta meta) {
         List<Component> lore = new ArrayList<>();
         Rarity rarity = Rarity.valueOf(Namespace.RARITY.get(meta));
-        lore.add(Message.from("<!italic><bold>" + rarity.name + "</bold></!italic>"));
+        lore.add(Message.from("<!italic><bold>" + rarity.getName() + "</bold></!italic>"));
         lore.add(Message.from("<!italic><#90FFF1>" + Namespace.INFO.get(meta) + "</#90FFF1></!italic>"));
 
         if (Namespace.GUN.has(meta)) {

@@ -2,8 +2,9 @@ package cz.jeme.programu.gungaming.item.misc;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.loot.Rarity;
+import cz.jeme.programu.gungaming.loot.SingletonLoot;
 import cz.jeme.programu.gungaming.util.Message;
-import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.util.registry.Guns;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,7 +19,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerTracker extends Misc {
+public class PlayerTracker extends Misc implements SingletonLoot {
 
     public PlayerTracker() {
         setup();

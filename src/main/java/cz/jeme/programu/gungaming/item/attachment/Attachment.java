@@ -3,9 +3,9 @@ package cz.jeme.programu.gungaming.item.attachment;
 import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.gun.Gun;
-import cz.jeme.programu.gungaming.loot.SingleLoot;
+import cz.jeme.programu.gungaming.loot.SingletonLoot;
 import cz.jeme.programu.gungaming.util.Message;
-import cz.jeme.programu.gungaming.util.item.Attachments;
+import cz.jeme.programu.gungaming.util.registry.Attachments;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class Attachment extends CustomItem implements SingleLoot {
+public abstract class Attachment extends CustomItem implements SingletonLoot {
     public final @NotNull List<Component> modifiersInfo = new ArrayList<>();
     protected final @NotNull ItemStack placeHolder = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
     public Attachment() {

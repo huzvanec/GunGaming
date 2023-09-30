@@ -44,7 +44,7 @@ public abstract class CustomItem {
         item = new ItemStack(getMaterial());
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        String coloredName = rarity.color + displayName + Message.getEscapeTag(rarity.color);
+        String coloredName = rarity.getColor() + displayName + Message.getEscapeTag(rarity.getColor());
         meta.displayName(Message.from("<!italic>" + coloredName + "</!italic>"));
         meta.setCustomModelData(customModelData);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

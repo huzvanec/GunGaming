@@ -3,8 +3,8 @@ package cz.jeme.programu.gungaming.eventhandler.interaction;
 import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.attachment.scope.Scope;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
-import cz.jeme.programu.gungaming.util.item.Attachments;
-import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.util.registry.Attachments;
+import cz.jeme.programu.gungaming.util.registry.Guns;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +21,11 @@ public final class LeftClickHandler {
 
     public static void block(@NotNull PlayerInteractEvent event) {
         ItemStack item = event.getItem();
+        Player player = event.getPlayer();
         if (Attachments.isAttachment(item)) {
+            event.setCancelled(true);
+        } else if (Guns.isGun(item) && player.isSneaking()) {
+            zoom(event);
             event.setCancelled(true);
         }
     }

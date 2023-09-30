@@ -4,11 +4,11 @@ import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
-import cz.jeme.programu.gungaming.loot.SingleLoot;
+import cz.jeme.programu.gungaming.loot.SingletonLoot;
 import cz.jeme.programu.gungaming.util.Packets;
 import cz.jeme.programu.gungaming.util.Sounds;
-import cz.jeme.programu.gungaming.util.item.Ammos;
-import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.util.registry.Ammos;
+import cz.jeme.programu.gungaming.util.registry.Guns;
 import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Random;
 
-public abstract class Gun extends CustomItem implements SingleLoot {
+public abstract class Gun extends CustomItem implements SingletonLoot {
 
     public @NotNull Integer shootCooldown;
 

@@ -13,7 +13,7 @@ public class Pills extends Adrenaline {
     @Override
     protected void setup() {
         name = "Pills";
-        info = "slowly heals you for 60 seconds";
+        info = "adds 60 seconds of adrenaline";
         customModelData = 3;
         rarity = Rarity.RARE;
     }

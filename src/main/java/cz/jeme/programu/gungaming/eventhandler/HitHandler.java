@@ -1,6 +1,6 @@
 package cz.jeme.programu.gungaming.eventhandler;
 
-import cz.jeme.programu.gungaming.Game;
+import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.gun.Gun;
@@ -12,9 +12,9 @@ import cz.jeme.programu.gungaming.runnable.Respawn;
 import cz.jeme.programu.gungaming.util.Materials;
 import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.Packets;
-import cz.jeme.programu.gungaming.util.item.Ammos;
-import cz.jeme.programu.gungaming.util.item.Guns;
-import cz.jeme.programu.gungaming.util.item.Throwables;
+import cz.jeme.programu.gungaming.util.registry.Ammos;
+import cz.jeme.programu.gungaming.util.registry.Guns;
+import cz.jeme.programu.gungaming.util.registry.Throwables;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import org.bukkit.*;
@@ -138,9 +138,12 @@ public final class HitHandler {
     }
 
     public static void onEntityDamage(@NotNull EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Player player)) {
+        Boolean invulnerable = Namespace.INVULNERABLE.get(event.getEntity());
+        if (invulnerable != null && invulnerable) {
+            event.setCancelled(true);
             return;
         }
+        if (!(event.getEntity() instanceof Player player)) return;
         Long grappleSubtract = Namespace.GRAPPLE_LAST_SUBTRACT.get(player);
         if (grappleSubtract != null && event.getCause() == EntityDamageEvent.DamageCause.FALL) {
             if (System.currentTimeMillis() - grappleSubtract <= GraplingHook.FALL_RESISTANCE_MILLIS) {

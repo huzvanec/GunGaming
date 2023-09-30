@@ -13,7 +13,7 @@ public class Soda extends Adrenaline {
     @Override
     protected void setup() {
         name = "Soda";
-        info = "small adrenaline drink";
+        info = "adds 30 seconds of adrenaline";
         customModelData = 2;
         rarity = Rarity.RARE;
     }

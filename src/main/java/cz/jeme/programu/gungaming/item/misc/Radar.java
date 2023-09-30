@@ -1,6 +1,8 @@
 package cz.jeme.programu.gungaming.item.misc;
 
+import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.loot.Rarity;
+import cz.jeme.programu.gungaming.loot.SingletonLoot;
 import cz.jeme.programu.gungaming.util.Maps;
 import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.Packets;
@@ -20,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-public class Radar extends Misc {
+public class Radar extends Misc implements SingletonLoot {
     @SuppressWarnings("deprecation")
     public Radar() {
         setup();
@@ -28,7 +30,9 @@ public class Radar extends Misc {
         MapMeta meta = (MapMeta) item.getItemMeta();
         meta.setMapId(0);
         MapView map = meta.getMapView();
-        assert map != null : "MapView is null!";
+        if (map == null) {
+            map = Bukkit.createMap(GunGaming.WORLD);
+        }
         map.getRenderers().forEach(map::removeRenderer);
         map.addRenderer(new Renderer());
         item.setItemMeta(meta);

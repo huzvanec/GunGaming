@@ -43,7 +43,7 @@ public final class Message {
 
     // Plugin prefix
     // [ɢɢ]:
-    public static final @NotNull String PREFIX = "<dark_gray>[<bold><#485C86>ɢɢ</#485C86></bold>] </dark_gray>";
+    public static final @NotNull String PREFIX = "<dark_gray>[<bold><#6786C8>ɢ</#6786C8><#4C618D>ɢ</#4C618D></bold>] </dark_gray>";
 
     private Message() {
         // Static class cannot be initialized
@@ -94,4 +94,6 @@ public final class Message {
         }
         return character;
     }
+
+
 }

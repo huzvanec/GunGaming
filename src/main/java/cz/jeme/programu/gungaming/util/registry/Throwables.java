@@ -1,4 +1,4 @@
-package cz.jeme.programu.gungaming.util.item;
+package cz.jeme.programu.gungaming.util.registry;
 
 import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;

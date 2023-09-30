@@ -8,7 +8,7 @@ public class Medkit extends Heal {
     @Override
     protected void setup() {
         name = "Medkit";
-        info = "instantly fully heals you";
+        info = "instantly gets you to full health";
         customModelData = 1;
         rarity = Rarity.EPIC;
         heal = 999999999d;

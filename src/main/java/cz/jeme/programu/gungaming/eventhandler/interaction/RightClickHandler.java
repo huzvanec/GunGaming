@@ -4,16 +4,17 @@ import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.eventhandler.PlayerItemConsumeHandler;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
+import cz.jeme.programu.gungaming.loot.generator.CrateGenerator;
 import cz.jeme.programu.gungaming.manager.CooldownManager;
 import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.util.Inventories;
 import cz.jeme.programu.gungaming.util.Materials;
 import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.Sounds;
-import cz.jeme.programu.gungaming.util.item.Attachments;
-import cz.jeme.programu.gungaming.util.item.Consumables;
-import cz.jeme.programu.gungaming.util.item.Guns;
-import cz.jeme.programu.gungaming.util.item.Throwables;
+import cz.jeme.programu.gungaming.util.registry.Attachments;
+import cz.jeme.programu.gungaming.util.registry.Consumables;
+import cz.jeme.programu.gungaming.util.registry.Guns;
+import cz.jeme.programu.gungaming.util.registry.Throwables;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -28,25 +29,42 @@ public final class RightClickHandler {
     }
 
     public static void air(@NotNull PlayerInteractEvent event) {
-        activateInteract(event);
+        interact(event);
     }
 
     public static void block(@NotNull PlayerInteractEvent event) {
         Block clickedBlock = event.getClickedBlock();
+        Player player = event.getPlayer();
+        ItemStack item = event.getItem();
+
         if (clickedBlock == null) {
             throw new NullPointerException("Clicked block is null!");
         }
+
+
+        if (player.isSneaking()) {
+            interact(event);
+            if (Guns.isGun(item) || Attachments.isAttachment(item)) {
+                event.setCancelled(true);
+            }
+            return;
+        }
+
+        if (CrateGenerator.INSTANCE.showInventory(clickedBlock, event.getPlayer())) {
+            event.setCancelled(true);
+            return;
+        }
+
         Material material = clickedBlock.getType();
         if (!Materials.hasRightClick(material)) {
-            activateInteract(event);
-            ItemStack item = event.getItem();
+            interact(event);
             if (Guns.isGun(item) || Attachments.isAttachment(item)) {
                 event.setCancelled(true);
             }
         }
     }
 
-    private static void activateInteract(@NotNull PlayerInteractEvent event) {
+    private static void interact(@NotNull PlayerInteractEvent event) {
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
 

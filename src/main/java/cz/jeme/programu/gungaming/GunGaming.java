@@ -24,12 +24,16 @@ import cz.jeme.programu.gungaming.item.throwable.grenade.FragGrenade;
 import cz.jeme.programu.gungaming.item.throwable.grenade.MIRVGrenade;
 import cz.jeme.programu.gungaming.item.throwable.grenade.SmallGrenade;
 import cz.jeme.programu.gungaming.item.throwable.grenade.SmokeGrenade;
-import cz.jeme.programu.gungaming.loot.Loot;
+import cz.jeme.programu.gungaming.loot.LootManager;
+import cz.jeme.programu.gungaming.loot.crate.AmmoCrate;
+import cz.jeme.programu.gungaming.loot.crate.WoodenCrate;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
 import cz.jeme.programu.gungaming.util.Message;
-import cz.jeme.programu.gungaming.util.item.*;
+import cz.jeme.programu.gungaming.util.registry.*;
 import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -40,10 +44,17 @@ import java.util.logging.Level;
 
 public final class GunGaming extends JavaPlugin {
 
+    public static final World WORLD = Bukkit.getWorlds().stream()
+            .filter(w -> w.getEnvironment() == World.Environment.NORMAL)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("No overworld found!"));
+
     @Override
     public void onEnable() {
         registerItems();
-        Loot.registerLoot();
+        registerGroups();
+        registerCrates();
+        LootManager.INSTANCE.registerGroups();
         GGCommand.getInstance(); // register the /gg command
 
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
@@ -52,10 +63,11 @@ public final class GunGaming extends JavaPlugin {
         saveDefaultConfig();
     }
 
+
     /**
      * Register all the custom items for GunGaming
      */
-    private void registerItems() {
+    private static void registerItems() {
         Ammos.register(new NineMm());
         Ammos.register(new SevenSixTwoMm());
         Ammos.register(new Rocket());
@@ -106,7 +118,12 @@ public final class GunGaming extends JavaPlugin {
         Attachments.registered();
         Throwables.registered();
         Consumables.registered();
+    }
 
+    /**
+     * Register all the item groups for GunGaming
+     */
+    private static void registerGroups() {
         Groups.register("gun", Guns.guns);
         Groups.register("ammo", Ammos.ammos);
         Groups.register("misc", Miscs.miscs);
@@ -117,15 +134,27 @@ public final class GunGaming extends JavaPlugin {
         Groups.registered();
     }
 
+    /**
+     * Register all the loot crates for GunGaming
+     */
+    private static void registerCrates() {
+        Crates.register(new WoodenCrate());
+        Crates.register(new AmmoCrate());
+        Crates.registered();
+    }
+
     @Override
     public void onDisable() {
         ZoomManager.INSTANCE.zoomOutAll();
+        Boolean daylightCycle = WORLD.getGameRuleDefault(GameRule.DO_DAYLIGHT_CYCLE);
+        assert daylightCycle != null : "Daylight cycle default value is null!";
+        WORLD.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, daylightCycle);
     }
 
     /**
      * Log a message with the plugin prefix to the console.
      *
-     * @param level Message severitiy identifier
+     * @param level   Message severitiy identifier
      * @param message The message to log
      */
     public static void serverLog(@NotNull Level level, @NotNull String message) {

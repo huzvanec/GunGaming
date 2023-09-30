@@ -8,9 +8,9 @@ import cz.jeme.programu.gungaming.item.attachment.stock.Stock;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.util.Lores;
 import cz.jeme.programu.gungaming.util.Message;
-import cz.jeme.programu.gungaming.util.item.Ammos;
-import cz.jeme.programu.gungaming.util.item.Attachments;
-import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.util.registry.Ammos;
+import cz.jeme.programu.gungaming.util.registry.Attachments;
+import cz.jeme.programu.gungaming.util.registry.Guns;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -55,7 +55,7 @@ public final class AttachmentMenu {
         this.gunItem = gunItem;
         gun = Guns.getGun(gunItem);
         player = (Player) event.getWhoClicked();
-        title = Message.from(gun.rarity.color + gun.name + Message.getEscapeTag(gun.rarity.color) + " attachments");
+        title = Message.from(gun.rarity.getColor() + gun.name + Message.getEscapeTag(gun.rarity.getColor()) + " attachments");
         inventory = Bukkit.createInventory(player, InventoryType.HOPPER, title);
 
         inventory.setItem(0, EMPTY);

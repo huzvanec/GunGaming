@@ -5,11 +5,12 @@ import cz.jeme.programu.gungaming.eventhandler.InventoryHandler;
 import cz.jeme.programu.gungaming.eventhandler.PlayerHealHandler;
 import cz.jeme.programu.gungaming.eventhandler.PlayerItemConsumeHandler;
 import cz.jeme.programu.gungaming.eventhandler.interaction.PlayerInteractHandler;
+import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.item.misc.GraplingHook;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
-import cz.jeme.programu.gungaming.util.item.Attachments;
-import cz.jeme.programu.gungaming.util.item.Guns;
-import cz.jeme.programu.gungaming.util.item.Miscs;
+import cz.jeme.programu.gungaming.util.registry.Attachments;
+import cz.jeme.programu.gungaming.util.registry.Guns;
+import cz.jeme.programu.gungaming.util.registry.Miscs;
 import io.papermc.paper.event.player.PlayerStopUsingItemEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,9 +19,14 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * GunGaming global event listener.
+ * Used to distribute all the game events.
+ */
 public enum EventListener implements Listener {
     INSTANCE;
 
@@ -132,7 +138,7 @@ public enum EventListener implements Listener {
     @EventHandler
     private void onPlayerMove(@NotNull PlayerMoveEvent event) {
         Boolean frozen = Namespace.FROZEN.get(event.getPlayer());
-        if (frozen != null && frozen) event.setCancelled(true);
+        if (frozen != null && frozen && event.hasChangedBlock()) event.setCancelled(true);
 //        PlayerTrafficHandler.onPlayerMove(event);
     }
 //
@@ -140,4 +146,31 @@ public enum EventListener implements Listener {
 //    private void onPlayerJoin(@NotNull PlayerJoinEvent event) {
 //        PlayerTrafficHandler.onPlayerJoin(event);
 //    }
+
+    @EventHandler
+    private void onEntityToggleGlide(@NotNull EntityToggleGlideEvent event) {
+        Game.onEntityToggleGlide(event);
+    }
+
+    @EventHandler
+    private void onWeatherChange(@NotNull WeatherChangeEvent event) {
+        if (Game.isRunning()) event.setCancelled(true);
+    }
+
+    @EventHandler
+    private void onEntitySpawn(@NotNull CreatureSpawnEvent event) {
+        if (Game.isRunning() && Game.DISABLED_SPAWNING.contains(event.getSpawnReason())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    private void onPlayerPortal(@NotNull PlayerPortalEvent event) {
+        if (Game.isRunning()) event.setCancelled(true);
+    }
+
+    @EventHandler
+    private void onEntityPortal(@NotNull EntityPortalEvent event) {
+        if (Game.isRunning()) event.setCancelled(true);
+    }
 }

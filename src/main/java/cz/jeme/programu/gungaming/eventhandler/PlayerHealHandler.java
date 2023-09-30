@@ -1,6 +1,6 @@
 package cz.jeme.programu.gungaming.eventhandler;
 
-import cz.jeme.programu.gungaming.Game;
+import cz.jeme.programu.gungaming.game.Game;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;

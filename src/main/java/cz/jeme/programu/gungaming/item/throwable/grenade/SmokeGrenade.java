@@ -20,7 +20,7 @@ public class SmokeGrenade extends Grenade {
         name = "Smoke Grenade";
         info = "throwable weapon that blinds enemies";
         customModelData = 2;
-        rarity = Rarity.UNCOMMON;
+        rarity = Rarity.RARE;
         throwCooldown = 3000;
         damage = 0d;
     }

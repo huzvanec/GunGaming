@@ -46,7 +46,10 @@ public enum Namespace {
     HOOKED(PersistentDataType.BOOLEAN),
     GRAPPLE_LAST_SUBTRACT(PersistentDataType.LONG),
     // Player namespaces
-    FROZEN(PersistentDataType.BOOLEAN);
+    FROZEN(PersistentDataType.BOOLEAN),
+    GLIDING(PersistentDataType.BOOLEAN),
+    // Entity namespaces
+    INVULNERABLE(PersistentDataType.BOOLEAN);
 
     public final @NotNull NamespacedKey namespacedKey;
     public final @NotNull PersistentDataType<?, ?> type;

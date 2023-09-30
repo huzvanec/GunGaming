@@ -3,11 +3,13 @@ package cz.jeme.programu.gungaming.item.misc;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.loot.Rarity;
-import cz.jeme.programu.gungaming.util.item.Miscs;
+import cz.jeme.programu.gungaming.loot.SingletonLoot;
+import cz.jeme.programu.gungaming.util.registry.Miscs;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerFishEvent;
@@ -19,13 +21,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GraplingHook extends Misc {
+public class GraplingHook extends Misc implements SingletonLoot {
     public static final long FALL_RESISTANCE_MILLIS = 5200;
 
     @Override
     protected void setup() {
         name = "Grapling Hook";
-        info = "You won't catch much fish with this";
+        info = "I don't think this is meant for fishing...";
         rarity = Rarity.EPIC;
         customModelData = 1;
     }
@@ -68,19 +70,21 @@ public class GraplingHook extends Misc {
                     return;
                 }
                 if (!hooked) {
-                    List<Boolean> air = List.of(
-                            world.getBlockAt(hook.getLocation().add(0, 0, RANGE)).getType().isAir(),
-                            world.getBlockAt(hook.getLocation().add(RANGE, 0, 0)).getType().isAir(),
-                            world.getBlockAt(hook.getLocation().add(0, RANGE, 0)).getType().isAir(),
-                            world.getBlockAt(hook.getLocation().subtract(0, 0, RANGE)).getType().isAir(),
-                            world.getBlockAt(hook.getLocation().subtract(RANGE, 0, 0)).getType().isAir(),
-                            world.getBlockAt(hook.getLocation().subtract(0, RANGE, 0)).getType().isAir()
+                    Location location = hook.getLocation();
+                    List<Block> blocks = List.of(
+                            world.getBlockAt(location.add(0, 0, RANGE)),
+                            world.getBlockAt(location.add(RANGE, 0, 0)),
+                            world.getBlockAt(location.add(0, RANGE, 0)),
+                            world.getBlockAt(location.subtract(0, 0, RANGE)),
+                            world.getBlockAt(location.subtract(RANGE, 0, 0)),
+                            world.getBlockAt(location.subtract(0, RANGE, 0))
                     );
-                    if (air.contains(false) || hook.isOnGround()) {
+                    if (blocks.stream().map(Block::getType).anyMatch(Material::isCollidable) || hook.isOnGround()) {
                         hooked = true;
                         Namespace.HOOKED.set(hook, true);
                     }
                 } else {
+                    // I really do like magic numbers
                     hook.setVelocity(new Vector(0f, 0.0302f, 0f));
                 }
             }

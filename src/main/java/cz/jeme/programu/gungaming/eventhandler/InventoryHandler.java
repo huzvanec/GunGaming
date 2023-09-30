@@ -6,7 +6,7 @@ import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
 import cz.jeme.programu.gungaming.util.Sounds;
-import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.util.registry.Guns;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;

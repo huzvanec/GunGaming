@@ -9,7 +9,7 @@ import cz.jeme.programu.gungaming.manager.ReloadManager;
 import cz.jeme.programu.gungaming.util.Inventories;
 import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.Sounds;
-import cz.jeme.programu.gungaming.util.item.Ammos;
+import cz.jeme.programu.gungaming.util.registry.Ammos;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

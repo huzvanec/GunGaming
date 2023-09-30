@@ -223,5 +223,15 @@
         "sounds": [
             "gungaming:gun/switch/prickskyttegevar_90"
         ]
+    },
+    "game.start": {
+        "sounds": [
+            "gungaming:game/start"
+        ]
+    },
+    "game.dong": {
+        "sounds": [
+            "gungaming:game/dong"
+        ]
     }
 }

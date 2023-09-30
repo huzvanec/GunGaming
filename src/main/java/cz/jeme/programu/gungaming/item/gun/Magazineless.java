@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.item.gun;
 
+/**
+ * Interface for tagging guns with no magazines (mostly shotguns)
+ */
 public interface Magazineless {
-    // An interface used to mark Guns with no magazines - they are reloaded per - bullet
-    // Usually guns
 }

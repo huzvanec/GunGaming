@@ -1,12 +1,11 @@
 package cz.jeme.programu.gungaming;
 
+import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.item.CustomItem;
-import cz.jeme.programu.gungaming.loot.Crate;
-import cz.jeme.programu.gungaming.loot.generation.CrateGenerator;
+import cz.jeme.programu.gungaming.loot.generator.CrateGenerator;
 import cz.jeme.programu.gungaming.util.Message;
-import cz.jeme.programu.gungaming.util.item.Groups;
+import cz.jeme.programu.gungaming.util.registry.Groups;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -66,14 +65,7 @@ public final class GGCommand extends Command {
     }
 
     private void generate(@NotNull CommandSender sender) {
-        Player player = (Player) sender;
-        Location loc1 = new Location(player.getWorld(), -250, 0, -250);
-        Location loc2 = new Location(player.getWorld(), 250, 0, 250);
-
-        CrateGenerator.INSTANCE.generateCrates(Map.of(
-                Crate.WOODEN_CRATE, 0.1f,
-                Crate.GOLDEN_CRATE, 0.02f
-        ), loc1, loc2, player);
+        CrateGenerator.INSTANCE.generate(sender, -250, -250, 250, 250);
     }
 
     private void help(@NotNull CommandSender sender) {

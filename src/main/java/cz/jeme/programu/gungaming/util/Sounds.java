@@ -7,7 +7,7 @@ import cz.jeme.programu.gungaming.item.consumable.Consumable;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.item.throwable.grenade.Grenade;
-import cz.jeme.programu.gungaming.util.item.Guns;
+import cz.jeme.programu.gungaming.util.registry.Guns;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import org.bukkit.inventory.ItemStack;
