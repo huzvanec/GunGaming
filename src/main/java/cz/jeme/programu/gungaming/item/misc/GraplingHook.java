@@ -62,6 +62,7 @@ public class GraplingHook extends Misc implements SingletonLoot {
             private final @NotNull World world = hook.getWorld();
             private boolean hooked = false;
             private static final float RANGE = 0.3f;
+            private static final float VERTICAL_DISTURBANCE = 0.0302f;
 
             @Override
             public void run() {
@@ -84,8 +85,7 @@ public class GraplingHook extends Misc implements SingletonLoot {
                         Namespace.HOOKED.set(hook, true);
                     }
                 } else {
-                    // I really do like magic numbers
-                    hook.setVelocity(new Vector(0f, 0.0302f, 0f));
+                    hook.setVelocity(new Vector(0f, VERTICAL_DISTURBANCE, 0f));
                 }
             }
         }.runTaskTimer(GunGaming.getPlugin(), 0L, 1L);
