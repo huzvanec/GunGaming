@@ -2,7 +2,6 @@ package cz.jeme.programu.gungaming.loot.generator;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.loot.crate.Crate;
-import cz.jeme.programu.gungaming.loot.crate.CrateLocation;
 import cz.jeme.programu.gungaming.util.Packets;
 import cz.jeme.programu.gungaming.util.registry.Crates;
 import net.kyori.adventure.audience.Audience;

@@ -27,6 +27,7 @@ import cz.jeme.programu.gungaming.item.throwable.grenade.SmallGrenade;
 import cz.jeme.programu.gungaming.item.throwable.grenade.SmokeGrenade;
 import cz.jeme.programu.gungaming.loot.LootManager;
 import cz.jeme.programu.gungaming.loot.crate.AmmoCrate;
+import cz.jeme.programu.gungaming.loot.crate.GoldenCrate;
 import cz.jeme.programu.gungaming.loot.crate.WoodenCrate;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
 import cz.jeme.programu.gungaming.util.Message;
@@ -134,6 +135,7 @@ public final class GunGaming extends JavaPlugin {
     private static void registerCrates() {
         Crates.register(new WoodenCrate());
         Crates.register(new AmmoCrate());
+        Crates.register(new GoldenCrate());
         Crates.registered();
     }
 

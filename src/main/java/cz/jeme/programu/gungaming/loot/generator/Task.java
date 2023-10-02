@@ -79,10 +79,10 @@ public final class Task extends BukkitRunnable {
             if (enlarge <= 0) { // When reducing and it runs fine
                 enlarge = 1; // Start enlarging
             } else { // When enlarging and it runs fine
-                enlarge *= 2; // Double the enlarging
+                enlarge *= 2; // Enlarge the enlarging
             }
         }
-        blocksPerTick += enlarge; // Set the amount of blocks to check for this tick
+        blocksPerTick = Math.max(1, blocksPerTick + enlarge); // Set the amount of blocks to check for this tick
 
         tickStamp = System.currentTimeMillis(); // Make a new tick stamp
 
@@ -97,9 +97,7 @@ public final class Task extends BukkitRunnable {
                 + "BPT; Tick duration: " + tickDuration + "ms"
                 + Message.getEscapeTag(color);
         audience.sendActionBar(Message.from(info));
-
-        int i;
-        for (i = 0; i < blocksPerTick; i++) {
+        for (int i = 0; i < blocksPerTick; i++) {
             if (x == xMax) {
                 if (z == zMax) {
                     cancel();
@@ -137,6 +135,7 @@ public final class Task extends BukkitRunnable {
             final int y = validHeights.size() == 1 ? validHeights.get(0) : validHeights.get(RANDOM.nextInt(validHeights.size() - 1));
             final Block block = Game.getWorld().getBlockAt(x, y, z);
             block.setType(crate.getBlock());
+            crate.getBlockAction().accept(block);
             generateCrate(block, crate);
         }
     }

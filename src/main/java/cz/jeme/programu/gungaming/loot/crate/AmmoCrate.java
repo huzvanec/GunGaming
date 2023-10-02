@@ -4,11 +4,13 @@ import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public final class AmmoCrate extends Crate {
     @Override
@@ -48,6 +50,11 @@ public final class AmmoCrate extends Crate {
 
     @Override
     public @NotNull Material getBlock() {
-        return Material.REPEATING_COMMAND_BLOCK;
+        return Material.COMMAND_BLOCK;
+    }
+
+    @Override
+    public @NotNull Consumer<Block> getBlockAction() {
+        return getConditionalConsumer(true);
     }
 }

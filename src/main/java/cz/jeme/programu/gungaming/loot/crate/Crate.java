@@ -3,12 +3,15 @@ package cz.jeme.programu.gungaming.loot.crate;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.type.CommandBlock;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public abstract class Crate {
     private final @NotNull Map<Rarity, Integer> chances;
@@ -31,6 +34,19 @@ public abstract class Crate {
 
     public final @NotNull Map<Rarity, Integer> getChances() {
         return chances;
+    }
+
+    public @NotNull Consumer<Block> getBlockAction() {
+        return b -> {
+        };
+    }
+
+    protected static @NotNull Consumer<Block> getConditionalConsumer(boolean conditional) {
+        return b -> {
+            CommandBlock commandBlock = ((CommandBlock) b.getBlockData());
+            commandBlock.setConditional(conditional);
+            b.setBlockData(commandBlock);
+        };
     }
 
     abstract public @NotNull String getName();

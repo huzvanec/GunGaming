@@ -1,4 +1,4 @@
-package cz.jeme.programu.gungaming.loot.crate;
+package cz.jeme.programu.gungaming.loot.generator;
 
 public record CrateLocation(int x, int y, int z) {
     @Override

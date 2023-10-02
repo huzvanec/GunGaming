@@ -13,22 +13,28 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public final class WoodenCrate extends Crate {
+public final class GoldenCrate extends Crate {
     @Override
     public @NotNull String getName() {
-        return "Wooden Crate";
+        return "Golden Crate";
     }
 
     @Override
     protected @NotNull Map<Rarity, Integer> getChanceOverrides() {
-        return Collections.emptyMap();
+        return Map.of(
+                Rarity.COMMON, 5,
+                Rarity.UNCOMMON, 5,
+                Rarity.RARE, 5,
+                Rarity.EPIC, 9,
+                Rarity.LEGENDARY, 8
+        );
     }
 
     @Override
     public @NotNull Map<Class<? extends CustomItem>, Integer> getLimits() {
         return Map.of(
-                Gun.class, 1,
-                Attachment.class, 1
+                Gun.class, 2,
+                Attachment.class, 2
         );
     }
 
@@ -38,27 +44,27 @@ public final class WoodenCrate extends Crate {
     }
 
     @Override
-    public @NotNull Consumer<Block> getBlockAction() {
-        return getConditionalConsumer(true);
-    }
-
-    @Override
     public @NotNull Crate.FilterType getFilterType() {
         return FilterType.BLACKLIST;
     }
 
     @Override
     public float getFillPercentage() {
-        return 0.25f;
+        return 0.5f;
     }
 
     @Override
     public float getSpawnPercentage() {
-        return 0.0015f;
+        return 0.0002f;
     }
 
     @Override
     public @NotNull Material getBlock() {
-        return Material.CHAIN_COMMAND_BLOCK;
+        return Material.REPEATING_COMMAND_BLOCK;
+    }
+
+    @Override
+    public @NotNull Consumer<Block> getBlockAction() {
+        return getConditionalConsumer(true);
     }
 }
