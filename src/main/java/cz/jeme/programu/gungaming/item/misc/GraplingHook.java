@@ -72,12 +72,12 @@ public class GraplingHook extends Misc implements SingletonLoot {
                 if (!hooked) {
                     Location location = hook.getLocation();
                     List<Block> blocks = List.of(
-                            world.getBlockAt(location.add(0, 0, RANGE)),
-                            world.getBlockAt(location.add(RANGE, 0, 0)),
-                            world.getBlockAt(location.add(0, RANGE, 0)),
-                            world.getBlockAt(location.subtract(0, 0, RANGE)),
-                            world.getBlockAt(location.subtract(RANGE, 0, 0)),
-                            world.getBlockAt(location.subtract(0, RANGE, 0))
+                            world.getBlockAt(location.clone().add(RANGE, 0, 0)),
+                            world.getBlockAt(location.clone().add(0, RANGE, 0)),
+                            world.getBlockAt(location.clone().add(0, 0, RANGE)),
+                            world.getBlockAt(location.clone().subtract(RANGE, 0, 0)),
+                            world.getBlockAt(location.clone().subtract(0, RANGE, 0)),
+                            world.getBlockAt(location.clone().subtract(0, 0, RANGE))
                     );
                     if (blocks.stream().map(Block::getType).anyMatch(Material::isCollidable) || hook.isOnGround()) {
                         hooked = true;
