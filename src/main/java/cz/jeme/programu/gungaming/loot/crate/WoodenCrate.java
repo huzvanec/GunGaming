@@ -20,6 +20,11 @@ public final class WoodenCrate extends Crate {
     }
 
     @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.UNCOMMON;
+    }
+
+    @Override
     protected @NotNull Map<Rarity, Integer> getChanceOverrides() {
         return Collections.emptyMap();
     }

@@ -2,6 +2,8 @@ package cz.jeme.programu.gungaming.game;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.Namespace;
+import cz.jeme.programu.gungaming.loot.generator.CrateGenerator;
+import cz.jeme.programu.gungaming.loot.generator.TaskManager;
 import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.Sounds;
 import net.kyori.adventure.bossbar.BossBar;
@@ -19,7 +21,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
@@ -93,18 +94,49 @@ public final class Game {
             player.showBossBar(BOSS_BAR);
         }
 
-        new StartCountdown();
+        CrateGenerator.INSTANCE.generate(
+                sender,
+                centerX - size / 2,
+                centerZ - size / 2,
+                centerX + size / 2,
+                centerZ + size / 2
+        );
+
+        new BukkitRunnable() {
+            private int dotsCount = 1;
+
+            @Override
+            public void run() {
+                if (TaskManager.INSTANCE.getQueueSize() > 0) {
+                    if (dotsCount >= 3) {
+                        dotsCount = 1;
+                    } else {
+                        dotsCount++;
+                    }
+                    Title title = Title.title(
+                            Message.from("<aqua>Loading</aqua>"),
+                            Message.from("<gold>Generating crates" + ".".repeat(dotsCount) + "</gold>"),
+                            Title.Times.times(Duration.ZERO, Duration.ofSeconds(3), Duration.ZERO)
+                    );
+
+                    players.forEach(p -> p.showTitle(title));
+                } else {
+                    cancel();
+                    new StartCountdown();
+                }
+            }
+        }.runTaskTimer(GunGaming.getPlugin(), 0L, 4L);
     }
 
     private void startGame() {
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : players) {
             Namespace.FROZEN.set(player, false);
             player.setGameMode(GameMode.SURVIVAL);
             player.setGliding(true);
             Namespace.GLIDING.set(player, true);
             Namespace.INVULNERABLE.set(player, true);
         }
-        new Counter();
+        Bukkit.getScheduler().runTask(GunGaming.getPlugin(), GracePeriodTimer::new);
     }
 
     public static void onEntityToggleGlide(@NotNull EntityToggleGlideEvent event) {
@@ -137,7 +169,7 @@ public final class Game {
     }
 
     private class StartCountdown extends BukkitRunnable {
-        private static final int COUNTER_START = 5;
+        private static final int COUNTER_START = 30;
         private int counter = COUNTER_START;
 
         private StartCountdown() {
@@ -151,9 +183,9 @@ public final class Game {
             if (counter == 0) {
                 cancel();
                 title = Title.title(
-                        Message.from("<#FF00FF>Good Luck!</#FF00FF>"),
-                        Message.from("<gold>Game is starting...</gold>"),
-                        Title.Times.times(Duration.ZERO, Duration.ofMillis(500), Duration.ofSeconds(1))
+                        Message.from("<aqua>Good Luck!</aqua>"),
+                        Message.from(""),
+                        Title.Times.times(Duration.ZERO, Duration.ofMillis(500), Duration.ofSeconds(2))
                 );
                 sound = Sounds.getSound("game.start", 1);
                 startGame();
@@ -164,7 +196,7 @@ public final class Game {
                                         + (float) counter / COUNTER_START
                                         + ">" + counter
                                         + "</transition>"),
-                        Message.from("<gold>Game is starting...</gold>"),
+                        Message.from("<gold>Game will start soon!</gold>"),
                         Title.Times.times(Duration.ZERO, Duration.ofSeconds(3), Duration.ZERO)
                 );
                 sound = Sounds.getSound("game.dong", 1);
@@ -178,35 +210,27 @@ public final class Game {
         }
     }
 
-    private static class Counter extends BukkitRunnable {
-        private static final long GAME_DURATION = 20 * 60; // Game duration in seconds
-        private long counter = GAME_DURATION;
-        private static final DecimalFormat FORMATTER = new DecimalFormat("00");
-
-        public Counter() {
-            runTaskTimer(GunGaming.getPlugin(), 0L, 20L);
+    private static class GameTimer extends Timer {
+        public GameTimer() {
+            super(20 * 60, BOSS_BAR);
+            BOSS_BAR.color(BossBar.Color.BLUE);
         }
 
         @Override
-        public void run() {
-            float phase = (float) counter / GAME_DURATION;
-            BOSS_BAR.progress(phase);
-            BOSS_BAR.name(Message.from("<b><transition:#FF0000:#00FF00:" + phase + ">"
-                    + translateTime(counter) + "</transition></b>"
-            ));
-            counter--;
+        protected void expire() {
+
+        }
+    }
+
+    private static class GracePeriodTimer extends Timer {
+        public GracePeriodTimer() {
+            super(2 * 60, BOSS_BAR);
+            BOSS_BAR.color(BossBar.Color.RED);
         }
 
-        private static String translateTime(long seconds) {
-            long hours = seconds / 3600;
-            seconds -= hours * 3600;
-            long minutes = seconds / 60;
-            seconds -= minutes * 60;
-            String time = FORMATTER.format(minutes) + ":" + FORMATTER.format(seconds);
-            if (hours != 0) {
-                time = FORMATTER.format(hours) + ":" + time;
-            }
-            return time;
+        @Override
+        protected void expire() {
+            new GameTimer();
         }
     }
 

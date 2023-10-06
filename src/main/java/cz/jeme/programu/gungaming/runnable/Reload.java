@@ -67,7 +67,7 @@ public final class Reload extends BukkitRunnable {
 
         if (ammoCounter == 0) { // First run, don't add any ammo
             newReload();
-            actionRunnable.runTaskTimer(GunGaming.getPlugin(), 0, 4);
+            actionRunnable.runTaskTimer(GunGaming.getPlugin(), 0L, 4L);
             return;
         }
 

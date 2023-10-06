@@ -26,4 +26,8 @@ public enum TaskManager {
         queue.add(task);
         check();
     }
+
+    public int getQueueSize() {
+        return queue.size();
+    }
 }

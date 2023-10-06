@@ -19,6 +19,11 @@ public final class AmmoCrate extends Crate {
     }
 
     @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.RARE;
+    }
+
+    @Override
     protected @NotNull Map<Rarity, Integer> getChanceOverrides() {
         return Collections.emptyMap();
     }

@@ -20,6 +20,11 @@ public final class GoldenCrate extends Crate {
     }
 
     @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.EPIC;
+    }
+
+    @Override
     protected @NotNull Map<Rarity, Integer> getChanceOverrides() {
         return Map.of(
                 Rarity.COMMON, 5,

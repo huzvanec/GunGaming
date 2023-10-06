@@ -51,6 +51,8 @@ public abstract class Crate {
 
     abstract public @NotNull String getName();
 
+    abstract public @NotNull Rarity getRarity();
+
     abstract protected @NotNull Map<Rarity, Integer> getChanceOverrides();
 
     abstract public @NotNull Map<Class<? extends CustomItem>, Integer> getLimits();

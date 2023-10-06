@@ -24,7 +24,7 @@ public enum Rarity {
     Rarity(int chance, @NotNull String color, @NotNull String prefix, @NotNull String suffix) {
         this.chance = chance;
         this.color = color;
-        name = prefix + color + this + Message.getEscapeTag(color) + suffix;
+        name = prefix + color + this + Message.escape(color) + suffix;
     }
 
     Rarity(int chance, @NotNull String color, @NotNull String prefix) {

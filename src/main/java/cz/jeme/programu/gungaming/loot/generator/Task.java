@@ -95,7 +95,7 @@ public final class Task extends BukkitRunnable {
                 + "%] Generation: " + crate.getName()
                 + "; Speed: " + blocksPerTick
                 + "BPT; Tick duration: " + tickDuration + "ms"
-                + Message.getEscapeTag(color);
+                + Message.escape(color);
         audience.sendActionBar(Message.from(info));
         for (int i = 0; i < blocksPerTick; i++) {
             if (x == xMax) {
@@ -141,7 +141,12 @@ public final class Task extends BukkitRunnable {
     }
 
     private void generateCrate(@NotNull Block block, @NotNull Crate crate) {
-        Inventory inventory = Bukkit.createInventory(null, InventoryType.CHEST, Message.from("Crateee"));
+        String color = crate.getRarity().getColor();
+        Inventory inventory = Bukkit.createInventory(
+                null,
+                InventoryType.CHEST,
+                Message.from(color + crate.getName() + Message.escape(color))
+        );
 
         int slot = 0;
         List<ItemStack> loot = LootManager.INSTANCE.generateLoot(crate, inventory.getSize());

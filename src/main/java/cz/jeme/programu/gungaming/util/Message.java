@@ -84,7 +84,7 @@ public final class Message {
         return builder.toString();
     }
 
-    public static @NotNull String getEscapeTag(@NotNull String string) {
+    public static @NotNull String escape(@NotNull String string) {
         return string.replace("<", "</");
     }
 

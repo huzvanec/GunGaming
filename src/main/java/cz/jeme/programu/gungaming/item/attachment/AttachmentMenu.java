@@ -55,7 +55,7 @@ public final class AttachmentMenu {
         this.gunItem = gunItem;
         gun = Guns.getGun(gunItem);
         player = (Player) event.getWhoClicked();
-        title = Message.from(gun.rarity.getColor() + gun.name + Message.getEscapeTag(gun.rarity.getColor()) + " attachments");
+        title = Message.from(gun.rarity.getColor() + gun.name + Message.escape(gun.rarity.getColor()) + " attachments");
         inventory = Bukkit.createInventory(player, InventoryType.HOPPER, title);
 
         inventory.setItem(0, EMPTY);
