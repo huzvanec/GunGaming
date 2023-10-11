@@ -1,9 +1,6 @@
 package cz.jeme.programu.gungaming;
 
-import cz.jeme.programu.gungaming.eventhandler.HitHandler;
-import cz.jeme.programu.gungaming.eventhandler.InventoryHandler;
-import cz.jeme.programu.gungaming.eventhandler.PlayerHealHandler;
-import cz.jeme.programu.gungaming.eventhandler.PlayerItemConsumeHandler;
+import cz.jeme.programu.gungaming.eventhandler.*;
 import cz.jeme.programu.gungaming.eventhandler.interaction.PlayerInteractHandler;
 import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.item.misc.GraplingHook;
@@ -130,22 +127,22 @@ public enum EventListener implements Listener {
         GraplingHook.onPlayerFish(event);
     }
 
-    //    @EventHandler
-//    private void onPlayerResourcePackStatus(@NotNull PlayerResourcePackStatusEvent event) {
-//        PlayerTrafficHandler.onPlayerResourcePackStatus(event);
-//    }
-//
+    @EventHandler
+    private void onPlayerResourcePackStatus(@NotNull PlayerResourcePackStatusEvent event) {
+        PlayerTrafficHandler.onPlayerResourcePackStatus(event);
+    }
+
     @EventHandler
     private void onPlayerMove(@NotNull PlayerMoveEvent event) {
         Boolean frozen = Namespace.FROZEN.get(event.getPlayer());
         if (frozen != null && frozen && event.hasChangedBlock()) event.setCancelled(true);
-//        PlayerTrafficHandler.onPlayerMove(event);
+        PlayerTrafficHandler.onPlayerMove(event);
     }
-//
-//    @EventHandler
-//    private void onPlayerJoin(@NotNull PlayerJoinEvent event) {
-//        PlayerTrafficHandler.onPlayerJoin(event);
-//    }
+
+    @EventHandler
+    private void onPlayerJoin(@NotNull PlayerJoinEvent event) {
+        PlayerTrafficHandler.onPlayerJoin(event);
+    }
 
     @EventHandler
     private void onEntityToggleGlide(@NotNull EntityToggleGlideEvent event) {
