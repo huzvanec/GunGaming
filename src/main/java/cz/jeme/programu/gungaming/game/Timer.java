@@ -28,17 +28,23 @@ public abstract class Timer extends BukkitRunnable {
             expire();
             return;
         }
+        float phase = (float) counter / duration;
         if (bossBar != null) {
-            float phase = (float) counter / duration;
             bossBar.progress(phase);
             bossBar.name(Message.from("<b><transition:#FF0000:#00FF00:" + phase + ">"
-                    + translateTime(counter) + "</transition></b>"
+                    + translateTime(counter)
+                    + "</transition></b>"
             ));
         }
+        tick(counter, phase);
         counter--;
     }
 
-    abstract protected void expire();
+    protected void expire() {
+    }
+
+    protected void tick(long counter, float phase) {
+    }
 
     private static String translateTime(long seconds) {
         long hours = seconds / 3600;

@@ -233,5 +233,10 @@
         "sounds": [
             "gungaming:game/dong"
         ]
+    },
+    "game.ding": {
+        "sounds": [
+            "gungaming:game/ding"
+        ]
     }
 }

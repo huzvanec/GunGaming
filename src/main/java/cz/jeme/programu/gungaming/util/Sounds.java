@@ -8,6 +8,7 @@ import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.item.throwable.grenade.Grenade;
 import cz.jeme.programu.gungaming.util.registry.Guns;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import org.bukkit.inventory.ItemStack;
@@ -51,15 +52,20 @@ public final class Sounds {
     }
 
     public static @NotNull Sound getThrowableThrowSound(@NotNull Throwable throwable) {
-        if (throwable instanceof Grenade) return getSound("throwable.throw.grenade",1.9f);
+        if (throwable instanceof Grenade) return getSound("throwable.throw.grenade", 1.9f);
         return getSound("throwable.throw." + formatName(throwable), 1.9f);
     }
 
     public static @NotNull Sound getConsumableEatSound(@NotNull Consumable consumable) {
-        return getSound("consumable.eat." + formatName(consumable),  1f);
+        return getSound("consumable.eat." + formatName(consumable), 1f);
     }
+
     public static @NotNull Sound getConsumableBurpSound(@NotNull Consumable consumable) {
-        return getSound("consumable.burp." + formatName(consumable),  1f);
+        return getSound("consumable.burp." + formatName(consumable), 1f);
+    }
+
+    public static <T extends Audience & Sound.Emitter> void ding(@NotNull T audience) {
+        audience.playSound(getSound("game.ding", 1f), audience);
     }
 
     public static @NotNull String formatName(@NotNull CustomItem customItem) {

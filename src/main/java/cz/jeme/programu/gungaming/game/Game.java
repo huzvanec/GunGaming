@@ -210,10 +210,41 @@ public final class Game {
         }
     }
 
-    private static class GameTimer extends Timer {
+    private class GameTimer extends Timer {
         public GameTimer() {
-            super(20 * 60, BOSS_BAR);
-            BOSS_BAR.color(BossBar.Color.BLUE);
+            super(20 * 60 + 5, BOSS_BAR);
+            BOSS_BAR.color(BossBar.Color.RED);
+        }
+
+        @Override
+        protected void tick(long counter, float phase) {
+            if ((counter < 60 * 5 && counter % 60 == 0) || counter % 60 * 5 == 0) {
+                String minutePlr = counter == 60 ? "minute" : "minutes";
+                for (Player player : players) {
+                    player.sendMessage(
+                            Message.from(
+                                    "<transition:#FF0000:#00FF00:" + phase
+                                            + ">Game ends in "
+                                            + counter / 60 + " "
+                                            + minutePlr + "!</transition>"
+                            )
+                    );
+                    Sounds.ding(player);
+                }
+            } else if (counter <= 10) {
+                String secondPlr = counter == 1 ? "second" : "seconds";
+                for (Player player : players) {
+                    player.sendMessage(
+                            Message.from(
+                                    "<transition:#FF0000:#00FF00:" + phase
+                                            + ">Game ends in "
+                                            + counter + " "
+                                            + secondPlr + "!</transition>"
+                            )
+                    );
+                    Sounds.ding(player);
+                }
+            }
         }
 
         @Override
@@ -222,15 +253,51 @@ public final class Game {
         }
     }
 
-    private static class GracePeriodTimer extends Timer {
+    private class GracePeriodTimer extends Timer {
+
         public GracePeriodTimer() {
-            super(2 * 60, BOSS_BAR);
-            BOSS_BAR.color(BossBar.Color.RED);
+            super(3 * 60 + 5, BOSS_BAR);
+            BOSS_BAR.color(BossBar.Color.GREEN);
         }
 
         @Override
         protected void expire() {
+            for (Player player : players) {
+                player.sendMessage(
+                        Message.from(
+                                "<#FF0000>The grace period ended! PvP is now enabled.</#FF0000>"
+                        )
+                );
+                Sounds.ding(player);
+            }
             new GameTimer();
+        }
+
+        @Override
+        protected void tick(long counter, float phase) {
+            if (counter == 10) {
+                for (Player player : players) {
+                    player.sendMessage(
+                            Message.from(
+                                    "<transition:#FF0000:#00FF00:" + phase + ">"
+                                            + "10 seconds of grace period remaining!</transition>"
+                            )
+                    );
+                    Sounds.ding(player);
+                }
+            } else if (counter % 60 == 0) {
+                String minutePlr = counter == 60 ? "minute" : "minutes";
+                for (Player player : players) {
+                    player.sendMessage(
+                            Message.from(
+                                    "<transition:#FF0000:#00FF00:" + phase + ">"
+                                            + counter / 60 + " " + minutePlr
+                                            + " of grace period remaining!</transition>"
+                            )
+                    );
+                    Sounds.ding(player);
+                }
+            }
         }
     }
 

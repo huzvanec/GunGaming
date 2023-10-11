@@ -8,7 +8,7 @@ import net.kyori.adventure.audience.Audience;
 import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftHumanEntity;
+import org.bukkit.craftbukkit.v1_20_R2.entity.CraftHumanEntity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;

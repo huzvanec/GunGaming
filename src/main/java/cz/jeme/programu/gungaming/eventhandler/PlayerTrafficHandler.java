@@ -2,11 +2,6 @@ package cz.jeme.programu.gungaming.eventhandler;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.util.Message;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -14,7 +9,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 public final class PlayerTrafficHandler {
     private static final @NotNull String RESOURCEPACK_MESSAGE =
@@ -31,14 +29,14 @@ public final class PlayerTrafficHandler {
     private static final @NotNull String HASH;
 
     static {
-        String tempHash;
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpGet get = new HttpGet(HASH_URL);
-        try (CloseableHttpResponse response = httpClient.execute(get)) {
-            tempHash = EntityUtils.toString(response.getEntity());
+        String tempHash = "";
+        try {
+            URL url = new URL(HASH_URL);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            tempHash = reader.readLine();
+            reader.close();
         } catch (IOException e) {
             GunGaming.serverLog("Couldn't download resourcepack hash!", e);
-            tempHash = "";
         }
         HASH = tempHash;
     }
@@ -67,6 +65,7 @@ public final class PlayerTrafficHandler {
             player.setGameMode(GameMode.SURVIVAL);
         }
     }
+
     public static void onPlayerMove(@NotNull PlayerMoveEvent event) {
         if (!event.getPlayer().hasResourcePack()) {
             event.setCancelled(true);

@@ -9,7 +9,7 @@ import cz.jeme.programu.gungaming.util.Sounds;
 import cz.jeme.programu.gungaming.util.registry.Guns;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -70,7 +70,7 @@ public final class InventoryHandler {
         }
 
         boolean rightClick = event.getClick() == ClickType.RIGHT;
-        boolean emptyClick = cursor == null || cursor.getType() == Material.AIR;
+        boolean emptyClick = cursor.getType() == Material.AIR;
         boolean isGun = Guns.isGun(item);
 
         if (rightClick && emptyClick && isGun) {
