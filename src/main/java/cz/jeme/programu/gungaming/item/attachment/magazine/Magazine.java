@@ -25,18 +25,18 @@ public abstract class Magazine extends Attachment {
     }
 
     @Override
-    public int getSlotId() {
+    public final int getSlotId() {
         return 1;
     }
 
     @Override
-    public @NotNull Namespace getNbt() {
+    public final @NotNull Namespace getNbt() {
         return Namespace.GUN_MAGAZINE;
     }
 
     @Override
-    protected @NotNull Material getMaterial() {
-        return Material.WOODEN_AXE;
+    protected final @NotNull Material getMaterial() {
+        return Material.FLOWER_BANNER_PATTERN;
     }
 
     public static void update(ItemStack item) {
@@ -56,7 +56,7 @@ public abstract class Magazine extends Attachment {
     }
 
     @Override
-    protected @NotNull Class<? extends Attachment> getGroupClass() {
+    protected final @NotNull Class<? extends Attachment> getGroupClass() {
         return Magazine.class;
     }
 }

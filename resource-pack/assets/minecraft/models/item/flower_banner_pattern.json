@@ -1,0 +1,27 @@
+{
+  "__gungaming__": "Flower banner patterns represent all the magazines in gungaming",
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "minecraft:item/flower_banner_pattern"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "item/gungaming/attachment/small_magazine"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2
+      },
+      "model": "item/gungaming/attachment/big_magazine"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3
+      },
+      "model": "item/gungaming/attachment/huge_magazine"
+    }
+  ]
+}

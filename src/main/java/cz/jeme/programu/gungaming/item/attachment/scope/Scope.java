@@ -23,21 +23,22 @@ public abstract class Scope extends Attachment {
     }
 
     @Override
-    protected @NotNull Material getMaterial() {
-        return Material.STONE_AXE;
+    protected final @NotNull Material getMaterial() {
+        return Material.CREEPER_BANNER_PATTERN;
     }
 
     @Override
-    public int getSlotId() {
+    public final int getSlotId() {
         return 2;
     }
 
     @Override
-    public @NotNull Namespace getNbt() {
+    public final @NotNull Namespace getNbt() {
         return Namespace.GUN_SCOPE;
     }
+
     @Override
-    protected @NotNull Class<? extends Attachment> getGroupClass() {
+    protected final @NotNull Class<? extends Attachment> getGroupClass() {
         return Scope.class;
     }
 }

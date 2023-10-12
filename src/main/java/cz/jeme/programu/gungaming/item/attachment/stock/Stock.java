@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class Stock extends Attachment {
     public @NotNull Float recoilPercentage;
     public @NotNull Float inaccuracyPercentage;
-    public static final @NotNull ItemStack SHOTGUN_STOCK_PLACEHOLDER = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
+    public static final @NotNull ItemStack SHOTGUN_STOCK_PLACEHOLDER = new ItemStack(org.bukkit.Material.WHITE_STAINED_GLASS_PANE);
 
     static {
         ItemMeta meta = SHOTGUN_STOCK_PLACEHOLDER.getItemMeta();
@@ -40,17 +40,17 @@ public abstract class Stock extends Attachment {
     }
 
     @Override
-    protected @NotNull Material getMaterial() {
-        return Material.IRON_AXE;
+    protected final @NotNull Material getMaterial() {
+        return Material.SKULL_BANNER_PATTERN;
     }
 
     @Override
-    public int getSlotId() {
+    public final int getSlotId() {
         return 3;
     }
 
     @Override
-    public @NotNull Namespace getNbt() {
+    public final @NotNull Namespace getNbt() {
         return Namespace.GUN_STOCK;
     }
 
@@ -83,12 +83,12 @@ public abstract class Stock extends Attachment {
     }
 
     @Override
-    protected @NotNull Class<? extends Attachment> getGroupClass() {
+    protected final @NotNull Class<? extends Attachment> getGroupClass() {
         return Stock.class;
     }
 
     @Override
-    public @NotNull ItemStack getPlaceHolder(@NotNull Gun gun) {
+    public final @NotNull ItemStack getPlaceHolder(@NotNull Gun gun) {
         if (gun.ammoType.equals(TwelveGauge.class)) {
             return SHOTGUN_STOCK_PLACEHOLDER;
         } else {
