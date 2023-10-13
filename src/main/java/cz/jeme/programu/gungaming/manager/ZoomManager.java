@@ -37,12 +37,12 @@ public enum ZoomManager {
         List<Component> lore = new ArrayList<>();
         assert meta != null;
         meta.lore(lore);
-        meta.displayName(Message.from("§"));
-        // This is equivalent to an empty char, minecraft cannot render paragraphs, they are used for colors
+        meta.displayName(Message.EMPTY);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.setCustomModelData(1);
         PUMPKIN.setItemMeta(meta);
     }
+
     public void nextZoom(@NotNull Player player, double multiplier) {
         if (!helmetItems.containsKey(player) || helmetItems.get(player).equals(PUMPKIN)) {
             zoomIn(player, multiplier);

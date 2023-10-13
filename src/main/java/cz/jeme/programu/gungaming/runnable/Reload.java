@@ -82,7 +82,7 @@ public final class Reload extends BukkitRunnable {
 
     private void shotgun() {
         if (!isCreative) {
-            Inventories.removeItems(player.getInventory(), ammo.item, 1);
+            Inventories.removeItems(player.getInventory(), ammo.getItem(), 1);
         }
         Ammos.add(item, 1);
         if (ammoCounter == ammoCount) {
@@ -92,7 +92,7 @@ public final class Reload extends BukkitRunnable {
 
     private void normal() {
         if (!isCreative) {
-            Inventories.removeItems(player.getInventory(), ammo.item, ammoCount);
+            Inventories.removeItems(player.getInventory(), ammo.getItem(), ammoCount);
         }
         Ammos.add(item, ammoCount);
         cancel();

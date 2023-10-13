@@ -1,27 +1,33 @@
-package cz.jeme.programu.gungaming.item.ammo;
+package cz.jeme.programu.gungaming.item.consumable.heal;
 
 import cz.jeme.programu.gungaming.loot.Rarity;
+import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 
-public final class Rocket extends Ammo {
+public final class Bandage extends Heal {
     @Override
     public int getCustomModelData() {
-        return 3;
+        return 1;
     }
 
     @Override
     public @NotNull String getName() {
-        return "Rocket";
+        return "Bandage";
     }
 
     @Override
     public @NotNull String getInfo() {
-        return "Ammo for the Rocket Launcher";
+        return "Instantly heals 2.5 hearts";
     }
 
     @Override
     public @NotNull Rarity getRarity() {
-        return Rarity.EPIC;
+        return Rarity.RARE;
+    }
+
+    @Override
+    public @NotNull Material getMaterial() {
+        return Material.GOLDEN_APPLE;
     }
 
     @Override
@@ -31,6 +37,11 @@ public final class Rocket extends Ammo {
 
     @Override
     public int getMaxStackLoot() {
-        return 4;
+        return 5;
+    }
+
+    @Override
+    public double getHealAmount() {
+        return 2.5D;
     }
 }

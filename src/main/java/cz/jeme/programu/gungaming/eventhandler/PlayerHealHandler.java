@@ -12,6 +12,7 @@ import java.util.UUID;
 
 public final class PlayerHealHandler {
     private static final @NotNull Map<UUID, Integer> HEALING = new HashMap<>();
+
     private PlayerHealHandler() {
         throw new AssertionError();
     }
@@ -20,6 +21,7 @@ public final class PlayerHealHandler {
         if (!Game.isRunning()) return;
         event.setCancelled(true);
     }
+
     public static void onEntityRegainHealth(@NotNull EntityRegainHealthEvent event) {
         if (event.getRegainReason() != EntityRegainHealthEvent.RegainReason.SATIATED) return;
         if (!(event.getEntity() instanceof Player player)) return;

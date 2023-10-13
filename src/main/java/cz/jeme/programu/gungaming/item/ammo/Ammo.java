@@ -6,14 +6,12 @@ import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Ammo extends CustomItem {
-    public Ammo() {
-        setup();
-
-        Namespace.AMMO.set(item, name);
+    @Override
+    public final @NotNull Material getMaterial() {
+        return Material.WHITE_DYE;
     }
 
-    @Override
-    protected @NotNull Material getMaterial() {
-        return Material.WHITE_DYE;
+    public Ammo() {
+        Namespace.AMMO.set(item, getName());
     }
 }

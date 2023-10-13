@@ -1,12 +1,14 @@
 package cz.jeme.programu.gungaming.loot.generator;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.loot.crate.Crate;
 import cz.jeme.programu.gungaming.util.Packets;
 import cz.jeme.programu.gungaming.util.registry.Crates;
 import net.kyori.adventure.audience.Audience;
 import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_20_R2.entity.CraftHumanEntity;
 import org.bukkit.entity.HumanEntity;
@@ -45,6 +47,12 @@ public enum CrateGenerator {
 
     private static @NotNull CrateLocation translateCoords(@NotNull Block block) {
         return new CrateLocation(block.getX(), block.getY(), block.getZ());
+    }
+
+    public void removeCrates() {
+        inventories.keySet().forEach(
+                cL -> Game.getWorld().getBlockAt(cL.x(), cL.y(), cL.z()).setType(Material.AIR)
+        );
     }
 
     public boolean showInventory(@NotNull CrateLocation crateLocation, @NotNull HumanEntity human) {

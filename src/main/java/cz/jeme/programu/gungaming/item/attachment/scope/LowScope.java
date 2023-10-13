@@ -3,23 +3,43 @@ package cz.jeme.programu.gungaming.item.attachment.scope;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import org.jetbrains.annotations.NotNull;
 
-public class LowScope extends Scope {
+import java.util.Collections;
+import java.util.Set;
+
+public final class LowScope extends Scope {
+
     @Override
-    protected void setup() {
-        customModelData = 1;
-        name = "Low Scope";
-        info = "A basic scope for close-range";
-        rarity = Rarity.RARE;
-        scope = 2D;
+    public int getCustomModelData() {
+        return 1;
     }
 
     @Override
-    protected @NotNull String[] getBuffs() {
-        return new String[]{"2× scope"};
+    public @NotNull String getName() {
+        return "Low Scope";
     }
 
     @Override
-    protected @NotNull String[] getNerfs() {
-        return new String[0];
+    public @NotNull String getInfo() {
+        return "Basic scope for close-range";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.RARE;
+    }
+
+    @Override
+    protected @NotNull Set<String> getBuffs() {
+        return Set.of("2× scope");
+    }
+
+    @Override
+    protected @NotNull Set<String> getNerfs() {
+        return Collections.emptySet();
+    }
+
+    @Override
+    public double getScopeMultiplier() {
+        return 2D;
     }
 }

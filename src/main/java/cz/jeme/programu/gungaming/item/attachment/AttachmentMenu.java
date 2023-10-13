@@ -28,18 +28,18 @@ import java.util.List;
 public final class AttachmentMenu {
 
     private static final @NotNull ItemStack EMPTY = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
-    private static final @NotNull ItemStack INAPLICABLE = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
+    private static final @NotNull ItemStack INAPPLICABLE = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
 
     static {
         ItemMeta emptyMeta = EMPTY.getItemMeta();
-        emptyMeta.displayName(Message.from("§"));
+        emptyMeta.displayName(Message.EMPTY);
         emptyMeta.setCustomModelData(4);
         EMPTY.setItemMeta(emptyMeta);
 
-        ItemMeta inaplicableMeta = INAPLICABLE.getItemMeta();
-        inaplicableMeta.displayName(Message.from("<!italic><red>Inaplicable for this weapon</red></!italic>"));
-        inaplicableMeta.setCustomModelData(5);
-        INAPLICABLE.setItemMeta(inaplicableMeta);
+        ItemMeta inapplicableMeta = INAPPLICABLE.getItemMeta();
+        inapplicableMeta.displayName(Message.from("<!italic><red>Inapplicable for this weapon</red></!italic>"));
+        inapplicableMeta.setCustomModelData(5);
+        INAPPLICABLE.setItemMeta(inapplicableMeta);
     }
 
     private final @NotNull ItemStack gunItem;
@@ -51,11 +51,14 @@ public final class AttachmentMenu {
 
     public AttachmentMenu(@NotNull InventoryClickEvent event) {
         ItemStack gunItem = event.getCurrentItem();
-        assert gunItem != null : "Current item is null!";
+        assert gunItem != null : "Current gun item is null!";
         this.gunItem = gunItem;
         gun = Guns.getGun(gunItem);
         player = (Player) event.getWhoClicked();
-        title = Message.from(gun.rarity.getColor() + gun.name + Message.escape(gun.rarity.getColor()) + " attachments");
+        title = Message.from(
+                gun.getRarity().getColor() + gun.getName()
+                        + Message.escape(gun.getRarity().getColor()) + " attachments"
+        );
         inventory = Bukkit.createInventory(player, InventoryType.HOPPER, title);
 
         inventory.setItem(0, EMPTY);
@@ -69,7 +72,7 @@ public final class AttachmentMenu {
         if (name.isEmpty()) return Attachments.placeHolders.get(clazz);
         Attachment attachment = Attachments.getAttachment(name);
         assert attachment != null : "Attachment is null!";
-        return attachment.item;
+        return attachment.getItem();
     }
 
     private void read() {
@@ -78,7 +81,7 @@ public final class AttachmentMenu {
         ItemStack stockItem;
 
         if (gun instanceof NoScope) {
-            scopeItem = INAPLICABLE;
+            scopeItem = INAPPLICABLE;
         } else {
             String scopeName = Namespace.GUN_SCOPE.get(gunItem);
             assert scopeName != null : "Scope name is null!";
@@ -87,7 +90,7 @@ public final class AttachmentMenu {
         inventory.setItem(2, scopeItem);
 
         if (gun instanceof NoMagazine) {
-            magazineItem = INAPLICABLE;
+            magazineItem = INAPPLICABLE;
         } else {
             String magazineName = Namespace.GUN_MAGAZINE.get(gunItem);
             assert magazineName != null : "Magazine name is null!";
@@ -99,8 +102,8 @@ public final class AttachmentMenu {
         assert stockName != null : "Stock name is null!";
 
         if (gun instanceof NoStock) {
-            stockItem = INAPLICABLE;
-        } else if (gun.ammoType.equals(TwelveGauge.class) && stockName.isEmpty()) {
+            stockItem = INAPPLICABLE;
+        } else if (gun.getAmmoType() == TwelveGauge.class && stockName.isEmpty()) {
             stockItem = Stock.SHOTGUN_STOCK_PLACEHOLDER;
         } else {
             stockItem = getAttachmentItem(stockName, Stock.class);
@@ -133,7 +136,7 @@ public final class AttachmentMenu {
         ItemStack currentItem = inventory.getItem(index);
         assert currentItem != null;
 
-        if (currentItem.equals(INAPLICABLE)) return;
+        if (currentItem.equals(INAPPLICABLE)) return;
 
         if (currentItem.equals(attachment.getPlaceHolder(gun))) {
             event.setCurrentItem(null);
@@ -142,22 +145,22 @@ public final class AttachmentMenu {
         }
 
         inventory.setItem(index, clickedItem);
-        attachment.getNbt().set(gunItem, attachment.name);
+        attachment.getNamespace().set(gunItem, attachment.getName());
     }
 
     private void moveToInventory(@NotNull ItemStack clickedItem) {
         Attachment attachment = Attachments.getAttachment(clickedItem);
         List<ItemStack> didntFit = new ArrayList<>(player.getInventory().addItem(clickedItem).values());
         inventory.setItem(attachment.getSlotId(), attachment.getPlaceHolder(gun));
-        attachment.getNbt().set(gunItem, "");
+        attachment.getNamespace().set(gunItem, "");
 
         if (attachment instanceof Magazine) { // Check that the gun is not overloaded
             Integer currentAmmo = Namespace.GUN_AMMO_CURRENT.get(gunItem);
             assert currentAmmo != null : "Current ammo is null!";
-            int difference = currentAmmo - gun.maxAmmo;
+            int difference = currentAmmo - gun.getMaxAmmo();
             if (difference > 0) { // It's overloaded, give the ammo back to the player
-                Namespace.GUN_AMMO_CURRENT.set(gunItem, gun.maxAmmo);
-                ItemStack ammoItem = new ItemStack(gun.ammo.item);
+                Namespace.GUN_AMMO_CURRENT.set(gunItem, gun.getMaxAmmo());
+                ItemStack ammoItem = new ItemStack(gun.getAmmo().getItem());
                 ammoItem.setAmount(difference);
                 didntFit.addAll(player.getInventory().addItem(ammoItem).values());
             }
@@ -174,12 +177,11 @@ public final class AttachmentMenu {
         assert magazineName != null : "Magazine name is null!";
         Gun gun = Guns.getGun(gunItem);
         if (magazineName.isEmpty()) {
-            Namespace.GUN_AMMO_MAX.set(gunItem, gun.maxAmmo);
+            Namespace.GUN_AMMO_MAX.set(gunItem, gun.getMaxAmmo());
         } else {
             Magazine magazine = (Magazine) Attachments.getAttachment(magazineName);
             assert magazine != null : "Magazine is null!";
-            float multiplier = magazine.magazinePercentage / 100f;
-            int multipliedMaxAmmo = Math.round(gun.maxAmmo * multiplier);
+            int multipliedMaxAmmo = Math.round(gun.getMaxAmmo() * magazine.getMagazineSizePercentage());
             Namespace.GUN_AMMO_MAX.set(gunItem, multipliedMaxAmmo);
         }
         Lores.update(gunItem);

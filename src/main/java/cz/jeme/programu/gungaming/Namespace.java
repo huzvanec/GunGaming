@@ -42,12 +42,14 @@ public enum Namespace {
     THROWN_DAMAGE(PersistentDataType.DOUBLE),
     // Consumable namespaces
     CONSUMABLE(PersistentDataType.STRING),
-    // Grapling Hook namespaces
+    // Grappling Hook namespaces
     HOOKED(PersistentDataType.BOOLEAN),
-    GRAPPLE_LAST_SUBTRACT(PersistentDataType.LONG),
+    GRAPPLING_LAST_SUBTRACT(PersistentDataType.LONG),
     // Player namespaces
     FROZEN(PersistentDataType.BOOLEAN),
     GLIDING(PersistentDataType.BOOLEAN),
+    LAST_HIT(PersistentDataType.LONG),
+    LAST_DAMAGER(PersistentDataType.STRING),
     // Entity namespaces
     INVULNERABLE(PersistentDataType.BOOLEAN);
 

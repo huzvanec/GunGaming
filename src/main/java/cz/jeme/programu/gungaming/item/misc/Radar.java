@@ -22,11 +22,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-public class Radar extends Misc implements SingletonLoot {
+public final class Radar extends Misc implements SingletonLoot {
     @SuppressWarnings("deprecation")
     public Radar() {
-        setup();
-
         MapMeta meta = (MapMeta) item.getItemMeta();
         meta.setMapId(0);
         MapView map = meta.getMapView();
@@ -39,25 +37,37 @@ public class Radar extends Misc implements SingletonLoot {
     }
 
     @Override
-    protected void setup() {
-        name = "Radar";
-        info = "Scans the surroundings";
-        rarity = Rarity.LEGENDARY;
-        customModelData = 1;
-    }
-
-    @Override
-    protected @NotNull Material getMaterial() {
-        return Material.FILLED_MAP;
-    }
-
-    @Override
-    public int getMinLoot() {
+    public int getCustomModelData() {
         return 1;
     }
 
     @Override
-    public int getMaxLoot() {
+    public @NotNull String getName() {
+        return "Radar";
+    }
+
+    @Override
+    public @NotNull String getInfo() {
+        return "Scans the surroundings";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.LEGENDARY;
+    }
+
+    @Override
+    public @NotNull Material getMaterial() {
+        return Material.FILLED_MAP;
+    }
+
+    @Override
+    public int getMinStackLoot() {
+        return 1;
+    }
+
+    @Override
+    public int getMaxStackLoot() {
         return 1;
     }
 

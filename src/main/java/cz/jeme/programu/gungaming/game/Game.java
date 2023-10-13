@@ -168,8 +168,12 @@ public final class Game {
         return game;
     }
 
+    public static @Nullable Game getInstance() {
+        return game;
+    }
+
     private class StartCountdown extends BukkitRunnable {
-        private static final int COUNTER_START = 30;
+        private static final int COUNTER_START = 5;
         private int counter = COUNTER_START;
 
         private StartCountdown() {
@@ -218,7 +222,7 @@ public final class Game {
 
         @Override
         protected void tick(long counter, float phase) {
-            if ((counter < 60 * 5 && counter % 60 == 0) || counter % 60 * 5 == 0) {
+            if ((counter < (60 * 5) && counter % 60 == 0) || counter % (60 * 5) == 0) {
                 String minutePlr = counter == 60 ? "minute" : "minutes";
                 for (Player player : players) {
                     player.sendMessage(
@@ -309,5 +313,17 @@ public final class Game {
                     .orElseThrow(() -> new IllegalArgumentException("No overworld found!"));
         }
         return world;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public int getCenterX() {
+        return centerX;
+    }
+
+    public int getCenterZ() {
+        return centerZ;
     }
 }

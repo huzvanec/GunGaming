@@ -17,21 +17,16 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Throwable extends CustomItem {
+    public abstract int getThrowCooldown();
 
-    public @NotNull Integer throwCooldown;
-    public @NotNull Double damage;
+    public abstract double getDamage();
 
     public Throwable() {
-        setup();
-
-        assert throwCooldown != null : "Throw cooldown not given!";
-        assert damage != null : "Damage not given!";
-
-        Namespace.THROWABLE.set(item, name);
+        Namespace.THROWABLE.set(item, getName());
     }
 
     @Override
-    protected @NotNull Material getMaterial() {
+    public final @NotNull Material getMaterial() {
         return Material.SNOWBALL;
     }
 
@@ -44,12 +39,12 @@ public abstract class Throwable extends CustomItem {
         Vector thrownVector = player.getLocation().getDirection();
 
         ThrowableProjectile thrown = player.launchProjectile(Snowball.class, thrownVector);
-        Namespace.THROWN.set(thrown, name);
-        Namespace.THROWN_DAMAGE.set(thrown, damage);
+        Namespace.THROWN.set(thrown, getName());
+        Namespace.THROWN_DAMAGE.set(thrown, getDamage());
 
         player.getWorld().playSound(Sounds.getThrowableThrowSound(this), player);
 
-        onDoThrow(event, heldItem, thrown);
+        onThrow(event, heldItem, thrown);
     }
 
     public final void thrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
@@ -59,9 +54,9 @@ public abstract class Throwable extends CustomItem {
         thrown.getWorld().playSound(Sounds.getThrowableExplosionSound(this), location.getX(), location.getY(), location.getZ());
     }
 
-    protected void onDoThrow(@NotNull PlayerInteractEvent event, @NotNull ItemStack heldItem, @NotNull Projectile thrown) {
+    protected void onThrow(@NotNull PlayerInteractEvent event, @NotNull ItemStack heldItem, @NotNull Projectile thrown) {
     }
 
-    public void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
+    protected void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
     }
 }

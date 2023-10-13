@@ -14,35 +14,58 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
-public class SmokeGrenade extends Grenade {
+public final class SmokeGrenade extends Grenade {
+    public static final int DURATION = 130; // Duration of effects in ticks
+
     @Override
-    protected void setup() {
-        name = "Smoke Grenade";
-        info = "throwable weapon that blinds enemies";
-        customModelData = 2;
-        rarity = Rarity.RARE;
-        throwCooldown = 3000;
-        damage = 0d;
+    public int getCustomModelData() {
+        return 2;
     }
 
     @Override
-    public int getMinLoot() {
+    public @NotNull String getName() {
+        return "Smoke Grenade";
+    }
+
+    @Override
+    public @NotNull String getInfo() {
+        return "Grenade that blinds enemies";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.RARE;
+    }
+
+    @Override
+    public int getMinStackLoot() {
         return 1;
     }
 
     @Override
-    public int getMaxLoot() {
-        return 6;
+    public int getMaxStackLoot() {
+        return 4;
     }
 
     @Override
-    public void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
+    public int getThrowCooldown() {
+        return 1000;
+    }
+
+    @Override
+    public double getDamage() {
+        return 0D;
+    }
+
+    @Override
+    protected void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
         Location location = thrown.getLocation();
         new BukkitRunnable() {
             private int counter = 0;
+
             @Override
             public void run() {
-                if (counter == 130) {
+                if (counter == DURATION) {
                     cancel();
                     return;
                 }

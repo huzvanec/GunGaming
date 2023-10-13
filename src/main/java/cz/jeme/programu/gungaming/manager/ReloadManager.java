@@ -54,11 +54,11 @@ public enum ReloadManager {
         }
 
         Gun gun = Guns.getGun(item);
-        Ammo ammo = gun.ammo;
+        Ammo ammo = gun.getAmmo();
 
         PlayerInventory inventory = player.getInventory();
 
-        int ammoFound = Inventories.getItemCount(inventory, ammo.item);
+        int ammoFound = Inventories.getItemCount(inventory, ammo.getItem());
         int ammoRequired = maxAmmo - currentAmmo;
 
         boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
@@ -96,7 +96,7 @@ public enum ReloadManager {
             return;
         }
 
-        CooldownManager.INSTANCE.setCooldown(player, gun.item.getType(), 0);
+        CooldownManager.INSTANCE.setCooldown(player, gun.getItem().getType(), 0);
         Reload reload = reloadMap.get(material);
         if (reload != null) {
             reload.cancel();

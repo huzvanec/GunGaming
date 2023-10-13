@@ -12,45 +12,41 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class CustomItem {
 
-    public @NotNull ItemStack item;
+    protected final @NotNull ItemStack item;
 
-    public @NotNull Integer customModelData;
+    public final @NotNull ItemStack getItem() {
+        return item;
+    }
 
-    public @NotNull String name;
-    public @NotNull String displayName;
+    public abstract int getCustomModelData();
 
-    public @NotNull String info;
+    public abstract @NotNull String getName();
 
-    public @NotNull Rarity rarity;
+    public @NotNull String getDisplayName() {
+        return getName();
+    }
 
-    abstract protected void setup();
+    public abstract @NotNull String getInfo();
 
-    abstract protected @NotNull Material getMaterial();
+    public abstract @NotNull Rarity getRarity();
 
-    abstract public int getMinLoot();
+    public abstract @NotNull Material getMaterial();
 
-    abstract public int getMaxLoot();
+    abstract public int getMinStackLoot();
+
+    abstract public int getMaxStackLoot();
 
     public CustomItem() {
-        setup();
-
-        assert customModelData != null : "Cusom model data not given!";
-        assert name != null : "Name not given!";
-        assert info != null : "Info not given!";
-        assert rarity != null : "Rarity not given!";
-
-        if (displayName == null) displayName = name;
-
         item = new ItemStack(getMaterial());
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        String coloredName = rarity.getColor() + displayName + Message.escape(rarity.getColor());
+        String coloredName = getRarity().getColor() + getDisplayName() + Message.escape(getRarity().getColor());
         meta.displayName(Message.from("<!italic>" + coloredName + "</!italic>"));
-        meta.setCustomModelData(customModelData);
+        meta.setCustomModelData(getCustomModelData());
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS);
-        Namespace.RARITY.set(meta, rarity.name());
-        Namespace.INFO.set(meta, Message.latin(info));
+        Namespace.RARITY.set(meta, getRarity().name());
+        Namespace.INFO.set(meta, Message.latin(getInfo()));
         Namespace.GG.set(meta, true);
         item.setItemMeta(meta);
         Lores.update(item);

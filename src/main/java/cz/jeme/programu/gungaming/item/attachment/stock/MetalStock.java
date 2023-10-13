@@ -3,24 +3,50 @@ package cz.jeme.programu.gungaming.item.attachment.stock;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import org.jetbrains.annotations.NotNull;
 
-public class MetalStock extends Stock {
+import java.util.Collections;
+import java.util.Set;
+
+public final class MetalStock extends Stock {
     @Override
-    protected void setup() {
-        customModelData = 3;
-        name = "Metal Stock";
-        info = "Awesome weapon handling";
-        rarity = Rarity.LEGENDARY;
-        recoilPercentage = 20f;
-        inaccuracyPercentage = 10f;
+    public int getCustomModelData() {
+        return 3;
     }
 
     @Override
-    protected @NotNull String[] getBuffs() {
-        return new String[]{"-80% recoil", "+90% accuracy"};
+    public @NotNull String getName() {
+        return "Metal Stock";
     }
 
     @Override
-    protected @NotNull String[] getNerfs() {
-        return new String[0];
+    public @NotNull String getInfo() {
+        return "Awesome weapon stability";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.LEGENDARY;
+    }
+
+    @Override
+    protected @NotNull Set<String> getBuffs() {
+        return Set.of(
+                "-80% recoil",
+                "+90% accuracy"
+        );
+    }
+
+    @Override
+    protected @NotNull Set<String> getNerfs() {
+        return Collections.emptySet();
+    }
+
+    @Override
+    public float getRecoilPercentage() {
+        return 0.2f;
+    }
+
+    @Override
+    public float getInaccuracyPercentage() {
+        return 0.1f;
     }
 }

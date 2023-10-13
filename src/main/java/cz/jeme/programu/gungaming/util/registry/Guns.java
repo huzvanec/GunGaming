@@ -16,7 +16,7 @@ public final class Guns {
     public static @NotNull Map<String, Gun> guns = new HashMap<>();
 
     private Guns() {
-        // Static class cannot be initialized
+        throw new AssertionError();
     }
 
     public static boolean isGun(@Nullable ItemStack item) {
@@ -36,8 +36,8 @@ public final class Guns {
     }
 
     public static void register(@NotNull Gun gun) {
-        guns.put(gun.name, gun);
-        Lores.update(gun.item);
+        guns.put(gun.getName(), gun);
+        Lores.update(gun.getItem());
     }
 
     public static void registered() {

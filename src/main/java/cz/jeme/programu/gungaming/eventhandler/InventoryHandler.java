@@ -24,6 +24,7 @@ import java.util.UUID;
 
 public final class InventoryHandler {
     private static final @NotNull Map<UUID, AttachmentMenu> ATTACHMENT_MENUS = new HashMap<>();
+
     private InventoryHandler() {
         throw new AssertionError();
     }

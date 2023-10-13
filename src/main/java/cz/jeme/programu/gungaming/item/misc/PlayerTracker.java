@@ -19,33 +19,43 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerTracker extends Misc implements SingletonLoot {
-
+public final class PlayerTracker extends Misc implements SingletonLoot {
     public PlayerTracker() {
-        setup();
         new Updater().runTaskTimer(GunGaming.getPlugin(), 0L, 5L);
     }
 
     @Override
-    protected void setup() {
-        name = "Player Tracker";
-        info = "Hold this in your hand to track the nearest player";
-        rarity = Rarity.EPIC;
-        customModelData = 1;
-    }
-
-    @Override
-    protected @NotNull Material getMaterial() {
-        return Material.COMPASS;
-    }
-
-    @Override
-    public int getMinLoot() {
+    public int getCustomModelData() {
         return 1;
     }
 
     @Override
-    public int getMaxLoot() {
+    public @NotNull String getName() {
+        return "Player Tracker";
+    }
+
+    @Override
+    public @NotNull String getInfo() {
+        return "Hold this in your hand to track the nearest player";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.EPIC;
+    }
+
+    @Override
+    public @NotNull Material getMaterial() {
+        return Material.COMPASS;
+    }
+
+    @Override
+    public int getMinStackLoot() {
+        return 1;
+    }
+
+    @Override
+    public int getMaxStackLoot() {
         return 1;
     }
 

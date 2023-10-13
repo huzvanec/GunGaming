@@ -16,7 +16,7 @@ public final class Consumables {
     public static @NotNull Map<String, Consumable> consumables = new HashMap<>();
 
     private Consumables() {
-        // Static class cannot be initialized
+        throw new AssertionError();
     }
 
     public static boolean isConsumable(@Nullable ItemStack item) {
@@ -36,8 +36,8 @@ public final class Consumables {
     }
 
     public static void register(@NotNull Consumable consumable) {
-        consumables.put(consumable.name, consumable);
-        Lores.update(consumable.item);
+        consumables.put(consumable.getName(), consumable);
+        Lores.update(consumable.getItem());
     }
 
     public static void registered() {

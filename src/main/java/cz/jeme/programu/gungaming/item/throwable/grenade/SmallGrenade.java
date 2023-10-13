@@ -5,30 +5,51 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class SmallGrenade extends Grenade {
-    public static final double DAMAGE = 10d;
-    @Override
-    protected void setup() {
-        name = "Small Grenade";
-        info = "a grenade used for the small MIRV explosion";
-        customModelData = 0;
-        rarity = Rarity.UNOBTAINABLE;
-        throwCooldown = 800;
-        damage = DAMAGE;
-    }
+public final class SmallGrenade extends Grenade {
+    public static final double DAMAGE = 10D;
 
     @Override
-    public int getMinLoot() {
+    public int getCustomModelData() {
         return 0;
     }
 
     @Override
-    public int getMaxLoot() {
+    public @NotNull String getName() {
+        return "Small Grenade";
+    }
+
+    @Override
+    public @NotNull String getInfo() {
+        return "Grenade used for the small MIRV explosion";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.UNOBTAINABLE;
+    }
+
+    @Override
+    public int getMinStackLoot() {
         return 0;
     }
 
     @Override
-    public void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
+    public int getMaxStackLoot() {
+        return 0;
+    }
+
+    @Override
+    public int getThrowCooldown() {
+        return 800;
+    }
+
+    @Override
+    public double getDamage() {
+        return DAMAGE;
+    }
+
+    @Override
+    protected void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
         thrown.getWorld().createExplosion(thrown, thrown.getLocation(), 2f, false, true);
     }
 }

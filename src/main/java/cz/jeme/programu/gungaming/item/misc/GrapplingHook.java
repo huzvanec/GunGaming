@@ -21,29 +21,41 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GraplingHook extends Misc implements SingletonLoot {
+public final class GrapplingHook extends Misc implements SingletonLoot {
     public static final long FALL_RESISTANCE_MILLIS = 5200;
 
     @Override
-    protected void setup() {
-        name = "Grapling Hook";
-        info = "I don't think this is meant for fishing...";
-        rarity = Rarity.EPIC;
-        customModelData = 1;
+    public int getCustomModelData() {
+        return 0;
     }
 
     @Override
-    protected @NotNull Material getMaterial() {
+    public @NotNull String getName() {
+        return "Grappling Hook";
+    }
+
+    @Override
+    public @NotNull String getInfo() {
+        return "I don't think this is meant for fishing...";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.EPIC;
+    }
+
+    @Override
+    public @NotNull Material getMaterial() {
         return Material.FISHING_ROD;
     }
 
     @Override
-    public int getMinLoot() {
+    public int getMinStackLoot() {
         return 1;
     }
 
     @Override
-    public int getMaxLoot() {
+    public int getMaxStackLoot() {
         return 1;
     }
 
@@ -95,7 +107,7 @@ public class GraplingHook extends Misc implements SingletonLoot {
         ItemStack fishingRod = event.getPlayer().getInventory().getItemInMainHand();
         if (!Miscs.isMisc(fishingRod)) return;
         Misc misc = Miscs.getMisc(fishingRod);
-        if (!(misc instanceof GraplingHook)) return;
+        if (!(misc instanceof GrapplingHook)) return;
         FishHook hook = event.getHook();
         if (!Namespace.HOOKED.has(hook)) return;
         Boolean hooked = Namespace.HOOKED.get(hook);
@@ -120,6 +132,6 @@ public class GraplingHook extends Misc implements SingletonLoot {
         double zD = hookLoc.getZ() - playerLoc.getZ();
 
         player.setVelocity(new Vector(xD, yD, zD).multiply(0.5));
-        Namespace.GRAPPLE_LAST_SUBTRACT.set(player, System.currentTimeMillis());
+        Namespace.GRAPPLING_LAST_SUBTRACT.set(player, System.currentTimeMillis());
     }
 }

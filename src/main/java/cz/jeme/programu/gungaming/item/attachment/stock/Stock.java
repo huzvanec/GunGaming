@@ -15,24 +15,25 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public abstract class Stock extends Attachment {
-    public @NotNull Float recoilPercentage;
-    public @NotNull Float inaccuracyPercentage;
-    public static final @NotNull ItemStack SHOTGUN_STOCK_PLACEHOLDER = new ItemStack(org.bukkit.Material.WHITE_STAINED_GLASS_PANE);
+    public abstract float getRecoilPercentage();
+
+    public abstract float getInaccuracyPercentage();
+
+    public static final @NotNull ItemStack SHOTGUN_STOCK_PLACEHOLDER = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
 
     static {
         ItemMeta meta = SHOTGUN_STOCK_PLACEHOLDER.getItemMeta();
         meta.displayName(Message.from("<!italic><gray>Stock</gray></!italic>"));
-        meta.lore(List.of(Message.from("<!italic><red>Stocks only have quarter effects on shotguns!</red></!italic>")));
+        meta.lore(List.of(
+                Message.from("<!italic><red>"
+                        + Message.latin("Stocks have only quarter effects on shotguns!")
+                        + "</red></!italic>")
+        ));
         meta.setCustomModelData(6);
         SHOTGUN_STOCK_PLACEHOLDER.setItemMeta(meta);
     }
 
-    public Stock() {
-        setup();
-
-        assert recoilPercentage != null : "Recoil percentage is null!";
-        assert inaccuracyPercentage != null : "Inaccuracy percentage is null!";
-
+    {
         ItemMeta scopeMeta = placeHolder.getItemMeta();
         scopeMeta.displayName(Message.from("<!italic><gray>Stock</gray></!italic>"));
         scopeMeta.setCustomModelData(3);
@@ -40,7 +41,7 @@ public abstract class Stock extends Attachment {
     }
 
     @Override
-    protected final @NotNull Material getMaterial() {
+    public final @NotNull Material getMaterial() {
         return Material.SKULL_BANNER_PATTERN;
     }
 
@@ -50,17 +51,17 @@ public abstract class Stock extends Attachment {
     }
 
     @Override
-    public final @NotNull Namespace getNbt() {
+    public final @NotNull Namespace getNamespace() {
         return Namespace.GUN_STOCK;
     }
 
-    public static void update(ItemStack item) {
+    public static void update(@NotNull ItemStack item) {
         String stockName = Namespace.GUN_STOCK.get(item);
         assert stockName != null : "Stock name is null!";
         Gun gun = Guns.getGun(item);
         if (stockName.isEmpty()) {
-            Namespace.GUN_RECOIL.set(item, gun.recoil);
-            Namespace.GUN_INACCURACY.set(item, gun.inaccuracy);
+            Namespace.GUN_RECOIL.set(item, gun.getRecoil());
+            Namespace.GUN_INACCURACY.set(item, gun.getInaccuracy());
             return;
         }
         Stock stock = (Stock) Attachments.getAttachment(stockName);
@@ -70,12 +71,12 @@ public abstract class Stock extends Attachment {
         float newRecoil;
         float newInaccuracy;
 
-        if (gun.ammoType.equals(TwelveGauge.class)) {
-            newRecoil = gun.recoil * ((100 + stock.recoilPercentage) / 400f);
-            newInaccuracy = gun.inaccuracy * ((100 + stock.inaccuracyPercentage) / 400f);
+        if (gun.getAmmoType() == TwelveGauge.class) {
+            newRecoil = gun.getRecoil() * ((100 + stock.getRecoilPercentage()) / 4f);
+            newInaccuracy = gun.getInaccuracy() * ((100 + stock.getInaccuracyPercentage()) / 4f);
         } else {
-            newRecoil = gun.recoil * (stock.recoilPercentage / 100f);
-            newInaccuracy = gun.inaccuracy * (stock.inaccuracyPercentage / 100f);
+            newRecoil = gun.getRecoil() * stock.getRecoilPercentage();
+            newInaccuracy = gun.getInaccuracy() * stock.getInaccuracyPercentage();
         }
 
         Namespace.GUN_RECOIL.set(item, newRecoil);
@@ -83,16 +84,13 @@ public abstract class Stock extends Attachment {
     }
 
     @Override
-    protected final @NotNull Class<? extends Attachment> getGroupClass() {
+    protected final @NotNull Class<? extends Attachment> getAttachmentType() {
         return Stock.class;
     }
 
     @Override
     public final @NotNull ItemStack getPlaceHolder(@NotNull Gun gun) {
-        if (gun.ammoType.equals(TwelveGauge.class)) {
-            return SHOTGUN_STOCK_PLACEHOLDER;
-        } else {
-            return super.getPlaceHolder(gun);
-        }
+        if (gun.getAmmoType() == TwelveGauge.class) return SHOTGUN_STOCK_PLACEHOLDER;
+        return super.getPlaceHolder(gun);
     }
 }

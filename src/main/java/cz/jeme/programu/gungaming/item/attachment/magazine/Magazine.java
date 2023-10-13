@@ -13,11 +13,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Magazine extends Attachment {
-    public Float magazinePercentage = null;
+    public abstract float getMagazineSizePercentage();
 
-    public Magazine() {
-        setup();
-        assert magazinePercentage != null : "Magazine enlarge percentage is null!";
+    {
         ItemMeta scopeMeta = placeHolder.getItemMeta();
         scopeMeta.displayName(Message.from("<!italic><gray>Magazine</gray></!italic>"));
         scopeMeta.setCustomModelData(1);
@@ -30,33 +28,33 @@ public abstract class Magazine extends Attachment {
     }
 
     @Override
-    public final @NotNull Namespace getNbt() {
+    public final @NotNull Namespace getNamespace() {
         return Namespace.GUN_MAGAZINE;
     }
 
     @Override
-    protected final @NotNull Material getMaterial() {
+    public final @NotNull Material getMaterial() {
         return Material.FLOWER_BANNER_PATTERN;
     }
 
-    public static void update(ItemStack item) {
+    public static void update(@NotNull ItemStack item) {
         String magazineName = Namespace.GUN_MAGAZINE.get(item);
         assert magazineName != null : "Magazine name is null!";
         Gun gun = Guns.getGun(item);
         if (magazineName.isEmpty()) {
-            Namespace.GUN_RELOAD_COOLDOWN.set(item, gun.reloadCooldown);
+            Namespace.GUN_RELOAD_COOLDOWN.set(item, gun.getReloadCooldown());
             return;
         }
         Magazine magazine = (Magazine) Attachments.getAttachment(magazineName);
         assert magazine != null : "Magazine is null!";
-        if (!gun.ammoType.equals(TwelveGauge.class)) {
-            float newReloadCooldown = gun.reloadCooldown * (magazine.magazinePercentage / 100f);
+        if (gun.getAmmoType() != TwelveGauge.class) {
+            float newReloadCooldown = gun.getReloadCooldown() * magazine.getMagazineSizePercentage();
             Namespace.GUN_RELOAD_COOLDOWN.set(item, Math.round(newReloadCooldown));
         }
     }
 
     @Override
-    protected final @NotNull Class<? extends Attachment> getGroupClass() {
+    protected final @NotNull Class<? extends Attachment> getAttachmentType() {
         return Magazine.class;
     }
 }

@@ -8,13 +8,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Scope extends Attachment {
-
-    public @NotNull Double scope;
-
-    public Scope() {
-        setup();
-
-        assert scope != null : "Scope level is null!";
+    {
+        assert getScopeMultiplier() >= 0D && getScopeMultiplier() <= 10D : "Scope multiplier is a number between 1.0 and 10.0!";
 
         ItemMeta scopeMeta = placeHolder.getItemMeta();
         scopeMeta.displayName(Message.from("<!italic><gray>Scope</gray></!italic>"));
@@ -23,7 +18,7 @@ public abstract class Scope extends Attachment {
     }
 
     @Override
-    protected final @NotNull Material getMaterial() {
+    public final @NotNull Material getMaterial() {
         return Material.CREEPER_BANNER_PATTERN;
     }
 
@@ -33,12 +28,14 @@ public abstract class Scope extends Attachment {
     }
 
     @Override
-    public final @NotNull Namespace getNbt() {
+    public final @NotNull Namespace getNamespace() {
         return Namespace.GUN_SCOPE;
     }
 
+    public abstract double getScopeMultiplier();
+
     @Override
-    protected final @NotNull Class<? extends Attachment> getGroupClass() {
+    protected final @NotNull Class<? extends Attachment> getAttachmentType() {
         return Scope.class;
     }
 }

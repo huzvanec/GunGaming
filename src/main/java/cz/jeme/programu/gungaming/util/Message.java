@@ -40,6 +40,7 @@ public final class Message {
     }
 
     public static final @NotNull MiniMessage MESSAGE = MiniMessage.miniMessage();
+    public static final @NotNull Component EMPTY = Component.empty();
 
     // Plugin prefix
     // [ɢɢ]:

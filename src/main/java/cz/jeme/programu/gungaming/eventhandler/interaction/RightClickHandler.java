@@ -11,7 +11,6 @@ import cz.jeme.programu.gungaming.util.Inventories;
 import cz.jeme.programu.gungaming.util.Materials;
 import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.Sounds;
-import cz.jeme.programu.gungaming.util.registry.Attachments;
 import cz.jeme.programu.gungaming.util.registry.Consumables;
 import cz.jeme.programu.gungaming.util.registry.Guns;
 import cz.jeme.programu.gungaming.util.registry.Throwables;
@@ -44,7 +43,7 @@ public final class RightClickHandler {
 
         if (player.isSneaking()) {
             interact(event);
-            if (Guns.isGun(item) || Attachments.isAttachment(item)) {
+            if (Guns.isGun(item)) {
                 event.setCancelled(true);
             }
             return;
@@ -58,7 +57,7 @@ public final class RightClickHandler {
         Material material = clickedBlock.getType();
         if (!Materials.hasRightClick(material)) {
             interact(event);
-            if (Guns.isGun(item) || Attachments.isAttachment(item)) {
+            if (Guns.isGun(item)) {
                 event.setCancelled(true);
             }
         }
@@ -78,7 +77,7 @@ public final class RightClickHandler {
         }
         if (Consumables.isConsumable(item)) {
             PlayerItemConsumeHandler.onStartConsume(event);
-            return;
+//            return;
         }
     }
 
@@ -95,7 +94,7 @@ public final class RightClickHandler {
         assert heldAmmo != null : "Held gun current ammo is null!";
         boolean isCreative = player.getGameMode() == GameMode.CREATIVE;
         if (heldAmmo == 0 && !isCreative) {
-            if (Inventories.getItemCount(player.getInventory(), gun.ammo.item) == 0) {
+            if (Inventories.getItemCount(player.getInventory(), gun.getAmmo().getItem()) == 0) {
                 player.sendActionBar(Message.from("<red>Out of ammo!</red>"));
                 player.playSound(Sounds.getSound("gun.out_of_ammo", 2.5f));
             } else {
@@ -105,7 +104,7 @@ public final class RightClickHandler {
             return;
         }
 
-        CooldownManager.INSTANCE.setCooldown(player, item.getType(), gun.shootCooldown);
+        CooldownManager.INSTANCE.setCooldown(player, item.getType(), gun.getShootCooldown());
         gun.shoot(event, item);
     }
 
@@ -116,7 +115,7 @@ public final class RightClickHandler {
 
         Throwable throwable = Throwables.getThrowable(heldItem);
 
-        CooldownManager.INSTANCE.setCooldown(player, heldItem.getType(), throwable.throwCooldown);
+        CooldownManager.INSTANCE.setCooldown(player, heldItem.getType(), throwable.getThrowCooldown());
         throwable.doThrow(event, heldItem);
     }
 }

@@ -3,23 +3,41 @@ package cz.jeme.programu.gungaming.item.attachment.magazine;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import org.jetbrains.annotations.NotNull;
 
-public class HugeMagazine extends Magazine {
+import java.util.Set;
+
+public final class HugeMagazine extends Magazine {
     @Override
-    protected void setup() {
-        customModelData = 3;
-        name = "Huge Magazine";
-        info = "A huge extended storage for ammo";
-        rarity = Rarity.LEGENDARY;
-        magazinePercentage = 150f;
+    public int getCustomModelData() {
+        return 3;
     }
 
     @Override
-    protected @NotNull String[] getBuffs() {
-        return new String[]{"+50% ammo"};
+    public @NotNull String getName() {
+        return "Huge Magazine";
     }
 
     @Override
-    protected @NotNull String[] getNerfs() {
-        return new String[]{"-50% reload speed"};
+    public @NotNull String getInfo() {
+        return "Huge extended storage for ammo";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.LEGENDARY;
+    }
+
+    @Override
+    protected @NotNull Set<String> getBuffs() {
+        return Set.of("+50% ammo");
+    }
+
+    @Override
+    protected @NotNull Set<String> getNerfs() {
+        return Set.of("-50% reload speed");
+    }
+
+    @Override
+    public float getMagazineSizePercentage() {
+        return 1.5f;
     }
 }

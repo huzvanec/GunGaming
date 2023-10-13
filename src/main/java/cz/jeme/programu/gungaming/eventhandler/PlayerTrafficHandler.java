@@ -15,16 +15,16 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 public final class PlayerTrafficHandler {
-    private static final @NotNull String RESOURCEPACK_MESSAGE =
-            "<bold><dark_blue>____________________________________________________________</dark_blue>\n\n" +
-                    "<dark_aqua>Hello! Welcome to <dark_red>GunGaming</dark_red>!</dark_aqua></bold>\n\n" +
+    private static final @NotNull String RESOURCE_PACK_MESSAGE =
+            "<b><dark_blue>____________________________________________________________</dark_blue>\n\n" +
+                    "<dark_aqua>Hello! Welcome to <dark_red>GunGaming</dark_red>!</dark_aqua></b>\n\n" +
                     "<dark_aqua>" +
-                    Message.latin("To play here, we need you to download this resourcepack!\n" +
-                            "Without it you wouldn't get the awesome gaming expirience!") +
+                    Message.latin("To play here, we need you to download this resource pack!\n" +
+                            "Without it you wouldn't get the awesome gaming experience!") +
                     "</dark_aqua>\n" +
-                    "<bold><dark_blue>____________________________________________________________</dark_blue></bold>";
+                    "<b><dark_blue>____________________________________________________________</dark_blue></b>";
     private static final @NotNull String VERSION = "BETAv3.0";
-    private static final @NotNull String RESOURCEPACK_URL = "https://github.com/Mandlemankiller/GunGaming/releases/download/" + VERSION + "/resource-pack.zip";
+    private static final @NotNull String RESOURCE_PACK_URL = "https://github.com/Mandlemankiller/GunGaming/releases/download/" + VERSION + "/resource-pack.zip";
     private static final @NotNull String HASH_URL = "https://github.com/Mandlemankiller/GunGaming/releases/download/" + VERSION + "/resource-pack.hash";
     private static final @NotNull String HASH;
 
@@ -36,7 +36,7 @@ public final class PlayerTrafficHandler {
             tempHash = reader.readLine();
             reader.close();
         } catch (IOException e) {
-            GunGaming.serverLog("Couldn't download resourcepack hash!", e);
+            GunGaming.serverLog("Couldn't download resource pack hash!", e);
         }
         HASH = tempHash;
     }
@@ -48,7 +48,7 @@ public final class PlayerTrafficHandler {
     public static void onPlayerJoin(@NotNull PlayerJoinEvent event) {
         Player player = event.getPlayer();
         player.setGameMode(GameMode.SPECTATOR);
-        player.setResourcePack(RESOURCEPACK_URL, HASH, true, Message.from(RESOURCEPACK_MESSAGE));
+        player.setResourcePack(RESOURCE_PACK_URL, HASH, true, Message.from(RESOURCE_PACK_MESSAGE));
     }
 
     public static void onPlayerResourcePackStatus(@NotNull PlayerResourcePackStatusEvent event) {

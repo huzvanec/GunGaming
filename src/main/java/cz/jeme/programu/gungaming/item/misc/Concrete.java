@@ -4,27 +4,39 @@ import cz.jeme.programu.gungaming.loot.Rarity;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 
-public class Concrete extends Misc {
+public final class Concrete extends Misc {
     @Override
-    protected void setup() {
-        name = "Concrete";
-        info = "A basic building block";
-        customModelData = 0;
-        rarity = Rarity.COMMON;
+    public int getCustomModelData() {
+        return 0;
     }
 
     @Override
-    protected @NotNull Material getMaterial() {
+    public @NotNull String getName() {
+        return "Concrete";
+    }
+
+    @Override
+    public @NotNull String getInfo() {
+        return "Basic building block";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.COMMON;
+    }
+
+    @Override
+    public @NotNull Material getMaterial() {
         return Material.GRAY_CONCRETE;
     }
 
     @Override
-    public int getMinLoot() {
+    public int getMinStackLoot() {
         return 10;
     }
 
     @Override
-    public int getMaxLoot() {
-        return 16;
+    public int getMaxStackLoot() {
+        return 20;
     }
 }

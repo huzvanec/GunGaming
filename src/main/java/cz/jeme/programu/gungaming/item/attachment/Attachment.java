@@ -11,66 +11,55 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public abstract class Attachment extends CustomItem implements SingletonLoot {
-    public final @NotNull List<Component> modifiersInfo = new ArrayList<>();
+    private final @NotNull Set<Component> modifiersInfo = new HashSet<>();
     protected final @NotNull ItemStack placeHolder = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
+
     public Attachment() {
-        setup();
+        getBuffs().forEach(
+                b -> modifiersInfo.add(Message.from("<!italic><green>" + Message.latin(b) + "</green></!italic>"))
+        );
 
-        addBuffs(getBuffs());
-        addNerfs(getNerfs());
+        getNerfs().forEach(
+                n -> modifiersInfo.add(Message.from("<!italic><red>" + Message.latin(n) + "</red></!italic>"))
+        );
 
-        Namespace.ATTACHMENT.set(item, name);
-        addPlaceHolder();
+        Namespace.ATTACHMENT.set(item, getName());
+
+        if (!Attachments.placeHolders.containsKey(getAttachmentType())) {
+            Attachments.placeHolders.put(getAttachmentType(), placeHolder);
+        }
     }
 
     @Override
-    public final int getMinLoot() {
+    public final int getMinStackLoot() {
         return 1;
     }
 
     @Override
-    public final int getMaxLoot() {
+    public final int getMaxStackLoot() {
         return 1;
-    }
-
-    private void addBuffs(@NotNull String[] buffArray) {
-        for (String buff : buffArray) {
-            addModifier(buff);
-        }
-    }
-
-    private void addNerfs(@NotNull String[] nerfArray) {
-        for (String nerf : nerfArray) {
-            addNerf(nerf);
-        }
-    }
-
-    private void addModifier(@NotNull String buff) {
-        modifiersInfo.add(Message.from("<!italic><green>" + Message.latin(buff) + "</green></!italic>"));
-    }
-
-    private void addNerf(@NotNull String nerf) {
-        modifiersInfo.add(Message.from("<!italic><red>" + Message.latin(nerf) + "</red></!italic>"));
-    }
-
-    private void addPlaceHolder() {
-        if (!Attachments.placeHolders.containsKey(getGroupClass())) {
-            Attachments.placeHolders.put(getGroupClass(), placeHolder);
-        }
     }
 
     public @NotNull ItemStack getPlaceHolder(@NotNull Gun gun) {
         return placeHolder;
     }
 
-    abstract protected @NotNull Class<? extends Attachment> getGroupClass();
-    abstract public int getSlotId();
-    abstract public @NotNull Namespace getNbt();
-    abstract protected @NotNull String[] getBuffs();
-    abstract protected @NotNull String[] getNerfs();
+    public final @NotNull Set<Component> getModifiersInfo() {
+        return modifiersInfo;
+    }
+
+    protected abstract @NotNull Class<? extends Attachment> getAttachmentType();
+
+    public abstract int getSlotId();
+
+    public abstract @NotNull Namespace getNamespace();
+
+    protected abstract @NotNull Set<String> getBuffs();
+
+    protected abstract @NotNull Set<String> getNerfs();
 }

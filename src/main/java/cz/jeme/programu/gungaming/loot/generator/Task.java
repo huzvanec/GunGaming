@@ -104,7 +104,7 @@ public final class Task extends BukkitRunnable {
                     running = false;
                     finished = true;
                     Bukkit.getScheduler().runTask(GunGaming.getPlugin(), TaskManager.INSTANCE::check);
-                    audience.sendMessage(Message.from(
+                    audience.sendMessage(Message.prefix(
                             "<green>Generated " + crateCounter
                                     + " instances of " + crate.getName() + "</green>"
                     ));

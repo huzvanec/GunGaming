@@ -14,7 +14,7 @@ public enum LootManager {
     private static final @NotNull Random RANDOM = new Random();
 
     public final void registerGroups() {
-        Groups.groups.values().forEach(m -> m.values().forEach(ci -> loot.put(ci, ci.rarity)));
+        Groups.groups.values().forEach(m -> m.values().forEach(ci -> loot.put(ci, ci.getRarity())));
         loot = Collections.unmodifiableMap(loot);
     }
 
@@ -57,7 +57,7 @@ public enum LootManager {
                 }
             }
 
-            ItemStack item = new ItemStack(customItem.item);
+            ItemStack item = new ItemStack(customItem.getItem());
             item.setAmount(getRandomAmount(customItem));
             items.add(item);
             if (customItem instanceof SingletonLoot) {
@@ -76,8 +76,8 @@ public enum LootManager {
     }
 
     private static int getRandomAmount(@NotNull CustomItem customItem) {
-        final int min = customItem.getMinLoot();
-        final int max = customItem.getMaxLoot();
+        final int min = customItem.getMinStackLoot();
+        final int max = customItem.getMaxStackLoot();
 
         if (min == max) return min;
         return RANDOM.nextInt((max - min) + 1) + min;

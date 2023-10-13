@@ -18,7 +18,7 @@ public final class Ammos {
     private static @NotNull Map<Class<? extends Ammo>, Ammo> ammoTypes = new HashMap<>();
 
     private Ammos() {
-        // Static class cannot be initialized
+        throw new AssertionError();
     }
 
     public static @Nullable Ammo getAmmo(@NotNull String name) {
@@ -40,7 +40,7 @@ public final class Ammos {
     }
 
     public static void register(@NotNull Ammo ammo) {
-        ammos.put(ammo.name, ammo);
+        ammos.put(ammo.getName(), ammo);
         ammoTypes.put(ammo.getClass(), ammo);
     }
 

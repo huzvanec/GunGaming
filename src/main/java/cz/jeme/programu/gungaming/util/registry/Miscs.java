@@ -14,7 +14,7 @@ public final class Miscs {
     public static @NotNull Map<String, Misc> miscs = new HashMap<>();
 
     private Miscs() {
-        // Static class cannot be initialized
+        throw new AssertionError();
     }
 
     public static @Nullable Misc getMisc(@NotNull String name) {
@@ -34,7 +34,7 @@ public final class Miscs {
     }
 
     public static void register(@NotNull Misc misc) {
-        miscs.put(misc.name, misc);
+        miscs.put(misc.getName(), misc);
     }
 
     public static void registered() {

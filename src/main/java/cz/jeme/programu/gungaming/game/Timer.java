@@ -4,12 +4,13 @@ import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.util.Message;
 import net.kyori.adventure.bossbar.BossBar;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
 
 public abstract class Timer extends BukkitRunnable {
-    private static final DecimalFormat FORMATTER = new DecimalFormat("00");
+    private static final @NotNull DecimalFormat FORMATTER = new DecimalFormat("00");
     private final long duration;
     private final @Nullable BossBar bossBar;
     private long counter;
@@ -46,7 +47,7 @@ public abstract class Timer extends BukkitRunnable {
     protected void tick(long counter, float phase) {
     }
 
-    private static String translateTime(long seconds) {
+    private static @NotNull String translateTime(long seconds) {
         long hours = seconds / 3600;
         seconds -= hours * 3600;
         long minutes = seconds / 60;

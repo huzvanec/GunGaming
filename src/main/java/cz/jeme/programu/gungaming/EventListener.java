@@ -3,9 +3,8 @@ package cz.jeme.programu.gungaming;
 import cz.jeme.programu.gungaming.eventhandler.*;
 import cz.jeme.programu.gungaming.eventhandler.interaction.PlayerInteractHandler;
 import cz.jeme.programu.gungaming.game.Game;
-import cz.jeme.programu.gungaming.item.misc.GraplingHook;
+import cz.jeme.programu.gungaming.item.misc.GrapplingHook;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
-import cz.jeme.programu.gungaming.util.registry.Attachments;
 import cz.jeme.programu.gungaming.util.registry.Guns;
 import cz.jeme.programu.gungaming.util.registry.Miscs;
 import io.papermc.paper.event.player.PlayerStopUsingItemEvent;
@@ -51,14 +50,12 @@ public enum EventListener implements Listener {
     private void onItemDamage(@NotNull PlayerItemDamageEvent event) {
         ItemStack item = event.getItem();
         boolean isGun = Guns.isGun(item);
-        boolean isAttachment = Attachments.isAttachment(item);
-        boolean isGrapling = false;
-        if (Miscs.isMisc(item)) isGrapling = Miscs.getMisc(item) instanceof GraplingHook;
-        event.setCancelled(isGun || isAttachment || isGrapling);
+        boolean isGrappling = Miscs.isMisc(item) && Miscs.getMisc(item) instanceof GrapplingHook;
+        event.setCancelled(isGun || isGrappling);
     }
 
     @EventHandler
-    private void onHotbarSlotSwich(@NotNull PlayerItemHeldEvent event) {
+    private void onHotbarSlotSwitch(@NotNull PlayerItemHeldEvent event) {
         InventoryHandler.onHotbarSlotSwitch(event);
     }
 
@@ -124,7 +121,7 @@ public enum EventListener implements Listener {
 
     @EventHandler
     private void onPlayerFish(@NotNull PlayerFishEvent event) {
-        GraplingHook.onPlayerFish(event);
+        GrapplingHook.onPlayerFish(event);
     }
 
     @EventHandler
@@ -136,13 +133,13 @@ public enum EventListener implements Listener {
     private void onPlayerMove(@NotNull PlayerMoveEvent event) {
         Boolean frozen = Namespace.FROZEN.get(event.getPlayer());
         if (frozen != null && frozen && event.hasChangedBlock()) event.setCancelled(true);
-        PlayerTrafficHandler.onPlayerMove(event);
+//        PlayerTrafficHandler.onPlayerMove(event);
     }
 
-    @EventHandler
-    private void onPlayerJoin(@NotNull PlayerJoinEvent event) {
-        PlayerTrafficHandler.onPlayerJoin(event);
-    }
+//    @EventHandler
+//    private void onPlayerJoin(@NotNull PlayerJoinEvent event) {
+//        PlayerTrafficHandler.onPlayerJoin(event);
+//    }
 
     @EventHandler
     private void onEntityToggleGlide(@NotNull EntityToggleGlideEvent event) {

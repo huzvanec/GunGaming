@@ -32,45 +32,62 @@ import java.util.List;
 import java.util.Random;
 
 public abstract class Gun extends CustomItem implements SingletonLoot {
+    public abstract int getShootCooldown();
 
-    public @NotNull Integer shootCooldown;
+    public abstract int getReloadCooldown();
 
-    public @NotNull Integer reloadCooldown;
+    public abstract double getDamage();
 
-    public @NotNull Double damage;
+    public abstract float getVelocity();
 
-    public @NotNull Float velocity;
+    public abstract int getMaxAmmo();
 
-    public @NotNull Integer maxAmmo;
+    public abstract @NotNull Class<? extends Ammo> getAmmoType();
 
-    public @NotNull Class<? extends Ammo> ammoType;
-    public final @NotNull Ammo ammo;
-    public @NotNull Float recoil;
-    public @NotNull Float inaccuracy;
-    public @NotNull Integer bulletsPerShot = 1;
-    public @NotNull Integer bulletCooldown = 1;
+    private final @NotNull Ammo ammo;
+
+    public final @NotNull Ammo getAmmo() {
+        return ammo;
+    }
+
+    public abstract float getRecoil();
+
+    public abstract float getInaccuracy();
+
+    public int getBulletsPerShot() {
+        return 1;
+    }
+
+    public int getBulletCooldown() {
+        return 1;
+    }
+
+    @Override
+    public final @NotNull Material getMaterial() {
+        return Material.CROSSBOW;
+    }
+
+    @Override
+    public final int getMinStackLoot() {
+        return 1;
+    }
+
+    @Override
+    public final int getMaxStackLoot() {
+        return 1;
+    }
+
     private static final @NotNull Random RANDOM = new Random();
 
     public Gun() {
-        setup();
+        ammo = Ammos.getAmmo(getAmmoType());
 
-        assert shootCooldown != null : "No shoot cooldown given!";
-        assert reloadCooldown != null : "No reload cooldown given!";
-        assert damage != null : "No damage given!";
-        assert velocity != null : "No bullet speed given!";
-        assert maxAmmo != null : "No max ammo given!";
-        assert ammoType != null : "No ammo type given!";
-        assert recoil != null : "No recoil given!";
-        assert inaccuracy != null : "No inaccuracy given!";
-
-        ammo = Ammos.getAmmo(ammoType);
-
-        Namespace.GUN.set(item, name);
-        Namespace.GUN_AMMO_MAX.set(item, maxAmmo);
+        Namespace.GUN.set(item, getName());
+        Namespace.GUN_AMMO_MAX.set(item, getMaxAmmo());
         Namespace.GUN_AMMO_CURRENT.set(item, 0);
-        Namespace.GUN_RELOAD_COOLDOWN.set(item, reloadCooldown);
-        Namespace.GUN_RECOIL.set(item, recoil);
-        Namespace.GUN_INACCURACY.set(item, inaccuracy);
+        Namespace.GUN_RELOAD_COOLDOWN.set(item, getReloadCooldown());
+        Namespace.GUN_RECOIL.set(item, getRecoil());
+        Namespace.GUN_INACCURACY.set(item, getInaccuracy());
 
         Namespace.GUN_SCOPE.set(item, "");
         Namespace.GUN_MAGAZINE.set(item, "");
@@ -86,11 +103,6 @@ public abstract class Gun extends CustomItem implements SingletonLoot {
         item.setItemMeta(crossbowMeta);
     }
 
-    @Override
-    protected @NotNull Material getMaterial() {
-        return Material.CROSSBOW;
-    }
-
     public final void shoot(@NotNull PlayerInteractEvent event, @NotNull ItemStack heldItem) {
         shoot(event, heldItem, 1);
     }
@@ -103,13 +115,13 @@ public abstract class Gun extends CustomItem implements SingletonLoot {
         assert heldAmmo != null : "Held ammo is null!";
         if (heldAmmo == 0 && !isCreative) return;
 
-        if (!isCreative && (bulletCooldown > 0 || round == 1)) {
+        if (!isCreative && (getBulletCooldown() > 0 || round == 1)) {
             Ammos.remove(item, 1);
         }
 
         Location location = player.getLocation();
 
-        if (bulletCooldown != 0 || round == 1) {
+        if (getBulletCooldown() != 0 || round == 1) {
             location.getWorld().playSound(Sounds.getGunShootSound(this), player);
         }
 
@@ -121,7 +133,7 @@ public abstract class Gun extends CustomItem implements SingletonLoot {
         player.setVelocity(player.getVelocity().subtract(recoilVector));
 
         Vector arrowVector = player.getLocation().getDirection();
-        arrowVector.multiply(velocity);
+        arrowVector.multiply(getVelocity());
 
         Float gunInaccuracy = Namespace.GUN_INACCURACY.get(item);
         assert gunInaccuracy != null : "Gun inaccuracy is null!";
@@ -131,9 +143,9 @@ public abstract class Gun extends CustomItem implements SingletonLoot {
         Arrow bullet = player.launchProjectile(Arrow.class, arrowVector);
         bullet.setPickupStatus(PickupStatus.DISALLOWED);
 
-        Namespace.BULLET.set(bullet, ammo.name);
-        Namespace.BULLET_DAMAGE.set(bullet, damage);
-        Namespace.BULLET_GUN_NAME.set(bullet, name);
+        Namespace.BULLET.set(bullet, ammo.getName());
+        Namespace.BULLET_DAMAGE.set(bullet, getDamage());
+        Namespace.BULLET_GUN_NAME.set(bullet, getName());
 
         bullet.setFallDistance(0);
         onShoot(event, bullet);
@@ -152,12 +164,16 @@ public abstract class Gun extends CustomItem implements SingletonLoot {
         ClientboundAnimatePacket packet = new ClientboundAnimatePacket(serverPlayer, hand);
         Packets.sendPacket(players, packet);
 
-        if (round < bulletsPerShot) {
-            Bukkit.getScheduler().runTaskLater(GunGaming.getPlugin(), () -> shoot(event, item, round + 1), bulletCooldown);
+        if (round < getBulletsPerShot()) {
+            Bukkit.getScheduler().runTaskLater(
+                    GunGaming.getPlugin(),
+                    () -> shoot(event, item, round + 1),
+                    getBulletCooldown()
+            );
         }
     }
 
-    private void randomizeVector(@NotNull Vector vector, float degrees) {
+    private static void randomizeVector(@NotNull Vector vector, float degrees) {
         float radians = (float) Math.toRadians(degrees);
         vector.rotateAroundX(RANDOM.nextFloat(radians * 2) - radians);
         vector.rotateAroundY(RANDOM.nextFloat(radians * 2) - radians);
@@ -173,15 +189,5 @@ public abstract class Gun extends CustomItem implements SingletonLoot {
     }
 
     protected void onBulletHit(@NotNull ProjectileHitEvent event, @NotNull Projectile bullet) {
-    }
-
-    @Override
-    public final int getMinLoot() {
-        return 1;
-    }
-
-    @Override
-    public final int getMaxLoot() {
-        return 1;
     }
 }

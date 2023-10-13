@@ -1,23 +1,36 @@
 package cz.jeme.programu.gungaming.item.ammo;
 
 import cz.jeme.programu.gungaming.loot.Rarity;
+import org.jetbrains.annotations.NotNull;
 
-public class ThreeZeroEightSubsonicWinchester extends Ammo {
+public final class ThreeZeroEightSubsonicWinchester extends Ammo {
     @Override
-    protected void setup() {
-        customModelData = 5;
-        name = ".308 Subsonic Winchester";
-        info = "Ammo for the best sniper rifles";
-        rarity = Rarity.EPIC;
+    public int getCustomModelData() {
+        return 5;
     }
 
     @Override
-    public int getMinLoot() {
+    public @NotNull String getName() {
+        return ".308 Subsonic Winchester";
+    }
+
+    @Override
+    public @NotNull String getInfo() {
+        return "Ammo for the best sniper rifles";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.EPIC;
+    }
+
+    @Override
+    public int getMinStackLoot() {
         return 3;
     }
 
     @Override
-    public int getMaxLoot() {
+    public int getMaxStackLoot() {
         return 12;
     }
 }

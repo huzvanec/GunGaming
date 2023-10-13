@@ -41,8 +41,8 @@ public final class Throwables {
     }
 
     public static void register(@NotNull Throwable throwable) {
-        throwables.put(throwable.name, throwable);
-        Lores.update(throwable.item);
+        throwables.put(throwable.getName(), throwable);
+        Lores.update(throwable.getItem());
     }
 
     public static void registered() {

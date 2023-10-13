@@ -11,13 +11,13 @@ import cz.jeme.programu.gungaming.item.attachment.scope.MediumScope;
 import cz.jeme.programu.gungaming.item.attachment.stock.MetalStock;
 import cz.jeme.programu.gungaming.item.attachment.stock.PlasticStock;
 import cz.jeme.programu.gungaming.item.attachment.stock.WoodenStock;
-import cz.jeme.programu.gungaming.item.consumable.Bandage;
-import cz.jeme.programu.gungaming.item.consumable.Medkit;
-import cz.jeme.programu.gungaming.item.consumable.Pills;
-import cz.jeme.programu.gungaming.item.consumable.Soda;
+import cz.jeme.programu.gungaming.item.consumable.heal.Bandage;
+import cz.jeme.programu.gungaming.item.consumable.heal.Medkit;
+import cz.jeme.programu.gungaming.item.consumable.adrenaline.Pills;
+import cz.jeme.programu.gungaming.item.consumable.adrenaline.Soda;
 import cz.jeme.programu.gungaming.item.gun.*;
 import cz.jeme.programu.gungaming.item.misc.Concrete;
-import cz.jeme.programu.gungaming.item.misc.GraplingHook;
+import cz.jeme.programu.gungaming.item.misc.GrapplingHook;
 import cz.jeme.programu.gungaming.item.misc.PlayerTracker;
 import cz.jeme.programu.gungaming.item.misc.Radar;
 import cz.jeme.programu.gungaming.item.throwable.MolotovCocktail;
@@ -29,6 +29,7 @@ import cz.jeme.programu.gungaming.loot.LootManager;
 import cz.jeme.programu.gungaming.loot.crate.AmmoCrate;
 import cz.jeme.programu.gungaming.loot.crate.GoldenCrate;
 import cz.jeme.programu.gungaming.loot.crate.WoodenCrate;
+import cz.jeme.programu.gungaming.loot.generator.CrateGenerator;
 import cz.jeme.programu.gungaming.manager.ZoomManager;
 import cz.jeme.programu.gungaming.util.Message;
 import cz.jeme.programu.gungaming.util.registry.*;
@@ -58,6 +59,15 @@ public final class GunGaming extends JavaPlugin {
         saveDefaultConfig();
     }
 
+    @Override
+    public void onDisable() {
+        ZoomManager.INSTANCE.zoomOutAll();
+        Boolean daylightCycle = Game.getWorld().getGameRuleDefault(GameRule.DO_DAYLIGHT_CYCLE);
+        assert daylightCycle != null : "Daylight cycle default value is null!";
+        Game.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, daylightCycle);
+        CrateGenerator.INSTANCE.removeCrates();
+    }
+
 
     /**
      * Register all the custom items for GunGaming
@@ -80,7 +90,7 @@ public final class GunGaming extends JavaPlugin {
         Guns.register(new Prickskyttegevar90());
 
         Miscs.register(new Concrete());
-        Miscs.register(new GraplingHook());
+        Miscs.register(new GrapplingHook());
         Miscs.register(new Radar());
         Miscs.register(new PlayerTracker());
 
@@ -137,14 +147,6 @@ public final class GunGaming extends JavaPlugin {
         Crates.register(new AmmoCrate());
         Crates.register(new GoldenCrate());
         Crates.registered();
-    }
-
-    @Override
-    public void onDisable() {
-        ZoomManager.INSTANCE.zoomOutAll();
-        Boolean daylightCycle = Game.getWorld().getGameRuleDefault(GameRule.DO_DAYLIGHT_CYCLE);
-        assert daylightCycle != null : "Daylight cycle default value is null!";
-        Game.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, daylightCycle);
     }
 
     /**

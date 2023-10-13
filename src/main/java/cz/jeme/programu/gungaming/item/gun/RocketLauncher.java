@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.item.gun;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.ammo.Rocket;
 import cz.jeme.programu.gungaming.item.attachment.NoMagazine;
 import cz.jeme.programu.gungaming.item.attachment.NoStock;
@@ -18,26 +19,71 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
-public class RocketLauncher extends Gun implements NoStock, NoMagazine {
+public final class RocketLauncher extends Gun implements NoStock, NoMagazine {
 
     @Override
-    protected void setup() {
-        name = "Rocket Launcher";
-        info = "Everything goes KABOOM";
-        shootCooldown = 600;
-        reloadCooldown = 4300;
-        damage = 20d;
-        velocity = 1.5f;
-        customModelData = 4;
-        maxAmmo = 1;
-        ammoType = Rocket.class;
-        rarity = Rarity.LEGENDARY;
-        recoil = 2f;
-        inaccuracy = 1f;
+    public int getShootCooldown() {
+        return 600;
     }
 
     @Override
-    protected final void onShoot(@NotNull PlayerInteractEvent event, @NotNull Arrow bullet) {
+    public int getReloadCooldown() {
+        return 4300;
+    }
+
+    @Override
+    public double getDamage() {
+        return 20D;
+    }
+
+    @Override
+    public float getVelocity() {
+        return 1.5f;
+    }
+
+    @Override
+    public int getMaxAmmo() {
+        return 1;
+    }
+
+    @Override
+    public @NotNull Class<? extends Ammo> getAmmoType() {
+        return Rocket.class;
+    }
+
+    @Override
+    public float getRecoil() {
+        return 2f;
+    }
+
+    @Override
+    public float getInaccuracy() {
+        return 1f;
+    }
+
+    @Override
+    public int getCustomModelData() {
+        return 4;
+    }
+
+    @Override
+    public @NotNull String getName() {
+        return "Rocket Launcher";
+    }
+
+    @Override
+    public @NotNull String getInfo() {
+        return "Everything goes KABOOM";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.LEGENDARY;
+    }
+
+
+    @Override
+    protected void onShoot(@NotNull PlayerInteractEvent event, @NotNull Arrow bullet) {
         bullet.setColor(Color.fromRGB(97, 10, 0));
         bullet.setGravity(false);
 
@@ -46,6 +92,7 @@ public class RocketLauncher extends Gun implements NoStock, NoMagazine {
 
         new BukkitRunnable() {
             int counter = 0;
+
             @Override
             public void run() {
                 counter++;
@@ -63,7 +110,7 @@ public class RocketLauncher extends Gun implements NoStock, NoMagazine {
     }
 
     @Override
-    public final void onBulletHit(@NotNull ProjectileHitEvent event, @NotNull Projectile bullet) {
+    protected void onBulletHit(@NotNull ProjectileHitEvent event, @NotNull Projectile bullet) {
         bullet.getWorld().createExplosion(bullet, bullet.getLocation(), 5f, true, true);
         bullet.remove();
     }

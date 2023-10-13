@@ -17,7 +17,7 @@ public final class Attachments {
     public static @NotNull Map<Class<? extends Attachment>, ItemStack> placeHolders = new HashMap<>();
 
     private Attachments() {
-        // Static class cannot be initialized
+        throw new AssertionError();
     }
 
     public static boolean isAttachment(@Nullable ItemStack item) {
@@ -37,8 +37,8 @@ public final class Attachments {
     }
 
     public static void register(@NotNull Attachment attachment) {
-        attachments.put(attachment.name, attachment);
-        Lores.update(attachment.item);
+        attachments.put(attachment.getName(), attachment);
+        Lores.update(attachment.getItem());
     }
 
     public static void registered() {

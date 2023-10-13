@@ -25,7 +25,7 @@ public final class Lores {
     private static final @NotNull DecimalFormat FORMATTER = new DecimalFormat("#0.##");
 
     private Lores() {
-        // Static class cannot be initialized
+        throw new AssertionError();
     }
 
     public static void update(@NotNull ItemMeta meta) {
@@ -50,7 +50,7 @@ public final class Lores {
         assert name != null : "Attachment name is null!";
         Attachment attachment = Attachments.getAttachment(name);
         assert attachment != null : "Attachment is null!";
-        lore.addAll(attachment.modifiersInfo);
+        lore.addAll(attachment.getModifiersInfo());
     }
 
     private static void updateGun(@NotNull ItemMeta meta, @NotNull List<Component> lore) {
@@ -58,11 +58,26 @@ public final class Lores {
         assert name != null : "Gun name is null!";
         Gun gun = Guns.getGun(name);
         assert gun != null : "Gun is null!";
-        lore.add(Message.from("<!italic><#CADCFF><#77A5FF>" + Message.latin("Damage: ") + "</#77A5FF>" + FORMATTER.format(gun.damage) + "</#CADCFF></!italic>"));
-        lore.add(Message.from("<!italic><#CADCFF><#77A5FF>" + Message.latin("DPS: ") + "</#77A5FF>" + calcDPS(gun.damage, gun.shootCooldown, gun.bulletsPerShot) + "</#CADCFF></!italic>"));
-        lore.add(Message.from("<!italic><#CADCFF><#77A5FF>" + Message.latin("Ammo type: ") + "</#77A5FF>" + gun.ammo.name + "</#CADCFF></!italic>"));
+        lore.add(Message.from(
+                "<!italic><#CADCFF><#77A5FF>"
+                        + Message.latin("Damage: ")
+                        + "</#77A5FF>" + FORMATTER.format(gun.getDamage())
+                        + "</#CADCFF></!italic>"
+        ));
+        lore.add(Message.from(
+                "<!italic><#CADCFF><#77A5FF>"
+                        + Message.latin("DPS: ")
+                        + "</#77A5FF>" + calcDPS(gun)
+                        + "</#CADCFF></!italic>"
+        ));
+        lore.add(Message.from(
+                "<!italic><#CADCFF><#77A5FF>"
+                        + Message.latin("Ammo type: ")
+                        + "</#77A5FF>" + gun.getAmmo().getName()
+                        + "</#CADCFF></!italic>"
+        ));
 
-        lore.add(Message.from(""));
+        lore.add(Message.EMPTY);
 
         Integer currentAmmo = Namespace.GUN_AMMO_CURRENT.get(meta);
         Integer maxAmmo = Namespace.GUN_AMMO_MAX.get(meta);
@@ -75,9 +90,9 @@ public final class Lores {
         if (!magazineName.isEmpty()) {
             Magazine magazine = (Magazine) Attachments.getAttachment(magazineName);
             assert magazine != null : "Magazine is null!";
-            float multiplier = magazine.magazinePercentage / 100f;
-            int addedAmmo = Math.round(gun.maxAmmo * multiplier - gun.maxAmmo);
-            ammo = ammo + " <#6FFD90>(+" + addedAmmo + " " + Message.latin(magazine.name) + ")</#6FFD90>";
+            float multiplier = magazine.getMagazineSizePercentage() / 100f;
+            int addedAmmo = Math.round(gun.getMaxAmmo() * multiplier - gun.getMaxAmmo());
+            ammo = ammo + " <#6FFD90>(+" + addedAmmo + " " + Message.latin(magazine.getName()) + ")</#6FFD90>";
         }
 
         lore.add(Message.from(ammo + "</!italic>"));
@@ -87,7 +102,7 @@ public final class Lores {
         if (!scopeName.isEmpty()) {
             Scope scope = (Scope) Attachments.getAttachment(scopeName);
             assert scope != null : "Scope is null!";
-            String scopeLevel = FORMATTER.format(scope.scope);
+            String scopeLevel = FORMATTER.format(scope.getScopeMultiplier());
             lore.add(Message.from("<!italic><#CADCFF><#77A5FF>" + Message.latin("Scope: ") + "</#77A5FF>" + scopeLevel + "× <#6FFD90>(+" + scopeLevel
                     + " " + Message.latin(scopeName) + ")</#6FFD90></#CADCFF></!italic>"));
         }
@@ -98,7 +113,7 @@ public final class Lores {
         assert name != null : "Name is null!";
         Throwable throwable = Throwables.getThrowable(name);
         assert throwable != null : "Throwable is null!";
-        String damage = FORMATTER.format(throwable.damage);
+        String damage = FORMATTER.format(throwable.getDamage());
         if (throwable instanceof MIRVGrenade) {
             damage += " + 8×" + FORMATTER.format(SmallGrenade.DAMAGE);
         }
@@ -117,8 +132,8 @@ public final class Lores {
         return "<transition:#FF0000:#1FFF00:" + phase + ">" + currentAmmo + "/" + maxAmmo + "</transition>";
     }
 
-    private static @NotNull String calcDPS(double damage, int shootCooldown, int bulletsPerShot) {
-        double DPS = (damage / (shootCooldown / 1000D)) * bulletsPerShot;
+    private static @NotNull String calcDPS(@NotNull Gun gun) {
+        double DPS = (gun.getDamage() / (gun.getShootCooldown() / 1000D)) * gun.getBulletsPerShot();
         return FORMATTER.format(DPS);
     }
 }

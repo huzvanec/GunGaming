@@ -53,7 +53,7 @@ public final class GGCommand extends Command {
             return true;
         }
         if (args[0].equals(CORRECT_ARGS.get("GENERATE"))) {
-            generate(sender);
+            generate(sender, args);
             return true;
         }
         if (args[0].equals(CORRECT_ARGS.get("START"))) {
@@ -64,8 +64,26 @@ public final class GGCommand extends Command {
         return true;
     }
 
-    private void generate(@NotNull CommandSender sender) {
-        CrateGenerator.INSTANCE.generate(sender, -250, -250, 250, 250);
+    private void generate(@NotNull CommandSender sender, @NotNull String[] args) {
+        if (args.length == 2 && args[1].equals("CONFIRM")) {
+            sender.sendMessage(Message.prefix("<green>Generating...</green>"));
+            CrateGenerator.INSTANCE.generate(sender, -250, -250, 250, 250);
+            return;
+        }
+        if (sender instanceof Player) {
+            sender.sendMessage(Message.prefix(
+                    "<red>Are you sure you want to generate crates?</red> " +
+                            "<b><dark_gray>[<green>" +
+                            "<hover:show_text:'<green>Click to generate!</green>'>" +
+                            "<click:run_command:/gg generate CONFIRM>YES</click>" +
+                            "</hover></green>]</dark_gray></b>"
+            ));
+        } else {
+            sender.sendMessage(Message.prefix(
+                    "<red>Are you sure you want to generate crates? " +
+                            "To generate crates type \"<green>gg generate CONFIRM</green>\".</red>"
+            ));
+        }
     }
 
     private void help(@NotNull CommandSender sender) {
@@ -116,7 +134,7 @@ public final class GGCommand extends Command {
 
         CustomItem customItem = getLowercaseUnderscores(group, itemName);
         assert customItem != null;
-        item = customItem.item;
+        item = customItem.getItem();
 
         int count = 1;
         if (args.length == 5) {
@@ -175,9 +193,16 @@ public final class GGCommand extends Command {
         if (args.length == 1) {
             return containsFilter(new ArrayList<>(CORRECT_ARGS.values()), args[0]);
         }
-        if (!args[0].equals(CORRECT_ARGS.get("GIVE"))) {
-            return new ArrayList<>();
+        if (args[0].equals(CORRECT_ARGS.get("GENERATE"))) {
+            return List.of("CONFIRM");
         }
+        if (args[0].equals(CORRECT_ARGS.get("GIVE"))) {
+            return giveTabComplete(args);
+        }
+        return new ArrayList<>();
+    }
+
+    private static @NotNull List<String> giveTabComplete(@NotNull String[] args) {
         if (args.length == 2) {
             ArrayList<String> playerNames = new ArrayList<>();
             for (Player player : Bukkit.getOnlinePlayers()) {
@@ -194,7 +219,7 @@ public final class GGCommand extends Command {
             if (group == null) return new ArrayList<>();
             List<String> itemNames = new ArrayList<>();
             for (CustomItem customItem : group.values()) {
-                itemNames.add(customItem.name.replace(' ', '_').toLowerCase());
+                itemNames.add(customItem.getName().replace(' ', '_').toLowerCase());
             }
             return containsFilter(itemNames, args[3]);
         }

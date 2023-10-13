@@ -1,25 +1,36 @@
 package cz.jeme.programu.gungaming.item.ammo;
 
 import cz.jeme.programu.gungaming.loot.Rarity;
+import org.jetbrains.annotations.NotNull;
 
-public class TwelveGauge extends Ammo {
-
+public final class TwelveGauge extends Ammo {
     @Override
-    protected void setup() {
-        customModelData = 4;
-        name = "12 gauge";
-        info = "Ammo for shotguns";
-        rarity = Rarity.UNCOMMON;
+    public int getCustomModelData() {
+        return 4;
     }
 
     @Override
-    public int getMinLoot() {
+    public @NotNull String getName() {
+        return "12 gauge";
+    }
+
+    @Override
+    public @NotNull String getInfo() {
+        return "Ammo for shotguns";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.UNCOMMON;
+    }
+
+    @Override
+    public int getMinStackLoot() {
         return 3;
     }
 
     @Override
-    public int getMaxLoot() {
+    public int getMaxStackLoot() {
         return 10;
     }
-
 }

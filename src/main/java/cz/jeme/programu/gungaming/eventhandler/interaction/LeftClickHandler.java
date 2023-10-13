@@ -22,9 +22,7 @@ public final class LeftClickHandler {
     public static void block(@NotNull PlayerInteractEvent event) {
         ItemStack item = event.getItem();
         Player player = event.getPlayer();
-        if (Attachments.isAttachment(item)) {
-            event.setCancelled(true);
-        } else if (Guns.isGun(item) && player.isSneaking()) {
+        if (Guns.isGun(item) && player.isSneaking()) {
             zoom(event);
             event.setCancelled(true);
         }
@@ -39,6 +37,6 @@ public final class LeftClickHandler {
         assert scopeName != null : "Scope name is null!";
         Scope scope = (Scope) Attachments.getAttachment(scopeName);
         if (scope == null) return;
-        ZoomManager.INSTANCE.nextZoom(player, scope.scope);
+        ZoomManager.INSTANCE.nextZoom(player, scope.getScopeMultiplier());
     }
 }

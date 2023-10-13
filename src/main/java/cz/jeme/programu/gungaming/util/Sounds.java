@@ -40,8 +40,8 @@ public final class Sounds {
         float pitch = 1.0f;
         Integer reloadCooldown = Namespace.GUN_RELOAD_COOLDOWN.get(gunItem);
         assert reloadCooldown != null : "Reload cooldown is null!";
-        if (gun.reloadCooldown != reloadCooldown.intValue() && !gun.ammoType.equals(TwelveGauge.class)) {
-            pitch = 1.1f - ((reloadCooldown * 100f) / gun.reloadCooldown - 100f) / 100f;
+        if (gun.getReloadCooldown() != reloadCooldown && gun.getAmmoType() != TwelveGauge.class) {
+            pitch = 1.1f - ((reloadCooldown * 100f) / gun.getReloadCooldown() - 100f) / 100f;
         }
 
         return getSound("gun.reload." + formatName(gun), 2.5f, pitch);
@@ -68,7 +68,11 @@ public final class Sounds {
         audience.playSound(getSound("game.ding", 1f), audience);
     }
 
+    public static <T extends Audience & Sound.Emitter> void dong(@NotNull T audience) {
+        audience.playSound(getSound("game.dong", 1f), audience);
+    }
+
     public static @NotNull String formatName(@NotNull CustomItem customItem) {
-        return customItem.name.toLowerCase().replace(' ', '_');
+        return customItem.getName().toLowerCase().replace(' ', '_');
     }
 }

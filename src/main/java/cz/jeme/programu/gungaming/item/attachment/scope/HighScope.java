@@ -3,23 +3,42 @@ package cz.jeme.programu.gungaming.item.attachment.scope;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import org.jetbrains.annotations.NotNull;
 
-public class HighScope extends Scope {
+import java.util.Collections;
+import java.util.Set;
+
+public final class HighScope extends Scope {
     @Override
-    protected void setup() {
-        customModelData = 3;
-        name = "High Scope";
-        info = "An extreme scope for long-range";
-        rarity = Rarity.LEGENDARY;
-        scope = 10D;
+    public int getCustomModelData() {
+        return 3;
     }
 
     @Override
-    protected @NotNull String[] getBuffs() {
-        return new String[]{"10× scope"};
+    public @NotNull String getName() {
+        return "High Scope";
     }
 
     @Override
-    protected @NotNull String[] getNerfs() {
-        return new String[0];
+    public @NotNull String getInfo() {
+        return "Extreme scope for long-range";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.LEGENDARY;
+    }
+
+    @Override
+    protected @NotNull Set<String> getBuffs() {
+        return Set.of("10× scope");
+    }
+
+    @Override
+    protected @NotNull Set<String> getNerfs() {
+        return Collections.emptySet();
+    }
+
+    @Override
+    public double getScopeMultiplier() {
+        return 10D;
     }
 }

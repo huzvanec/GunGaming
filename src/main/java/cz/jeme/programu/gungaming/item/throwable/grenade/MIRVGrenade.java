@@ -9,43 +9,62 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
-public class MIRVGrenade extends Grenade {
-    @Override
-    protected void setup() {
-        name = "MIRV Grenade";
-        info = "explodes into eight small explosive pieces";
-        customModelData = 3;
-        rarity = Rarity.EPIC;
-        throwCooldown = 2000;
-        damage = 25d;
-    }
+public final class MIRVGrenade extends Grenade {
+    public static final double HORIZONTAL_POWER = 0.3f;
+    public static final double VERTICAL_POWER = 0.3f;
 
     @Override
-    public int getMinLoot() {
-        return 1;
-    }
-
-    @Override
-    public int getMaxLoot() {
+    public int getCustomModelData() {
         return 3;
     }
 
     @Override
-    public void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
-        thrown.getWorld().createExplosion(thrown, thrown.getLocation(), 4f, false, true);
-        float horizontalPower = 0.3f;
-        float circleMultiplier = 1.570796327f; // pi / 2
-        shootSmallGrenade(thrown, horizontalPower, 0f);
-        shootSmallGrenade(thrown, horizontalPower / circleMultiplier, horizontalPower / circleMultiplier);
-        shootSmallGrenade(thrown, 0f, horizontalPower);
-        shootSmallGrenade(thrown, horizontalPower / (-circleMultiplier), horizontalPower / circleMultiplier);
-        shootSmallGrenade(thrown, horizontalPower * -1f, 0f);
-        shootSmallGrenade(thrown, horizontalPower / (-circleMultiplier), horizontalPower / (-circleMultiplier));
-        shootSmallGrenade(thrown, 0f, horizontalPower * -1f);
-        shootSmallGrenade(thrown, horizontalPower / circleMultiplier, horizontalPower / (-circleMultiplier));
+    public @NotNull String getName() {
+        return "MIRV Grenade";
     }
 
-    private void shootSmallGrenade(@NotNull Projectile thrown, float x, float z) {
+    @Override
+    public @NotNull String getInfo() {
+        return "Explodes into eight small grenades";
+    }
+
+    @Override
+    public @NotNull Rarity getRarity() {
+        return Rarity.EPIC;
+    }
+
+    @Override
+    public int getMinStackLoot() {
+        return 1;
+    }
+
+    @Override
+    public int getMaxStackLoot() {
+        return 2;
+    }
+
+    @Override
+    public int getThrowCooldown() {
+        return 2000;
+    }
+
+    @Override
+    public double getDamage() {
+        return 26D;
+    }
+
+    @Override
+    protected void onThrownHit(@NotNull ProjectileHitEvent event, @NotNull Projectile thrown) {
+        thrown.getWorld().createExplosion(thrown, thrown.getLocation(), 4f, false, true);
+        for (int i = 0; i < 360; i += 45) {
+            shootSmallGrenade(thrown, i);
+        }
+    }
+
+    private void shootSmallGrenade(@NotNull Projectile thrown, double degrees) {
+        final double radians = Math.toRadians(degrees);
+        final double x = Math.cos(radians) * HORIZONTAL_POWER;
+        final double z = Math.sin(radians) * HORIZONTAL_POWER;
         Snowball smallGrenade;
         if (!(thrown.getShooter() instanceof Player player)) {
             smallGrenade = thrown.getWorld().spawn(thrown.getLocation(), Snowball.class);
@@ -56,6 +75,6 @@ public class MIRVGrenade extends Grenade {
 
         Namespace.THROWN.set(smallGrenade, "Small Grenade");
         Namespace.THROWN_DAMAGE.set(smallGrenade, SmallGrenade.DAMAGE);
-        smallGrenade.setVelocity(new Vector(x, 0.3f, z));
+        smallGrenade.setVelocity(new Vector(x, VERTICAL_POWER, z));
     }
 }

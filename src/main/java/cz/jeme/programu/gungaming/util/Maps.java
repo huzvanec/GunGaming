@@ -23,9 +23,16 @@ import org.jetbrains.annotations.NotNull;
 
 public final class Maps {
     private Maps() {
-        // Static class cannot be initialized
+        throw new AssertionError();
     }
 
+    /**
+     * Method copied from {@link net.minecraft.world.item.MapItem#update(Level, Entity, MapItemSavedData)} to make it static.
+     *
+     * @param world  World for the map to be drawn in.
+     * @param entity Entity holding (and rendering) the map.
+     * @param state  The data of the map.
+     */
     public static void update(Level world, Entity entity, MapItemSavedData state) {
         if (world.dimension() == state.dimension && entity instanceof Player) {
             int i = 1 << state.scale;
@@ -154,6 +161,7 @@ public final class Maps {
         assert -180 <= yaw && yaw <= 180 : "Invalid yaw: " + yaw + "!"; // Range check
         return (byte) ((yaw / 22.5f + 16.5f) % 16f);
     }
+
     public static byte calcDirection(@NotNull Location location) {
         return calcDirection(location.getYaw());
     }
