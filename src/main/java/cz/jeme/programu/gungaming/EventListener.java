@@ -133,13 +133,13 @@ public enum EventListener implements Listener {
     private void onPlayerMove(@NotNull PlayerMoveEvent event) {
         Boolean frozen = Namespace.FROZEN.get(event.getPlayer());
         if (frozen != null && frozen && event.hasChangedBlock()) event.setCancelled(true);
-//        PlayerTrafficHandler.onPlayerMove(event);
+        PlayerTrafficHandler.onPlayerMove(event);
     }
 
-//    @EventHandler
-//    private void onPlayerJoin(@NotNull PlayerJoinEvent event) {
-//        PlayerTrafficHandler.onPlayerJoin(event);
-//    }
+    @EventHandler
+    private void onPlayerJoin(@NotNull PlayerJoinEvent event) {
+        PlayerTrafficHandler.onPlayerJoin(event);
+    }
 
     @EventHandler
     private void onEntityToggleGlide(@NotNull EntityToggleGlideEvent event) {

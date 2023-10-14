@@ -173,7 +173,7 @@ public final class Game {
     }
 
     private class StartCountdown extends BukkitRunnable {
-        private static final int COUNTER_START = 5;
+        private static final int COUNTER_START = 30;
         private int counter = COUNTER_START;
 
         private StartCountdown() {
