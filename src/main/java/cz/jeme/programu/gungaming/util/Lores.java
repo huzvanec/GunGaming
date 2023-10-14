@@ -4,6 +4,7 @@ import cz.jeme.programu.gungaming.Namespace;
 import cz.jeme.programu.gungaming.item.attachment.Attachment;
 import cz.jeme.programu.gungaming.item.attachment.magazine.Magazine;
 import cz.jeme.programu.gungaming.item.attachment.scope.Scope;
+import cz.jeme.programu.gungaming.item.attachment.stock.Stock;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.item.throwable.grenade.MIRVGrenade;
@@ -73,7 +74,7 @@ public final class Lores {
         lore.add(Message.from(
                 "<!italic><#CADCFF><#77A5FF>"
                         + Message.latin("Ammo type: ")
-                        + "</#77A5FF>" + gun.getAmmo().getName()
+                        + "</#77A5FF>" + Message.latin(gun.getAmmo().getDisplayName())
                         + "</#CADCFF></!italic>"
         ));
 
@@ -90,9 +91,11 @@ public final class Lores {
         if (!magazineName.isEmpty()) {
             Magazine magazine = (Magazine) Attachments.getAttachment(magazineName);
             assert magazine != null : "Magazine is null!";
-            float multiplier = magazine.getMagazineSizePercentage() / 100f;
-            int addedAmmo = Math.round(gun.getMaxAmmo() * multiplier - gun.getMaxAmmo());
-            ammo = ammo + " <#6FFD90>(+" + addedAmmo + " " + Message.latin(magazine.getName()) + ")</#6FFD90>";
+            int addedAmmo = Math.round(gun.getMaxAmmo() * magazine.getMagazineSizePercentage() - gun.getMaxAmmo());
+            ammo = ammo + " <#77A5FF>[<#CADCFF>+" + addedAmmo + "</#CADCFF> "
+                    + magazine.getRarity().getColor() + Message.latin(magazine.getDisplayName())
+                    + Message.escape(magazine.getRarity().getColor())
+                    + "]</#77A5FF>";
         }
 
         lore.add(Message.from(ammo + "</!italic>"));
@@ -103,9 +106,37 @@ public final class Lores {
             Scope scope = (Scope) Attachments.getAttachment(scopeName);
             assert scope != null : "Scope is null!";
             String scopeLevel = FORMATTER.format(scope.getScopeMultiplier());
-            lore.add(Message.from("<!italic><#CADCFF><#77A5FF>" + Message.latin("Scope: ") + "</#77A5FF>" + scopeLevel + "× <#6FFD90>(+" + scopeLevel
-                    + " " + Message.latin(scopeName) + ")</#6FFD90></#CADCFF></!italic>"));
+            lore.add(
+                    Message.from(
+                            "<!italic><#CADCFF><#77A5FF>"
+                                    + Message.latin("Scope: ")
+                                    + "</#77A5FF>" + scopeLevel
+                                    + "× <#77A5FF>[<#CADCFF>+"
+                                    + scopeLevel + "×</#CADCFF> "
+                                    + scope.getRarity().getColor()
+                                    + Message.latin(scope.getDisplayName())
+                                    + Message.escape(scope.getRarity().getColor())
+                                    + "]</#77A5FF></#CADCFF></!italic>"
+                    ));
         }
+
+        String stockName = Namespace.GUN_STOCK.get(meta);
+        assert stockName != null : "Stock name is null!";
+        if (!stockName.isEmpty()) {
+            Stock stock = (Stock) Attachments.getAttachment(stockName);
+            assert stock != null : "Stock is null!";
+            lore.add(
+                    Message.from(
+                            "<!italic><#CADCFF><#77A5FF>"
+                                    + Message.latin("Stability: ")
+                                    + "</#77A5FF>" + Message.latin(stock.getStabilityName())
+                                    + " <#77A5FF>[" + stock.getRarity().getColor()
+                                    + Message.latin(stock.getDisplayName())
+                                    + Message.escape(stock.getRarity().getColor())
+                                    + "]</#77A5FF></#CADCFF></!italic>"
+                    ));
+        }
+
     }
 
     private static void updateThrowable(@NotNull ItemMeta meta, @NotNull List<Component> lore) {

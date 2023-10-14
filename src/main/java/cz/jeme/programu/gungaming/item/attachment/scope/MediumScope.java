@@ -29,7 +29,7 @@ public final class MediumScope extends Scope {
 
     @Override
     protected @NotNull Set<String> getBuffs() {
-        return Set.of("5× scope");
+        return Set.of("+5× scope");
     }
 
     @Override

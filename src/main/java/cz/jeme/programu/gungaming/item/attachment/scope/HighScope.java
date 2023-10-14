@@ -29,7 +29,7 @@ public final class HighScope extends Scope {
 
     @Override
     protected @NotNull Set<String> getBuffs() {
-        return Set.of("10× scope");
+        return Set.of("+10× scope");
     }
 
     @Override

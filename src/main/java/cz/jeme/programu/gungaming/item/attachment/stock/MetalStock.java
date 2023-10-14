@@ -49,4 +49,9 @@ public final class MetalStock extends Stock {
     public float getInaccuracyPercentage() {
         return 0.1f;
     }
+
+    @Override
+    public @NotNull String getStabilityName() {
+        return "Awesome";
+    }
 }

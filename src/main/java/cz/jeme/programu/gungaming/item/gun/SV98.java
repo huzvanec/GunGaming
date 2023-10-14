@@ -38,7 +38,7 @@ public final class SV98 extends Gun {
 
     @Override
     public double getDamage() {
-        return 20D;
+        return 18D;
     }
 
     @Override

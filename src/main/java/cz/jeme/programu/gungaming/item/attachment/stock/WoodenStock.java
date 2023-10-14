@@ -19,7 +19,7 @@ public final class WoodenStock extends Stock {
 
     @Override
     public @NotNull String getInfo() {
-        return "Better weapon stability";
+        return "Good weapon stability";
     }
 
     @Override
@@ -48,5 +48,10 @@ public final class WoodenStock extends Stock {
     @Override
     public float getInaccuracyPercentage() {
         return 0.7f;
+    }
+
+    @Override
+    public @NotNull String getStabilityName() {
+        return "Good";
     }
 }

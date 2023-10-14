@@ -49,4 +49,9 @@ public final class PlasticStock extends Stock {
     public float getInaccuracyPercentage() {
         return 0.4f;
     }
+
+    @Override
+    public @NotNull String getStabilityName() {
+        return "Great";
+    }
 }

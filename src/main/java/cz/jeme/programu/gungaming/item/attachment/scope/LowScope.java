@@ -30,7 +30,7 @@ public final class LowScope extends Scope {
 
     @Override
     protected @NotNull Set<String> getBuffs() {
-        return Set.of("2× scope");
+        return Set.of("+2× scope");
     }
 
     @Override

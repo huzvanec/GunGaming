@@ -19,6 +19,8 @@ public abstract class Stock extends Attachment {
 
     public abstract float getInaccuracyPercentage();
 
+    public abstract @NotNull String getStabilityName();
+
     public static final @NotNull ItemStack SHOTGUN_STOCK_PLACEHOLDER = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
 
     static {
