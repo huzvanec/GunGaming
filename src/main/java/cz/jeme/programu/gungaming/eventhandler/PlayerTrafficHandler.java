@@ -23,7 +23,7 @@ public final class PlayerTrafficHandler {
                             "Without it you wouldn't get the awesome gaming experience!") +
                     "</dark_aqua>\n" +
                     "<b><dark_blue>____________________________________________________________</dark_blue></b>";
-    private static final @NotNull String VERSION = "BETAv3.0";
+    private static final @NotNull String VERSION = "BETAv3.1";
     private static final @NotNull String RESOURCE_PACK_URL = "https://github.com/Mandlemankiller/GunGaming/releases/download/" + VERSION + "/resource-pack.zip";
     private static final @NotNull String HASH_URL = "https://github.com/Mandlemankiller/GunGaming/releases/download/" + VERSION + "/resource-pack.hash";
     private static final @NotNull String HASH;
