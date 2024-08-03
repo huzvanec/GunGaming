@@ -1,0 +1,17 @@
+{
+  "pack": {
+    "pack_format": 34,
+    "description": [
+      {
+        "text": "Gun",
+        "color": "#6786C8",
+        "bold": true
+      },
+      {
+        "text": "Gaming",
+        "color": "#4C618D",
+        "bold": true
+      }
+    ]
+  }
+}

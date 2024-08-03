@@ -1,0 +1,45 @@
+{
+	"__gungaming__": "Snowball represents throwables in GunGaming",
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "item/snowball"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"custom_model_data": 1
+			},
+			"model": "item/gungaming/throwable/frag_grenade"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 2
+			},
+			"model": "item/gungaming/throwable/smoke_grenade"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 3
+			},
+			"model": "item/gungaming/throwable/mirv_grenade"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 4
+			},
+			"model": "item/gungaming/throwable/molotov_cocktail"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 5
+			},
+			"model": "item/gungaming/throwable/small_grenade"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 6
+			},
+			"model": "item/gungaming/throwable/wind_pearl"
+		}
+	]
+}
