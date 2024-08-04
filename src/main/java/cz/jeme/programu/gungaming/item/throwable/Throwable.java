@@ -4,6 +4,7 @@ import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.util.Lores;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import org.bukkit.GameMode;
@@ -17,6 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public abstract class Throwable extends CustomItem {
     public static final @NotNull Data<Integer, Integer> THROW_COOLDOWN_DATA = Data.ofInteger(GunGaming.namespaced("throwable_throw_cooldown"));
@@ -155,6 +158,11 @@ public abstract class Throwable extends CustomItem {
     @Override
     protected final @NotNull String provideType() {
         return "throwable";
+    }
+
+    @Override
+    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+        return List.of(Lores.loreStat("Damage", Lores.STATS_FORMATTER.format(maxDamage)));
     }
 
     // static accessors

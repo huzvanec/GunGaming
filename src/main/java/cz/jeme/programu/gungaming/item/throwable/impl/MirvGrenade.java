@@ -4,6 +4,7 @@ import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.throwable.Grenade;
 import cz.jeme.programu.gungaming.item.throwable.ThrownHelper;
 import cz.jeme.programu.gungaming.loot.Rarity;
+import cz.jeme.programu.gungaming.util.Lores;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -14,9 +15,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class MirvGrenade extends Grenade {
-    public static final double HORIZONTAL_POWER = 0.3;
-    public static final double VERTICAL_POWER = 0.3;
+    public static final double HORIZONTAL_POWER = 0.4;
+    public static final double VERTICAL_POWER = 0.4;
 
     @Override
     protected int provideThrowCooldown() {
@@ -61,6 +64,13 @@ public class MirvGrenade extends Grenade {
     @Override
     protected @NotNull Integer provideCustomModelData() {
         return 3;
+    }
+
+    @Override
+    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+        final String damageStr = Lores.STATS_FORMATTER.format(maxDamage) + " + 8×"
+                                 + Lores.STATS_FORMATTER.format(SmallGrenade.MAX_DAMAGE);
+        return List.of(Lores.loreStat("Damage", damageStr));
     }
 
     @Override

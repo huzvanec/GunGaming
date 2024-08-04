@@ -6,7 +6,10 @@ import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class WindPearl extends Throwable {
     @Override
@@ -53,6 +56,11 @@ public class WindPearl extends Throwable {
     protected void onThrow(final @NotNull PlayerInteractEvent event, final @NotNull Snowball thrown) {
         thrown.addPassenger(event.getPlayer());
         thrown.setVelocity(thrown.getVelocity().multiply(2));
+    }
+
+    @Override
+    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+        return List.of();
     }
 
     @Override
