@@ -5,6 +5,7 @@ import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +29,7 @@ final class StartCountdown extends Countdown {
                 Components.of("<gold><b>" + Components.latinString("The game will start soon")),
                 Title.Times.times(Duration.ZERO, Duration.ofSeconds(3), Duration.ZERO)
         );
-        for (final Player player : game.players) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
             player.showTitle(title);
             player.playSound(Game.DONG_SOUND, player);
         }
@@ -41,7 +42,7 @@ final class StartCountdown extends Countdown {
                 Component.empty(),
                 Title.Times.times(Duration.ZERO, Duration.ofMillis(500), Duration.ofSeconds(2))
         );
-        for (final Player player : game.players) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
             player.showTitle(title);
             player.playSound(START_SOUND, player);
         }
