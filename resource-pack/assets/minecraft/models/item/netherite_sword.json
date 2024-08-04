@@ -1,0 +1,15 @@
+{
+  "__GunGaming__": "Netherite Sword represents Knife in GunGaming",
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "minecraft:item/netherite_sword"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "item/gungaming/melee/knife"
+    }
+  ]
+}

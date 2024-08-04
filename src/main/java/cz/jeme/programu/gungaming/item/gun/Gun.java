@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.item.gun;
 
+import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.item.CustomItem;
@@ -11,6 +12,7 @@ import cz.jeme.programu.gungaming.item.attachment.ZoomManager;
 import cz.jeme.programu.gungaming.item.attachment.impl.Silencer;
 import cz.jeme.programu.gungaming.util.Components;
 import cz.jeme.programu.gungaming.util.Inventories;
+import cz.jeme.programu.gungaming.util.Lores;
 import cz.jeme.programu.gungaming.util.Packets;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
@@ -402,20 +404,20 @@ public abstract class Gun extends CustomItem {
         final List<String> lore = new ArrayList<>();
         // ammo type
         final String ammoName = Components.strip(ammo.name());
-        lore.add(loreStat("Ammo Type", ammoName));
+        lore.add(Lores.loreStat("Ammo Type", ammoName));
         // damage
         final double damage = DAMAGE_DATA.require(item);
         final String damageModification = Silencer.GUN_SILENCER_KEY_DATA.check(item) ? "<red>" : "";
-        lore.add(loreStat("Damage", StatsMenu.DECIMAL_FORMATTER.format(damage), damageModification));
+        lore.add(Lores.loreStat("Damage", Lores.STATS_FORMATTER.format(damage), damageModification));
         // scope
         if (Scope.GUN_SCOPE_KEY_DATA.check(item)) {
             final Scope scope = Scope.of(Scope.GUN_SCOPE_KEY_DATA.require(item));
             final double zoom = scope.zoom();
-            lore.add(loreStat("Scope", StatsMenu.DECIMAL_FORMATTER.format(zoom) + "×", "<green>"));
+            lore.add(Lores.loreStat("Scope", Lores.STATS_FORMATTER.format(zoom) + "×", "<green>"));
         }
         // ammo
         final String ammoModification = Magazine.GUN_MAGAZINE_KEY_DATA.check(item) ? "<green>" : "";
-        lore.add(loreStat(
+        lore.add(Lores.loreStat(
                 "Ammo",
                 currentAmmo + "/" + ammoModification + maxAmmo));
         // info
@@ -423,14 +425,6 @@ public abstract class Gun extends CustomItem {
         lore.add("<yellow>[Right click to edit attachments]");
         lore.add("<yellow>[Shift right click to view stats]");
         return lore;
-    }
-
-    private static @NotNull String loreStat(final @NotNull String key, final @NotNull String value) {
-        return loreStat(key, value, "");
-    }
-
-    private static @NotNull String loreStat(final @NotNull String key, final @NotNull String value, final @NotNull String modification) {
-        return "<#77A5FF>" + Components.latinString(key) + ": <#CADCFF>" + modification + value;
     }
 
     @Override
@@ -477,7 +471,7 @@ public abstract class Gun extends CustomItem {
     // static accessors
 
     public static @NotNull Gun of(final @NotNull String keyStr) {
-        return CustomItem.of(keyStr, Gun.class);
+        return CustomElement.of(keyStr, Gun.class);
     }
 
     public static @NotNull Gun of(final @NotNull ItemStack item) {
@@ -485,7 +479,7 @@ public abstract class Gun extends CustomItem {
     }
 
     public static boolean is(final @NotNull String keyStr) {
-        return CustomItem.is(keyStr, Gun.class);
+        return CustomElement.is(keyStr, Gun.class);
     }
 
     public static boolean is(final @Nullable ItemStack item) {

@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.item.attachment;
 
+import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.command.GGCommand;
 import cz.jeme.programu.gungaming.data.Data;
@@ -63,7 +64,7 @@ public abstract class Magazine extends Attachment {
     }
 
     public static @NotNull Magazine of(final @NotNull String keyStr) {
-        return CustomItem.of(keyStr, Magazine.class);
+        return CustomElement.of(keyStr, Magazine.class);
     }
 
     public static @NotNull Magazine of(final @NotNull ItemStack item) {
@@ -71,7 +72,7 @@ public abstract class Magazine extends Attachment {
     }
 
     public static boolean is(final @NotNull String keyStr) {
-        return CustomItem.is(keyStr, Magazine.class);
+        return CustomElement.is(keyStr, Magazine.class);
     }
 
     public static boolean is(final @Nullable ItemStack item) {

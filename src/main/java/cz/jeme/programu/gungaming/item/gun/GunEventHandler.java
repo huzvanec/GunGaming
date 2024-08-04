@@ -141,7 +141,7 @@ public final class GunEventHandler {
     public static void onEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof final AbstractArrow bullet) || !BulletHelper.isBullet(bullet)) {
             if (event.getDamager() instanceof Projectile)
-                GlobalEventHandler.resetNoDamageTicks(event.getDamager());
+                GlobalEventHandler.resetNoDamageTicks(event.getEntity());
             return;
         }
 

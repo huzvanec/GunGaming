@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.item.attachment;
 
+import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.util.Components;
 import org.bukkit.Material;
@@ -81,7 +82,7 @@ public abstract class Attachment extends CustomItem {
     // static accessors
 
     public static @NotNull Attachment of(final @NotNull String keyStr) {
-        return CustomItem.of(keyStr, Attachment.class);
+        return CustomElement.of(keyStr, Attachment.class);
     }
 
     public static @NotNull Attachment of(final @NotNull ItemStack item) {
@@ -89,7 +90,7 @@ public abstract class Attachment extends CustomItem {
     }
 
     public static boolean is(final @NotNull String keyStr) {
-        return CustomItem.is(keyStr, Attachment.class);
+        return CustomElement.is(keyStr, Attachment.class);
     }
 
     public static boolean is(final @Nullable ItemStack item) {

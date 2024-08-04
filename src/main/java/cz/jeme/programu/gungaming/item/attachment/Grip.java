@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.item.attachment;
 
+import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.item.CustomItem;
@@ -56,7 +57,7 @@ public abstract class Grip extends Attachment {
     }
 
     public static @NotNull Grip of(final @NotNull String keyStr) {
-        return CustomItem.of(keyStr, Grip.class);
+        return CustomElement.of(keyStr, Grip.class);
     }
 
     public static @NotNull Grip of(final @NotNull ItemStack item) {
@@ -64,7 +65,7 @@ public abstract class Grip extends Attachment {
     }
 
     public static boolean is(final @NotNull String keyStr) {
-        return CustomItem.is(keyStr, Grip.class);
+        return CustomElement.is(keyStr, Grip.class);
     }
 
     public static boolean is(final @Nullable ItemStack item) {

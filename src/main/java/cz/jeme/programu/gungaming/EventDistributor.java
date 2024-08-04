@@ -6,6 +6,7 @@ import cz.jeme.programu.gungaming.item.attachment.AttachmentEventHandler;
 import cz.jeme.programu.gungaming.item.consumable.ConsumableEventHandler;
 import cz.jeme.programu.gungaming.item.gun.GunEventHandler;
 import cz.jeme.programu.gungaming.item.impl.GrapplingHook;
+import cz.jeme.programu.gungaming.item.melee.MeleeEventHandler;
 import cz.jeme.programu.gungaming.item.throwable.ThrowableEventHandler;
 import cz.jeme.programu.gungaming.loot.crate.CrateEventHandler;
 import io.papermc.paper.event.player.PlayerStopUsingItemEvent;
@@ -84,6 +85,7 @@ public enum EventDistributor implements Listener {
     private static void onEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent event) {
         GunEventHandler.onEntityDamageByEntity(event);
         ThrowableEventHandler.onEntityDamageByEntity(event);
+        MeleeEventHandler.onEntityDamageByEntity(event);
     }
 
     @EventHandler
@@ -102,6 +104,7 @@ public enum EventDistributor implements Listener {
     @EventHandler
     private static void onPlayerItemConsume(final @NotNull PlayerItemConsumeEvent event) {
         ConsumableEventHandler.onPlayerItemConsume(event);
+        MeleeEventHandler.onPlayerItemConsume(event);
     }
 
     @EventHandler

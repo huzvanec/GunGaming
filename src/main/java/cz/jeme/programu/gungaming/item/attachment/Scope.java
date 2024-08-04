@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.item.attachment;
 
+import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.item.CustomItem;
@@ -33,7 +34,7 @@ public abstract class Scope extends Attachment {
 
 
     public static @NotNull Scope of(final @NotNull String keyStr) {
-        return CustomItem.of(keyStr, Scope.class);
+        return CustomElement.of(keyStr, Scope.class);
     }
 
     public static @NotNull Scope of(final @NotNull ItemStack item) {
@@ -41,7 +42,7 @@ public abstract class Scope extends Attachment {
     }
 
     public static boolean is(final @NotNull String keyStr) {
-        return CustomItem.is(keyStr, Scope.class);
+        return CustomElement.is(keyStr, Scope.class);
     }
 
     public static boolean is(final @Nullable ItemStack item) {

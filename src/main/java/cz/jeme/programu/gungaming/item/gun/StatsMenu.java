@@ -4,6 +4,7 @@ import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.attachment.*;
 import cz.jeme.programu.gungaming.item.attachment.impl.Silencer;
 import cz.jeme.programu.gungaming.util.Components;
+import cz.jeme.programu.gungaming.util.Lores;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -15,17 +16,14 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 public final class StatsMenu {
     private final @NotNull HumanEntity player;
     private final @NotNull ItemStack gunItem;
-    private @NotNull ItemStack gunItemBackup;
+    private final @NotNull ItemStack gunItemBackup;
     private final @NotNull Gun gun;
     private final @NotNull Inventory inventory;
-
-    public static final @NotNull DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("#0.##");
 
     public StatsMenu(final @NotNull HumanEntity player, final @NotNull ItemStack gunItem) {
         this.player = player;
@@ -83,7 +81,7 @@ public final class StatsMenu {
                         "<green>",
                         scope == null
                                 ? null
-                                : DECIMAL_FORMATTER.format(scope.zoom()) + "×",
+                                : Lores.STATS_FORMATTER.format(scope.zoom()) + "×",
                         scope
                 )
         );
@@ -102,20 +100,20 @@ public final class StatsMenu {
                 .orElse(null);
         final String damageStr = loreStat(
                 "Per Bullet",
-                DECIMAL_FORMATTER.format(gun.damage()),
+                Lores.STATS_FORMATTER.format(gun.damage()),
                 loreModification(
                         "<red>",
-                        DECIMAL_FORMATTER.format(damage),
+                        Lores.STATS_FORMATTER.format(damage),
                         silencer
                 )
         );
         final double shootCooldownSeconds = Gun.SHOOT_COOLDOWN_DATA.require(gunItem) / 20D;
         final String dpsStr = loreStat(
                 "Per Second",
-                DECIMAL_FORMATTER.format(gun.damage() / shootCooldownSeconds * gun.bulletsPerShot()),
+                Lores.STATS_FORMATTER.format(gun.damage() / shootCooldownSeconds * gun.bulletsPerShot()),
                 loreModification(
                         "<red>",
-                        DECIMAL_FORMATTER.format(damage / shootCooldownSeconds * gun.bulletsPerShot()),
+                        Lores.STATS_FORMATTER.format(damage / shootCooldownSeconds * gun.bulletsPerShot()),
                         silencer
                 )
         );
@@ -126,7 +124,7 @@ public final class StatsMenu {
         );
         inventory.setItem(1, damageInfo);
         // durations
-        final String shootDurationStr = loreStat("Shooting", DECIMAL_FORMATTER.format(
+        final String shootDurationStr = loreStat("Shooting", Lores.STATS_FORMATTER.format(
                 Gun.SHOOT_COOLDOWN_DATA.require(gunItem) / 20D / (shotgun ? 1 : gun.bulletsPerShot())
         ) + "s");
         final int reloadModifier = shotgun ? gun.bulletsPerShot() : 1;
@@ -135,10 +133,10 @@ public final class StatsMenu {
                 .orElse(null);
         final String reloadDurationStr = loreStat(
                 "Reloading",
-                DECIMAL_FORMATTER.format(gun.reloadDuration() / 20D * reloadModifier) + "s",
+                Lores.STATS_FORMATTER.format(gun.reloadDuration() / 20D * reloadModifier) + "s",
                 loreModification(
                         "<red>",
-                        DECIMAL_FORMATTER.format(Gun.RELOAD_DURATION_DATA.require(gunItem) / 20D * reloadModifier) + "s",
+                        Lores.STATS_FORMATTER.format(Gun.RELOAD_DURATION_DATA.require(gunItem) / 20D * reloadModifier) + "s",
                         magazine
                 )
         );
@@ -152,10 +150,10 @@ public final class StatsMenu {
         final int recoilModifier = shotgun ? gun.bulletsPerShot() : 1;
         final String recoilStr = loreStat(
                 "Recoil",
-                DECIMAL_FORMATTER.format(gun.recoil() * recoilModifier * 10),
+                Lores.STATS_FORMATTER.format(gun.recoil() * recoilModifier * 10),
                 loreModification(
                         "<green>",
-                        DECIMAL_FORMATTER.format(Gun.RECOIL_DATA.require(gunItem) * recoilModifier * 10),
+                        Lores.STATS_FORMATTER.format(Gun.RECOIL_DATA.require(gunItem) * recoilModifier * 10),
                         Stock.GUN_STOCK_KEY_DATA.read(gunItem)
                                 .map(Stock::of)
                                 .orElse(null)
@@ -166,10 +164,10 @@ public final class StatsMenu {
                 .orElse(null);
         final String spreadStr = loreStat(
                 "Spread",
-                DECIMAL_FORMATTER.format(gun.inaccuracy()),
+                Lores.STATS_FORMATTER.format(gun.inaccuracy()),
                 loreModification(
                         "<green>",
-                        DECIMAL_FORMATTER.format(Gun.INACCURACY_DATA.require(gunItem)),
+                        Lores.STATS_FORMATTER.format(Gun.INACCURACY_DATA.require(gunItem)),
                         grip
                 )
         );
@@ -193,7 +191,7 @@ public final class StatsMenu {
         );
         final String bulletSpeedStr = loreStat(
                 "Bullet Speed",
-                DECIMAL_FORMATTER.format(Gun.BULLET_VELOCITY_DATA.require(gunItem))
+                Lores.STATS_FORMATTER.format(Gun.BULLET_VELOCITY_DATA.require(gunItem))
         );
         final ItemStack ammoInfo = statItem(
                 "Ammo",

@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.item.consumable;
 
+import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import net.kyori.adventure.key.Key;
@@ -75,7 +76,7 @@ public abstract class Consumable extends CustomItem {
     // static accessors
 
     public static @NotNull Consumable of(final @NotNull String keyStr) {
-        return CustomItem.of(keyStr, Consumable.class);
+        return CustomElement.of(keyStr, Consumable.class);
     }
 
     public static @NotNull Consumable of(final @NotNull ItemStack item) {
@@ -83,7 +84,7 @@ public abstract class Consumable extends CustomItem {
     }
 
     public static boolean is(final @NotNull String keyStr) {
-        return CustomItem.is(keyStr, Consumable.class);
+        return CustomElement.is(keyStr, Consumable.class);
     }
 
     public static boolean is(final @Nullable ItemStack item) {

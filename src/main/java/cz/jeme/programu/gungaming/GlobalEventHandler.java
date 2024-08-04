@@ -11,8 +11,11 @@ public final class GlobalEventHandler {
     }
 
     public static void onEntityDamage(final @NotNull EntityDamageEvent event) {
-        if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) return;
-        resetNoDamageTicks(event.getEntity());
+        switch (event.getCause()) {
+            case PROJECTILE, ENTITY_ATTACK, ENTITY_SWEEP_ATTACK -> {
+            }
+            default -> resetNoDamageTicks(event.getEntity());
+        }
     }
 
     public static void resetNoDamageTicks(final @NotNull Entity entity) {

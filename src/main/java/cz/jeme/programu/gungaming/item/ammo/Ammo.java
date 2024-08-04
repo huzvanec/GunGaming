@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.item.ammo;
 
+import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -18,7 +19,7 @@ public abstract class Ammo extends CustomItem {
     }
 
     public static @NotNull Ammo of(final @NotNull String keyStr) {
-        return CustomItem.of(keyStr, Ammo.class);
+        return CustomElement.of(keyStr, Ammo.class);
     }
 
     public static @NotNull Ammo of(final @NotNull ItemStack item) {
@@ -26,7 +27,7 @@ public abstract class Ammo extends CustomItem {
     }
 
     public static boolean is(final @NotNull String keyStr) {
-        return CustomItem.is(keyStr, Ammo.class);
+        return CustomElement.is(keyStr, Ammo.class);
     }
 
     public static boolean is(final @Nullable ItemStack item) {

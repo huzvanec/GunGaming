@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.item.throwable;
 
+import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.item.CustomItem;
@@ -154,7 +155,7 @@ public abstract class Throwable extends CustomItem {
     // static accessors
 
     public static @NotNull Throwable of(final @NotNull String keyStr) {
-        return CustomItem.of(keyStr, Throwable.class);
+        return CustomElement.of(keyStr, Throwable.class);
     }
 
     public static @NotNull Throwable of(final @NotNull ItemStack item) {
@@ -162,7 +163,7 @@ public abstract class Throwable extends CustomItem {
     }
 
     public static boolean is(final @NotNull String keyStr) {
-        return CustomItem.is(keyStr, Throwable.class);
+        return CustomElement.is(keyStr, Throwable.class);
     }
 
     public static boolean is(final @Nullable ItemStack item) {

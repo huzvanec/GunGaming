@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.item.attachment;
 
+import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.item.CustomItem;
@@ -46,7 +47,7 @@ public abstract class Stock extends Attachment {
     }
 
     public static @NotNull Stock of(final @NotNull String keyStr) {
-        return CustomItem.of(keyStr, Stock.class);
+        return CustomElement.of(keyStr, Stock.class);
     }
 
     public static @NotNull Stock of(final @NotNull ItemStack item) {
@@ -54,7 +55,7 @@ public abstract class Stock extends Attachment {
     }
 
     public static boolean is(final @NotNull String keyStr) {
-        return CustomItem.is(keyStr, Stock.class);
+        return CustomElement.is(keyStr, Stock.class);
     }
 
     public static boolean is(final @Nullable ItemStack item) {

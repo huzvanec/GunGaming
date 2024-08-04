@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.item;
 
+import com.google.common.collect.HashMultimap;
 import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.loot.Rarity;
@@ -34,16 +35,17 @@ public abstract class CustomItem extends CustomElement {
         item.editMeta(meta -> {
             meta.displayName(Components.of("<!i>").append(name));
             meta.setCustomModelData(customModelData);
+            meta.setAttributeModifiers(HashMultimap.create());
+            meta.addItemFlags(
+                    ItemFlag.HIDE_ATTRIBUTES,
+                    ItemFlag.HIDE_ADDITIONAL_TOOLTIP
+            );
             KEY_DATA.write(meta, key.asString());
         });
     }
 
     @ApiStatus.Internal
     public void init() {
-        item.editMeta(meta -> meta.addItemFlags(
-                ItemFlag.HIDE_ATTRIBUTES,
-                ItemFlag.HIDE_ADDITIONAL_TOOLTIP
-        ));
         // ran after initialization
         updateItem(item);
     }
