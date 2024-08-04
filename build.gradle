@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'io.papermc.paperweight.userdev' version '1.7.1'
-    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'cz.jeme.programu'
@@ -10,13 +10,13 @@ version = '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
     maven {
-        name = "sonatype"
-        url = "https://oss.sonatype.org/content/groups/public/"
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
     }
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle('1.21-R0.1-SNAPSHOT')
     implementation 'io.github.classgraph:classgraph:4.8.174'
 }
 
