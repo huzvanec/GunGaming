@@ -53,6 +53,11 @@ public class GoldenCrate extends Crate {
     }
 
     @Override
+    protected @NotNull Rarity provideRarity() {
+        return Rarity.EPIC;
+    }
+
+    @Override
     protected void generated(final @NotNull Block block, final @NotNull Inventory inventory) {
         final CommandBlock data = (CommandBlock) block.getBlockData();
         data.setConditional(true);

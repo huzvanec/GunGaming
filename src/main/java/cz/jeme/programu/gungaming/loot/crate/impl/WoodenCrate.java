@@ -22,6 +22,11 @@ public class WoodenCrate extends Crate {
     }
 
     @Override
+    protected @NotNull Rarity provideRarity() {
+        return Rarity.RARE;
+    }
+
+    @Override
     protected @NotNull Component provideName() {
         return Component.text("Wooden Crate");
     }

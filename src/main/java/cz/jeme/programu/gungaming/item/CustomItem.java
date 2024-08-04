@@ -3,7 +3,6 @@ package cz.jeme.programu.gungaming.item;
 import com.google.common.collect.HashMultimap;
 import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
-import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
@@ -21,8 +20,6 @@ import java.util.*;
 public abstract class CustomItem extends CustomElement {
     private final @NotNull Set<String> tags = new HashSet<>();
 
-    protected final @NotNull Rarity rarity = provideRarity();
-    protected final @NotNull Component name = rarity.color().append(provideName());
     protected final @NotNull String description = Components.strip(provideDescription());
     protected final @NotNull Material material = provideMaterial();
     protected final @NotNull ItemStack item = ItemStack.of(material);
@@ -84,8 +81,6 @@ public abstract class CustomItem extends CustomElement {
 
     // providers
 
-    protected abstract @NotNull Component provideName();
-
     protected abstract @NotNull String provideDescription();
 
     protected abstract @NotNull Material provideMaterial();
@@ -93,8 +88,6 @@ public abstract class CustomItem extends CustomElement {
     protected @Nullable Integer provideCustomModelData() {
         return null;
     }
-
-    protected abstract @NotNull Rarity provideRarity();
 
     protected abstract int provideMinAmount();
 
@@ -105,10 +98,6 @@ public abstract class CustomItem extends CustomElement {
     }
 
     // getters
-
-    public final @NotNull Component name() {
-        return name;
-    }
 
     public final @NotNull Set<String> tags() {
         return new HashSet<>(tags);
@@ -134,10 +123,6 @@ public abstract class CustomItem extends CustomElement {
         if (customModelData == null)
             throw new IllegalStateException("This custom item has no customModelData!");
         return customModelData;
-    }
-
-    public final @NotNull Rarity rarity() {
-        return rarity;
     }
 
     public final int minAmount() {

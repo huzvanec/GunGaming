@@ -4,7 +4,6 @@ import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.util.Components;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
@@ -21,7 +20,6 @@ public abstract class Crate extends CustomElement {
     protected final @NotNull Material material = provideMaterial();
     protected final double fillPercentage = provideFillPercentage();
     protected final double spawnPercentage = provideSpawnPercentage();
-    protected final @NotNull Component name = provideName();
 
     protected Crate() {
         final Map<Rarity, Integer> tempRarityChances = new HashMap<>(provideRarityChances());
@@ -35,8 +33,6 @@ public abstract class Crate extends CustomElement {
     }
 
     // providers
-
-    protected abstract @NotNull Component provideName();
 
     protected abstract @NotNull Map<Rarity, Integer> provideRarityChances();
 
@@ -78,10 +74,6 @@ public abstract class Crate extends CustomElement {
 
     public final double spawnPercentage() {
         return spawnPercentage;
-    }
-
-    public final @NotNull Component name() {
-        return name;
     }
 
     protected void generated(final @NotNull Block block, final @NotNull Inventory inventory) {

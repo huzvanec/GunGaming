@@ -1,8 +1,10 @@
 package cz.jeme.programu.gungaming;
 
 import cz.jeme.programu.gungaming.data.Data;
+import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -10,11 +12,29 @@ public abstract class CustomElement {
     public static final @NotNull Data<String, String> KEY_DATA = Data.ofString(GunGaming.namespaced("element_key"));
 
     protected final @NotNull Key key = GunGaming.namespaced(provideKey());
+    protected final @NotNull Rarity rarity = provideRarity();
+    protected final @NotNull Component name = rarity.color().append(provideName());
+
+    // providers
 
     protected abstract @KeyPattern.Value @NotNull String provideKey();
 
+    protected abstract @NotNull Rarity provideRarity();
+
+    protected abstract @NotNull Component provideName();
+
+    // getters
+
     public final @NotNull Key key() {
         return key;
+    }
+
+    public final @NotNull Rarity rarity() {
+        return rarity;
+    }
+
+    public final @NotNull Component name() {
+        return name;
     }
 
     // object
