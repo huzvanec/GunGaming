@@ -1,7 +1,6 @@
 package cz.jeme.programu.gungaming.loot.crate;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,16 +23,20 @@ public final class CrateFilter {
     }
 
     @SafeVarargs
-    public final void add(final Class<? extends CustomItem> @NotNull ... classes) {
-        content.addAll(Arrays.asList(classes));
+    public final @NotNull CrateFilter add(final @NotNull Class<? extends CustomItem> first, final Class<? extends CustomItem> @NotNull ... other) {
+        content.add(first);
+        content.addAll(Arrays.asList(other));
+        return this;
     }
 
-    public void remove(final @NotNull Class<? extends CustomItem> clazz) {
+    public @NotNull CrateFilter remove(final @NotNull Class<? extends CustomItem> clazz) {
         content.remove(clazz);
+        return this;
     }
 
-    public void clear() {
+    public @NotNull CrateFilter clear() {
         content.clear();
+        return this;
     }
 
     public boolean check(final @NotNull CustomItem customItem) {

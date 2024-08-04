@@ -1,10 +1,9 @@
 package cz.jeme.programu.gungaming.loot.crate.impl;
 
-import cz.jeme.programu.gungaming.item.CustomItem;
-import cz.jeme.programu.gungaming.item.Weapon;
-import cz.jeme.programu.gungaming.item.attachment.Attachment;
+import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.loot.crate.Crate;
+import cz.jeme.programu.gungaming.loot.crate.CrateFilter;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -15,22 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public class WoodenCrate extends Crate {
-    @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
-        return "wooden_crate";
-    }
-
-    @Override
-    protected @NotNull Rarity provideRarity() {
-        return Rarity.UNCOMMON;
-    }
-
-    @Override
-    protected @NotNull Component provideName() {
-        return Component.text("Wooden Crate");
-    }
-
+public class AmmoCrate extends Crate {
     @Override
     protected @NotNull Map<Rarity, Integer> provideRarityChances() {
         return Map.of(
@@ -44,7 +28,7 @@ public class WoodenCrate extends Crate {
 
     @Override
     protected @NotNull Material provideMaterial() {
-        return Material.CHAIN_COMMAND_BLOCK;
+        return Material.COMMAND_BLOCK;
     }
 
     @Override
@@ -54,7 +38,22 @@ public class WoodenCrate extends Crate {
 
     @Override
     protected double provideSpawnPercentage() {
-        return .0005;
+        return .00012;
+    }
+
+    @Override
+    protected @KeyPattern.Value @NotNull String provideKey() {
+        return "ammo_crate";
+    }
+
+    @Override
+    protected @NotNull Rarity provideRarity() {
+        return Rarity.RARE;
+    }
+
+    @Override
+    protected @NotNull Component provideName() {
+        return Component.text("Ammo Crate");
     }
 
     @Override
@@ -65,10 +64,8 @@ public class WoodenCrate extends Crate {
     }
 
     @Override
-    protected @NotNull Map<Class<? extends CustomItem>, Integer> provideLimits() {
-        return Map.of(
-                Weapon.class, 1,
-                Attachment.class, 1
-        );
+    protected @NotNull CrateFilter provideFilter() {
+        return new CrateFilter(CrateFilter.CrateFilterType.WHITELIST)
+                .add(Ammo.class);
     }
 }
