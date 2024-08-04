@@ -13,6 +13,11 @@ public abstract class CustomBlock extends CustomItem {
         addTags("block");
     }
 
+    @Override
+    protected final @NotNull String provideType() {
+        return "block";
+    }
+
     // static accessors
 
     public static @NotNull CustomBlock of(final @NotNull String keyStr) {

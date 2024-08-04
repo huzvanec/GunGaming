@@ -64,6 +64,11 @@ public abstract class Attachment extends CustomItem {
     }
 
     @Override
+    protected final @NotNull String provideType() {
+        return "attachment";
+    }
+
+    @Override
     protected final int provideMinAmount() {
         return 1;
     }

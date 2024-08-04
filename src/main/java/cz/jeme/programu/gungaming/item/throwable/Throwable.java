@@ -152,6 +152,11 @@ public abstract class Throwable extends CustomItem {
         return Material.SNOWBALL;
     }
 
+    @Override
+    protected final @NotNull String provideType() {
+        return "throwable";
+    }
+
     // static accessors
 
     public static @NotNull Throwable of(final @NotNull String keyStr) {

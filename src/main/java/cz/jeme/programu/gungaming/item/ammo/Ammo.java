@@ -18,6 +18,11 @@ public abstract class Ammo extends CustomItem {
         return Material.WHITE_DYE;
     }
 
+    @Override
+    protected final @NotNull String provideType() {
+        return "ammo";
+    }
+
     public static @NotNull Ammo of(final @NotNull String keyStr) {
         return CustomElement.of(keyStr, Ammo.class);
     }

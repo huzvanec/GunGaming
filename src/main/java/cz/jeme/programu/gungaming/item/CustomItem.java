@@ -100,7 +100,9 @@ public abstract class CustomItem extends CustomElement {
 
     protected abstract int provideMaxAmount();
 
-    protected abstract @NotNull String provideType();
+    protected @NotNull String provideType() {
+        return "item";
+    }
 
     // getters
 

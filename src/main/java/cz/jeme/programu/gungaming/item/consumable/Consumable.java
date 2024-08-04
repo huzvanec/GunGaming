@@ -72,6 +72,10 @@ public abstract class Consumable extends CustomItem {
         return Material.CHORUS_FRUIT;
     }
 
+    @Override
+    protected final @NotNull String provideType() {
+        return "consumable";
+    }
 
     // static accessors
 

@@ -85,6 +85,10 @@ public abstract class Melee extends Weapon {
         GlobalEventHandler.resetNoDamageTicks(event.getEntity());
     }
 
+    @Override
+    protected final @NotNull String provideType() {
+        return "melee weapon";
+    }
 
     public static @NotNull Melee of(final @NotNull String keyStr) {
         return CustomElement.of(keyStr, Melee.class);

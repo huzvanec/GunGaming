@@ -432,6 +432,11 @@ public abstract class Gun extends Weapon {
         return Material.CROSSBOW;
     }
 
+    @Override
+    protected final @NotNull String provideType() {
+        return "gun";
+    }
+
     // ammo utils
 
     public static void setAmmo(final @NotNull ItemStack item, final int ammo) {
