@@ -15,41 +15,41 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public class WoodenCrate extends Crate {
-    @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
-        return "wooden_crate";
-    }
-
+public class GoldenCrate extends Crate {
     @Override
     protected @NotNull Component provideName() {
-        return Component.text("Wooden Crate");
+        return Component.text("Golden Crate");
     }
 
     @Override
     protected @NotNull Map<Rarity, Integer> provideRarityChances() {
         return Map.of(
-                Rarity.COMMON, 14,
-                Rarity.UNCOMMON, 12,
-                Rarity.RARE, 8,
-                Rarity.EPIC, 3,
-                Rarity.LEGENDARY, 1
+                Rarity.COMMON, 5,
+                Rarity.UNCOMMON, 5,
+                Rarity.RARE, 5,
+                Rarity.EPIC, 9,
+                Rarity.LEGENDARY, 8
         );
     }
 
     @Override
     protected @NotNull Material provideMaterial() {
-        return Material.CHAIN_COMMAND_BLOCK;
+        return Material.REPEATING_COMMAND_BLOCK;
     }
 
     @Override
     protected double provideFillPercentage() {
-        return .25;
+        return .5;
     }
 
     @Override
     protected double provideSpawnPercentage() {
-        return .0005;
+        return .00006;
+    }
+
+    @Override
+    protected @KeyPattern.Value @NotNull String provideKey() {
+        return "golden_crate";
     }
 
     @Override
@@ -62,8 +62,8 @@ public class WoodenCrate extends Crate {
     @Override
     protected @NotNull Map<Class<? extends CustomItem>, Integer> provideLimits() {
         return Map.of(
-                Weapon.class, 1,
-                Attachment.class, 1
+                Weapon.class, 2,
+                Attachment.class, 2
         );
     }
 }

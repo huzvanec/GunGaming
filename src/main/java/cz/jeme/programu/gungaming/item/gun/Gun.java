@@ -4,6 +4,7 @@ import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.item.Weapon;
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.attachment.Grip;
 import cz.jeme.programu.gungaming.item.attachment.Magazine;
@@ -40,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public abstract class Gun extends CustomItem {
+public abstract class Gun extends Weapon {
     public static final @NotNull Data<Integer, Integer> MAX_AMMO_DATA = Data.ofInteger(GunGaming.namespaced("gun_max_ammo"));
     public static final @NotNull Data<Integer, Integer> SHOOT_COOLDOWN_DATA = Data.ofInteger(GunGaming.namespaced("gun_shoot_cooldown"));
     public static final @NotNull Data<Integer, Integer> RELOAD_DURATION_DATA = Data.ofInteger(GunGaming.namespaced("gun_reload_duration"));
@@ -242,7 +243,6 @@ public abstract class Gun extends CustomItem {
         // the player isn't in creative mode && the gun has no ammo
         if (!creative && currentAmmo == 0) {
             noAmmo(player, item);
-            player.sendMessage(String.valueOf(round));
             return;
         }
         // the player isn't in creative mode && (the gun is not a shotgun || the shotgun is shooting its last bullet)
@@ -430,16 +430,6 @@ public abstract class Gun extends CustomItem {
     @Override
     protected final @NotNull Material provideMaterial() {
         return Material.CROSSBOW;
-    }
-
-    @Override
-    protected final int provideMinAmount() {
-        return 1;
-    }
-
-    @Override
-    protected final int provideMaxAmount() {
-        return 1;
     }
 
     // ammo utils

@@ -4,6 +4,7 @@ import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GlobalEventHandler;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.item.Weapon;
 import cz.jeme.programu.gungaming.util.Lores;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -15,8 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Melee extends CustomItem {
-
+public abstract class Melee extends Weapon {
     protected final double damage = provideDamage();
     protected final double knockback = provideKnockback();
     protected final double attackSpeed = provideAttackSpeed();
@@ -79,16 +79,6 @@ public abstract class Melee extends CustomItem {
 
     public final double attackSpeed() {
         return attackSpeed;
-    }
-
-    @Override
-    protected int provideMinAmount() {
-        return 1;
-    }
-
-    @Override
-    protected int provideMaxAmount() {
-        return 1;
     }
 
     protected void onHit(final @NotNull EntityDamageEvent event, final @NotNull ItemStack item) {
