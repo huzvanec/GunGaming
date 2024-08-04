@@ -29,6 +29,7 @@ public abstract class CustomItem extends CustomElement {
     protected final @Nullable Integer customModelData = provideCustomModelData();
     protected final int minAmount = provideMinAmount();
     protected final int maxAmount = provideMaxAmount();
+    protected final @NotNull String type = Components.strip(provideType());
 
     protected CustomItem() {
         addTags("item");
@@ -61,7 +62,10 @@ public abstract class CustomItem extends CustomElement {
             throw new IllegalArgumentException("The provided item is not this CustomItem!");
         final List<Component> lore = new ArrayList<>();
         final String rarityName = Components.latinString(rarity.key().value());
-        lore.add(Components.of(LORE_PREFIX + "<b>").append(rarity.color().append(Components.of(rarityName))));
+        final String typeStr = Components.latinString(type);
+        lore.add(Components.of(LORE_PREFIX + "<b>").append(rarity.color().append(
+                Components.of(rarityName + " " + typeStr)
+        )));
         lore.add(Components.of(LORE_PREFIX + "<#CADCFF>" + Components.latinString(description)));
         final List<String> childLore = update(item);
         if (!childLore.isEmpty()) {
@@ -95,6 +99,8 @@ public abstract class CustomItem extends CustomElement {
     protected abstract int provideMinAmount();
 
     protected abstract int provideMaxAmount();
+
+    protected abstract @NotNull String provideType();
 
     // getters
 
@@ -138,6 +144,10 @@ public abstract class CustomItem extends CustomElement {
 
     public final int maxAmount() {
         return maxAmount;
+    }
+
+    public final @NotNull String type() {
+        return type;
     }
 
     protected void onLeftClick(final @NotNull PlayerInteractEvent event) {
