@@ -52,7 +52,7 @@ public class WindPearl extends Throwable {
     @Override
     protected void onThrow(final @NotNull PlayerInteractEvent event, final @NotNull Snowball thrown) {
         thrown.addPassenger(event.getPlayer());
-        thrown.setVelocity(thrown.getVelocity().multiply(1.5));
+        thrown.setVelocity(thrown.getVelocity().multiply(2));
     }
 
     @Override
