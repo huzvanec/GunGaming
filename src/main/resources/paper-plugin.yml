@@ -1,5 +1,5 @@
 name: GunGaming
-version: '1.0-SNAPSHOT'
+version: ${version}
 main: cz.jeme.programu.gungaming.GunGaming
 api-version: '1.21'
 authors: [ XD_CZ ]
