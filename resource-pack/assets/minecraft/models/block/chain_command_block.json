@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "end": "block/gungaming/crate/airdrop_top",
-    "side": "block/gungaming/crate/airdrop"
+    "end": "block/gungaming/crate/air_drop_top",
+    "side": "block/gungaming/crate/air_drop"
   }
 }
