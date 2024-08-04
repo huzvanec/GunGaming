@@ -32,7 +32,7 @@ public final class GunGaming extends JavaPlugin {
         );
         registerCommands();
         try {
-            Class.forName(PlayerTrafficHandler.class.getName()); // load resource pack hash
+            Class.forName(ResourcePackEventHandler.class.getName()); // load resource pack hash
         } catch (final ClassNotFoundException ignored) {
         }
         Bukkit.getPluginManager().registerEvents(EventDistributor.INSTANCE, this);

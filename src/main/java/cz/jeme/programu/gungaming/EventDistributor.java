@@ -32,17 +32,17 @@ public enum EventDistributor implements Listener {
     @EventHandler
     private static void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
         GameEventHandler.onPlayerJoin(event);
-        PlayerTrafficHandler.onPlayerJoin(event); // important: has to go last
+        ResourcePackEventHandler.onPlayerJoin(event); // important: has to go last
     }
 
     @EventHandler
     private static void onPlayerResourcePackStatus(final @NotNull PlayerResourcePackStatusEvent event) {
-        PlayerTrafficHandler.onPlayerResourcePackStatus(event);
+        ResourcePackEventHandler.onPlayerResourcePackStatus(event);
     }
 
     @EventHandler
     private static void onPlayerMove(final @NotNull PlayerMoveEvent event) {
-        PlayerTrafficHandler.onPlayerMove(event);
+        ResourcePackEventHandler.onPlayerMove(event);
         GameEventHandler.onPlayerMove(event);
     }
 

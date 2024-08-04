@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public final class PlayerTrafficHandler {
+public final class ResourcePackEventHandler {
     private static final boolean RESOURCE_PACK_ENABLED = false;
 
     private static final @NotNull Component RESOURCE_PACK_MESSAGE = Components.of("""
@@ -53,7 +53,7 @@ public final class PlayerTrafficHandler {
         }
     }
 
-    private PlayerTrafficHandler() {
+    private ResourcePackEventHandler() {
         throw new AssertionError();
     }
 

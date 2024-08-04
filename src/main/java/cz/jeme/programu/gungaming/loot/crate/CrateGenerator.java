@@ -13,6 +13,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
@@ -135,5 +136,14 @@ public enum CrateGenerator {
 
     public boolean generating() {
         return generation != null;
+    }
+
+    public void generateCrate(final @NotNull Crate crate, final @NotNull Location location) {
+        final Block block = location.getBlock();
+        block.setType(crate.material());
+        final Inventory inventory = Bukkit.createInventory(null, InventoryType.CHEST, crate.name());
+        inventory.setContents(LootGenerator.INSTANCE.generate(crate, inventory.getSize()));
+        addInventory(block, crate, inventory);
+        crate.generated(block, inventory);
     }
 }

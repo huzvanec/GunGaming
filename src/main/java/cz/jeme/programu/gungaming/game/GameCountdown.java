@@ -10,8 +10,7 @@ final class GameCountdown extends Countdown {
     private final @NotNull Game game;
 
     public GameCountdown(final @NotNull Game game, final int duration) {
-//        super(duration, game.bossBar());
-        super(15, game.bossBar());
+        super(duration, game.bossBar());
         this.game = game;
         game.bossBar().color(BossBar.Color.RED);
     }

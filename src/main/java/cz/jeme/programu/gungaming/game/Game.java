@@ -62,6 +62,7 @@ public final class Game {
     private final @NotNull Team team;
     private final @NotNull Objective kills;
     private final @NotNull Scoreboard scoreboard;
+    private final @NotNull AirDropTimer airDropTimer = new AirDropTimer(this);
 
     final @NotNull List<Player> players;
 
@@ -200,6 +201,7 @@ public final class Game {
         }
 
         new GameCountdown(this, duration * 60 + 5);
+        airDropTimer.start();
     }
 
     private static final @NotNull String GOLD = "<#D4AF37>";
@@ -209,6 +211,7 @@ public final class Game {
 
     void endGame() {
         instance = null;
+        airDropTimer.cancel();
         bossBar.color(BossBar.Color.BLUE);
         bossBar.name(Components.of("<green>Game ended!"));
         bossBar.progress(1);
