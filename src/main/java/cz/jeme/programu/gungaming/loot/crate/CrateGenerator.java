@@ -106,10 +106,11 @@ public enum CrateGenerator {
         return true;
     }
 
-    public boolean refillCrates(final @NotNull Audience audience) {
+    public boolean refillCrates(final @Nullable Audience audience) {
         if (checkLock(audience)) return false;
         if (inventories.isEmpty()) {
-            audience.sendMessage(Components.prefix("<red>No crates to refill!"));
+            if (audience != null)
+                audience.sendMessage(Components.prefix("<red>No crates to refill!"));
             return false;
         }
         clearCrates(audience);
@@ -118,7 +119,8 @@ public enum CrateGenerator {
             final Inventory inventory = info.inventory();
             inventory.setContents(LootGenerator.INSTANCE.generate(info.crate(), inventory.getSize()));
         }
-        audience.sendMessage(Components.prefix("<green>Crates refilled successfully"));
+        if (audience != null)
+            audience.sendMessage(Components.prefix("<green>Crates refilled successfully"));
         return true;
     }
 

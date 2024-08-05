@@ -6,6 +6,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import cz.jeme.programu.gungaming.CustomElement;
+import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.loot.crate.CrateGenerator;
@@ -23,7 +24,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -32,7 +32,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Objects;
 
 import static io.papermc.paper.command.brigadier.Commands.argument;
 import static io.papermc.paper.command.brigadier.Commands.literal;
@@ -59,13 +58,13 @@ public final class GGCommand {
     private static @NotNull LiteralCommandNode<CommandSourceStack> build() {
         return literal("gg")
                 .requires(source -> source.getSender().hasPermission("gungaming.gg"))
-                .executes(GGCommand::help)
-                .then(literal("help")
-                        .executes(GGCommand::help)
+                .executes(GGCommand::version)
+                .then(literal("version")
+                        .executes(GGCommand::version)
                 )
-                .then(literal("reload")
-                        .executes(GGCommand::reload)
-                )
+//                .then(literal("reload")
+//                        .executes(GGCommand::reload)
+//                )
                 .then(literal("give")
                         .then(argument("targets", ArgumentTypes.players())
                                 .then(argument("tag", new CustomItemTagCommandArgument())
@@ -114,11 +113,13 @@ public final class GGCommand {
                         .then(literal("remove")
                                 .executes(GGCommand::removeCrates)
                         )
-                        .then(literal("clear")
-                                .executes(GGCommand::clearCrates)
-                        )
-                        .then(literal("refill")
-                                .executes(GGCommand::refillCrates)
+                        .then(literal("contents")
+                                .then(literal("clear")
+                                        .executes(GGCommand::clearCrates)
+                                )
+                                .then(literal("refill")
+                                        .executes(GGCommand::refillCrates)
+                                )
                         )
                         .then(literal("airdrop")
                                 .then(literal("generate")
@@ -167,15 +168,12 @@ public final class GGCommand {
                 .build();
     }
 
-    private static int help(final @NotNull CommandContext<CommandSourceStack> ctx) {
-        final Entity executor = Objects.requireNonNull(ctx.getSource().getExecutor(), "Executor is null!");
-        executor.sendMessage(Component.text("TODO help"));
+    private static int version(final @NotNull CommandContext<CommandSourceStack> ctx) {
+        ctx.getSource().getSender().sendMessage(Components.prefix("<green>Running <#6786C8>Gun</#6786C8><#4C618D>Gaming</#4C618D> v" + GunGaming.plugin().getPluginMeta().getVersion()));
         return SUCCESS;
     }
 
     private static int reload(final @NotNull CommandContext<CommandSourceStack> ctx) {
-        final Entity executor = Objects.requireNonNull(ctx.getSource().getExecutor(), "Executor is null!");
-        executor.sendMessage(Component.text("TODO reload"));
         return SUCCESS;
     }
 

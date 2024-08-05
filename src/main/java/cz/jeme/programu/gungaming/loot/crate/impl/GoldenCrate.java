@@ -1,8 +1,9 @@
 package cz.jeme.programu.gungaming.loot.crate.impl;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
-import cz.jeme.programu.gungaming.item.Weapon;
 import cz.jeme.programu.gungaming.item.attachment.Attachment;
+import cz.jeme.programu.gungaming.item.gun.Gun;
+import cz.jeme.programu.gungaming.item.melee.Melee;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.loot.crate.Crate;
 import net.kyori.adventure.key.KeyPattern;
@@ -67,7 +68,8 @@ public class GoldenCrate extends Crate {
     @Override
     protected @NotNull Map<Class<? extends CustomItem>, Integer> provideLimits() {
         return Map.of(
-                Weapon.class, 2,
+                Gun.class, 2,
+                Melee.class, 1,
                 Attachment.class, 2
         );
     }

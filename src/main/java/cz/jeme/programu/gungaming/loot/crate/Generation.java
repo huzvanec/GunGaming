@@ -11,16 +11,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 final class Generation extends BukkitRunnable {
@@ -40,6 +38,7 @@ final class Generation extends BukkitRunnable {
             .collect(Collectors.toSet());
     private final long startTime;
     private int cratesCount = 0;
+    private final @NotNull Collection<? extends Player> players = Bukkit.getOnlinePlayers();
 
     public Generation(final @NotNull Audience audience, final @NotNull Location location, final int x1, final int z1, final int x2, final int z2, final int bps) {
         this.audience = audience;
@@ -89,7 +88,8 @@ final class Generation extends BukkitRunnable {
         final String minutesStr = minutes == 0 ? "" : minutes + "min ";
         final String secondsStr = seconds + "sec ";
         final String etaStr = hoursStr + minutesStr + secondsStr + "remaining";
-        audience.sendActionBar(Components.of("<green>Generating: " + percentageStr + " | " + etaStr));
+        for (final Player player : players)
+            player.sendActionBar(Components.of("<green>Generating: " + percentageStr + " | " + etaStr));
     }
 
     @Override

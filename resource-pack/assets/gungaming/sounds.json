@@ -258,5 +258,25 @@
         "sounds": [
             "gungaming:game/ding"
         ]
+    },
+    "game.warning": {
+        "sounds": [
+            "gungaming:game/warning"
+        ]
+    },
+    "game.info": {
+        "sounds": [
+            "gungaming:game/info"
+        ]
+    },
+    "block.air_drop.ambient": {
+        "sounds": [
+            "gungaming:crate/air_drop_ambient"
+        ]
+    },
+    "game.air_drop": {
+        "sounds": [
+            "gungaming:game/air_drop"
+        ]
     }
 }

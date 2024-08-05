@@ -1,8 +1,9 @@
 package cz.jeme.programu.gungaming.loot.crate.impl;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
-import cz.jeme.programu.gungaming.item.Weapon;
 import cz.jeme.programu.gungaming.item.attachment.Attachment;
+import cz.jeme.programu.gungaming.item.gun.Gun;
+import cz.jeme.programu.gungaming.item.melee.Melee;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.loot.crate.Crate;
 import net.kyori.adventure.key.KeyPattern;
@@ -56,7 +57,8 @@ public class AirDrop extends Crate {
     protected @NotNull Map<Class<? extends CustomItem>, Integer> provideLimits() {
         return Map.of(
                 Attachment.class, 3,
-                Weapon.class, 5
+                Gun.class, 3,
+                Melee.class, 2
         );
     }
 

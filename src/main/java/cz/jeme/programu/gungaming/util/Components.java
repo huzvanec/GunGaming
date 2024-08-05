@@ -53,7 +53,7 @@ public final class Components {
 //        LATIN.put('0', '₉');
     }
 
-    public static final @NotNull String PREFIX = "<dark_gray>[<b><#4C618D>ɢɢ</#4C618D></b>]</dark_gray> ";
+    public static final @NotNull String PREFIX = "<dark_gray>[<b><#6786C8>ɢ</#6786C8><#4C618D>ɢ</#4C618D></b>]</dark_gray> ";
 
     public static @NotNull Component of(final @NotNull String string) {
         return MiniMessage.miniMessage().deserialize(string);

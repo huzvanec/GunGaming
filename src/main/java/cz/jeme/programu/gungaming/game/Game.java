@@ -29,8 +29,11 @@ public final class Game {
     public static final @NotNull Data<Byte, Boolean> GLIDING_DATA = Data.ofBoolean(GunGaming.namespaced("gliding"));
     public static final @NotNull Data<Byte, Boolean> INVULNERABLE_DATA = Data.ofBoolean(GunGaming.namespaced("invulnerable"));
 
+    public static final @NotNull Sound START_SOUND = Sound.sound(GunGaming.namespaced("game.start"), Sound.Source.MASTER, 1, 1);
     public static final @NotNull Sound DING_SOUND = Sound.sound(GunGaming.namespaced("game.ding"), Sound.Source.MASTER, 1, 1);
     public static final @NotNull Sound DONG_SOUND = Sound.sound(GunGaming.namespaced("game.dong"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound WARNING_SOUND = Sound.sound(GunGaming.namespaced("game.warning"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound INFO_SOUND = Sound.sound(GunGaming.namespaced("game.info"), Sound.Source.MASTER, 1, 1);
     public static final @NotNull Sound END_SOUND = Sound.sound(GunGaming.namespaced("game.end"), Sound.Source.MASTER, 1, 1);
 
     private static final @NotNull String GRACE_PERIOD_TEAM_NAME = GunGaming.namespaced("grace_period").asString();
@@ -39,7 +42,7 @@ public final class Game {
 
     @SuppressWarnings("UnstableApiUsage")
     private final @NotNull BossBar bossBar = BossBar.bossBar(
-            Components.of("<b><#6786C8>Gun</#6786C8><#4C618D>Gaming</#4C618D> <#717B95>"
+            Components.of("<b><#6786C8>Gun</#6786C8><#4C618D>Gaming</#4C618D> <#717B95>v"
                           + GunGaming.plugin().getPluginMeta().getVersion()
             ),
             1,
@@ -62,7 +65,8 @@ public final class Game {
     private final @NotNull Team team;
     private final @NotNull Objective kills;
     private final @NotNull Scoreboard scoreboard;
-    private final @NotNull AirDropTimer airDropTimer;
+    private final @NotNull AirDropRunnable airDropRunnable;
+    private final @NotNull RefillRunnable refillRunnable;
 
     final @NotNull List<Player> players;
 
@@ -86,7 +90,8 @@ public final class Game {
 
         players = new ArrayList<>(Bukkit.getOnlinePlayers());
 
-        airDropTimer = new AirDropTimer(this);
+        airDropRunnable = new AirDropRunnable(this);
+        refillRunnable = new RefillRunnable();
 
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
@@ -202,8 +207,9 @@ public final class Game {
             player.removePotionEffect(PotionEffectType.INVISIBILITY);
         }
 
-        new GameCountdown(this, duration * 60 + 5);
-        airDropTimer.start();
+        new GameCountdown(this, duration * 60 + 15);
+        airDropRunnable.start();
+        refillRunnable.start();
     }
 
     private static final @NotNull String GOLD = "<#D4AF37>";
@@ -213,7 +219,8 @@ public final class Game {
 
     void endGame() {
         instance = null;
-        airDropTimer.cancel();
+        airDropRunnable.cancel();
+        refillRunnable.cancel();
         bossBar.color(BossBar.Color.BLUE);
         bossBar.name(Components.of("<green>Game ended!"));
         bossBar.progress(1);

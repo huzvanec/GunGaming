@@ -1,8 +1,6 @@
 package cz.jeme.programu.gungaming.game;
 
-import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.util.Components;
-import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
@@ -12,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import java.time.Duration;
 
 final class StartCountdown extends Countdown {
-    public static final @NotNull Sound START_SOUND = Sound.sound(GunGaming.namespaced("game.start"), Sound.Source.MASTER, 1, 1);
     private static final int DURATION = 30; // seconds
 
     private final @NotNull Game game;
@@ -44,7 +41,7 @@ final class StartCountdown extends Countdown {
         );
         for (final Player player : Bukkit.getOnlinePlayers()) {
             player.showTitle(title);
-            player.playSound(START_SOUND, player);
+            player.playSound(Game.START_SOUND, player);
         }
         game.startGame();
     }
