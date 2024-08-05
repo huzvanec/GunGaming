@@ -20,7 +20,7 @@ public class TitaniumHelmet extends Helmet {
 
     @Override
     protected @NotNull String provideDescription() {
-        return "";
+        return "helmet forged from raw titanium";
     }
 
     @Override

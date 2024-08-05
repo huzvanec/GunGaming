@@ -45,7 +45,7 @@ public class DirtySword extends Melee {
 
     @Override
     protected double provideDamage() {
-        return 10;
+        return 8;
     }
 
     @Override

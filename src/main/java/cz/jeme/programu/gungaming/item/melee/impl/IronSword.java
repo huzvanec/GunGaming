@@ -15,7 +15,7 @@ public class IronSword extends Melee {
 
     @Override
     protected @NotNull String provideDescription() {
-        return "A basic melee weapon";
+        return "basic sword";
     }
 
     @Override

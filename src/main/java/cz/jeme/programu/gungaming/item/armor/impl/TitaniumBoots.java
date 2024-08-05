@@ -20,7 +20,7 @@ public class TitaniumBoots extends Boots {
 
     @Override
     protected @NotNull String provideDescription() {
-        return "";
+        return "boots forged from raw titanium";
     }
 
     @Override

@@ -20,7 +20,7 @@ public class TitaniumChestplate extends Chestplate {
 
     @Override
     protected @NotNull String provideDescription() {
-        return "";
+        return "chestplate forged from raw titanium";
     }
 
     @Override

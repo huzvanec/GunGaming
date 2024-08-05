@@ -1,50 +1,45 @@
 package cz.jeme.programu.gungaming.item.armor.impl;
 
-import cz.jeme.programu.gungaming.item.armor.Leggings;
+import cz.jeme.programu.gungaming.item.armor.Helmet;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 
-public class TitaniumLeggings extends Leggings {
+public class DiamondHelmet extends Helmet {
     @Override
     protected double provideArmor() {
-        return 8;
-    }
-
-    @Override
-    protected double provideToughness() {
         return 3;
     }
 
     @Override
+    protected double provideToughness() {
+        return 2;
+    }
+
+    @Override
     protected @NotNull String provideDescription() {
-        return "leggings forged from raw titanium";
+        return "good helmet";
     }
 
     @Override
     protected @NotNull Material provideMaterial() {
-        return Material.NETHERITE_LEGGINGS;
+        return Material.DIAMOND_HELMET;
     }
 
     @Override
     protected @KeyPattern.Value @NotNull String provideKey() {
-        return "titanium_leggings";
+        return "diamond_helmet";
     }
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.LEGENDARY;
+        return Rarity.EPIC;
     }
 
     @Override
     protected @NotNull Component provideName() {
-        return Component.text("Titanium Leggings");
-    }
-
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 1;
+        return Component.text("Diamond Helmet");
     }
 }

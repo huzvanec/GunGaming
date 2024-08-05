@@ -15,7 +15,7 @@ public class DiamondSword extends Melee {
 
     @Override
     protected @NotNull String provideDescription() {
-        return "A good melee weapon";
+        return "good sword";
     }
 
     @Override
@@ -25,7 +25,7 @@ public class DiamondSword extends Melee {
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.RARE;
+        return Rarity.EPIC;
     }
 
     @Override

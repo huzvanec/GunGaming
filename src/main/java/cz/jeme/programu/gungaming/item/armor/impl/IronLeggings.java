@@ -7,44 +7,39 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 
-public class TitaniumLeggings extends Leggings {
+public class IronLeggings extends Leggings {
     @Override
     protected double provideArmor() {
-        return 8;
+        return 5;
     }
 
     @Override
     protected double provideToughness() {
-        return 3;
+        return 0;
     }
 
     @Override
     protected @NotNull String provideDescription() {
-        return "leggings forged from raw titanium";
+        return "";
     }
 
     @Override
     protected @NotNull Material provideMaterial() {
-        return Material.NETHERITE_LEGGINGS;
+        return Material.IRON_LEGGINGS;
     }
 
     @Override
     protected @KeyPattern.Value @NotNull String provideKey() {
-        return "titanium_leggings";
+        return "iron_leggings";
     }
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.LEGENDARY;
+        return Rarity.RARE;
     }
 
     @Override
     protected @NotNull Component provideName() {
-        return Component.text("Titanium Leggings");
-    }
-
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 1;
+        return Component.text("Iron Leggings");
     }
 }
