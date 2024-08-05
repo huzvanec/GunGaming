@@ -62,7 +62,7 @@ public class PlayerTracker extends CustomItem implements SingleLoot {
         return "player_tracker";
     }
 
-    private final class Updater extends BukkitRunnable {
+    private static final class Updater extends BukkitRunnable {
         private static final @NotNull DecimalFormat FORMATTER = new DecimalFormat("00.00");
 
         @Override
@@ -73,7 +73,7 @@ public class PlayerTracker extends CustomItem implements SingleLoot {
                 final ItemStack mainHand = inventory.getItemInMainHand();
                 final ItemStack offHand = inventory.getItemInOffHand();
 
-                if (!mainHand.isSimilar(item) && !offHand.isSimilar(item)) {
+                if (!CustomItem.is(mainHand, PlayerTracker.class) && !CustomItem.is(offHand, PlayerTracker.class)) {
                     player.setCompassTarget(player.getWorld().getSpawnLocation());
                     continue;
                 }

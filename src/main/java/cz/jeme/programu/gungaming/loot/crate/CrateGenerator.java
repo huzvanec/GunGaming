@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming.loot.crate;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.loot.LootGenerator;
+import cz.jeme.programu.gungaming.loot.crate.impl.AirDrop;
 import cz.jeme.programu.gungaming.util.Components;
 import cz.jeme.programu.gungaming.util.Packets;
 import net.kyori.adventure.audience.Audience;
@@ -16,17 +17,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public enum CrateGenerator {
     INSTANCE;
 
 
     private final @NotNull Map<CrateLocation, CrateInfo> inventories = new HashMap<>();
+    private final @NotNull Set<CrateLocation> airDrops = new HashSet<>();
     volatile @Nullable Generation generation = null;
 
     private boolean checkLock(final @Nullable Audience audience) {
@@ -50,7 +55,10 @@ public enum CrateGenerator {
     }
 
     void addInventory(final @NotNull Block block, final @NotNull Crate crate, final @NotNull Inventory inventory) {
-        inventories.put(new CrateLocation(block), new CrateInfo(crate, inventory));
+        final CrateLocation location = new CrateLocation(block);
+        inventories.put(location, new CrateInfo(crate, inventory));
+        if (crate instanceof AirDrop)
+            airDrops.add(location);
     }
 
     void click(final @NotNull PlayerInteractEvent event) {
@@ -122,6 +130,11 @@ public enum CrateGenerator {
         if (audience != null)
             audience.sendMessage(Components.prefix("<green>Crates refilled successfully"));
         return true;
+    }
+
+    @ApiStatus.Internal
+    public @NotNull Set<CrateLocation> airDrops() {
+        return airDrops;
     }
 
     public boolean cancel(final @Nullable Audience audience) {

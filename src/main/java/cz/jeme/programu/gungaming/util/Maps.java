@@ -28,7 +28,7 @@ public final class Maps {
     public static byte direction(final float yaw) {
         if (-180 > yaw || yaw > 180)
             throw new IllegalArgumentException("Invalid yaw: " + yaw);
-        return (byte) ((yaw / 22.5f + 16.5f) % 16f);
+        return (byte) ((yaw / 22.5F + 16.5F) % 16F);
     }
 
     /**
