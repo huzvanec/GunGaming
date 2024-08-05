@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.loot.crate.impl;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.item.armor.Armor;
 import cz.jeme.programu.gungaming.item.attachment.Attachment;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.item.melee.Melee;
@@ -70,7 +71,8 @@ public class GoldenCrate extends Crate {
         return Map.of(
                 Gun.class, 2,
                 Melee.class, 1,
-                Attachment.class, 2
+                Attachment.class, 2,
+                Armor.class, 1
         );
     }
 }

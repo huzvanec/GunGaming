@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming.item.armor;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.loot.SingleLoot;
 import cz.jeme.programu.gungaming.util.Lores;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
-public abstract class Armor extends CustomItem {
+public abstract class Armor extends CustomItem implements SingleLoot {
 
     protected final double armor = provideArmor();
     protected final double toughness = provideToughness();

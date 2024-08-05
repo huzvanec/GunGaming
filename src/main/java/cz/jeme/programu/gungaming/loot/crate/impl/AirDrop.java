@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.loot.crate.impl;
 
 import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.item.armor.Armor;
 import cz.jeme.programu.gungaming.item.attachment.Attachment;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.item.melee.Melee;
@@ -58,7 +59,8 @@ public class AirDrop extends Crate {
         return Map.of(
                 Attachment.class, 3,
                 Gun.class, 3,
-                Melee.class, 2
+                Melee.class, 2,
+                Armor.class, 3
         );
     }
 
