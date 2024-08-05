@@ -9,6 +9,8 @@ import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
+import org.bukkit.advancement.Advancement;
+import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Entity;
@@ -68,7 +70,7 @@ public final class Game {
     private final @NotNull AirDropRunnable airDropRunnable;
     private final @NotNull RefillRunnable refillRunnable;
 
-    final @NotNull List<Player> players;
+    private final @NotNull List<Player> players;
 
     public Game(final @NotNull Audience audience,
                 final @NotNull Location location,
@@ -146,6 +148,12 @@ public final class Game {
                     false
             ));
             kills.getScore(player).setScore(0);
+            final Iterator<Advancement> advancements = Bukkit.advancementIterator();
+            while (advancements.hasNext()) {
+                final Advancement advancement = advancements.next();
+                final AdvancementProgress progress = player.getAdvancementProgress(advancement);
+                advancement.getCriteria().forEach(progress::revokeCriteria);
+            }
         }
 
         xMin = centerX - size / 2;
@@ -272,6 +280,11 @@ public final class Game {
             ));
             player.playSound(END_SOUND, player);
         }
+    }
+
+    void removePlayer(final @NotNull Player player) {
+        players.remove(player);
+        kills.getScore(player).resetScore();
     }
 
     public static @Nullable Game instance() {

@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.game;
 
+import com.destroystokyo.paper.event.player.PlayerAdvancementCriterionGrantEvent;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.text.Component;
@@ -122,7 +123,7 @@ public final class GameEventHandler {
         Game.FROZEN_DATA.write(player, false);
         Game.INVULNERABLE_DATA.write(player, true);
         player.removePotionEffect(PotionEffectType.INVISIBILITY);
-        game.players.remove(player);
+        game.removePlayer(player);
         player.showTitle(Title.title(
                 Components.of("<red>" + Components.latinString("You are a spectator")),
                 Component.empty(),
@@ -132,6 +133,17 @@ public final class GameEventHandler {
 
     public static void onPlayerQuit(final @NotNull PlayerQuitEvent event) {
         if (!Game.running()) return;
-        Objects.requireNonNull(Game.instance()).players.remove(event.getPlayer());
+        final Player player = event.getPlayer();
+        Objects.requireNonNull(Game.instance()).removePlayer(player);
+        for (final ItemStack item : player.getInventory()) {
+            if (item == null) continue;
+            player.getWorld().dropItemNaturally(player.getLocation(), item);
+        }
+        player.getInventory().clear();
+    }
+
+    public static void onPlayerAdvancementCriterionGrant(final @NotNull PlayerAdvancementCriterionGrantEvent event) {
+        if (!Game.running()) return;
+        event.setCancelled(true);
     }
 }
