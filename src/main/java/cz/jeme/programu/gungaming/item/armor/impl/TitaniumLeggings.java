@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 public class TitaniumLeggings extends Leggings {
     @Override
     protected double provideArmor() {
-        return 6;
+        return 8;
     }
 
     @Override
     protected double provideToughness() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class TitaniumLeggings extends Leggings {
 
     @Override
     protected @NotNull Material provideMaterial() {
-        return Material.DIAMOND_LEGGINGS;
+        return Material.NETHERITE_LEGGINGS;
     }
 
     @Override
@@ -35,11 +35,16 @@ public class TitaniumLeggings extends Leggings {
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.EPIC;
+        return Rarity.LEGENDARY;
     }
 
     @Override
     protected @NotNull Component provideName() {
         return Component.text("Titanium Leggings");
+    }
+
+    @Override
+    protected @NotNull Integer provideCustomModelData() {
+        return 1;
     }
 }

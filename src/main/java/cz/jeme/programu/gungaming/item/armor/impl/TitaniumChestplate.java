@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 public class TitaniumChestplate extends Chestplate {
     @Override
     protected double provideArmor() {
-        return 8;
+        return 10;
     }
 
     @Override
     protected double provideToughness() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class TitaniumChestplate extends Chestplate {
 
     @Override
     protected @NotNull Material provideMaterial() {
-        return Material.DIAMOND_CHESTPLATE;
+        return Material.NETHERITE_CHESTPLATE;
     }
 
     @Override
@@ -35,11 +35,16 @@ public class TitaniumChestplate extends Chestplate {
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.EPIC;
+        return Rarity.LEGENDARY;
     }
 
     @Override
     protected @NotNull Component provideName() {
         return Component.text("Titanium Chestplate");
+    }
+
+    @Override
+    protected @NotNull Integer provideCustomModelData() {
+        return 1;
     }
 }

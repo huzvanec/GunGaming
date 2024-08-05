@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 public class TitaniumHelmet extends Helmet {
     @Override
     protected double provideArmor() {
-        return 3;
+        return 5;
     }
 
     @Override
     protected double provideToughness() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class TitaniumHelmet extends Helmet {
 
     @Override
     protected @NotNull Material provideMaterial() {
-        return Material.DIAMOND_HELMET;
+        return Material.NETHERITE_HELMET;
     }
 
     @Override
@@ -35,11 +35,16 @@ public class TitaniumHelmet extends Helmet {
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.EPIC;
+        return Rarity.LEGENDARY;
     }
 
     @Override
     protected @NotNull Component provideName() {
         return Component.text("Titanium Helmet");
+    }
+
+    @Override
+    protected @NotNull Integer provideCustomModelData() {
+        return 1;
     }
 }

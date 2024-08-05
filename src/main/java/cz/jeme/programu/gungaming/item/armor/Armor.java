@@ -74,8 +74,8 @@ public abstract class Armor extends CustomItem {
     @Override
     protected @NotNull List<String> update(final @NotNull ItemStack item) {
         return List.of(
-                Lores.loreStat("Armor", "+" + Lores.STATS_FORMATTER.format(armor)),
-                Lores.loreStat("Toughness", "+" + Lores.STATS_FORMATTER.format(toughness))
+                Lores.loreStat("Armor", Lores.STATS_FORMATTER.format(armor)),
+                Lores.loreStat("Toughness", Lores.STATS_FORMATTER.format(toughness))
         );
     }
 }
