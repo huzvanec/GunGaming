@@ -10,20 +10,20 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class Knife extends Melee {
+public class TitaniumKnife extends Melee {
     @Override
     protected @NotNull Component provideName() {
-        return Component.text("Knife");
+        return Component.text("Titanium Knife");
     }
 
     @Override
     protected @NotNull String provideDescription() {
-        return "Insanely fast melee weapon";
+        return "Insanely fast titanium weapon";
     }
 
     @Override
     protected @NotNull Material provideMaterial() {
-        return Material.NETHERITE_SWORD;
+        return Material.IRON_SWORD;
     }
 
     @Override
@@ -33,12 +33,12 @@ public class Knife extends Melee {
 
     @Override
     protected @KeyPattern.Value @NotNull String provideKey() {
-        return "knife";
+        return "titanium_knife";
     }
 
     @Override
     protected @NotNull Integer provideCustomModelData() {
-        return 1;
+        return 2;
     }
 
     @Override
