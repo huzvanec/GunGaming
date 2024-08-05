@@ -9,6 +9,7 @@ import cz.jeme.programu.gungaming.util.Lores;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,30 +22,34 @@ public abstract class Melee extends Weapon {
     protected final double knockback = provideKnockback();
     protected final double attackSpeed = provideAttackSpeed();
 
+    @SuppressWarnings("UnstableApiUsage")
     protected Melee() {
         item.editMeta(meta -> {
             meta.addAttributeModifier(
                     Attribute.GENERIC_ATTACK_DAMAGE,
                     new AttributeModifier(
-                            GunGaming.namespaced("attack_damage"),
+                            GunGaming.namespaced(key.value() + "_attack_damage"),
                             damage - 1,
-                            AttributeModifier.Operation.ADD_NUMBER
+                            AttributeModifier.Operation.ADD_NUMBER,
+                            EquipmentSlotGroup.MAINHAND
                     )
             );
             meta.addAttributeModifier(
                     Attribute.GENERIC_ATTACK_KNOCKBACK,
                     new AttributeModifier(
-                            GunGaming.namespaced("attack_knockback"),
+                            GunGaming.namespaced(key.value() + "_attack_knockback"),
                             knockback,
-                            AttributeModifier.Operation.ADD_NUMBER
+                            AttributeModifier.Operation.ADD_NUMBER,
+                            EquipmentSlotGroup.MAINHAND
                     )
             );
             meta.addAttributeModifier(
                     Attribute.GENERIC_ATTACK_SPEED,
                     new AttributeModifier(
-                            GunGaming.namespaced("attack_speed"),
+                            GunGaming.namespaced(key.value() + "_attack_speed"),
                             attackSpeed,
-                            AttributeModifier.Operation.ADD_NUMBER
+                            AttributeModifier.Operation.ADD_NUMBER,
+                            EquipmentSlotGroup.MAINHAND
                     )
             );
         });
