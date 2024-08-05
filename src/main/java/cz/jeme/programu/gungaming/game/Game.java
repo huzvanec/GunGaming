@@ -62,7 +62,7 @@ public final class Game {
     private final @NotNull Team team;
     private final @NotNull Objective kills;
     private final @NotNull Scoreboard scoreboard;
-    private final @NotNull AirDropTimer airDropTimer = new AirDropTimer(this);
+    private final @NotNull AirDropTimer airDropTimer;
 
     final @NotNull List<Player> players;
 
@@ -85,6 +85,8 @@ public final class Game {
         spawn = new Location(world, centerX, 350, centerZ);
 
         players = new ArrayList<>(Bukkit.getOnlinePlayers());
+
+        airDropTimer = new AirDropTimer(this);
 
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         world.setGameRule(GameRule.DO_MOB_SPAWNING, false);

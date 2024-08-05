@@ -39,7 +39,7 @@ public class GoldenCrate extends Crate {
 
     @Override
     protected double provideFillPercentage() {
-        return .5;
+        return .65;
     }
 
     @Override

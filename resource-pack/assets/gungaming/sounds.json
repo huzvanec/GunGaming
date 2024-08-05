@@ -179,6 +179,11 @@
             "gungaming:throwable/explosion/molotov_cocktail"
         ]
     },
+    "item.wind_pearl.throw": {
+        "sounds": [
+            "gungaming:throwable/throw/wind_pearl"
+        ]
+    },
     "item.soda.eat": {
         "sounds": [
             "gungaming:consumable/eat/soda"

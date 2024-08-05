@@ -114,6 +114,7 @@ public enum CrateGenerator {
         }
         clearCrates(audience);
         for (final CrateInfo info : inventories.values()) {
+            if (!info.crate().refill()) continue;
             final Inventory inventory = info.inventory();
             inventory.setContents(LootGenerator.INSTANCE.generate(info.crate(), inventory.getSize()));
         }

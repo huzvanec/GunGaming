@@ -5,18 +5,23 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.loot.crate.CrateGenerator;
+import cz.jeme.programu.gungaming.loot.crate.impl.AirDrop;
 import cz.jeme.programu.gungaming.util.Components;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
+import io.papermc.paper.command.brigadier.argument.resolvers.BlockPositionResolver;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
+import io.papermc.paper.math.BlockPosition;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
@@ -74,31 +79,36 @@ public final class GGCommand {
                         )
                 )
                 .then(literal("crates")
-                        .then(literal("generate")
-                                .then(argument("width", IntegerArgumentType.integer(1, 10_000))
-                                        .then(argument("length", IntegerArgumentType.integer(1, 10_000))
-                                                .executes(ctx -> {
-                                                    final Location location = ctx.getSource().getLocation();
-                                                    return generate(ctx, location.getBlockX(), location.getBlockZ(), 1000);
-                                                })
-                                                .then(argument("center_x", IntegerArgumentType.integer(-30_000_000, 30_000_000))
-                                                        .then(argument("center_z", IntegerArgumentType.integer(-30_000_000, 30_000_000))
-                                                                .executes(ctx -> {
-                                                                    final int x = IntegerArgumentType.getInteger(ctx, "center_x");
-                                                                    final int z = IntegerArgumentType.getInteger(ctx, "center_z");
-                                                                    return generate(ctx, x, z, 1000);
-                                                                })
-                                                                .then(argument("bps", IntegerArgumentType.integer(100, 5000))
+                        .then(literal("generation")
+                                .then(literal("start")
+                                        .then(argument("width", IntegerArgumentType.integer(1, 10_000))
+                                                .then(argument("length", IntegerArgumentType.integer(1, 10_000))
+                                                        .executes(ctx -> {
+                                                            final Location location = ctx.getSource().getLocation();
+                                                            return generate(ctx, location.getBlockX(), location.getBlockZ(), 1000);
+                                                        })
+                                                        .then(argument("center_x", IntegerArgumentType.integer(-30_000_000, 30_000_000))
+                                                                .then(argument("center_z", IntegerArgumentType.integer(-30_000_000, 30_000_000))
                                                                         .executes(ctx -> {
                                                                             final int x = IntegerArgumentType.getInteger(ctx, "center_x");
                                                                             final int z = IntegerArgumentType.getInteger(ctx, "center_z");
-                                                                            final int bps = IntegerArgumentType.getInteger(ctx, "bps");
-                                                                            return generate(ctx, x, z, bps);
+                                                                            return generate(ctx, x, z, 1000);
                                                                         })
+                                                                        .then(argument("bps", IntegerArgumentType.integer(100, 5000))
+                                                                                .executes(ctx -> {
+                                                                                    final int x = IntegerArgumentType.getInteger(ctx, "center_x");
+                                                                                    final int z = IntegerArgumentType.getInteger(ctx, "center_z");
+                                                                                    final int bps = IntegerArgumentType.getInteger(ctx, "bps");
+                                                                                    return generate(ctx, x, z, bps);
+                                                                                })
+                                                                        )
                                                                 )
                                                         )
                                                 )
                                         )
+                                )
+                                .then(literal("cancel")
+                                        .executes(GGCommand::cancelGeneration)
                                 )
                         )
                         .then(literal("remove")
@@ -110,8 +120,12 @@ public final class GGCommand {
                         .then(literal("refill")
                                 .executes(GGCommand::refillCrates)
                         )
-                        .then(literal("cancel")
-                                .executes(GGCommand::cancelGeneration)
+                        .then(literal("airdrop")
+                                .then(literal("generate")
+                                        .then(argument("pos", ArgumentTypes.blockPosition())
+                                                .executes(GGCommand::generateAirDrop)
+                                        )
+                                )
                         )
                 )
                 .then(literal("game")
@@ -268,6 +282,21 @@ public final class GGCommand {
                 centerZ,
                 bps
         );
+        return SUCCESS;
+    }
+
+    private static int generateAirDrop(final @NotNull CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        final BlockPositionResolver resolver = ctx.getArgument("pos", BlockPositionResolver.class);
+        final BlockPosition pos = resolver.resolve(ctx.getSource());
+        final Location location = pos.toLocation(ctx.getSource().getLocation().getWorld());
+        final Block block = location.getBlock();
+        final CommandSender sender = ctx.getSource().getSender();
+        if (!block.isEmpty()) {
+            sender.sendMessage(Components.prefix("<red>Air drop location must be empty!"));
+            return FAILURE;
+        }
+        CrateGenerator.INSTANCE.generateCrate(CustomElement.of(AirDrop.class), location);
+        sender.sendMessage(Components.prefix("<green>Air drop generated successfully!"));
         return SUCCESS;
     }
 }

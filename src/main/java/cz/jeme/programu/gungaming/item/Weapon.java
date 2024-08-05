@@ -1,6 +1,8 @@
 package cz.jeme.programu.gungaming.item;
 
-public abstract class Weapon extends CustomItem {
+import cz.jeme.programu.gungaming.loot.SingleLoot;
+
+public abstract class Weapon extends CustomItem implements SingleLoot {
     protected Weapon() {
         addTags("weapon");
     }

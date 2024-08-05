@@ -33,7 +33,7 @@ public class AmmoCrate extends Crate {
 
     @Override
     protected double provideFillPercentage() {
-        return .25;
+        return .4;
     }
 
     @Override

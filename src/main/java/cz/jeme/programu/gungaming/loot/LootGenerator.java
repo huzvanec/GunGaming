@@ -6,7 +6,6 @@ import cz.jeme.programu.gungaming.loot.crate.Crate;
 import cz.jeme.programu.gungaming.loot.crate.CrateFilter;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -33,9 +32,13 @@ public enum LootGenerator {
         final List<CustomItem> items = new ArrayList<>();
         int i = 0;
         while (i < size) {
-            final CustomItem item = random(crate, lootPool);
-            if (!checkLimits(crate, items, item)) continue;
-            items.add(item);
+            if (random.nextDouble() > crate.fillPercentage() || lootPool.isEmpty()) {
+                items.add(null);
+            } else {
+                final CustomItem item = random(crate, lootPool);
+                if (!checkLimits(crate, items, item)) continue;
+                items.add(item);
+            }
             i++;
         }
 
@@ -50,15 +53,15 @@ public enum LootGenerator {
     }
 
 
-    private @Nullable CustomItem random(final @NotNull Crate crate, final @NotNull List<CustomItem> lootPool) {
-        if (random.nextDouble() > crate.fillPercentage() || lootPool.isEmpty()) return null;
+    private @NotNull CustomItem random(final @NotNull Crate crate, final @NotNull List<CustomItem> lootPool) {
+        if (lootPool.isEmpty())
+            throw new IllegalArgumentException("Loot pool is empty!");
         return lootPool.size() == 1
                 ? lootPool.getFirst()
                 : lootPool.get(random.nextInt(lootPool.size() - 1));
     }
 
-    private static boolean checkLimits(final @NotNull Crate crate, final @NotNull List<CustomItem> items, final @Nullable CustomItem item) {
-        if (item == null) return true;
+    private static boolean checkLimits(final @NotNull Crate crate, final @NotNull List<CustomItem> items, final @NotNull CustomItem item) {
         if (item instanceof SingleLoot && items.contains(item)) return false;
         final Map.Entry<Class<? extends CustomItem>, Integer> limitEntry = crate.limits().entrySet().stream()
                 .filter(entry -> entry.getKey().isAssignableFrom(item.getClass()))

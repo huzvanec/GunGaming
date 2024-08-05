@@ -1,5 +1,8 @@
 package cz.jeme.programu.gungaming.loot.crate.impl;
 
+import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.item.Weapon;
+import cz.jeme.programu.gungaming.item.attachment.Attachment;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.loot.crate.Crate;
 import net.kyori.adventure.key.KeyPattern;
@@ -13,8 +16,9 @@ public class AirDrop extends Crate {
     @Override
     protected @NotNull Map<Rarity, Integer> provideRarityChances() {
         return Map.of(
-                Rarity.EPIC, 1,
-                Rarity.LEGENDARY, 2
+                Rarity.RARE, 1,
+                Rarity.EPIC, 3,
+                Rarity.LEGENDARY, 6
         );
     }
 
@@ -25,7 +29,7 @@ public class AirDrop extends Crate {
 
     @Override
     protected double provideFillPercentage() {
-        return .8;
+        return .95;
     }
 
     @Override
@@ -46,5 +50,18 @@ public class AirDrop extends Crate {
     @Override
     protected @NotNull Component provideName() {
         return Component.text("Air Drop");
+    }
+
+    @Override
+    protected @NotNull Map<Class<? extends CustomItem>, Integer> provideLimits() {
+        return Map.of(
+                Attachment.class, 3,
+                Weapon.class, 5
+        );
+    }
+
+    @Override
+    protected boolean provideRefill() {
+        return false;
     }
 }

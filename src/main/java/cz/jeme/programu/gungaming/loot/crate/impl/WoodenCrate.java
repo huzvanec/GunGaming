@@ -49,7 +49,7 @@ public class WoodenCrate extends Crate {
 
     @Override
     protected double provideFillPercentage() {
-        return .25;
+        return .3;
     }
 
     @Override
