@@ -9,7 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 final class RefillRunnable extends BukkitRunnable {
     private static final int DURATION = 6 * 60 * 20; // 6 minutes
 
-    public void start() {
+    public RefillRunnable() {
         runTaskTimer(GunGaming.plugin(), DURATION, DURATION);
     }
 

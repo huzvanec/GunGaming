@@ -121,7 +121,7 @@ public enum CrateGenerator {
                 audience.sendMessage(Components.prefix("<red>No crates to refill!"));
             return false;
         }
-        clearCrates(audience);
+        clearCrates(null);
         for (final CrateInfo info : inventories.values()) {
             if (!info.crate().refill()) continue;
             final Inventory inventory = info.inventory();
@@ -155,9 +155,12 @@ public enum CrateGenerator {
     }
 
     public void generateCrate(final @NotNull Crate crate, final @NotNull Location location) {
-        final Block block = location.getBlock();
+        generateCrate(crate, location.getBlock());
+    }
+
+    public void generateCrate(final @NotNull Crate crate, final @NotNull Block block) {
         block.setType(crate.material());
-        final Inventory inventory = Bukkit.createInventory(null, InventoryType.CHEST, crate.name());
+        final Inventory inventory = Bukkit.createInventory(null, InventoryType.CHEST, crate.strippedName());
         inventory.setContents(LootGenerator.INSTANCE.generate(crate, inventory.getSize()));
         addInventory(block, crate, inventory);
         crate.generated(block, inventory);

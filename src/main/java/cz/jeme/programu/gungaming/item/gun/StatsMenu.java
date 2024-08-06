@@ -5,6 +5,7 @@ import cz.jeme.programu.gungaming.item.attachment.*;
 import cz.jeme.programu.gungaming.item.attachment.impl.Silencer;
 import cz.jeme.programu.gungaming.util.Components;
 import cz.jeme.programu.gungaming.util.Lores;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -33,7 +34,7 @@ public final class StatsMenu {
         inventory = Bukkit.createInventory(
                 player,
                 InventoryType.HOPPER,
-                gun.name().append(Components.of("<dark_gray> statistics"))
+                gun.strippedName().append(Component.text(" statistics"))
         );
 
         fill();

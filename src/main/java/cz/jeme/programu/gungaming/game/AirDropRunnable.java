@@ -30,9 +30,6 @@ final class AirDropRunnable extends BukkitRunnable {
     public AirDropRunnable(final @NotNull Game game) {
         this.game = game;
         this.world = game.world();
-    }
-
-    public void start() {
         final long duration = random.nextLong(MIN_MINUTES_SPAWN, MAX_MINUTES_SPAWN) * 1200;
         runTaskTimer(GunGaming.plugin(), duration, duration);
     }

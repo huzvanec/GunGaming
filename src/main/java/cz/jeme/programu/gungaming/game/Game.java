@@ -66,8 +66,7 @@ public final class Game {
     private final @NotNull Team team;
     private final @NotNull Objective kills;
     private final @NotNull Scoreboard scoreboard;
-    private final @NotNull AirDropRunnable airDropRunnable;
-    private final @NotNull RefillRunnable refillRunnable;
+    private final @NotNull List<BukkitRunnable> runnables = new ArrayList<>();
 
     private final @NotNull List<Player> players;
 
@@ -90,9 +89,6 @@ public final class Game {
         spawn = new Location(world, centerX, 350, centerZ);
 
         players = new ArrayList<>(Bukkit.getOnlinePlayers());
-
-        airDropRunnable = new AirDropRunnable(this);
-        refillRunnable = new RefillRunnable();
 
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
@@ -153,7 +149,7 @@ public final class Game {
         xMax = xMin + size;
         zMax = zMin + size;
 
-        new BukkitRunnable() {
+        final BukkitRunnable runnable = new BukkitRunnable() {
             private int dotsCount = 1;
 
             @Override
@@ -163,7 +159,7 @@ public final class Game {
                         team.addPlayer(player);
                         player.clearTitle();
                     }
-                    new StartCountdown(Game.this);
+                    runnables.add(new StartCountdown(Game.this));
                     cancel();
                     return;
                 }
@@ -177,7 +173,9 @@ public final class Game {
                 );
                 players.forEach(p -> p.showTitle(title));
             }
-        }.runTaskTimer(GunGaming.plugin(), 0L, 20L);
+        };
+        runnable.runTaskTimer(GunGaming.plugin(), 0L, 20L);
+        runnables.add(runnable);
 
         CrateGenerator.INSTANCE.generate(
                 audience,
@@ -195,7 +193,7 @@ public final class Game {
             player.setGameMode(GameMode.SURVIVAL);
             player.setGliding(true);
         }
-        new GracePeriodCountdown(this);
+        runnables.add(new GracePeriodCountdown(this));
     }
 
     void gracePeriodEnd() {
@@ -205,9 +203,9 @@ public final class Game {
             team.setAllowFriendlyFire(true);
         }
 
-        new GameCountdown(this, duration * 60 + 15);
-        airDropRunnable.start();
-        refillRunnable.start();
+        runnables.add(new GameCountdown(this, duration * 60 + 15));
+        runnables.add(new AirDropRunnable(this));
+        runnables.add(new RefillRunnable());
     }
 
     private static final @NotNull String GOLD = "<#D4AF37>";
@@ -215,13 +213,26 @@ public final class Game {
     private static final @NotNull String BRONZE = "<#D58E00>";
     private static final @NotNull String PEWTER = "<#E9EAEC>";
 
-    void endGame() {
+    public void stop() {
         instance = null;
-        airDropRunnable.cancel();
-        refillRunnable.cancel();
+        runnables.stream()
+                .filter(runnable -> !runnable.isCancelled())
+                .forEach(BukkitRunnable::cancel);
         bossBar.color(BossBar.Color.BLUE);
         bossBar.name(Components.of("<green>Game ended!"));
         bossBar.progress(1);
+        CrateGenerator.INSTANCE.removeCrates(null);
+        for (final Player player : Bukkit.getOnlinePlayers()) {
+            FROZEN_DATA.delete(player);
+            INVULNERABLE_DATA.delete(player);
+            GLIDING_DATA.delete(player);
+
+        }
+    }
+
+    public void endGame() {
+        stop();
+        if (players.isEmpty()) return; // just a precaution
         final Map<Integer, List<String>> scores = new HashMap<>();
         for (final String entry : scoreboard.getEntries()) {
             final int score = kills.getScore(entry).getScore();
@@ -276,11 +287,16 @@ public final class Game {
         final boolean contained = players.remove(player);
         if (contained)
             kills.getScore(player).resetScore();
+        if (players.size() == 1) Bukkit.getScheduler().runTaskLater(
+                GunGaming.plugin(),
+                this::endGame,
+                1L
+        );
         return contained;
     }
 
-    public static @Nullable Game instance() {
-        return instance;
+    public static @NotNull Game instance() {
+        return Objects.requireNonNull(instance, "Game is not running!");
     }
 
     public static boolean running() {

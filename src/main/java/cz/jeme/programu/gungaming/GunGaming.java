@@ -55,7 +55,7 @@ public final class GunGaming extends JavaPlugin {
         ReloadManager.INSTANCE.abortReloadAll(false);
         CrateGenerator.INSTANCE.removeCrates(null);
         if (!Game.running()) return;
-        final Game game = Objects.requireNonNull(Game.instance());
+        final Game game = Game.instance();
         for (final Player player : Bukkit.getOnlinePlayers()) {
             player.activeBossBars().forEach(player::hideBossBar);
             game.team().removePlayer(player);

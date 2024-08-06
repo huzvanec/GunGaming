@@ -12,11 +12,11 @@ import java.util.Map;
 
 public enum Rarity {
     COMMON("common", "<white>"),
-    UNCOMMON("uncommon", "<dark_green>"),
-    RARE("rare", "<blue>"),
-    EPIC("epic", "<dark_purple>"),
-    LEGENDARY("legendary", "<#d58e00>"),
-    UNOBTAINABLE("unobtainable", "<dark_red>");
+    UNCOMMON("uncommon", "<#22DD22>"),
+    RARE("rare", "<#22DDDD>"),
+    EPIC("epic", "<#DD22DD>"),
+    LEGENDARY("legendary", "<#DDDD22>"),
+    UNOBTAINABLE("unobtainable", "<#DD2222>");
 
     private final @NotNull Component color;
     private final @NotNull Key key;

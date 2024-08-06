@@ -75,8 +75,8 @@ public class ThermalGoggles extends CustomItem {
             try {
                 final Field sharedFlagsField = Entity.class.getDeclaredField("DATA_SHARED_FLAGS_ID");
                 sharedFlagsField.setAccessible(true);
-                //noinspection unchecked
-                DATA_SHARED_FLAGS_ID = (EntityDataAccessor<Byte>) sharedFlagsField.get(null);
+                @SuppressWarnings("unchecked") final EntityDataAccessor<Byte> tempSharedFlags = (EntityDataAccessor<Byte>) sharedFlagsField.get(null);
+                DATA_SHARED_FLAGS_ID = tempSharedFlags;
                 final Field glowingFlagField = Entity.class.getDeclaredField("FLAG_GLOWING");
                 glowingFlagField.setAccessible(true);
                 FLAG_GLOWING = glowingFlagField.getInt(null);

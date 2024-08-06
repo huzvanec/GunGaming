@@ -20,6 +20,7 @@ import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSele
 import io.papermc.paper.math.BlockPosition;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -164,6 +165,12 @@ public final class GGCommand {
                                         )
                                 )
                         )
+                        .then(literal("stop")
+                                .executes(GGCommand::stopGame)
+                        )
+                        .then(literal("end")
+                                .executes(GGCommand::endGame)
+                        )
                 )
                 .build();
     }
@@ -271,6 +278,10 @@ public final class GGCommand {
             sender.sendMessage(Components.prefix("<red>A game is already running!"));
             return FAILURE;
         }
+        if (Bukkit.getOnlinePlayers().size() <= 1) {
+            sender.sendMessage(Components.prefix("<red>There must be at least 2 players online to start a game!"));
+            return FAILURE;
+        }
         new Game(
                 sender,
                 ctx.getSource().getLocation(),
@@ -295,6 +306,28 @@ public final class GGCommand {
         }
         CrateGenerator.INSTANCE.generateCrate(CustomElement.of(AirDrop.class), location);
         sender.sendMessage(Components.prefix("<green>Air drop generated successfully!"));
+        return SUCCESS;
+    }
+
+    private static int stopGame(final @NotNull CommandContext<CommandSourceStack> ctx) {
+        final CommandSender sender = ctx.getSource().getSender();
+        if (!Game.running()) {
+            sender.sendMessage(Components.prefix("<red>No game is running!"));
+            return FAILURE;
+        }
+        Game.instance().stop();
+        sender.sendMessage(Components.prefix("<green>Game stopped successfully"));
+        return SUCCESS;
+    }
+
+    private static int endGame(final @NotNull CommandContext<CommandSourceStack> ctx) {
+        final CommandSender sender = ctx.getSource().getSender();
+        if (!Game.running()) {
+            sender.sendMessage(Components.prefix("<red>No game is running!"));
+            return FAILURE;
+        }
+        Game.instance().endGame();
+        sender.sendMessage(Components.prefix("<green>Game ended successfully"));
         return SUCCESS;
     }
 }

@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming;
 
 import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.loot.Rarity;
+import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
@@ -14,6 +15,7 @@ public abstract class CustomElement {
     protected final @NotNull Key key = GunGaming.namespaced(provideKey());
     protected final @NotNull Rarity rarity = provideRarity();
     protected final @NotNull Component name = rarity.color().append(provideName());
+    protected final @NotNull Component strippedName = Component.text(Components.strip(name));
 
     // providers
 
@@ -35,6 +37,10 @@ public abstract class CustomElement {
 
     public final @NotNull Component name() {
         return name;
+    }
+
+    public final @NotNull Component strippedName() {
+        return strippedName;
     }
 
     // object

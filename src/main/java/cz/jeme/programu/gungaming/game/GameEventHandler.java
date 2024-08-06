@@ -70,7 +70,7 @@ public final class GameEventHandler {
 
     public static void onPlayerDeath(final @NotNull PlayerDeathEvent event) {
         if (!Game.running()) return;
-        final Game game = Objects.requireNonNull(Game.instance());
+        final Game game = Game.instance();
         final Player player = event.getPlayer();
         event.setCancelled(true);
         final Component deathMessage = event.deathMessage();
@@ -114,7 +114,7 @@ public final class GameEventHandler {
     public static void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
         if (!Game.running()) return;
         final Player player = event.getPlayer();
-        final Game game = Objects.requireNonNull(Game.instance());
+        final Game game = Game.instance();
         player.setGameMode(GameMode.SPECTATOR);
         final double x = player.getX();
         final double z = player.getZ();
@@ -139,7 +139,7 @@ public final class GameEventHandler {
     public static void onPlayerQuit(final @NotNull PlayerQuitEvent event) {
         if (!Game.running()) return;
         final Player player = event.getPlayer();
-        final boolean gamePlayer = Objects.requireNonNull(Game.instance()).removePlayer(player);
+        final boolean gamePlayer = Game.instance().removePlayer(player);
         if (gamePlayer) {
             for (final ItemStack item : player.getInventory()) {
                 if (item == null) continue;

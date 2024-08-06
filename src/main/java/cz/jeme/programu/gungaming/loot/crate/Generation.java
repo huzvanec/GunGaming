@@ -2,7 +2,6 @@ package cz.jeme.programu.gungaming.loot.crate;
 
 import cz.jeme.programu.gungaming.ElementManager;
 import cz.jeme.programu.gungaming.GunGaming;
-import cz.jeme.programu.gungaming.loot.LootGenerator;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -10,10 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -57,7 +53,7 @@ final class Generation extends BukkitRunnable {
     @Override
     public void run() {
         for (int i = 0; i < bps; i++) {
-            for (final Crate crate : crates) test(crate, x, z);
+            for (final Crate crate : crates) generate(crate, x, z);
             if (x < xMax) x++;
             else if (z == zMax) {
                 cancel();
@@ -103,7 +99,7 @@ final class Generation extends BukkitRunnable {
 
     private final @NotNull Random random = new Random();
 
-    private void test(final @NotNull Crate crate, final int x, final int z) {
+    private void generate(final @NotNull Crate crate, final int x, final int z) {
         final List<Integer> heights = new ArrayList<>();
         boolean lastOccluding = false;
         for (int y = world.getMinHeight(); y < world.getMaxHeight() - 1; y++) {
@@ -120,17 +116,8 @@ final class Generation extends BukkitRunnable {
         if (heights.isEmpty()) return;
         for (final int y : heights) {
             if (random.nextDouble() > crate.spawnPercentage()) continue;
-            generate(crate, x, y, z);
+            CrateGenerator.INSTANCE.generateCrate(crate, world.getBlockAt(x, y, z));
+            cratesCount++;
         }
-    }
-
-    private void generate(final @NotNull Crate crate, final int x, final int y, final int z) {
-        final Block block = world.getBlockAt(x, y, z);
-        block.setType(crate.material());
-        final Inventory inventory = Bukkit.createInventory(null, InventoryType.CHEST, crate.name());
-        inventory.setContents(LootGenerator.INSTANCE.generate(crate, inventory.getSize()));
-        CrateGenerator.INSTANCE.addInventory(block, crate, inventory);
-        crate.generated(block, inventory);
-        cratesCount++;
     }
 }

@@ -6,7 +6,7 @@ import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.attachment.disable.*;
 import cz.jeme.programu.gungaming.item.attachment.impl.Silencer;
 import cz.jeme.programu.gungaming.item.gun.Gun;
-import cz.jeme.programu.gungaming.util.Components;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -34,7 +34,7 @@ public final class AttachmentMenu {
         inventory = Bukkit.createInventory(
                 player,
                 InventoryType.HOPPER,
-                gun.name().append(Components.of("<dark_gray> attachments"))
+                gun.strippedName().append(Component.text(" attachments"))
         );
 
         fill();

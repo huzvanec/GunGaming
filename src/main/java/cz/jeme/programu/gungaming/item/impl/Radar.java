@@ -162,6 +162,7 @@ public class Radar extends CustomItem implements SingleLoot {
             canvas.setCursors(cursors);
         }
 
+        @SuppressWarnings("deprecation")
         private static void renderWorld(final @NotNull MapView map, final @NotNull MapCanvas canvas, final @NotNull Player player) {
             final Location location = player.getLocation();
             // create a new map data that will get updated
@@ -182,7 +183,6 @@ public class Radar extends CustomItem implements SingleLoot {
             // transform the map data to canvas pixels
             for (int y = 0; y < MAP_SIZE; y++)
                 for (int x = 0; x < MAP_SIZE; x++)
-                    //noinspection deprecation
                     canvas.setPixel(x, y, data.colors[y * 128 + x]);
         }
     }
