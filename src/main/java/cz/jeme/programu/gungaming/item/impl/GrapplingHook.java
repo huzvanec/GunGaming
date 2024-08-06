@@ -5,6 +5,7 @@ import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.loot.SingleLoot;
+import cz.jeme.programu.gungaming.util.Lores;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
@@ -19,7 +20,6 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -73,7 +73,18 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
         return 1;
     }
 
-    public static void onPlayerFish(@NotNull final PlayerFishEvent event) {
+    @Override
+    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+        final Damageable meta = (Damageable) item.getItemMeta();
+        final int damage = meta.getDamage();
+        final int maxDamage = meta.getMaxDamage();
+        final String uses = maxDamage - damage + "/" + maxDamage;
+        return List.of(
+                Lores.loreStat("Uses", uses)
+        );
+    }
+
+    public void onPlayerFish(@NotNull final PlayerFishEvent event) {
         final PlayerFishEvent.State state = event.getState();
         if (state == PlayerFishEvent.State.BITE || state == PlayerFishEvent.State.FAILED_ATTEMPT) return;
         final EquipmentSlot hand = event.getHand();
@@ -84,7 +95,7 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
         else onSubtract(event);
     }
 
-    private static void onThrow(@NotNull final PlayerFishEvent event) {
+    private void onThrow(@NotNull final PlayerFishEvent event) {
         final FishHook hook = event.getHook();
         hook.setVelocity(hook.getVelocity().multiply(1.4));
         new BukkitRunnable() {
@@ -120,7 +131,7 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
         }.runTaskTimer(GunGaming.plugin(), 0L, 1L);
     }
 
-    private static void onSubtract(@NotNull final PlayerFishEvent event) {
+    private void onSubtract(@NotNull final PlayerFishEvent event) {
         assert event.getHand() != null;
         final ItemStack fishingRod = event.getPlayer().getInventory().getItem(event.getHand());
         final FishHook hook = event.getHook();
@@ -139,6 +150,8 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
                     player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 1);
                 }
             });
+
+        if (fishingRod.getAmount() != 0) updateItem(fishingRod);
 
         final double xD = hookLoc.getX() - playerLoc.getX();
         final double yD = hookLoc.getY() - playerLoc.getY();

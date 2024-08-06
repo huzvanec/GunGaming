@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming;
 
 import com.destroystokyo.paper.event.player.PlayerAdvancementCriterionGrantEvent;
 import cz.jeme.programu.gungaming.game.GameEventHandler;
+import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.ItemEventHandler;
 import cz.jeme.programu.gungaming.item.attachment.AttachmentEventHandler;
 import cz.jeme.programu.gungaming.item.block.BlockEventHandler;
@@ -148,9 +149,11 @@ public enum EventDistributor implements Listener {
         GunEventHandler.onEntityShootBow(event);
     }
 
+    private static final @NotNull GrapplingHook GRAPPLING_HOOK = CustomItem.of(GrapplingHook.class);
+
     @EventHandler
     private static void onPlayerFish(final @NotNull PlayerFishEvent event) {
-        GrapplingHook.onPlayerFish(event);
+        GRAPPLING_HOOK.onPlayerFish(event);
     }
 
     @EventHandler
