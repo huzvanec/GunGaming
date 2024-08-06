@@ -1,5 +1,5 @@
 {
-	"__gungaming__": "White dyes represent ammo in GunGaming",
+	"__gungaming__": "White Dye represents Ammo",
 	"parent": "item/generated",
 	"textures": {
 		"layer0": "item/white_dye"
@@ -9,31 +9,31 @@
 			"predicate": {
 				"custom_model_data": 1
 			},
-			"model": "item/gungaming/ammo/9mm"
+			"model": "gungaming:item/ammo/9mm"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 2
 			},
-			"model": "item/gungaming/ammo/7.62mm"
+			"model": "gungaming:item/ammo/7.62mm"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 3
 			},
-			"model": "item/gungaming/ammo/rocket"
+			"model": "gungaming:item/ammo/rocket"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 4
 			},
-			"model": "item/gungaming/ammo/12_gauge"
+			"model": "gungaming:item/ammo/12_gauge"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 5
 			},
-			"model": "item/gungaming/ammo/308_subsonic_winchester"
+			"model": "gungaming:item/ammo/308_subsonic_winchester"
 		}
 	]
 }

@@ -1,5 +1,5 @@
 {
-  "__gungaming__": "Netherite leggins represent titanium leggings",
+  "__gungaming__": "Netherite Leggins represent Titanium Leggings",
   "parent": "minecraft:item/generated",
   "overrides": [
     {
@@ -63,8 +63,8 @@
       }
     },
     {
-      "model": "item/gungaming/armor/titanium_leggings",
-      "predicate":{
+      "model": "gungaming:item/armor/titanium_leggings",
+      "predicate": {
         "custom_model_data": 1
       }
     }

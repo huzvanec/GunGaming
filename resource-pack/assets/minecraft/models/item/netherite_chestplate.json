@@ -1,5 +1,5 @@
 {
-  "__gungaming__": "Neterite chestplate represents titanium chestplate",
+  "__gungaming__": "Neterite Chestplate represents Titanium Chestplate",
   "parent": "minecraft:item/generated",
   "overrides": [
     {
@@ -63,7 +63,7 @@
       }
     },
     {
-      "model": "item/gungaming/armor/titanium_chestplate",
+      "model": "gungaming:item/armor/titanium_chestplate",
       "predicate":{
         "custom_model_data": 1
       }

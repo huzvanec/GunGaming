@@ -1,5 +1,5 @@
 {
-  "__gungaming__": "Iron Sword represents Dirty Sword and Titanium Knife in GunGaming",
+  "__gungaming__": "Iron Sword represents Dirty Sword and Titanium Knife",
   "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "minecraft:item/iron_sword"
@@ -9,13 +9,13 @@
       "predicate": {
         "custom_model_data": 1
       },
-      "model": "item/gungaming/melee/dirty_sword"
+      "model": "gungaming:item/melee/dirty_sword"
     },
     {
       "predicate": {
         "custom_model_data": 2
       },
-      "model": "item/gungaming/melee/titanium_knife"
+      "model": "gungaming:item/melee/titanium_knife"
     }
   ]
 }

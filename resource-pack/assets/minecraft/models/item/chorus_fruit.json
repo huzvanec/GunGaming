@@ -1,5 +1,5 @@
 {
-	"__gungaming__": "Chorus fruit represents consumables in GunGaming",
+	"__gungaming__": "Chorus Fruit represents Consumables",
 	"parent": "item/generated",
 	"textures": {
 		"layer0": "item/chorus_fruit"
@@ -9,31 +9,31 @@
 			"predicate": {
 				"custom_model_data": 1
 			},
-			"model": "item/gungaming/consumable/bandage"
+			"model": "gungaming:item/consumable/bandage"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 2
 			},
-			"model": "item/gungaming/consumable/soda"
+			"model": "gungaming:item/consumable/soda"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 3
 			},
-			"model": "item/gungaming/consumable/pills"
+			"model": "gungaming:item/consumable/pills"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 4
 			},
-			"model": "item/gungaming/consumable/medkit"
+			"model": "gungaming:item/consumable/medkit"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 5
 			},
-			"model": "item/gungaming/melee/fish"
+			"model": "gungaming:item/melee/fish"
 		}
 	]
 }

@@ -1,0 +1,33 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "gungaming:item/throwable/mirv_grenade"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, -90, 0],
+			"scale": [1, 1, 2.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 90, 0],
+			"scale": [1, 1, 2.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -90, 0],
+			"scale": [1, 1, 2.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 90, 0],
+			"scale": [1, 1, 2.5]
+		},
+		"ground": {
+			"scale": [1, 1, 2.5]
+		},
+		"gui": {
+			"scale": [1, 1, 2.5]
+		},
+		"fixed": {
+			"scale": [1, 1, 2.5]
+		}
+	}
+}

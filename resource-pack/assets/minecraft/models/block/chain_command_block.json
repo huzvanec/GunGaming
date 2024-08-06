@@ -1,7 +1,8 @@
 {
+  "__gungaming__": "Chain Command Block represents Air Drop",
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "end": "block/gungaming/crate/air_drop_top",
-    "side": "block/gungaming/crate/air_drop"
+    "end": "gungaming:block/crate/air_drop_top",
+    "side": "gungaming:block/crate/air_drop"
   }
 }

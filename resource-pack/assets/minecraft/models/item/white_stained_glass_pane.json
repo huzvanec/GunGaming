@@ -1,5 +1,5 @@
 {
-	"__gungaming__": "White stained glass panes represent all menu buttons in gungaming",
+	"__gungaming__": "White Stained Glass Pane represents all menu buttons",
 	"parent": "item/generated",
 	"textures": {
 		"layer0": "minecraft:block/white_stained_glass"
@@ -9,73 +9,73 @@
 			"predicate": {
 				"custom_model_data": 1
 			},
-			"model": "item/gungaming/attachment_menu/silencer"
+			"model": "gungaming:item/menu/gun_attachments/silencer"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 2
 			},
-			"model": "item/gungaming/attachment_menu/grip"
+			"model": "gungaming:item/menu/gun_attachments/grip"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 3
 			},
-			"model": "item/gungaming/attachment_menu/scope"
+			"model": "gungaming:item/menu/gun_attachments/scope"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 4
 			},
-			"model": "item/gungaming/attachment_menu/magazine"
+			"model": "gungaming:item/menu/gun_attachments/magazine"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 5
 			},
-			"model": "item/gungaming/attachment_menu/stock"
+			"model": "gungaming:item/menu/gun_attachments/stock"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 6
 			},
-			"model": "item/gungaming/attachment_menu/grip_shotgun"
+			"model": "gungaming:item/menu/gun_attachments/grip_shotgun"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 7
 			},
-			"model": "item/gungaming/attachment_menu/disabled"
+			"model": "gungaming:item/menu/gun_attachments/disabled"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 8
 			},
-			"model": "item/gungaming/stats_menu/basic_info"
+			"model": "gungaming:item/menu/gun_stats/basic_info"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 9
 			},
-			"model": "item/gungaming/stats_menu/damage"
+			"model": "gungaming:item/menu/gun_stats/damage"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 10
 			},
-			"model": "item/gungaming/stats_menu/durations"
+			"model": "gungaming:item/menu/gun_stats/durations"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 11
 			},
-			"model": "item/gungaming/stats_menu/stability"
+			"model": "gungaming:item/menu/gun_stats/stability"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 12
 			},
-			"model": "item/gungaming/stats_menu/ammo"
+			"model": "gungaming:item/menu/gun_stats/ammo"
 		}
 	]
 }

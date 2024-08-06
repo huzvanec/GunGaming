@@ -1,6 +1,0 @@
-{
-	"parent": "item/gungaming/gun/gun",
-	"textures": {
-		"layer0": "item/gungaming/gun/nagant_m1895"
-	}
-}

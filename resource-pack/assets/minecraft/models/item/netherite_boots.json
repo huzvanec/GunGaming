@@ -1,5 +1,5 @@
 {
-  "__gungaming__": "Netherite boots represent titanium boots",
+  "__gungaming__": "Netherite Boots represent Titanium Boots",
   "parent": "minecraft:item/generated",
   "overrides": [
     {
@@ -63,7 +63,7 @@
       }
     },
     {
-      "model": "item/gungaming/armor/titanium_boots",
+      "model": "gungaming:item/armor/titanium_boots",
       "predicate":{
         "custom_model_data": 1
       }

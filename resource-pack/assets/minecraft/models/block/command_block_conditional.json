@@ -1,7 +1,8 @@
 {
+  "__gungaming__": "Conditional Command Block represents Ammo Crate",
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "end": "block/gungaming/crate/ammo_crate_top",
-    "side": "block/gungaming/crate/ammo_crate"
+    "end": "gungaming:block/crate/ammo_crate_top",
+    "side": "gungaming:block/crate/ammo_crate"
   }
 }

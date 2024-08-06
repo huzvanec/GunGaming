@@ -1,6 +1,7 @@
 {
+  "__gungaming__": "Conditional Chain Command Block represents Wooden Crate",
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "block/gungaming/crate/wooden_crate"
+    "all": "gungaming:block/crate/wooden_crate"
   }
 }

@@ -1,0 +1,6 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "gungaming:item/melee/dirty_sword"
+	}
+}

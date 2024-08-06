@@ -1,5 +1,5 @@
 {
-	"__gungaming__": "Crossbows represent guns in GunGaming",
+	"__gungaming__": "Crossbow represents Guns",
 	"parent": "item/generated",
 	"textures": {
 		"layer0": "item/crossbow_standby"
@@ -112,55 +112,55 @@
 			"predicate": {
 				"custom_model_data": 1
 			},
-			"model": "item/gungaming/gun/m9"
+			"model": "gungaming:item/gun/m9"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 2
 			},
-			"model": "item/gungaming/gun/nagant_m1895"
+			"model": "gungaming:item/gun/nagant_m1895"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 3
 			},
-			"model": "item/gungaming/gun/ak-47"
+			"model": "gungaming:item/gun/ak-47"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 4
 			},
-			"model": "item/gungaming/gun/rocket_launcher"
+			"model": "gungaming:item/gun/rocket_launcher"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 5
 			},
-			"model": "item/gungaming/gun/m134_minigun"
+			"model": "gungaming:item/gun/m134_minigun"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 6
 			},
-			"model": "item/gungaming/gun/remington_m870"
+			"model": "gungaming:item/gun/remington_m870"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 7
 			},
-			"model": "item/gungaming/gun/dragunov_svu"
+			"model": "gungaming:item/gun/dragunov_svu"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 8
 			},
-			"model": "item/gungaming/gun/sv-98"
+			"model": "gungaming:item/gun/sv-98"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 9
 			},
-			"model": "item/gungaming/gun/prickskyttegevar_90"
+			"model": "gungaming:item/gun/prickskyttegevar_90"
 		}
 	]
 }

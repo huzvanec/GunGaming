@@ -1,6 +1,7 @@
 {
+  "__gungaming__": "Conditional Repeating Command Block represents Golden Crate",
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "block/gungaming/crate/golden_crate"
+    "all": "gungaming:block/crate/golden_crate"
   }
 }

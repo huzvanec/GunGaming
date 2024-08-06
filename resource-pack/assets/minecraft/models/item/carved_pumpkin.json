@@ -1,12 +1,12 @@
 {
-	"__gungaming__": "Carved pumpkin is used for the scope overlay in GunGaming",
+	"__gungaming__": "Carved Pumpkin represents Scope overlay",
 	"parent": "minecraft:block/carved_pumpkin",
 	"overrides": [
 		{
 			"predicate": {
 				"custom_model_data": 1
 			},
-			"model": "minecraft:item/gungaming/scope"
+			"model": "gungaming:item/menu/scope"
 		}
 	]
 }

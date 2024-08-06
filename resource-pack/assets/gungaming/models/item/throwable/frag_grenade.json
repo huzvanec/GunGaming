@@ -1,0 +1,33 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "gungaming:item/throwable/frag_grenade"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, -90, 0],
+			"scale": [0.8, 0.8, 2.2]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 90, 0],
+			"scale": [0.8, 0.8, 2.2]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -90, 0],
+			"scale": [0.8, 0.8, 2.2]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 90, 0],
+			"scale": [0.8, 0.8, 2.2]
+		},
+		"ground": {
+			"scale": [0.8, 0.8, 2.2]
+		},
+		"gui": {
+			"scale": [1, 1, 2.2]
+		},
+		"fixed": {
+			"scale": [1, 1, 2.2]
+		}
+	}
+}

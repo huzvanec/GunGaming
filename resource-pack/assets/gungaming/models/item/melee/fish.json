@@ -1,0 +1,36 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "gungaming:item/melee/fish"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [
+				0,
+				-90,
+				-45
+			]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [
+				0,
+				90,
+				45
+			]
+		},
+		"firstperson_righthand": {
+			"rotation": [
+				0,
+				-90,
+				-45
+			]
+		},
+		"firstperson_lefthand": {
+			"rotation": [
+				0,
+				90,
+				45
+			]
+		}
+	}
+}

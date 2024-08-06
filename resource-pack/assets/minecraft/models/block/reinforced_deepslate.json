@@ -1,6 +1,7 @@
 {
+  "__gungaming__": "Reinforced Deepslate represents Reinforced Titanium",
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "block/gungaming/reinforced_titanium"
+    "all": "gungaming:block/reinforced_titanium"
   }
 }

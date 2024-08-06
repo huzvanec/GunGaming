@@ -1,5 +1,5 @@
 {
-  "__gungaming__": "Netherite helmet represents titanium helmet",
+  "__gungaming__": "Netherite Helmet represents Titanium Helmet",
   "parent": "minecraft:item/generated",
   "overrides": [
     {
@@ -63,7 +63,7 @@
       }
     },
     {
-      "model": "item/gungaming/armor/titanium_helmet",
+      "model": "gungaming:item/armor/titanium_helmet",
       "predicate":{
         "custom_model_data": 1
       }

@@ -19,6 +19,7 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -65,6 +66,11 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
     @Override
     protected @KeyPattern.Value @NotNull String provideKey() {
         return "grappling_hook";
+    }
+
+    @Override
+    protected @NotNull Integer provideCustomModelData() {
+        return 1;
     }
 
     public static void onPlayerFish(@NotNull final PlayerFishEvent event) {

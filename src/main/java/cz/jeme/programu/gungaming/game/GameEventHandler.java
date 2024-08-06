@@ -33,7 +33,7 @@ public final class GameEventHandler {
 
     public static void onPlayerMove(final @NotNull PlayerMoveEvent event) {
         if (!Game.running()) return;
-        if (!event.hasChangedBlock()) return;
+        if (!event.hasChangedPosition()) return;
         final Location to = event.getTo();
         if (to.y() < to.getWorld().getMinHeight()) {
             event.setCancelled(true);
@@ -116,7 +116,10 @@ public final class GameEventHandler {
         final Player player = event.getPlayer();
         final Game game = Objects.requireNonNull(Game.instance());
         player.setGameMode(GameMode.SPECTATOR);
-        player.teleport(game.spawn());
+        final double x = player.getX();
+        final double z = player.getZ();
+        if (x >= game.xMax() || x <= game.xMin() || z >= game.zMax() || z <= game.zMin())
+            player.teleport(game.spawn());
         Game.GLIDING_DATA.write(player, false);
         Game.FROZEN_DATA.write(player, false);
         Game.INVULNERABLE_DATA.write(player, true);

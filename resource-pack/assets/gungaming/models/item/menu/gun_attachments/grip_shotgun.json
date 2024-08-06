@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "gungaming:item/menu/gun_attachments/grip_shotgun"
+	}
+}

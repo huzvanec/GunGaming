@@ -1,5 +1,5 @@
 {
-	"__gungaming__": "Snowball represents throwables in GunGaming",
+	"__gungaming__": "Snowball represents Throwables",
 	"parent": "item/generated",
 	"textures": {
 		"layer0": "item/snowball"
@@ -9,37 +9,37 @@
 			"predicate": {
 				"custom_model_data": 1
 			},
-			"model": "item/gungaming/throwable/frag_grenade"
+			"model": "gungaming:item/throwable/frag_grenade"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 2
 			},
-			"model": "item/gungaming/throwable/smoke_grenade"
+			"model": "gungaming:item/throwable/smoke_grenade"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 3
 			},
-			"model": "item/gungaming/throwable/mirv_grenade"
+			"model": "gungaming:item/throwable/mirv_grenade"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 4
 			},
-			"model": "item/gungaming/throwable/molotov_cocktail"
+			"model": "gungaming:item/throwable/molotov_cocktail"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 5
 			},
-			"model": "item/gungaming/throwable/small_grenade"
+			"model": "gungaming:item/throwable/small_grenade"
 		},
 		{
 			"predicate": {
 				"custom_model_data": 6
 			},
-			"model": "item/gungaming/throwable/wind_pearl"
+			"model": "gungaming:item/throwable/wind_pearl"
 		}
 	]
 }
