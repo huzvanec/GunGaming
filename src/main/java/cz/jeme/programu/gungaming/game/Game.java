@@ -7,6 +7,7 @@ import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.advancement.Advancement;
@@ -16,8 +17,6 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
 import org.jetbrains.annotations.NotNull;
@@ -112,7 +111,8 @@ public final class Game {
         if (existingTeam != null) existingTeam.unregister();
         team = scoreboard.registerNewTeam(GRACE_PERIOD_TEAM_NAME);
         team.setAllowFriendlyFire(false);
-        team.setCanSeeFriendlyInvisibles(true);
+        team.setCanSeeFriendlyInvisibles(false);
+        team.color(NamedTextColor.RED);
         scoreboard.getObjectives().forEach(Objective::unregister);
         kills = scoreboard.registerNewObjective(
                 GunGaming.namespaced("kills").asString(),
@@ -139,14 +139,6 @@ public final class Game {
             player.setLevel(0);
             player.activeBossBars().forEach(player::hideBossBar);
             player.showBossBar(bossBar);
-            player.addPotionEffect(new PotionEffect(
-                    PotionEffectType.INVISIBILITY,
-                    -1,
-                    255,
-                    false,
-                    false,
-                    false
-            ));
             kills.getScore(player).setScore(0);
             final Iterator<Advancement> advancements = Bukkit.advancementIterator();
             while (advancements.hasNext()) {
@@ -160,13 +152,6 @@ public final class Game {
         zMin = centerZ - size / 2;
         xMax = xMin + size;
         zMax = zMin + size;
-
-        CrateGenerator.INSTANCE.generate(
-                audience,
-                audienceLocation,
-                xMin, zMin, xMax, zMax,
-                bps
-        );
 
         new BukkitRunnable() {
             private int dotsCount = 1;
@@ -193,6 +178,13 @@ public final class Game {
                 players.forEach(p -> p.showTitle(title));
             }
         }.runTaskTimer(GunGaming.plugin(), 0L, 20L);
+
+        CrateGenerator.INSTANCE.generate(
+                audience,
+                audienceLocation,
+                xMin, zMin, xMax, zMax,
+                bps
+        );
     }
 
     void startGame() {
@@ -210,9 +202,7 @@ public final class Game {
         for (final Player player : players) {
             INVULNERABLE_DATA.write(player, false);
             GLIDING_DATA.write(player, false);
-            team.setCanSeeFriendlyInvisibles(false);
             team.setAllowFriendlyFire(true);
-            player.removePotionEffect(PotionEffectType.INVISIBILITY);
         }
 
         new GameCountdown(this, duration * 60 + 15);
@@ -282,9 +272,11 @@ public final class Game {
         }
     }
 
-    void removePlayer(final @NotNull Player player) {
-        players.remove(player);
-        kills.getScore(player).resetScore();
+    boolean removePlayer(final @NotNull Player player) {
+        final boolean contained = players.remove(player);
+        if (contained)
+            kills.getScore(player).resetScore();
+        return contained;
     }
 
     public static @Nullable Game instance() {

@@ -16,7 +16,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Score;
 import org.jetbrains.annotations.NotNull;
 
@@ -56,7 +55,6 @@ public final class GameEventHandler {
         final Material groundMaterial = player.getWorld().getBlockAt(player.getLocation().subtract(0, .4, 0)).getType();
         if (!groundMaterial.isEmpty()) {
             Game.GLIDING_DATA.write(player, false);
-            player.removePotionEffect(PotionEffectType.INVISIBILITY);
             Bukkit.getScheduler().runTaskLater(
                     GunGaming.plugin(),
                     () -> Game.INVULNERABLE_DATA.write(player, false),
@@ -122,24 +120,42 @@ public final class GameEventHandler {
         Game.GLIDING_DATA.write(player, false);
         Game.FROZEN_DATA.write(player, false);
         Game.INVULNERABLE_DATA.write(player, true);
-        player.removePotionEffect(PotionEffectType.INVISIBILITY);
         game.removePlayer(player);
         player.showTitle(Title.title(
                 Components.of("<red>" + Components.latinString("You are a spectator")),
                 Component.empty(),
                 Title.Times.times(Duration.ZERO, Duration.ofSeconds(5), Duration.ofSeconds(2))
         ));
+        event.joinMessage(Components.of("<#00FFFF>\uD83D\uDC41 ").append(
+                player.name().append(
+                        Component.text(" started spectating")
+                )
+        ));
     }
 
     public static void onPlayerQuit(final @NotNull PlayerQuitEvent event) {
         if (!Game.running()) return;
         final Player player = event.getPlayer();
-        Objects.requireNonNull(Game.instance()).removePlayer(player);
-        for (final ItemStack item : player.getInventory()) {
-            if (item == null) continue;
-            player.getWorld().dropItemNaturally(player.getLocation(), item);
+        final boolean gamePlayer = Objects.requireNonNull(Game.instance()).removePlayer(player);
+        if (gamePlayer) {
+            for (final ItemStack item : player.getInventory()) {
+                if (item == null) continue;
+                player.getWorld().dropItemNaturally(player.getLocation(), item);
+            }
+            player.getInventory().clear();
+            event.quitMessage(Components.of("<#FF0000>☠ ").append(
+                            player.name().append(
+                                    Component.text(" left and got eliminated")
+                            )
+                    )
+            );
+        } else {
+            event.quitMessage(Components.of("<#00FFFF>\uD83D\uDC41 ").append(
+                    player.name().append(
+                            Component.text(" quit spectating")
+                    )
+            ));
         }
-        player.getInventory().clear();
     }
 
     public static void onPlayerAdvancementCriterionGrant(final @NotNull PlayerAdvancementCriterionGrantEvent event) {

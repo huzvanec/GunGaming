@@ -13,19 +13,22 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.logging.Logger;
 
 
 public final class GunGaming extends JavaPlugin {
+    private static @Nullable GunGaming instance;
     public static final @NotNull String NAMESPACE = "gungaming";
     @SuppressWarnings("NotNullFieldNotInitialized")
-    private static @NotNull Logger LOGGER;
+    private static @NotNull Logger logger;
 
     @Override
     public void onEnable() {
-        LOGGER = getLogger();
+        instance = this;
+        logger = getLogger();
         ElementManager.INSTANCE.registerElements(
                 "cz.jeme.programu.gungaming.item",
                 "cz.jeme.programu.gungaming.loot.crate"
@@ -60,7 +63,7 @@ public final class GunGaming extends JavaPlugin {
     }
 
     public static @NotNull GunGaming plugin() {
-        return JavaPlugin.getPlugin(GunGaming.class);
+        return Objects.requireNonNull(instance, "GunGaming has not yet been initialized!");
     }
 
     public static @NotNull NamespacedKey namespaced(final @KeyPattern.Value @NotNull String key) {
@@ -68,6 +71,6 @@ public final class GunGaming extends JavaPlugin {
     }
 
     public static @NotNull Logger logger() {
-        return LOGGER;
+        return logger;
     }
 }
