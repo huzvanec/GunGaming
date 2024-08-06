@@ -31,7 +31,7 @@ public abstract class CustomItem extends CustomElement {
     protected CustomItem() {
         addTags("item");
         item.editMeta(meta -> {
-            meta.displayName(Components.of("<!i>").append(name));
+            meta.itemName(name);
             meta.setCustomModelData(customModelData);
             meta.setAttributeModifiers(HashMultimap.create());
             meta.addItemFlags(
@@ -58,10 +58,9 @@ public abstract class CustomItem extends CustomElement {
         if (!CustomItem.is(item, getClass()))
             throw new IllegalArgumentException("The provided item is not this CustomItem!");
         final List<Component> lore = new ArrayList<>();
-        final String rarityName = Components.latinString(rarity.key().value());
-        final String typeStr = Components.latinString(type);
+        final String rarityName = rarity.key().value();
         lore.add(Components.of(LORE_PREFIX + "<b>").append(rarity.color().append(
-                Components.of(rarityName + " " + typeStr)
+                Component.text(Components.latinString(rarityName + " " + type))
         )));
         lore.add(Components.of(LORE_PREFIX + "<#CADCFF>" + Components.latinString(description)));
         final List<String> childLore = update(item);

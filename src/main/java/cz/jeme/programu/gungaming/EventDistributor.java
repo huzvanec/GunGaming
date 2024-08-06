@@ -4,6 +4,7 @@ import com.destroystokyo.paper.event.player.PlayerAdvancementCriterionGrantEvent
 import cz.jeme.programu.gungaming.game.GameEventHandler;
 import cz.jeme.programu.gungaming.item.ItemEventHandler;
 import cz.jeme.programu.gungaming.item.attachment.AttachmentEventHandler;
+import cz.jeme.programu.gungaming.item.block.BlockEventHandler;
 import cz.jeme.programu.gungaming.item.consumable.ConsumableEventHandler;
 import cz.jeme.programu.gungaming.item.gun.GunEventHandler;
 import cz.jeme.programu.gungaming.item.impl.GrapplingHook;
@@ -170,5 +171,10 @@ public enum EventDistributor implements Listener {
     @EventHandler
     private static void onPlayerAdvancementCriterionGrant(final @NotNull PlayerAdvancementCriterionGrantEvent event) {
         GameEventHandler.onPlayerAdvancementCriterionGrant(event);
+    }
+
+    @EventHandler
+    private static void onItemSpawn(final @NotNull ItemSpawnEvent event) {
+        BlockEventHandler.onItemSpawn(event);
     }
 }
