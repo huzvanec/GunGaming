@@ -10,7 +10,6 @@ import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -19,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.Collection;
-import java.util.List;
 
 public class PlayerTracker extends CustomItem implements SingleLoot {
 
@@ -80,11 +78,9 @@ public class PlayerTracker extends CustomItem implements SingleLoot {
 
                 Player nearestPlayer = null;
                 double distance = Double.MAX_VALUE;
-                final List<? extends Player> trackablePlayers = players.stream()
-                        .filter(Entity::isValid)
-                        .filter(p -> !p.getUniqueId().equals(player.getUniqueId()))
-                        .toList();
-                for (final Player trackPlayer : trackablePlayers) {
+                for (final Player trackPlayer : Bukkit.getOnlinePlayers()) {
+                    if (!trackPlayer.isValid()) continue;
+                    if (trackPlayer.getUniqueId().equals(player.getUniqueId())) continue;
                     final double newDistance = player.getLocation().distance(trackPlayer.getLocation());
                     if (newDistance < distance) {
                         distance = newDistance;

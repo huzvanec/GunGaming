@@ -127,6 +127,7 @@ public class Radar extends CustomItem implements SingleLoot {
 
             // add enemy player cursors
             for (final Player enemy : Bukkit.getOnlinePlayers()) {
+                if (!enemy.isValid()) continue; // don't show dead players
                 if (enemy.getUniqueId().equals(player.getUniqueId())) continue; // it's me lol
                 if (enemy.getGameMode() == GameMode.SPECTATOR) continue; // don't show spectators
                 final Location enemyLocation = enemy.getLocation();
