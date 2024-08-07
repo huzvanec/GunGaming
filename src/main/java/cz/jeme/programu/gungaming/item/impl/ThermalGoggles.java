@@ -67,6 +67,11 @@ public class ThermalGoggles extends CustomItem {
         return Component.text("Thermal Goggles");
     }
 
+    @Override
+    protected @NotNull Integer provideCustomModelData() {
+        return 1;
+    }
+
     private static final class Updater extends BukkitRunnable {
         private static final @NotNull EntityDataAccessor<Byte> DATA_SHARED_FLAGS_ID;
         private static final int FLAG_GLOWING;
