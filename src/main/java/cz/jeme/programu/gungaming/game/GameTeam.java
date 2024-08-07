@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-enum GameTeam {
+public enum GameTeam {
     BLUE("Blue", NamedTextColor.BLUE),
     RED("Red", NamedTextColor.RED),
     GREEN("Green", NamedTextColor.GREEN),

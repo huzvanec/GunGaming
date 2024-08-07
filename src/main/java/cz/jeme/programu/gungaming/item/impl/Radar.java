@@ -1,7 +1,10 @@
 package cz.jeme.programu.gungaming.item.impl;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.data.Data;
+import cz.jeme.programu.gungaming.game.Game;
+import cz.jeme.programu.gungaming.game.GameTeam;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.loot.SingleLoot;
@@ -125,22 +128,25 @@ public class Radar extends CustomItem implements SingleLoot {
                     true
             ));
 
-            // add enemy player cursors
-            for (final Player enemy : Bukkit.getOnlinePlayers()) {
-                if (!enemy.isValid()) continue; // don't show dead players
-                if (enemy.getUniqueId().equals(player.getUniqueId())) continue; // it's me lol
-                if (enemy.getGameMode() == GameMode.SPECTATOR) continue; // don't show spectators
-                final Location enemyLocation = enemy.getLocation();
-                final int mapX = (enemyLocation.getBlockX() - playerLocation.getBlockX()) * 2;
-                final int mapY = (enemyLocation.getBlockZ() - playerLocation.getBlockZ()) * 2;
+            // add other player cursors
+            for (final Player mapPlayer : Bukkit.getOnlinePlayers()) {
+                if (!mapPlayer.isValid()) continue; // don't show dead players
+                if (mapPlayer.getUniqueId().equals(player.getUniqueId())) continue; // it's me lol
+                if (mapPlayer.getGameMode() == GameMode.SPECTATOR) continue; // don't show spectators
+                final Location mapPlayerLocation = mapPlayer.getLocation();
+                final int mapX = (mapPlayerLocation.getBlockX() - playerLocation.getBlockX()) * 2;
+                final int mapY = (mapPlayerLocation.getBlockZ() - playerLocation.getBlockZ()) * 2;
                 if (Math.abs(mapX) >= MAP_SIZE || Math.abs(mapY) >= MAP_SIZE)
-                    continue; // the enemy is out of this map's scope
+                    continue; // the player is out of this map's scope
+                final boolean teammate = Game.running() &&
+                                         GameConfig.TEAM_PLAYERS.get() > 1 &&
+                                         GameTeam.ofPlayer(player).players().contains(mapPlayer);
                 cursors.addCursor(new MapCursor(
                         (byte) mapX, (byte) mapY,
-                        Maps.direction(enemy.getYaw()),
-                        MapCursor.Type.RED_MARKER,
+                        Maps.direction(mapPlayer.getYaw()),
+                        teammate ? MapCursor.Type.FRAME : MapCursor.Type.RED_MARKER,
                         true,
-                        Components.of("<red>" + enemy.getName())
+                        Components.of((teammate ? "<green>" : "<red>") + mapPlayer.getName())
                 ));
             }
 
