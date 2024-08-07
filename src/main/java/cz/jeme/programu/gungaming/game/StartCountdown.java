@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.game;
 
+import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
@@ -10,12 +11,10 @@ import org.jetbrains.annotations.NotNull;
 import java.time.Duration;
 
 final class StartCountdown extends Countdown {
-    private static final int DURATION = 30; // seconds
-
     private final @NotNull Game game;
 
     public StartCountdown(final @NotNull Game game) {
-        super(DURATION, null);
+        super(GameConfig.COUNTDOWN_SECONDS.get(), null);
         this.game = game;
     }
 

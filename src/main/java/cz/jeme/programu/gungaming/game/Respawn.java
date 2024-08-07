@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.game;
 
+import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.title.Title;
 import org.bukkit.GameMode;
@@ -14,8 +15,6 @@ import java.time.Duration;
 import java.util.Random;
 
 final class Respawn extends Countdown {
-
-    private static final int DURATION = 30; // seconds
     private static final @NotNull Random RANDOM = new Random();
 
     private final @NotNull Player player;
@@ -23,7 +22,7 @@ final class Respawn extends Countdown {
     private final @NotNull World world;
 
     public Respawn(final @NotNull Game game, final @NotNull Player player) {
-        super(DURATION, null);
+        super(GameConfig.RESPAWN_SECONDS.get(), null);
         this.game = game;
         this.player = player;
         player.setGameMode(GameMode.SPECTATOR);

@@ -1,17 +1,16 @@
 package cz.jeme.programu.gungaming.game;
 
+import cz.jeme.programu.gungaming.config.GameConfig;
 import net.kyori.adventure.bossbar.BossBar;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 final class GracePeriodCountdown extends Countdown {
-    private static final int DURATION = 3 /*\* 60 + 30*/; // seconds = 3 minutes and 30 seconds (extra 30 for the glide down)
-
     private final @NotNull Game game;
 
     public GracePeriodCountdown(final @NotNull Game game) {
-        super(DURATION, game.bossBar());
+        super(GameConfig.GRACE_PERIOD_SECONDS.get(), game.bossBar());
         this.game = game;
         game.bossBar().color(BossBar.Color.RED);
     }

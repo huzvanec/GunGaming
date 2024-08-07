@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.game;
 
+import cz.jeme.programu.gungaming.config.GameConfig;
 import net.kyori.adventure.bossbar.BossBar;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -9,8 +10,8 @@ final class GameCountdown extends Countdown {
 
     private final @NotNull Game game;
 
-    public GameCountdown(final @NotNull Game game, final int duration) {
-        super(duration, game.bossBar());
+    public GameCountdown(final @NotNull Game game) {
+        super(GameConfig.GAME_SECONDS.get(), game.bossBar());
         this.game = game;
         game.bossBar().color(BossBar.Color.RED);
     }

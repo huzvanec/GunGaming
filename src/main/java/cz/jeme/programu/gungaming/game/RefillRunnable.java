@@ -1,16 +1,16 @@
 package cz.jeme.programu.gungaming.game;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.loot.crate.CrateGenerator;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 final class RefillRunnable extends BukkitRunnable {
-    private static final int DURATION = 6 * 60 * 20; // 6 minutes
-
     public RefillRunnable() {
-        runTaskTimer(GunGaming.plugin(), DURATION, DURATION);
+        final int duration = GameConfig.REFILL_SECONDS.get() * 20;
+        runTaskTimer(GunGaming.plugin(), duration, duration);
     }
 
     @Override

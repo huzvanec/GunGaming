@@ -118,13 +118,13 @@ enum GameTeam {
     private static final GameTeam @NotNull [] VALUES = values();
     public static final int TEAM_COUNT = VALUES.length;
 
-    public static @NotNull GameTeam byOrdinal(final int ordinal) {
-        return Objects.requireNonNull(VALUES[ordinal], "Ordinal out of bounds!");
+    public static @NotNull GameTeam ofOrdinal(final int ordinal) {
+        return VALUES[ordinal];
     }
 
     private static final @NotNull Map<UUID, GameTeam> PLAYER_TEAMS = new HashMap<>();
 
-    public static @NotNull GameTeam byPlayer(final @NotNull Player player) {
+    public static @NotNull GameTeam ofPlayer(final @NotNull Player player) {
         return Objects.requireNonNull(PLAYER_TEAMS.get(player.getUniqueId()), "Unknown player!");
     }
 

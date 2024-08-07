@@ -89,6 +89,11 @@ public final class GGCommand {
                                 .then(literal("cancel")
                                         .executes(GGCommand::cancelGeneration)
                                 )
+                                .then(literal("air_drop")
+                                        .then(argument("pos", ArgumentTypes.blockPosition())
+                                                .executes(GGCommand::generateAirDrop)
+                                        )
+                                )
                         )
                         .then(literal("remove")
                                 .executes(GGCommand::removeCrates)
@@ -99,13 +104,6 @@ public final class GGCommand {
                                 )
                                 .then(literal("refill")
                                         .executes(GGCommand::refillCrates)
-                                )
-                        )
-                        .then(literal("airdrop")
-                                .then(literal("generate")
-                                        .then(argument("pos", ArgumentTypes.blockPosition())
-                                                .executes(GGCommand::generateAirDrop)
-                                        )
                                 )
                         )
                 )
@@ -144,6 +142,11 @@ public final class GGCommand {
                     })
                     .then(argument("value", type)
                             .executes(ctx -> {
+                                final CommandSender sender = ctx.getSource().getSender();
+                                if (Game.running()) {
+                                    sender.sendMessage(Components.prefix("<red>You can't modify configuration while a game is running!"));
+                                    return FAILURE;
+                                }
                                 // i love this part
                                 @SuppressWarnings("unchecked") final ConfigValue<Object> valueObj = (ConfigValue<Object>) value;
                                 valueObj.set(ctx.getArgument(
@@ -151,7 +154,6 @@ public final class GGCommand {
                                         Object.class
                                 ));
                                 final String valueStr = value.getString(((net.minecraft.commands.CommandSourceStack) ctx.getSource()));
-                                final CommandSender sender = ctx.getSource().getSender();
                                 sender.sendMessage(Components.prefix("<green>Set <aqua>" + literal + ":" + name
                                                                      + "</aqua> to <yellow>" + valueStr));
                                 return SUCCESS;

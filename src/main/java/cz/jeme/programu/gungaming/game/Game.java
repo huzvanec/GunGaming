@@ -74,6 +74,7 @@ public final class Game {
     @SuppressWarnings("UnstableApiUsage")
     public Game(final @NotNull CommandSourceStack source) {
         this.audience = source.getSender();
+        // error handling
         if (running()) {
             audience.sendMessage(Components.prefix("<red>A game is already running!"));
             throw new IllegalStateException("There can be only one instance of Game!");
@@ -103,7 +104,7 @@ public final class Game {
         centerZ = centerPos.getZ();
 
         spawn = new Location(world, centerX, 350, centerZ);
-
+        // setting up the world
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
         world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, false);
@@ -115,7 +116,7 @@ public final class Game {
         final WorldBorder worldBorder = world.getWorldBorder();
         worldBorder.setCenter(centerX, centerZ);
         worldBorder.setSize(size);
-
+        // setting up scoreboard
         scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         scoreboard.getObjectives().forEach(Objective::unregister);
         scoreboard.getTeams().forEach(Team::unregister);
@@ -124,9 +125,10 @@ public final class Game {
                 Criteria.DUMMY,
                 Components.of("<#00FFFF><b>" + Components.latinString("Kills"))
         );
+        // setting up teams
         final List<GameTeam> teams = new ArrayList<>();
         for (int i = 0; i < players.size() / teamPlayers; i++) {
-            final GameTeam team = GameTeam.byOrdinal(i);
+            final GameTeam team = GameTeam.ofOrdinal(i);
             team.register(kills);
             teams.add(team);
         }
@@ -137,7 +139,7 @@ public final class Game {
             final GameTeam team = teams.get(i / teamPlayers);
             team.addPlayer(player);
         }
-
+        // player init
         for (final Player player : players) {
             player.closeInventory();
             player.spigot().respawn();
@@ -224,9 +226,9 @@ public final class Game {
     void loadingEnd() {
         kills.setDisplaySlot(DisplaySlot.SIDEBAR);
         for (final Player player : players) {
-            final GameTeam team = GameTeam.byPlayer(player);
+            final GameTeam team = GameTeam.ofPlayer(player);
             final List<Player> teammates = team.players().stream()
-                    .filter(teammate -> !teammate.getUniqueId().equals(player.getUniqueId()))
+                    .filter(p -> !p.getUniqueId().equals(player.getUniqueId()))
                     .toList();
             final StringBuilder teammatesStr = new StringBuilder();
             for (int i = 0; i < teammates.size(); i++) {
@@ -235,6 +237,7 @@ public final class Game {
                 teammatesStr.append(teammate.getName());
                 if (i != teammates.size() - 1) teammatesStr.append(", ");
             }
+            player.playSound(INFO_SOUND, player);
             player.showTitle(Title.title(
                     team.color().append(Components.of("Team " + team.displayName())),
                     team.color().append(Components.of(teammatesStr.toString())),
@@ -273,7 +276,7 @@ public final class Game {
             GLIDING_DATA.write(player, false);
         }
 
-        runnables.add(new GameCountdown(this, duration * 60 + 15));
+        runnables.add(new GameCountdown(this));
         runnables.add(new AirDropRunnable(this));
         runnables.add(new RefillRunnable());
     }
@@ -343,7 +346,7 @@ public final class Game {
             player.setGameMode(GameMode.SPECTATOR);
             messages.forEach(player::sendMessage);
 
-            final int rank = sorted.indexOf(GameTeam.byPlayer(player).getScore()) + 1;
+            final int rank = sorted.indexOf(GameTeam.ofPlayer(player).getScore()) + 1;
             final String rankStr = switch (rank) {
                 case 1 -> GOLD + "1" + Components.latinString("st");
                 case 2 -> SILVER + "2" + Components.latinString("nd");
@@ -362,7 +365,7 @@ public final class Game {
 
     boolean removePlayer(final @NotNull Player player) {
         final boolean contained = players.remove(player);
-        if (contained) GameTeam.byPlayer(player).removePlayer(player);
+        if (contained) GameTeam.ofPlayer(player).removePlayer(player);
         if (GameTeam.activeTeams().size() <= 1) Bukkit.getScheduler().runTaskLater(
                 GunGaming.plugin(),
                 this::endGame,

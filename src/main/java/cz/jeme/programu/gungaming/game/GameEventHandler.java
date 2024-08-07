@@ -69,7 +69,6 @@ public final class GameEventHandler {
 
     public static void onPlayerDeath(final @NotNull PlayerDeathEvent event) {
         if (!Game.running()) return;
-        final Game game = Game.instance();
         final Player player = event.getPlayer();
         event.setCancelled(true);
         final Component deathMessage = event.deathMessage();
@@ -80,7 +79,7 @@ public final class GameEventHandler {
             );
         final Player killer = player.getKiller();
         if (killer != null && !killer.getUniqueId().equals(player.getUniqueId())) {
-            GameTeam.byPlayer(killer).addScore(killer, 1);
+            GameTeam.ofPlayer(killer).addScore(killer, 1);
         }
     }
 

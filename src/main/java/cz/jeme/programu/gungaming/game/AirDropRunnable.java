@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming.game;
 
 import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.loot.crate.CrateGenerator;
 import cz.jeme.programu.gungaming.loot.crate.impl.AirDrop;
 import net.kyori.adventure.sound.Sound;
@@ -20,8 +21,6 @@ final class AirDropRunnable extends BukkitRunnable {
     public static final @NotNull Sound AIR_DROP_AMBIENT_SOUND = Sound.sound(GunGaming.namespaced("block.air_drop.ambient"), Sound.Source.MASTER, 1, 1);
     public static final @NotNull Sound AIR_DROP_PING_SOUND = Sound.sound(GunGaming.namespaced("game.air_drop"), Sound.Source.MASTER, 1, 1);
 
-    private static final int MIN_MINUTES_SPAWN = 2;
-    private static final int MAX_MINUTES_SPAWN = 7;
     private static final int MIN_BORDER_RADIUS = 10;
 
     private final @NotNull Game game;
@@ -30,7 +29,7 @@ final class AirDropRunnable extends BukkitRunnable {
     public AirDropRunnable(final @NotNull Game game) {
         this.game = game;
         this.world = game.world();
-        final long duration = random.nextLong(MIN_MINUTES_SPAWN, MAX_MINUTES_SPAWN) * 1200;
+        final long duration = random.nextLong(GameConfig.AIR_DROP_MIN_SECONDS.get(), GameConfig.AIR_DROP_MAX_SECONDS.get()) * 20;
         runTaskTimer(GunGaming.plugin(), duration, duration);
     }
 
