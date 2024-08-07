@@ -1,12 +1,17 @@
 package cz.jeme.programu.gungaming.command;
 
 import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.config.ConfigValue;
+import cz.jeme.programu.gungaming.config.GameConfig;
+import cz.jeme.programu.gungaming.config.GenerationConfig;
 import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.loot.crate.CrateGenerator;
@@ -20,7 +25,7 @@ import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSele
 import io.papermc.paper.math.BlockPosition;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Bukkit;
+import net.minecraft.core.BlockPos;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -33,6 +38,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
 
 import static io.papermc.paper.command.brigadier.Commands.argument;
 import static io.papermc.paper.command.brigadier.Commands.literal;
@@ -63,13 +69,10 @@ public final class GGCommand {
                 .then(literal("version")
                         .executes(GGCommand::version)
                 )
-//                .then(literal("reload")
-//                        .executes(GGCommand::reload)
-//                )
                 .then(literal("give")
                         .then(argument("targets", ArgumentTypes.players())
-                                .then(argument("tag", new CustomItemTagCommandArgument())
-                                        .then(argument("item", new CustomItemCommandArgument())
+                                .then(argument("tag", new CustomItemTagArgument())
+                                        .then(argument("item", new CustomItemArgument())
                                                 .executes(ctx -> give(ctx, 1))
                                                 .then(argument("count", IntegerArgumentType.integer(1))
                                                         .executes(ctx -> give(ctx, IntegerArgumentType.getInteger(ctx, "count")))
@@ -81,31 +84,7 @@ public final class GGCommand {
                 .then(literal("crates")
                         .then(literal("generation")
                                 .then(literal("start")
-                                        .then(argument("width", IntegerArgumentType.integer(1, 10_000))
-                                                .then(argument("length", IntegerArgumentType.integer(1, 10_000))
-                                                        .executes(ctx -> {
-                                                            final Location location = ctx.getSource().getLocation();
-                                                            return generate(ctx, location.getBlockX(), location.getBlockZ(), 1000);
-                                                        })
-                                                        .then(argument("center_x", IntegerArgumentType.integer(-30_000_000, 30_000_000))
-                                                                .then(argument("center_z", IntegerArgumentType.integer(-30_000_000, 30_000_000))
-                                                                        .executes(ctx -> {
-                                                                            final int x = IntegerArgumentType.getInteger(ctx, "center_x");
-                                                                            final int z = IntegerArgumentType.getInteger(ctx, "center_z");
-                                                                            return generate(ctx, x, z, 1000);
-                                                                        })
-                                                                        .then(argument("bps", IntegerArgumentType.integer(100, 5000))
-                                                                                .executes(ctx -> {
-                                                                                    final int x = IntegerArgumentType.getInteger(ctx, "center_x");
-                                                                                    final int z = IntegerArgumentType.getInteger(ctx, "center_z");
-                                                                                    final int bps = IntegerArgumentType.getInteger(ctx, "bps");
-                                                                                    return generate(ctx, x, z, bps);
-                                                                                })
-                                                                        )
-                                                                )
-                                                        )
-                                                )
-                                        )
+                                        .executes(GGCommand::startGeneration)
                                 )
                                 .then(literal("cancel")
                                         .executes(GGCommand::cancelGeneration)
@@ -132,38 +111,7 @@ public final class GGCommand {
                 )
                 .then(literal("game")
                         .then(literal("start")
-                                .then(argument("size", IntegerArgumentType.integer(50, 10_000))
-                                        .executes(ctx -> {
-                                            final Location location = ctx.getSource().getLocation();
-                                            return startGame(ctx, location.getBlockX(), location.getBlockZ(), 1000, 20);
-                                        })
-                                        .then(argument("center_x", IntegerArgumentType.integer(-30_000_000, 30_000_000))
-                                                .then(argument("center_z", IntegerArgumentType.integer(-30_000_000, 30_000_000))
-                                                        .executes(ctx -> {
-                                                            final int x = IntegerArgumentType.getInteger(ctx, "center_x");
-                                                            final int z = IntegerArgumentType.getInteger(ctx, "center_z");
-                                                            return startGame(ctx, x, z, 1000, 20);
-                                                        })
-                                                        .then(argument("bps", IntegerArgumentType.integer(100, 5000))
-                                                                .executes(ctx -> {
-                                                                    final int x = IntegerArgumentType.getInteger(ctx, "center_x");
-                                                                    final int z = IntegerArgumentType.getInteger(ctx, "center_z");
-                                                                    final int bps = IntegerArgumentType.getInteger(ctx, "bps");
-                                                                    return startGame(ctx, x, z, bps, 20);
-                                                                })
-                                                                .then(argument("duration_minutes", IntegerArgumentType.integer(1, 1000))
-                                                                        .executes(ctx -> {
-                                                                            final int x = IntegerArgumentType.getInteger(ctx, "center_x");
-                                                                            final int z = IntegerArgumentType.getInteger(ctx, "center_z");
-                                                                            final int bps = IntegerArgumentType.getInteger(ctx, "bps");
-                                                                            final int duration = IntegerArgumentType.getInteger(ctx, "duration_minutes");
-                                                                            return startGame(ctx, x, z, bps, duration);
-                                                                        })
-                                                                )
-                                                        )
-                                                )
-                                        )
-                                )
+                                .executes(GGCommand::startGame)
                         )
                         .then(literal("stop")
                                 .executes(GGCommand::stopGame)
@@ -172,15 +120,50 @@ public final class GGCommand {
                                 .executes(GGCommand::endGame)
                         )
                 )
+                .then(literal("config")
+                        .then(configVisitor("game", GameConfig.values()))
+                        .then(configVisitor("generation", GenerationConfig.values()))
+                )
                 .build();
+    }
+
+    private static @NotNull LiteralArgumentBuilder<CommandSourceStack> configVisitor(final @NotNull String literal, final @NotNull Map<String, ConfigValue<?>> values) {
+        final LiteralArgumentBuilder<CommandSourceStack> builder = literal(literal);
+        for (final ConfigValue<?> value : values.values()) {
+            final ArgumentType<?> type = value.type();
+            final String name = value.name();
+            builder.then(literal(name)
+                    .executes(ctx -> {
+                        final CommandSender sender = ctx.getSource().getSender();
+                        final String valueStr = value.getString(((net.minecraft.commands.CommandSourceStack) ctx.getSource()));
+                        sender.sendMessage(Components.prefix(
+                                "<green><aqua>"
+                                + literal + ":" + name
+                                + "</aqua> is currently set to <yellow>" + valueStr));
+                        return SUCCESS;
+                    })
+                    .then(argument("value", type)
+                            .executes(ctx -> {
+                                // i love this part
+                                @SuppressWarnings("unchecked") final ConfigValue<Object> valueObj = (ConfigValue<Object>) value;
+                                valueObj.set(ctx.getArgument(
+                                        "value",
+                                        Object.class
+                                ));
+                                final String valueStr = value.getString(((net.minecraft.commands.CommandSourceStack) ctx.getSource()));
+                                final CommandSender sender = ctx.getSource().getSender();
+                                sender.sendMessage(Components.prefix("<green>Set <aqua>" + literal + ":" + name
+                                                                     + "</aqua> to <yellow>" + valueStr));
+                                return SUCCESS;
+                            })
+                    )
+            );
+        }
+        return builder;
     }
 
     private static int version(final @NotNull CommandContext<CommandSourceStack> ctx) {
         ctx.getSource().getSender().sendMessage(Components.prefix("<green>Running <#6786C8>Gun</#6786C8><#4C618D>Gaming</#4C618D> v" + GunGaming.plugin().getPluginMeta().getVersion()));
-        return SUCCESS;
-    }
-
-    private static int reload(final @NotNull CommandContext<CommandSourceStack> ctx) {
         return SUCCESS;
     }
 
@@ -244,16 +227,20 @@ public final class GGCommand {
         }
     }
 
-    private static int generate(final @NotNull CommandContext<CommandSourceStack> ctx, final int centerX, final int centerZ, final int bps) {
+    private static int startGeneration(final @NotNull CommandContext<CommandSourceStack> ctx) {
         final Location location = ctx.getSource().getLocation();
-        final int width = IntegerArgumentType.getInteger(ctx, "width");
-        final int length = IntegerArgumentType.getInteger(ctx, "length");
-        final int x1 = centerX - width / 2;
-        final int z1 = centerZ - length / 2;
+        final int width = GenerationConfig.WIDTH.get();
+        final int length = GenerationConfig.LENGTH.get();
+        final BlockPos center = GenerationConfig.CENTER.get()
+                .getBlockPos((net.minecraft.commands.CommandSourceStack) ctx.getSource());
+        final int x1 = center.getX() - width / 2;
+        final int z1 = center.getZ() - length / 2;
         final int x2 = x1 + width;
         final int z2 = z1 + length;
         final CommandSender sender = ctx.getSource().getSender();
-        return CrateGenerator.INSTANCE.generate(sender, location, x1, z1, x2, z2, bps) ? SUCCESS : FAILURE;
+        return CrateGenerator.INSTANCE.generate(sender, location, x1, z1, x2, z2, GenerationConfig.BPS.get())
+                ? SUCCESS
+                : FAILURE;
     }
 
     private static int removeCrates(final @NotNull CommandContext<CommandSourceStack> ctx) {
@@ -272,26 +259,14 @@ public final class GGCommand {
         return CrateGenerator.INSTANCE.cancel(ctx.getSource().getSender()) ? SUCCESS : FAILURE;
     }
 
-    private static int startGame(final @NotNull CommandContext<CommandSourceStack> ctx, final int centerX, final int centerZ, final int bps, final int duration) {
-        final CommandSender sender = ctx.getSource().getSender();
-        if (Game.running()) {
-            sender.sendMessage(Components.prefix("<red>A game is already running!"));
+    private static int startGame(final @NotNull CommandContext<CommandSourceStack> ctx) {
+        // errors are handled in Game constructor
+        try {
+            new Game(ctx.getSource());
+            return SUCCESS;
+        } catch (final IllegalStateException e) {
             return FAILURE;
         }
-        if (Bukkit.getOnlinePlayers().size() <= 1) {
-            sender.sendMessage(Components.prefix("<red>There must be at least 2 players online to start a game!"));
-            return FAILURE;
-        }
-        new Game(
-                sender,
-                ctx.getSource().getLocation(),
-                duration,
-                IntegerArgumentType.getInteger(ctx, "size"),
-                centerX,
-                centerZ,
-                bps
-        );
-        return SUCCESS;
     }
 
     private static int generateAirDrop(final @NotNull CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
@@ -315,7 +290,7 @@ public final class GGCommand {
             sender.sendMessage(Components.prefix("<red>No game is running!"));
             return FAILURE;
         }
-        Game.instance().stop();
+        Game.instance().stopGame();
         sender.sendMessage(Components.prefix("<green>Game stopped successfully"));
         return SUCCESS;
     }

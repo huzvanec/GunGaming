@@ -10,7 +10,6 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.kyori.adventure.key.KeyPattern;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -55,11 +54,7 @@ public final class GunGaming extends JavaPlugin {
         ReloadManager.INSTANCE.abortReloadAll(false);
         CrateGenerator.INSTANCE.removeCrates(null);
         if (!Game.running()) return;
-        final Game game = Game.instance();
-        for (final Player player : Bukkit.getOnlinePlayers()) {
-            player.activeBossBars().forEach(player::hideBossBar);
-            game.team().removePlayer(player);
-        }
+        Game.instance().stopGame();
     }
 
     public static @NotNull GunGaming plugin() {

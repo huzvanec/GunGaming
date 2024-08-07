@@ -89,6 +89,7 @@ public enum EventDistributor implements Listener {
         GunEventHandler.onEntityDamageByEntity(event);
         ThrowableEventHandler.onEntityDamageByEntity(event);
         MeleeEventHandler.onEntityDamageByEntity(event);
+        GameEventHandler.onEntityDamageByEntity(event);
     }
 
     @EventHandler

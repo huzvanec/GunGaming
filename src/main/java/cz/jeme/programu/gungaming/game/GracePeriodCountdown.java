@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 final class GracePeriodCountdown extends Countdown {
-    private static final int DURATION = 3 * 60 + 30; // seconds = 3 minutes and 30 seconds (extra 30 for the glide down)
+    private static final int DURATION = 3 /*\* 60 + 30*/; // seconds = 3 minutes and 30 seconds (extra 30 for the glide down)
 
     private final @NotNull Game game;
 

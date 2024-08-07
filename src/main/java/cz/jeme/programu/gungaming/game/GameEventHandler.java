@@ -16,7 +16,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scoreboard.Score;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -81,8 +80,7 @@ public final class GameEventHandler {
             );
         final Player killer = player.getKiller();
         if (killer != null && !killer.getUniqueId().equals(player.getUniqueId())) {
-            final Score score = game.kills().getScore(killer);
-            score.setScore(score.getScore() + 1);
+            GameTeam.byPlayer(killer).addScore(killer, 1);
         }
     }
 
@@ -164,5 +162,16 @@ public final class GameEventHandler {
     public static void onPlayerAdvancementCriterionGrant(final @NotNull PlayerAdvancementCriterionGrantEvent event) {
         if (!Game.running()) return;
         event.setCancelled(true);
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    public static void onEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent event) {
+        if (!Game.running()) return;
+        if (!(event.getEntity() instanceof Player)) return;
+        if (!(event.getDamageSource().getCausingEntity() instanceof final Player damager)) return;
+        if (Game.instance().gracePeriod()) {
+            event.setCancelled(true);
+            damager.sendActionBar(Components.of("<red>You can't damage other players during grace period!"));
+        }
     }
 }

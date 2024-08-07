@@ -28,7 +28,10 @@ public final class MeleeEventHandler {
 
         final ItemStack item = player.getInventory().getItemInMainHand();
 
-        if (!Melee.is(item)) return;
+        if (!Melee.is(item)) {
+            GlobalEventHandler.resetNoDamageTicks(attacked);
+            return;
+        }
         Melee.of(item).onHit(event, item);
     }
 
