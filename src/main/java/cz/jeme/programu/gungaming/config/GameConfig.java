@@ -35,7 +35,7 @@ public final class GameConfig {
     );
     public static final @NotNull ConfigValue<Integer> TEAM_PLAYERS = value(
             "team_players",
-            IntegerArgumentType.integer(1, 4),
+            IntegerArgumentType.integer(1, 10),
             1
     );
     public static final @NotNull ConfigValue<Coordinates> CENTER = value(
