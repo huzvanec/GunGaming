@@ -28,7 +28,7 @@ public abstract class Melee extends Weapon {
             meta.addAttributeModifier(
                     Attribute.GENERIC_ATTACK_DAMAGE,
                     new AttributeModifier(
-                            GunGaming.namespaced(key.value() + "_attack_damage"),
+                            GunGaming.namespaced(key.value() + "_generic_attack_damage"),
                             damage - 1,
                             AttributeModifier.Operation.ADD_NUMBER,
                             EquipmentSlotGroup.MAINHAND
@@ -37,7 +37,7 @@ public abstract class Melee extends Weapon {
             meta.addAttributeModifier(
                     Attribute.GENERIC_ATTACK_KNOCKBACK,
                     new AttributeModifier(
-                            GunGaming.namespaced(key.value() + "_attack_knockback"),
+                            GunGaming.namespaced(key.value() + "_generic_attack_knockback"),
                             knockback,
                             AttributeModifier.Operation.ADD_NUMBER,
                             EquipmentSlotGroup.MAINHAND
@@ -46,7 +46,7 @@ public abstract class Melee extends Weapon {
             meta.addAttributeModifier(
                     Attribute.GENERIC_ATTACK_SPEED,
                     new AttributeModifier(
-                            GunGaming.namespaced(key.value() + "_attack_speed"),
+                            GunGaming.namespaced(key.value() + "_generic_attack_speed"),
                             attackSpeed,
                             AttributeModifier.Operation.ADD_NUMBER,
                             EquipmentSlotGroup.MAINHAND

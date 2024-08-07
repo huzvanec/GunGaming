@@ -14,6 +14,8 @@ import net.minecraft.world.entity.Entity;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -29,6 +31,14 @@ import java.util.List;
 
 public class ThermalGoggles extends CustomItem {
     protected ThermalGoggles() {
+        item.editMeta(meta -> meta.addAttributeModifier(
+                Attribute.GENERIC_ARMOR,
+                new AttributeModifier(
+                        GunGaming.namespaced(key.value() + "_generic_armor"),
+                        0,
+                        AttributeModifier.Operation.ADD_NUMBER
+                )
+        ));
         new Updater();
     }
 

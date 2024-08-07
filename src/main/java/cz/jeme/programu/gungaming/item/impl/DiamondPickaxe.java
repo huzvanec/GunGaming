@@ -20,7 +20,7 @@ public class DiamondPickaxe extends CustomItem implements SingleLoot {
         item.editMeta(meta -> meta.addAttributeModifier(
                 Attribute.GENERIC_ATTACK_SPEED,
                 new AttributeModifier(
-                        GunGaming.namespaced(key.value() + "_attack_speed"),
+                        GunGaming.namespaced(key.value() + "_generic_attack_speed"),
                         -3,
                         AttributeModifier.Operation.ADD_NUMBER,
                         EquipmentSlotGroup.MAINHAND
