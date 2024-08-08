@@ -394,7 +394,7 @@ public final class Game {
 
     boolean removePlayer(final @NotNull Player player) {
         final boolean contained = players.remove(player);
-        Bukkit.getScheduler().runTaskLater(
+        Bukkit.getScheduler().runTask(
                 GunGaming.plugin(),
                 () -> {
                     if (contained) {
@@ -411,8 +411,7 @@ public final class Game {
                             );
                     }
                     if (GameTeam.activeTeams().size() <= 1) endGame();
-                },
-                1L
+                }
         );
         return contained;
     }

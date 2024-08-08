@@ -88,6 +88,7 @@ public class RocketLauncher extends Gun implements MagazineDisabled, SilencerDis
     @Override
     protected void onShoot(final @NotNull PlayerInteractEvent event, final @NotNull AbstractArrow bullet) {
         bullet.setGravity(false);
+        ((SpectralArrow) bullet).setGlowingTicks(0);
 
         final Vector velocity = bullet.getVelocity();
         final Location location = bullet.getLocation();
