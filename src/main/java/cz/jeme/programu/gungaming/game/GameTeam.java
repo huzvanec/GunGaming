@@ -33,6 +33,7 @@ public enum GameTeam {
     private final @NotNull NamedTextColor color;
     private final @NotNull Component colorComponent;
     private final @NotNull List<Player> players = new ArrayList<>();
+    private final @NotNull List<Player> removedPlayers = new ArrayList<>();
     private @Nullable Team team = null;
     private @Nullable Objective kills = null;
     private int score = 0;
@@ -71,6 +72,7 @@ public enum GameTeam {
         players.forEach(player -> PLAYER_TEAMS.remove(player.getUniqueId()));
         ACTIVE_TEAMS.remove(this);
         players.clear();
+        removedPlayers.clear();
     }
 
     private @NotNull Team team() {
@@ -88,31 +90,45 @@ public enum GameTeam {
         PLAYER_TEAMS.put(player.getUniqueId(), this);
     }
 
-    public void removePlayer(final @NotNull Player player) {
-        players.remove(player);
-        PLAYER_TEAMS.remove(player.getUniqueId());
-        if (players.isEmpty()) unregister();
+    public boolean removePlayer(final @NotNull Player player) {
+        if (players.remove(player)) {
+            removedPlayers.add(player);
+            PLAYER_TEAMS.remove(player.getUniqueId());
+            if (players.isEmpty()) {
+                unregister();
+                return true;
+            }
+        }
+        return false;
     }
 
-    public int getScore() {
+    public int score() {
         return score;
     }
 
-    public int getScore(final @NotNull Player player) {
+    public int score(final @NotNull Player player) {
+        if (!players.contains(player))
+            throw new IllegalArgumentException("This player is not on this team!");
         return kills().getScore(player).getScore();
     }
 
-    public void addScore(final @NotNull Player player, final int kills) {
-        kills().getScore(player).setScore(getScore(player) + kills);
-        score += kills;
+    public void addScore(final @NotNull Player player, final int score) {
+        if (!players.contains(player))
+            throw new IllegalArgumentException("This player is not on this team!");
+        kills().getScore(player).setScore(score(player) + score);
+        this.score += score;
     }
 
-    public void removeScore(final @NotNull Player player, final int kills) {
-        addScore(player, -kills);
+    public void removeScore(final @NotNull Player player, final int score) {
+        addScore(player, -score);
     }
 
     public @NotNull List<Player> players() {
         return players;
+    }
+
+    public @NotNull List<Player> removedPlayers() {
+        return removedPlayers;
     }
 
     private static final GameTeam @NotNull [] VALUES = values();

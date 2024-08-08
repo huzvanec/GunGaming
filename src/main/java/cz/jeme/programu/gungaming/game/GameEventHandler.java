@@ -127,8 +127,8 @@ public final class GameEventHandler {
                 Title.Times.times(Duration.ZERO, Duration.ofSeconds(5), Duration.ofSeconds(2))
         ));
         event.joinMessage(Components.of("<#00FFFF>\uD83D\uDC41 ").append(
-                player.name().append(
-                        Component.text(" started spectating")
+                player.teamDisplayName().append(
+                        Components.of("<#00FFFF> started spectating")
                 )
         ));
     }
@@ -143,16 +143,16 @@ public final class GameEventHandler {
                 player.getWorld().dropItemNaturally(player.getLocation(), item);
             }
             player.getInventory().clear();
-            event.quitMessage(Components.of("<#FF0000>☠ ").append(
-                            player.name().append(
-                                    Component.text(" left and got eliminated")
+            event.quitMessage(Components.of("<#FF0000>❌ ").append(
+                            player.teamDisplayName().append(
+                                    Components.of("<#FF0000> left the game and got eliminated")
                             )
                     )
             );
         } else {
             event.quitMessage(Components.of("<#00FFFF>\uD83D\uDC41 ").append(
-                    player.name().append(
-                            Component.text(" quit spectating")
+                    player.teamDisplayName().append(
+                            Components.of("<#00FFFF> quit spectating")
                     )
             ));
         }

@@ -171,6 +171,18 @@ public final class Game {
 
         teleportPlayers();
 
+        announceTeams();
+        final BukkitRunnable runnable = new BukkitRunnable() {
+            @Override
+            public void run() {
+                generateCrates();
+            }
+        };
+        runnable.runTaskLater(GunGaming.plugin(), GameConfig.TEAM_ANNOUNCE_SECONDS.get() * 20);
+        runnables.add(runnable);
+    }
+
+    private void generateCrates() {
         runnables.add(new Loading(this));
 
         CrateGenerator.INSTANCE.generate(
@@ -223,24 +235,24 @@ public final class Game {
         }
     }
 
-    void loadingEnd() {
+    private void announceTeams() {
         kills.setDisplaySlot(DisplaySlot.SIDEBAR);
         for (final Player player : players) {
             final GameTeam team = GameTeam.ofPlayer(player);
             final List<Player> teammates = team.players().stream()
                     .filter(p -> !p.getUniqueId().equals(player.getUniqueId()))
                     .toList();
-            final StringBuilder teammatesStr = new StringBuilder();
+            final StringBuilder teammatesStrB = new StringBuilder();
             for (int i = 0; i < teammates.size(); i++) {
-                if (i == 0) teammatesStr.append("w/ ");
+                if (i == 0) teammatesStrB.append("w/ ");
                 final Player teammate = teammates.get(i);
-                teammatesStr.append(teammate.getName());
-                if (i != teammates.size() - 1) teammatesStr.append(", ");
+                teammatesStrB.append(teammate.getName());
+                if (i != teammates.size() - 1) teammatesStrB.append(", ");
             }
             player.playSound(INFO_SOUND, player);
             player.showTitle(Title.title(
                     team.color().append(Components.of("Team " + team.displayName())),
-                    team.color().append(Components.of(teammatesStr.toString())),
+                    team.color().append(Components.of(teammatesStrB.toString())),
                     Title.Times.times(
                             Duration.ZERO,
                             Duration.ofSeconds(GameConfig.TEAM_ANNOUNCE_SECONDS.get() - 1),
@@ -248,14 +260,10 @@ public final class Game {
                     )
             ));
         }
-        final BukkitRunnable runnable = new BukkitRunnable() {
-            @Override
-            public void run() {
-                runnables.add(new StartCountdown(Game.this));
-            }
-        };
-        runnable.runTaskLater(GunGaming.plugin(), GameConfig.TEAM_ANNOUNCE_SECONDS.get() * 20);
-        runnables.add(runnable);
+    }
+
+    void loadingEnd() {
+        runnables.add(new StartCountdown(Game.this));
     }
 
     void startGame() {
@@ -281,11 +289,6 @@ public final class Game {
         runnables.add(new RefillRunnable());
     }
 
-    private static final @NotNull String GOLD = "<#D4AF37>";
-    private static final @NotNull String SILVER = "<#C0C0C0>";
-    private static final @NotNull String BRONZE = "<#D58E00>";
-    private static final @NotNull String PEWTER = "<#E9EAEC>";
-
     private void stop() {
         instance = null;
         runnables.stream()
@@ -310,54 +313,70 @@ public final class Game {
         }
     }
 
+    private static @NotNull String rankToColor(final int rank) {
+        return switch (rank) {
+            case 0 -> throw new IllegalArgumentException("Rank must be >= 1!");
+            case 1 -> "<#D4AF37>"; // gold
+            case 2 -> "<#C0C0C0>"; // silver
+            case 3 -> "<#D58E00>"; // bronze
+            default -> "<#E9EAEC>"; // pewter
+        };
+    }
+
+    private static @NotNull Component parseRank(final int rank) {
+        final String color = rankToColor(rank);
+        return switch (rank) {
+            case 1 -> Components.of(color + "1" + Components.latinString("st"));
+            case 2 -> Components.of(color + "2" + Components.latinString("nd"));
+            case 3 -> Components.of(color + "3" + Components.latinString("rd"));
+            default -> Components.of(color + rank + Components.latinString("th"));
+        };
+    }
+
     public void endGame() {
         if (players.isEmpty()) return; // just a precaution
-        final Map<Integer, List<String>> scores = new HashMap<>();
+        // read team scores
+        final Map<Integer, List<GameTeam>> scoreTeams = new TreeMap<>(Collections.reverseOrder());
         for (final GameTeam team : GameTeam.activeTeams()) {
-            final int score = team.getScore();
-            scores.putIfAbsent(score, new ArrayList<>());
-            final String color = Components.toString(team.color());
-            for (final Player player : team.players())
-                scores.get(score).add(color + player.getName());
+            final int score = team.score();
+            scoreTeams.putIfAbsent(score, new ArrayList<>());
+            scoreTeams.get(score).add(team);
         }
-        final List<Integer> sorted = new ArrayList<>(scores.keySet());
-        sorted.sort(Collections.reverseOrder());
+        // send messages to the whole server
         final List<Component> messages = new ArrayList<>();
         messages.add(Components.of("<#00FF00>=== Game Finished ==="));
-        if (!sorted.isEmpty()) {
-            messages.add(Components.of(
-                    GOLD + "<b>1"
-                    + Components.latinString("st") + ": "
-                    + String.join(GOLD + ", ", scores.get(sorted.getFirst()))));
-            if (sorted.size() > 1) {
-                messages.add(Components.of(
-                        SILVER + "<b>2"
-                        + Components.latinString("nd") + ": "
-                        + String.join(SILVER + ", ", scores.get(sorted.get(1)))));
-                if (sorted.size() > 2) {
-                    messages.add(Components.of(
-                            BRONZE + "<b>3"
-                            + Components.latinString("rd") + ": "
-                            + String.join(BRONZE + ", ", scores.get(sorted.get(1)))));
+        int rank = 1;
+        for (final Map.Entry<Integer, List<GameTeam>> entry : scoreTeams.entrySet()) {
+            final int score = entry.getKey();
+            final List<GameTeam> teams = entry.getValue();
+            final Component rankComponent = parseRank(rank);
+
+            final List<String> players = new ArrayList<>();
+            for (final GameTeam team : teams) {
+                final String color = Components.toString(team.color());
+                final List<Player> teamPlayers = new ArrayList<>(team.players());
+                // title start
+                for (final Player player : teamPlayers) {
+                    player.showTitle(Title.title(
+                            Components.of("<b>").append(rankComponent),
+                            Components.of("<gold>" + Components.latinString("You finished")),
+                            Title.Times.times(Duration.ZERO, Duration.ofHours(1), Duration.ZERO)
+                    ));
                 }
+                // title end
+                teamPlayers.addAll(team.removedPlayers());
+                teamPlayers.forEach(player -> players.add(color + player.getName()));
             }
+            final String color = rankToColor(rank);
+            messages.add(Components.of("<b>").append(rankComponent.append(Components.of(
+                    " [" + score + "]:"
+                    + String.join(color + ", ", players)
+            ))));
+            rank++;
         }
-        for (final Player player : players) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
             player.setGameMode(GameMode.SPECTATOR);
             messages.forEach(player::sendMessage);
-
-            final int rank = sorted.indexOf(GameTeam.ofPlayer(player).getScore()) + 1;
-            final String rankStr = switch (rank) {
-                case 1 -> GOLD + "1" + Components.latinString("st");
-                case 2 -> SILVER + "2" + Components.latinString("nd");
-                case 3 -> BRONZE + "3" + Components.latinString("rd");
-                default -> PEWTER + rank + Components.latinString("th");
-            };
-            player.showTitle(Title.title(
-                    Components.of("<b>" + rankStr),
-                    Components.of("<gold>" + Components.latinString("You finished")),
-                    Title.Times.times(Duration.ZERO, Duration.ofHours(1), Duration.ZERO)
-            ));
             player.playSound(END_SOUND, player);
         }
         stop();
@@ -365,10 +384,24 @@ public final class Game {
 
     boolean removePlayer(final @NotNull Player player) {
         final boolean contained = players.remove(player);
-        if (contained) GameTeam.ofPlayer(player).removePlayer(player);
-        if (GameTeam.activeTeams().size() <= 1) Bukkit.getScheduler().runTaskLater(
+        Bukkit.getScheduler().runTaskLater(
                 GunGaming.plugin(),
-                this::endGame,
+                () -> {
+                    if (contained) {
+                        final GameTeam team = GameTeam.ofPlayer(player);
+                        if (team.removePlayer(player) && teamPlayers > 1)
+                            Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(
+                                            Components.of("<#FF0000>❌ The ").append(
+                                                    team.color().append(Components.of(
+                                                            team.displayName()
+                                                            + "<#FF0000> team got eliminated"
+                                                    ))
+                                            )
+                                    )
+                            );
+                    }
+                    if (GameTeam.activeTeams().size() <= 1) endGame();
+                },
                 1L
         );
         return contained;
