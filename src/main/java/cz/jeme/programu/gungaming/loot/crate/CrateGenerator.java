@@ -108,7 +108,9 @@ public enum CrateGenerator {
                 audience.sendMessage(Components.prefix("<red>No crates to clear!"));
             return false;
         }
-        inventories.values().forEach(info -> info.inventory().clear());
+        inventories.values().stream()
+                .filter(info -> info.crate().modifyContents())
+                .forEach(info -> info.inventory().clear());
         if (audience != null)
             audience.sendMessage(Components.prefix("<green>Crates cleared successfully"));
         return true;
@@ -123,7 +125,7 @@ public enum CrateGenerator {
         }
         clearCrates(null);
         for (final CrateInfo info : inventories.values()) {
-            if (!info.crate().refill()) continue;
+            if (!info.crate().modifyContents()) continue;
             final Inventory inventory = info.inventory();
             inventory.setContents(LootGenerator.INSTANCE.generate(info.crate(), inventory.getSize()));
         }

@@ -65,7 +65,7 @@ public class AirDrop extends Crate {
     }
 
     @Override
-    protected boolean provideRefill() {
+    protected boolean provideModifyContents() {
         return false;
     }
 }

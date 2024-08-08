@@ -30,7 +30,7 @@ final class AirDropRunnable extends BukkitRunnable {
         this.game = game;
         this.world = game.world();
         final long duration = random.nextLong(GameConfig.AIR_DROP_MIN_SECONDS.get(), GameConfig.AIR_DROP_MAX_SECONDS.get()) * 20;
-        runTaskTimer(GunGaming.plugin(), duration, duration);
+        runTaskLater(GunGaming.plugin(), duration);
     }
 
     @Override
@@ -59,6 +59,8 @@ final class AirDropRunnable extends BukkitRunnable {
                             break generating;
                         }
                     }
+                    game.runnables.remove(this);
+                    game.runnables.add(new AirDropRunnable(game));
                     if (!success)
                         throw new RuntimeException("Could not generate air drop in 1000 attempts!");
 

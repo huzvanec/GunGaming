@@ -71,7 +71,7 @@ public final class Game {
     private final @NotNull Location spawn;
     private final @NotNull Objective kills;
     private final @NotNull Scoreboard scoreboard;
-    private final @NotNull List<BukkitRunnable> runnables = new ArrayList<>();
+    final @NotNull List<BukkitRunnable> runnables = new ArrayList<>();
     private final @NotNull List<Player> players;
     private boolean gracePeriod = true;
 
@@ -379,7 +379,7 @@ public final class Game {
             }
             final String color = rankToColor(rank);
             messages.add(Components.of("<b>").append(rankComponent.append(Components.of(
-                    " [" + score + "]:"
+                    " [" + score + "]: "
                     + String.join(color + ", ", players)
             ))));
             rank++;

@@ -20,7 +20,7 @@ public abstract class Crate extends CustomElement {
     protected final @NotNull Material material = provideMaterial();
     protected final double fillPercentage = provideFillPercentage();
     protected final double spawnPercentage = provideSpawnPercentage();
-    private final boolean refill = provideRefill();
+    private final boolean modifyContents = provideModifyContents();
 
     protected Crate() {
         final Map<Rarity, Integer> tempRarityChances = new HashMap<>(provideRarityChances());
@@ -51,7 +51,7 @@ public abstract class Crate extends CustomElement {
 
     protected abstract double provideSpawnPercentage();
 
-    protected boolean provideRefill() {
+    protected boolean provideModifyContents() {
         return true;
     }
 
@@ -81,8 +81,8 @@ public abstract class Crate extends CustomElement {
         return spawnPercentage;
     }
 
-    public final boolean refill() {
-        return refill;
+    public final boolean modifyContents() {
+        return modifyContents;
     }
 
     protected void generated(final @NotNull Block block, final @NotNull Inventory inventory) {
