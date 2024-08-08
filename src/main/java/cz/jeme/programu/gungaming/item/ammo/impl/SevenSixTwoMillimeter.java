@@ -24,7 +24,7 @@ public class SevenSixTwoMillimeter extends Ammo {
 
     @Override
     protected int provideMinAmount() {
-        return 5;
+        return 3;
     }
 
     @Override

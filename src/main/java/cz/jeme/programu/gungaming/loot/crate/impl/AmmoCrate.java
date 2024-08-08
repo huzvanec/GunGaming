@@ -18,9 +18,9 @@ public class AmmoCrate extends Crate {
     @Override
     protected @NotNull Map<Rarity, Integer> provideRarityChances() {
         return Map.of(
-                Rarity.COMMON, 14,
-                Rarity.UNCOMMON, 12,
-                Rarity.RARE, 8,
+                Rarity.COMMON, 10,
+                Rarity.UNCOMMON, 8,
+                Rarity.RARE, 5,
                 Rarity.EPIC, 3,
                 Rarity.LEGENDARY, 1
         );
@@ -33,12 +33,12 @@ public class AmmoCrate extends Crate {
 
     @Override
     protected double provideFillPercentage() {
-        return .4;
+        return .3;
     }
 
     @Override
     protected double provideSpawnPercentage() {
-        return .00012;
+        return .00013;
     }
 
     @Override
