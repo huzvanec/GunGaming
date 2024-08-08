@@ -90,7 +90,7 @@ public final class Game {
         }
         if (players.size() / teamPlayers <= 1) {
             audience.sendMessage(Components.prefix("<red>There must be at least 2 teams to start a game!"));
-//            throw new IllegalStateException("Not enough players to start a game!");
+            throw new IllegalStateException("Not enough players to start a game!");
         }
         if (players.size() / teamPlayers > GameTeam.TEAM_COUNT) {
             audience.sendMessage(Components.prefix("<red>Too many players for this team configuration!"));
