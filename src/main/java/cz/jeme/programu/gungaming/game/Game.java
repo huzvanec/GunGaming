@@ -1,9 +1,11 @@
 package cz.jeme.programu.gungaming.game;
 
+import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.config.GenerationConfig;
 import cz.jeme.programu.gungaming.data.Data;
+import cz.jeme.programu.gungaming.item.tracker.TeammateTracker;
 import cz.jeme.programu.gungaming.loot.crate.CrateGenerator;
 import cz.jeme.programu.gungaming.util.Components;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -20,6 +22,8 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
 import org.jetbrains.annotations.NotNull;
@@ -86,7 +90,7 @@ public final class Game {
         }
         if (players.size() / teamPlayers <= 1) {
             audience.sendMessage(Components.prefix("<red>There must be at least 2 teams to start a game!"));
-            throw new IllegalStateException("Not enough players to start a game!");
+//            throw new IllegalStateException("Not enough players to start a game!");
         }
         if (players.size() / teamPlayers > GameTeam.TEAM_COUNT) {
             audience.sendMessage(Components.prefix("<red>Too many players for this team configuration!"));
@@ -139,6 +143,9 @@ public final class Game {
             final GameTeam team = teams.get(i / teamPlayers);
             team.addPlayer(player);
         }
+
+        final ItemStack teammateTracker = CustomElement.of(TeammateTracker.class).item();
+
         // player init
         for (final Player player : players) {
             player.closeInventory();
@@ -146,7 +153,9 @@ public final class Game {
             player.setGameMode(GameMode.SPECTATOR);
             FROZEN_DATA.write(player, true);
             player.clearActivePotionEffects();
-            player.getInventory().clear();
+            final PlayerInventory inventory = player.getInventory();
+            inventory.clear();
+            inventory.setHeldItemSlot(0);
             player.setHealth(20);
             Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).setBaseValue(20);
             player.setAbsorptionAmount(0);
@@ -162,6 +171,7 @@ public final class Game {
                 final AdvancementProgress progress = player.getAdvancementProgress(advancement);
                 advancement.getCriteria().forEach(progress::revokeCriteria);
             }
+            if (teamPlayers > 1) inventory.setItem(8, teammateTracker);
         }
 
         xMin = centerX - size / 2;

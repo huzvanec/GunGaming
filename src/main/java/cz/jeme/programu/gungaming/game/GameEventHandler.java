@@ -2,13 +2,12 @@ package cz.jeme.programu.gungaming.game;
 
 import com.destroystokyo.paper.event.player.PlayerAdvancementCriterionGrantEvent;
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.item.tracker.TeammateTracker;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -16,6 +15,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -67,11 +67,23 @@ public final class GameEventHandler {
         event.getInventory().setResult(ItemStack.empty());
     }
 
+    private static void dropPlayerStuff(final @NotNull Player player) {
+        final PlayerInventory inventory = player.getInventory();
+        final World world = player.getWorld();
+        for (final ItemStack item : inventory) {
+            if (item == null) continue;
+            if (CustomItem.is(item, TeammateTracker.class)) continue;
+            world.dropItemNaturally(player.getLocation(), item);
+            item.setAmount(0);
+        }
+    }
+
     public static void onPlayerDeath(final @NotNull PlayerDeathEvent event) {
         if (!Game.running()) return;
         final Player player = event.getPlayer();
         event.setCancelled(true);
         final Component deathMessage = event.deathMessage();
+        dropPlayerStuff(player);
         new Respawn(Objects.requireNonNull(Game.instance()), player);
         if (deathMessage != null)
             Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(
@@ -138,11 +150,7 @@ public final class GameEventHandler {
         final Player player = event.getPlayer();
         final boolean gamePlayer = Game.instance().removePlayer(player);
         if (gamePlayer) {
-            for (final ItemStack item : player.getInventory()) {
-                if (item == null) continue;
-                player.getWorld().dropItemNaturally(player.getLocation(), item);
-            }
-            player.getInventory().clear();
+            dropPlayerStuff(player);
             event.quitMessage(Components.of("<#FF0000>❌ ").append(
                             player.teamDisplayName().append(
                                     Components.of("<#FF0000> left the game and got eliminated")

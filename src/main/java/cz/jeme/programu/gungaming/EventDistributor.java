@@ -11,6 +11,7 @@ import cz.jeme.programu.gungaming.item.gun.GunEventHandler;
 import cz.jeme.programu.gungaming.item.impl.GrapplingHook;
 import cz.jeme.programu.gungaming.item.melee.MeleeEventHandler;
 import cz.jeme.programu.gungaming.item.throwable.ThrowableEventHandler;
+import cz.jeme.programu.gungaming.item.tracker.TrackerEventHandler;
 import cz.jeme.programu.gungaming.loot.crate.CrateEventHandler;
 import io.papermc.paper.event.player.PlayerStopUsingItemEvent;
 import org.bukkit.event.EventHandler;
@@ -58,6 +59,7 @@ public enum EventDistributor implements Listener {
     private static void onPlayerDropItem(final @NotNull PlayerDropItemEvent event) {
         GunEventHandler.onPlayerDropItem(event);
         AttachmentEventHandler.onPlayerDropItem(event);
+        TrackerEventHandler.onPlayerDropItem(event);
     }
 
     @EventHandler
@@ -76,6 +78,7 @@ public enum EventDistributor implements Listener {
     private static void onInventoryClick(final @NotNull InventoryClickEvent event) {
         GunEventHandler.onInventoryClick(event);
         AttachmentEventHandler.onInventoryClick(event);
+        TrackerEventHandler.onInventoryClick(event);
     }
 
     @EventHandler
@@ -150,7 +153,7 @@ public enum EventDistributor implements Listener {
         GunEventHandler.onEntityShootBow(event);
     }
 
-    private static final @NotNull GrapplingHook GRAPPLING_HOOK = CustomItem.of(GrapplingHook.class);
+    private static final @NotNull GrapplingHook GRAPPLING_HOOK = CustomElement.of(GrapplingHook.class);
 
     @EventHandler
     private static void onPlayerFish(final @NotNull PlayerFishEvent event) {

@@ -19,20 +19,13 @@ final class Respawn extends Countdown {
 
     private final @NotNull Player player;
     private final @NotNull Game game;
-    private final @NotNull World world;
 
     public Respawn(final @NotNull Game game, final @NotNull Player player) {
         super(GameConfig.RESPAWN_SECONDS.get(), null);
         this.game = game;
         this.player = player;
         player.setGameMode(GameMode.SPECTATOR);
-        world = player.getWorld();
-        final PlayerInventory inventory = player.getInventory();
-        for (final ItemStack item : inventory) {
-            if (item == null) continue;
-            world.dropItemNaturally(player.getLocation(), item);
-        }
-        inventory.clear();
+        player.getInventory().setHeldItemSlot(0);
     }
 
     @Override
