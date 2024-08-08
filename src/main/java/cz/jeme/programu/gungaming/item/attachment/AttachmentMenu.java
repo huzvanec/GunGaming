@@ -90,6 +90,7 @@ public final class AttachmentMenu {
         final ItemStack clickedItem = event.getCurrentItem();
         if (clickedItem == null) return;
         final int slot = event.getSlot();
+        final PlayerInventory playerInventory = event.getWhoClicked().getInventory();
         final boolean placeholder = PlaceholderHelper.PLACEHOLDER_DATA.read(clickedItem)
                 .orElse(false);
         final boolean disabled = PlaceholderHelper.DISABLED_DATA.read(clickedItem)
@@ -115,7 +116,7 @@ public final class AttachmentMenu {
                 event.setCancelled(true);
             }
             case SHIFT_LEFT, SHIFT_RIGHT -> {
-                if (placeholder || disabled) {
+                if (placeholder || disabled || playerInventory.firstEmpty() == -1) {
                     event.setCancelled(true);
                     return;
                 }
@@ -124,7 +125,6 @@ public final class AttachmentMenu {
             case NUMBER_KEY -> {
                 event.setCancelled(true);
                 final int hotbarSlot = event.getHotbarButton();
-                final PlayerInventory playerInventory = event.getWhoClicked().getInventory();
                 final ItemStack hotbarItem = playerInventory.getItem(hotbarSlot);
                 if (!disabled && checkAttachmentSlot(hotbarItem, slot)) {
                     ItemStack clickedItemBackup = null;
