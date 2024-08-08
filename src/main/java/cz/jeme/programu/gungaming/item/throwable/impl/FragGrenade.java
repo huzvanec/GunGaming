@@ -16,7 +16,7 @@ public class FragGrenade extends Grenade {
 
     @Override
     protected double provideMaxDamage() {
-        return 32D;
+        return 22D;
     }
 
     @Override

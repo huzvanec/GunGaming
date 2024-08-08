@@ -9,7 +9,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class SmallGrenade extends Grenade {
-    public static final double MAX_DAMAGE = 16;
+    public static final double MAX_DAMAGE = 10;
 
     @Override
     protected int provideThrowCooldown() {
