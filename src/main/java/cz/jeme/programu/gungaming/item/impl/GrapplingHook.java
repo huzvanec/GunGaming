@@ -5,6 +5,7 @@ import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.loot.SingleLoot;
+import cz.jeme.programu.gungaming.util.Components;
 import cz.jeme.programu.gungaming.util.Lores;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
@@ -85,14 +86,19 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
     }
 
     public void onPlayerFish(@NotNull final PlayerFishEvent event) {
-        final PlayerFishEvent.State state = event.getState();
-        if (state == PlayerFishEvent.State.BITE || state == PlayerFishEvent.State.FAILED_ATTEMPT) return;
         final EquipmentSlot hand = event.getHand();
-        assert hand != null;
-        final ItemStack fishingRod = event.getPlayer().getInventory().getItem(hand);
+        if (hand == null) return;
+        final Player player = event.getPlayer();
+        final ItemStack fishingRod = player.getInventory().getItem(hand);
         if (!CustomItem.is(fishingRod, GrapplingHook.class)) return;
-        if (event.getState() == PlayerFishEvent.State.FISHING) onThrow(event);
-        else onSubtract(event);
+        switch (event.getState()) {
+            case FISHING -> onThrow(event);
+            case REEL_IN -> onSubtract(event);
+            default -> {
+                player.sendActionBar(Components.of("<red>Remember: It's a Grappling Hook!"));
+                event.setCancelled(true);
+            }
+        }
     }
 
     private void onThrow(@NotNull final PlayerFishEvent event) {

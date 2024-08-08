@@ -2,7 +2,6 @@ package cz.jeme.programu.gungaming;
 
 import com.destroystokyo.paper.event.player.PlayerAdvancementCriterionGrantEvent;
 import cz.jeme.programu.gungaming.game.GameEventHandler;
-import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.ItemEventHandler;
 import cz.jeme.programu.gungaming.item.attachment.AttachmentEventHandler;
 import cz.jeme.programu.gungaming.item.block.BlockEventHandler;
