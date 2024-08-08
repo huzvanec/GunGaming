@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public final class ResourcePackEventHandler {
-    private static final boolean RESOURCE_PACK_ENABLED = true;
+    private static final boolean RESOURCE_PACK_ENABLED = false;
 
     private static final @NotNull Component RESOURCE_PACK_MESSAGE = Components.of("""
                     <b><dark_blue>============================================================</b>
