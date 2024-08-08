@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gungaming:item/tracker/teammate_tracker_03"
+  }
+}

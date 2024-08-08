@@ -32,6 +32,11 @@ public class EnemyTracker extends PlayerTracker implements SingleLoot {
     }
 
     @Override
+    protected @NotNull Integer provideCustomModelData() {
+        return 1;
+    }
+
+    @Override
     protected boolean validate(final @NotNull Player player, final @NotNull Player trackPlayer) {
         return !Game.running() ||
                GameConfig.TEAM_PLAYERS.get() == 1 ||
