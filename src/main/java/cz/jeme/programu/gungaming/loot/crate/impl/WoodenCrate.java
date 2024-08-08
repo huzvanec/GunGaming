@@ -36,10 +36,10 @@ public class WoodenCrate extends Crate {
     @Override
     protected @NotNull Map<Rarity, Integer> provideRarityChances() {
         return Map.of(
-                Rarity.COMMON, 14,
-                Rarity.UNCOMMON, 12,
-                Rarity.RARE, 8,
-                Rarity.EPIC, 3,
+                Rarity.COMMON, 22,
+                Rarity.UNCOMMON, 19,
+                Rarity.RARE, 16,
+                Rarity.EPIC, 2,
                 Rarity.LEGENDARY, 1
         );
     }

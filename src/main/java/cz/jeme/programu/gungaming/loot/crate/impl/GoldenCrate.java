@@ -26,11 +26,11 @@ public class GoldenCrate extends Crate {
     @Override
     protected @NotNull Map<Rarity, Integer> provideRarityChances() {
         return Map.of(
-                Rarity.COMMON, 5,
-                Rarity.UNCOMMON, 5,
-                Rarity.RARE, 5,
-                Rarity.EPIC, 9,
-                Rarity.LEGENDARY, 8
+                Rarity.COMMON, 1,
+                Rarity.UNCOMMON, 1,
+                Rarity.RARE, 1,
+                Rarity.EPIC, 1,
+                Rarity.LEGENDARY, 1
         );
     }
 
