@@ -131,8 +131,8 @@ public class Radar extends CustomItem implements SingleLoot {
             // add other player cursors
             for (final Player mapPlayer : Bukkit.getOnlinePlayers()) {
                 if (!mapPlayer.isValid()) continue; // don't show dead players
-                if (mapPlayer.getUniqueId().equals(player.getUniqueId())) continue; // it's me lol
                 if (mapPlayer.getGameMode() == GameMode.SPECTATOR) continue; // don't show spectators
+                if (mapPlayer.getUniqueId().equals(player.getUniqueId())) continue; // it's me lol
                 final Location mapPlayerLocation = mapPlayer.getLocation();
                 final int mapX = (mapPlayerLocation.getBlockX() - playerLocation.getBlockX()) * 2;
                 final int mapY = (mapPlayerLocation.getBlockZ() - playerLocation.getBlockZ()) * 2;

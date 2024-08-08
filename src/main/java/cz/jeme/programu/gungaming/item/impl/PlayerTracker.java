@@ -1,6 +1,9 @@
 package cz.jeme.programu.gungaming.item.impl;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.config.GameConfig;
+import cz.jeme.programu.gungaming.game.Game;
+import cz.jeme.programu.gungaming.game.GameTeam;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
@@ -9,6 +12,7 @@ import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -79,8 +83,13 @@ public class PlayerTracker extends CustomItem implements SingleLoot {
                 Player nearestPlayer = null;
                 double distance = Double.MAX_VALUE;
                 for (final Player trackPlayer : Bukkit.getOnlinePlayers()) {
-                    if (!trackPlayer.isValid()) continue;
-                    if (trackPlayer.getUniqueId().equals(player.getUniqueId())) continue;
+                    if (!trackPlayer.isValid()) continue; // don't track dead players
+                    if (trackPlayer.getGameMode() == GameMode.SPECTATOR) continue; // don't track spectators
+                    if (trackPlayer.getUniqueId().equals(player.getUniqueId())) continue; // that's me lol
+                    if (Game.running() &&
+                        GameConfig.TEAM_PLAYERS.get() > 1 &&
+                        GameTeam.ofPlayer(player).players().contains(trackPlayer))
+                        continue; // don't track teammates
                     final double newDistance = player.getLocation().distance(trackPlayer.getLocation());
                     if (newDistance < distance) {
                         distance = newDistance;
