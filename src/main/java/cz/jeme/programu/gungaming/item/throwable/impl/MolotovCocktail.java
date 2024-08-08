@@ -31,7 +31,7 @@ public class MolotovCocktail extends Throwable {
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.RARE;
+        return Rarity.UNCOMMON;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class MolotovCocktail extends Throwable {
 
     @Override
     protected int provideMaxAmount() {
-        return 4;
+        return 3;
     }
 
     @Override

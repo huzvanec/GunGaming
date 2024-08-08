@@ -42,7 +42,7 @@ public class SmokeGrenade extends Grenade {
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.RARE;
+        return Rarity.UNCOMMON;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class SmokeGrenade extends Grenade {
 
     @Override
     protected int provideMaxAmount() {
-        return 4;
+        return 2;
     }
 
     @Override

@@ -54,7 +54,7 @@ public class DirtySword extends Melee {
         livingEntity.addPotionEffect(new PotionEffect(
                 PotionEffectType.POISON,
                 200,
-                1,
+                0,
                 false,
                 true,
                 true

@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class Bandage extends InstantHeal {
     @Override
     protected double provideHealAmount() {
-        return 5;
+        return 4;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class Bandage extends InstantHeal {
 
     @Override
     protected @NotNull String provideDescription() {
-        return "Instantly heals 2.5 hearts";
+        return "Instantly heals 2 hearts";
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Bandage extends InstantHeal {
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.RARE;
+        return Rarity.UNCOMMON;
     }
 
     @Override
@@ -44,6 +44,6 @@ public class Bandage extends InstantHeal {
 
     @Override
     protected int provideMaxAmount() {
-        return 5;
+        return 3;
     }
 }
