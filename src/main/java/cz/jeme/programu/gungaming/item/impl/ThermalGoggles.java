@@ -19,6 +19,7 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -31,14 +32,17 @@ import java.util.List;
 
 public class ThermalGoggles extends CustomItem {
     protected ThermalGoggles() {
-        item.editMeta(meta -> meta.addAttributeModifier(
-                Attribute.GENERIC_ARMOR,
-                new AttributeModifier(
-                        GunGaming.namespaced(key.value() + "_generic_armor"),
-                        0,
-                        AttributeModifier.Operation.ADD_NUMBER
-                )
-        ));
+        item.editMeta(Damageable.class, meta -> {
+            meta.addAttributeModifier(
+                    Attribute.GENERIC_ARMOR,
+                    new AttributeModifier(
+                            GunGaming.namespaced(key.value() + "_generic_armor"),
+                            0,
+                            AttributeModifier.Operation.ADD_NUMBER
+                    )
+            );
+            meta.setMaxDamage(15);
+        });
         new Updater();
     }
 

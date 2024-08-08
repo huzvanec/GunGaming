@@ -174,8 +174,13 @@ public final class GameEventHandler {
     @SuppressWarnings("UnstableApiUsage")
     public static void onEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent event) {
         if (!Game.running()) return;
-        if (!(event.getEntity() instanceof Player)) return;
+        if (!(event.getEntity() instanceof final Player hurt)) return;
         if (!(event.getDamageSource().getCausingEntity() instanceof final Player damager)) return;
+        if (hurt.getUniqueId().equals(damager.getUniqueId())) return;
+        if (GameTeam.ofPlayer(damager).players().contains(hurt)) { // it's his teammate
+            event.setCancelled(true);
+            return;
+        }
         if (Game.instance().gracePeriod()) {
             event.setCancelled(true);
             damager.sendActionBar(Components.of("<red>You can't damage other players during grace period!"));

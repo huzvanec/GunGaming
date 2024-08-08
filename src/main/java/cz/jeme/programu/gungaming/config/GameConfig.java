@@ -50,7 +50,7 @@ public final class GameConfig {
     public static final @NotNull ConfigValue<Integer> GAME_SECONDS = value(
             "game_seconds",
             IntegerArgumentType.integer(60, 5 * 60 * 60),
-            20 * 60 + 15
+            30 * 60 + 15
     );
     public static final @NotNull ConfigValue<Integer> COUNTDOWN_SECONDS = value(
             "countdown_seconds",

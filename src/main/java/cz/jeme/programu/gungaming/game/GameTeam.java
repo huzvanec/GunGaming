@@ -56,7 +56,7 @@ public enum GameTeam {
         this.kills = kills;
         team = Objects.requireNonNull(kills.getScoreboard()).registerNewTeam(displayName);
         team.color(color);
-        team.setAllowFriendlyFire(false);
+        team.setAllowFriendlyFire(true); // handled in GameEventHandler#onEntityDamageByEntity
         team.setCanSeeFriendlyInvisibles(true);
         ACTIVE_TEAMS.add(this);
     }

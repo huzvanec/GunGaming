@@ -7,8 +7,6 @@ import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -25,6 +23,7 @@ final class Respawn extends Countdown {
         this.game = game;
         this.player = player;
         player.setGameMode(GameMode.SPECTATOR);
+        player.clearActivePotionEffects();
         player.getInventory().setHeldItemSlot(0);
     }
 
