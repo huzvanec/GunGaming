@@ -101,9 +101,13 @@ public enum CrateGenerator {
         return true;
     }
 
+    private boolean checkModifiableCrates() {
+        return inventories.isEmpty() || inventories.values().stream().noneMatch(info -> info.crate().modifyContents());
+    }
+
     public boolean clearCrates(final @Nullable Audience audience) {
         if (checkLock(audience)) return false;
-        if (inventories.isEmpty()) {
+        if (checkModifiableCrates()) {
             if (audience != null)
                 audience.sendMessage(Components.prefix("<red>No crates to clear!"));
             return false;
@@ -118,7 +122,7 @@ public enum CrateGenerator {
 
     public boolean refillCrates(final @Nullable Audience audience) {
         if (checkLock(audience)) return false;
-        if (inventories.isEmpty()) {
+        if (checkModifiableCrates()) {
             if (audience != null)
                 audience.sendMessage(Components.prefix("<red>No crates to refill!"));
             return false;
