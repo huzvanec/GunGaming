@@ -1,15 +1,17 @@
-package cz.jeme.programu.gungaming.game;
+package cz.jeme.programu.gungaming.game.runnable.countdown;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.game.runnable.GameRunnable;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.bossbar.BossBar;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
 
-abstract class Countdown extends BukkitRunnable {
+@ApiStatus.Internal
+public abstract class Countdown extends GameRunnable {
     private static final @NotNull DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("00");
     private final long duration;
     private final @Nullable BossBar bossBar;

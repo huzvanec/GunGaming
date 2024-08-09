@@ -1,17 +1,19 @@
-package cz.jeme.programu.gungaming.game;
+package cz.jeme.programu.gungaming.game.runnable;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.loot.crate.CrateGenerator;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 
-final class Loading extends BukkitRunnable {
+@ApiStatus.Internal
+public final class Loading extends GameRunnable {
     private int dotsCount = 1;
 
     private final @NotNull Game game;
@@ -24,7 +26,7 @@ final class Loading extends BukkitRunnable {
     @Override
     public void run() {
         if (!CrateGenerator.INSTANCE.generating()) {
-            for (final Player player : Bukkit.getOnlinePlayers()) player.clearTitle();
+            Bukkit.getOnlinePlayers().forEach(Player::clearTitle);
             game.loadingEnd();
             cancel();
             return;

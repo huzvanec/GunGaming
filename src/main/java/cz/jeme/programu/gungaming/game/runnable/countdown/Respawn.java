@@ -1,6 +1,8 @@
-package cz.jeme.programu.gungaming.game;
+package cz.jeme.programu.gungaming.game.runnable.countdown;
 
 import cz.jeme.programu.gungaming.config.GameConfig;
+import cz.jeme.programu.gungaming.game.Game;
+import cz.jeme.programu.gungaming.game.GameTeam;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.title.Title;
 import org.bukkit.GameMode;
@@ -8,13 +10,15 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.util.Optional;
 import java.util.Random;
 
-final class Respawn extends Countdown {
+@ApiStatus.Internal
+public final class Respawn extends Countdown {
     private static final @NotNull Random RANDOM = new Random();
 
     private final @NotNull Player player;
@@ -23,7 +27,6 @@ final class Respawn extends Countdown {
     public Respawn(final @NotNull Game game, final @NotNull Player player) {
         super(GameConfig.RESPAWN_SECONDS.get(), null);
         this.game = game;
-        game.runnables.add(this);
         this.player = player;
         player.setGameMode(GameMode.SPECTATOR);
         player.clearActivePotionEffects();
@@ -49,7 +52,6 @@ final class Respawn extends Countdown {
 
     @Override
     protected void expire() {
-        game.runnables.remove(this);
         player.clearTitle();
         if (GameConfig.TEAM_PLAYERS.get() > 1) {
             final Optional<Player> teammate = GameTeam.ofPlayer(player).players().stream()

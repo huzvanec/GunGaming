@@ -6,6 +6,13 @@ import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.config.GenerationConfig;
 import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.game.lobby.Lobby;
+import cz.jeme.programu.gungaming.game.runnable.AirDropRunnable;
+import cz.jeme.programu.gungaming.game.runnable.GameRunnable;
+import cz.jeme.programu.gungaming.game.runnable.Loading;
+import cz.jeme.programu.gungaming.game.runnable.RefillRunnable;
+import cz.jeme.programu.gungaming.game.runnable.countdown.GameCountdown;
+import cz.jeme.programu.gungaming.game.runnable.countdown.GracePeriodCountdown;
+import cz.jeme.programu.gungaming.game.runnable.countdown.StartCountdown;
 import cz.jeme.programu.gungaming.item.tracker.TeammateTracker;
 import cz.jeme.programu.gungaming.loot.crate.CrateGenerator;
 import cz.jeme.programu.gungaming.util.Components;
@@ -25,7 +32,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -73,7 +79,6 @@ public final class Game {
     private final @NotNull Location spawn;
     private final @NotNull Objective kills;
     private final @NotNull Scoreboard scoreboard;
-    final @NotNull List<BukkitRunnable> runnables = new ArrayList<>();
     private final @NotNull List<Player> players;
     private boolean gracePeriod = true;
 
@@ -160,14 +165,13 @@ public final class Game {
         teleportPlayers();
 
         announceTeams();
-        final BukkitRunnable runnable = new BukkitRunnable() {
+
+        new GameRunnable() {
             @Override
             public void run() {
                 generateCrates();
             }
-        };
-        runnable.runTaskLater(GunGaming.plugin(), GameConfig.TEAM_ANNOUNCE_SECONDS.get() * 20);
-        runnables.add(runnable);
+        }.runTaskLater(GunGaming.plugin(), GameConfig.TEAM_ANNOUNCE_SECONDS.get() * 20);
     }
 
     @ApiStatus.Internal
@@ -209,14 +213,13 @@ public final class Game {
     }
 
     private void generateCrates() {
-        runnables.add(new Loading(this));
-
         CrateGenerator.INSTANCE.generate(
                 audience,
                 audienceLocation,
                 xMin, zMin, xMax, zMax,
                 GenerationConfig.BPS.get()
         );
+        new Loading(this);
     }
 
     public void teleportPlayers() {
@@ -288,11 +291,13 @@ public final class Game {
         }
     }
 
-    void loadingEnd() {
-        runnables.add(new StartCountdown(Game.this));
+    @ApiStatus.Internal
+    public void loadingEnd() {
+        new StartCountdown(Game.this);
     }
 
-    void startGame() {
+    @ApiStatus.Internal
+    public void startGame() {
         for (final Player player : players) {
             FROZEN_DATA.write(player, false);
             INVULNERABLE_DATA.write(player, true);
@@ -300,26 +305,25 @@ public final class Game {
             player.setGameMode(GameMode.SURVIVAL);
             player.setGliding(true);
         }
-        runnables.add(new GracePeriodCountdown(this));
+        new GracePeriodCountdown(this);
     }
 
-    void gracePeriodEnd() {
+    @ApiStatus.Internal
+    public void gracePeriodEnd() {
         gracePeriod = false;
         for (final Player player : players) {
             INVULNERABLE_DATA.write(player, false);
             GLIDING_DATA.write(player, false);
         }
 
-        runnables.add(new GameCountdown(this));
-        runnables.add(new AirDropRunnable(this));
-        runnables.add(new RefillRunnable());
+        new GameCountdown(this);
+        new AirDropRunnable(this);
+        new RefillRunnable();
     }
 
     private void stop() {
         instance = null;
-        runnables.stream()
-                .filter(runnable -> !runnable.isCancelled())
-                .forEach(BukkitRunnable::cancel);
+        GameRunnable.cancelAll();
         GameTeam.unregisterAll();
         kills.unregister();
         CrateGenerator.INSTANCE.cancel(null);

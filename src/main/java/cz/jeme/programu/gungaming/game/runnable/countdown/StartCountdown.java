@@ -1,16 +1,19 @@
-package cz.jeme.programu.gungaming.game;
+package cz.jeme.programu.gungaming.game.runnable.countdown;
 
 import cz.jeme.programu.gungaming.config.GameConfig;
+import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 
-final class StartCountdown extends Countdown {
+@ApiStatus.Internal
+public final class StartCountdown extends Countdown {
     private final @NotNull Game game;
 
     public StartCountdown(final @NotNull Game game) {
