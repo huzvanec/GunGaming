@@ -4,12 +4,14 @@ import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.title.Title;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
+import java.util.Optional;
 import java.util.Random;
 
 final class Respawn extends Countdown {
@@ -21,6 +23,7 @@ final class Respawn extends Countdown {
     public Respawn(final @NotNull Game game, final @NotNull Player player) {
         super(GameConfig.RESPAWN_SECONDS.get(), null);
         this.game = game;
+        game.runnables.add(this);
         this.player = player;
         player.setGameMode(GameMode.SPECTATOR);
         player.clearActivePotionEffects();
@@ -29,10 +32,6 @@ final class Respawn extends Countdown {
 
     @Override
     protected void tick(final long counter, final float phase) {
-        if (!Game.running()) {
-            cancel();
-            return;
-        }
         final Title title = Title.title(
                 Components.of("<transition:#FF0000:#FFFF00:#00FF00:" + phase + ">" + counter),
                 Components.of("<gold>" + Components.latinString("Respawning...")),
@@ -43,9 +42,35 @@ final class Respawn extends Countdown {
 
     private static final int BORDER_BLOCKS = 10; // minimum amount of blocks between the respawn position and the nearest border
 
+    private void respawn(final @NotNull Location location) {
+        player.teleport(location);
+        player.setGameMode(GameMode.SURVIVAL);
+    }
+
     @Override
     protected void expire() {
+        game.runnables.remove(this);
         player.clearTitle();
+        if (GameConfig.TEAM_PLAYERS.get() > 1) {
+            final Optional<Player> teammate = GameTeam.ofPlayer(player).players().stream()
+                    .filter(p -> p.getGameMode() != GameMode.SPECTATOR)
+                    .filter(p -> !p.getUniqueId().equals(player.getUniqueId()))
+                    .findFirst();
+            if (teammate.isPresent()) {
+                final Location location = teammate.get().getLocation();
+                final World world = location.getWorld();
+                final double x = location.getX();
+                final double z = location.getZ();
+                final int y = world.getHighestBlockYAt(location.getBlockX(), location.getBlockZ()) + 1;
+                respawn(new Location(
+                        world,
+                        x,
+                        y,
+                        z
+                ));
+                return;
+            }
+        }
         final World world = player.getWorld();
         final int xMin = game.xMin() + BORDER_BLOCKS;
         final int zMin = game.zMin() + BORDER_BLOCKS;
@@ -61,8 +86,7 @@ final class Respawn extends Countdown {
                 final Block up1 = world.getBlockAt(x, y + 1, z);
                 final Block up2 = world.getBlockAt(x, y + 2, z);
                 if (!(up1.isEmpty() && up2.isEmpty())) continue respawning;
-                player.teleport(up1.getLocation().add(.5, 0, .5));
-                player.setGameMode(GameMode.SURVIVAL);
+                respawn(up1.getLocation().add(.5, 0, .5));
                 return;
             }
         }
