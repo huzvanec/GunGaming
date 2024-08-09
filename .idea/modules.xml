@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/GunGaming.main.iml" filepath="$PROJECT_DIR$/.idea/modules/GunGaming.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/GunGaming.test.iml" filepath="$PROJECT_DIR$/.idea/modules/GunGaming.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cz.jeme.programu.GunGaming.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cz.jeme.programu.GunGaming.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cz.jeme.programu.GunGaming.test.iml" filepath="$PROJECT_DIR$/.idea/modules/cz.jeme.programu.GunGaming.test.iml" />
     </modules>
   </component>
 </project>
