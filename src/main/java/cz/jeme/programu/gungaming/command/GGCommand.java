@@ -13,6 +13,7 @@ import cz.jeme.programu.gungaming.config.ConfigValue;
 import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.config.GenerationConfig;
 import cz.jeme.programu.gungaming.game.Game;
+import cz.jeme.programu.gungaming.game.lobby.Lobby;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.loot.crate.CrateGenerator;
 import cz.jeme.programu.gungaming.loot.crate.impl.AirDrop;
@@ -116,6 +117,14 @@ public final class GGCommand {
                         )
                         .then(literal("end")
                                 .executes(GGCommand::endGame)
+                        )
+                        .then(literal("lobby")
+                                .then(literal("enable")
+                                        .executes(GGCommand::enableLobby)
+                                )
+                                .then(literal("disable")
+                                        .executes(GGCommand::disableLobby)
+                                )
                         )
                 )
                 .then(literal("config")
@@ -305,6 +314,27 @@ public final class GGCommand {
         }
         Game.instance().endGame();
         sender.sendMessage(Components.prefix("<green>Game ended successfully"));
+        return SUCCESS;
+    }
+
+    private static int enableLobby(final @NotNull CommandContext<CommandSourceStack> ctx) {
+        // errors are handled in Lobby constructor
+        try {
+            new Lobby(ctx.getSource());
+            return SUCCESS;
+        } catch (final IllegalStateException e) {
+            return FAILURE;
+        }
+    }
+
+    private static int disableLobby(final @NotNull CommandContext<CommandSourceStack> ctx) {
+        final CommandSender sender = ctx.getSource().getSender();
+        if (!Lobby.enabled()) {
+            sender.sendMessage(Components.prefix("<red>Lobby is not enabled!"));
+            return FAILURE;
+        }
+        Lobby.instance().disable();
+        sender.sendMessage(Components.prefix("<green>Lobby disabled successfully"));
         return SUCCESS;
     }
 }

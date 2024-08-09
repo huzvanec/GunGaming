@@ -14,6 +14,7 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRecipeDiscoverEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
@@ -185,5 +186,10 @@ public final class GameEventHandler {
             event.setCancelled(true);
             damager.sendActionBar(Components.of("<red>You can't damage other players during grace period!"));
         }
+    }
+
+    public static void onPlayerRecipeDiscover(final @NotNull PlayerRecipeDiscoverEvent event) {
+        if (!Game.running()) return;
+        event.setCancelled(true);
     }
 }

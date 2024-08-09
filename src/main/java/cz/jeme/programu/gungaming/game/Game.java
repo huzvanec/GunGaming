@@ -5,6 +5,7 @@ import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.config.GenerationConfig;
 import cz.jeme.programu.gungaming.data.Data;
+import cz.jeme.programu.gungaming.game.lobby.Lobby;
 import cz.jeme.programu.gungaming.item.tracker.TeammateTracker;
 import cz.jeme.programu.gungaming.loot.crate.CrateGenerator;
 import cz.jeme.programu.gungaming.util.Components;
@@ -26,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -99,6 +101,8 @@ public final class Game {
         // init success, no issues found
         instance = this;
 
+        if (Lobby.enabled()) Lobby.instance().disable();
+
         this.audienceLocation = source.getLocation();
         this.world = audienceLocation.getWorld();
 
@@ -108,15 +112,7 @@ public final class Game {
         centerZ = centerPos.getZ();
 
         spawn = new Location(world, centerX, 350, centerZ);
-        // setting up the world
-        world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-        world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
-        world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, false);
-        world.setTime(GameConfig.WORLD_TIME.get());
-        world.setClearWeatherDuration(duration * 20);
-        world.getEntities().stream()
-                .filter(entity -> entity.getType() != EntityType.PLAYER)
-                .forEach(Entity::remove);
+        worldSetup(world);
         final WorldBorder worldBorder = world.getWorldBorder();
         worldBorder.setCenter(centerX, centerZ);
         worldBorder.setSize(size);
@@ -148,30 +144,11 @@ public final class Game {
 
         // player init
         for (final Player player : players) {
-            player.closeInventory();
-            player.spigot().respawn();
+            playerSetup(player);
             player.setGameMode(GameMode.SPECTATOR);
             FROZEN_DATA.write(player, true);
-            player.clearActivePotionEffects();
-            final PlayerInventory inventory = player.getInventory();
-            inventory.clear();
-            inventory.setHeldItemSlot(0);
-            player.setHealth(20);
-            Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).setBaseValue(20);
-            player.setAbsorptionAmount(0);
-            player.setFoodLevel(20);
-            player.setExp(0);
-            player.setLevel(0);
-            player.activeBossBars().forEach(player::hideBossBar);
             player.showBossBar(bossBar);
-            // clear advancements
-            final Iterator<Advancement> advancements = Bukkit.advancementIterator();
-            while (advancements.hasNext()) {
-                final Advancement advancement = advancements.next();
-                final AdvancementProgress progress = player.getAdvancementProgress(advancement);
-                advancement.getCriteria().forEach(progress::revokeCriteria);
-            }
-            if (teamPlayers > 1) inventory.setItem(8, teammateTracker);
+            if (teamPlayers > 1) player.getInventory().setItem(8, teammateTracker);
         }
 
         xMin = centerX - size / 2;
@@ -190,6 +167,44 @@ public final class Game {
         };
         runnable.runTaskLater(GunGaming.plugin(), GameConfig.TEAM_ANNOUNCE_SECONDS.get() * 20);
         runnables.add(runnable);
+    }
+
+    @ApiStatus.Internal
+    public static void worldSetup(final @NotNull World world) {
+        world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        world.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+        world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
+        world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, false);
+        world.setTime(GameConfig.WORLD_TIME.get());
+        world.setClearWeatherDuration(99);
+        world.getEntities().stream()
+                .filter(entity -> entity.getType() != EntityType.PLAYER)
+                .forEach(Entity::remove);
+    }
+
+    @ApiStatus.Internal
+    public static void playerSetup(final @NotNull Player player) {
+        player.closeInventory();
+        player.spigot().respawn();
+        player.clearActivePotionEffects();
+        final PlayerInventory inventory = player.getInventory();
+        inventory.clear();
+        inventory.setHeldItemSlot(0);
+        player.setHealth(20);
+        Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).setBaseValue(20);
+        player.setAbsorptionAmount(0);
+        player.setFoodLevel(20);
+        player.setExp(0);
+        player.setLevel(0);
+        player.activeBossBars().forEach(player::hideBossBar);
+        player.undiscoverRecipes(player.getDiscoveredRecipes());
+        // clear advancements
+        final Iterator<Advancement> advancements = Bukkit.advancementIterator();
+        while (advancements.hasNext()) {
+            final Advancement advancement = advancements.next();
+            final AdvancementProgress progress = player.getAdvancementProgress(advancement);
+            advancement.getCriteria().forEach(progress::revokeCriteria);
+        }
     }
 
     private void generateCrates() {

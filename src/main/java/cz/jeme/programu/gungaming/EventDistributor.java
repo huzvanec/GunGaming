@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming;
 
 import com.destroystokyo.paper.event.player.PlayerAdvancementCriterionGrantEvent;
 import cz.jeme.programu.gungaming.game.GameEventHandler;
+import cz.jeme.programu.gungaming.game.lobby.LobbyEventHandler;
 import cz.jeme.programu.gungaming.item.ItemEventHandler;
 import cz.jeme.programu.gungaming.item.attachment.AttachmentEventHandler;
 import cz.jeme.programu.gungaming.item.block.BlockEventHandler;
@@ -30,11 +31,13 @@ public enum EventDistributor implements Listener {
     private static void onPlayerInteract(final @NotNull PlayerInteractEvent event) {
         ItemEventHandler.onPlayerInteract(event);
         CrateEventHandler.onPlayerInteract(event);
+        LobbyEventHandler.onPlayerInteract(event);
     }
 
     @EventHandler
     private static void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
         GameEventHandler.onPlayerJoin(event);
+        LobbyEventHandler.onPlayerJoin(event);
         ResourcePackEventHandler.onPlayerJoin(event); // important: has to go last
     }
 
@@ -99,6 +102,7 @@ public enum EventDistributor implements Listener {
         GlobalEventHandler.onEntityDamage(event);
         GrapplingHook.onEntityDamage(event);
         GameEventHandler.onEntityDamage(event);
+        LobbyEventHandler.onEntityDamage(event);
     }
 
     @EventHandler
@@ -167,6 +171,7 @@ public enum EventDistributor implements Listener {
     @EventHandler
     private static void onFoodLevelChange(final @NotNull FoodLevelChangeEvent event) {
         GameEventHandler.onFoodLevelChange(event);
+        LobbyEventHandler.onFoodLevelChange(event);
     }
 
     @EventHandler
@@ -177,10 +182,17 @@ public enum EventDistributor implements Listener {
     @EventHandler
     private static void onPlayerAdvancementCriterionGrant(final @NotNull PlayerAdvancementCriterionGrantEvent event) {
         GameEventHandler.onPlayerAdvancementCriterionGrant(event);
+        LobbyEventHandler.onPlayerAdvancementCriterionGrant(event);
     }
 
     @EventHandler
     private static void onItemSpawn(final @NotNull ItemSpawnEvent event) {
         BlockEventHandler.onItemSpawn(event);
+    }
+
+    @EventHandler
+    private static void onPlayerRecipeDiscover(final @NotNull PlayerRecipeDiscoverEvent event) {
+        GameEventHandler.onPlayerRecipeDiscover(event);
+        LobbyEventHandler.onPlayerRecipeDiscover(event);
     }
 }

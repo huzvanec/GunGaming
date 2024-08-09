@@ -47,6 +47,15 @@ public final class GameConfig {
                     new WorldCoordinate(false, 0)
             )
     );
+    public static final @NotNull ConfigValue<Coordinates> LOBBY_SPAWN = value(
+            "lobby_spawn",
+            Vec2Argument.vec2(),
+            new WorldCoordinates(
+                    new WorldCoordinate(false, 0),
+                    new WorldCoordinate(true, 0),
+                    new WorldCoordinate(false, 0)
+            )
+    );
     public static final @NotNull ConfigValue<Integer> GAME_SECONDS = value(
             "game_seconds",
             IntegerArgumentType.integer(60, 5 * 60 * 60),
