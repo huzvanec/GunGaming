@@ -59,7 +59,7 @@ public final class GameConfig {
     public static final @NotNull ConfigValue<Integer> GAME_SECONDS = value(
             "game_seconds",
             IntegerArgumentType.integer(60, 5 * 60 * 60),
-            30 * 60 + 15
+            25 * 60 + 15
     );
     public static final @NotNull ConfigValue<Integer> COUNTDOWN_SECONDS = value(
             "countdown_seconds",
@@ -79,17 +79,17 @@ public final class GameConfig {
     public static final @NotNull ConfigValue<Integer> REFILL_SECONDS = value(
             "refill_seconds",
             IntegerArgumentType.integer(60, 60 * 60),
-            6 * 60
+            9 * 60
     );
     public static final @NotNull ConfigValue<Integer> AIR_DROP_MIN_SECONDS = value(
             "air_drop_min_seconds",
             IntegerArgumentType.integer(30, 60 * 60),
-            2 * 60
+            5 * 60
     );
     public static final @NotNull ConfigValue<Integer> AIR_DROP_MAX_SECONDS = value(
             "air_drop_max_seconds",
             IntegerArgumentType.integer(30, 60 * 60),
-            7 * 60
+            12 * 60
     );
     public static final @NotNull ConfigValue<Integer> WORLD_TIME = value(
             "world_time",
