@@ -35,6 +35,7 @@ public final class Lobby {
         }
         // init success, no issues found
         instance = this;
+        audience.sendMessage(Components.prefix("<green>Lobby enabled successfully"));
         world = source.getLocation().getWorld();
         final BlockPos spawnPos = GameConfig.LOBBY_SPAWN.get()
                 .getBlockPos(((net.minecraft.commands.CommandSourceStack) source));

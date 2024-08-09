@@ -100,6 +100,7 @@ public final class Game {
         }
         // init success, no issues found
         instance = this;
+        audience.sendMessage(Components.prefix("<green>Game started successfully"));
 
         if (Lobby.enabled()) Lobby.instance().disable();
 
