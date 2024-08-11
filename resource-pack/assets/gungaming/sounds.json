@@ -179,6 +179,21 @@
             "gungaming:item/held/ump9"
         ]
     },
+    "item.remington_m1100.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/remington_m1100"
+        ]
+    },
+    "item.remington_m1100.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/remington_m1100"
+        ]
+    },
+    "item.remington_m1100.held": {
+        "sounds": [
+            "gungaming:item/held/remington_m1100"
+        ]
+    },
     "entity.rocket.ambient": {
         "sounds": [
             "gungaming:entity/ambient/rocket"

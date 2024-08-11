@@ -23,7 +23,7 @@ public class RemingtonM870 extends Gun implements MagazineDisabled {
 
     @Override
     protected int provideReloadDuration() {
-        return 13;
+        return 15;
     }
 
     @Override

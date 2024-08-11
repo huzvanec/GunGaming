@@ -179,6 +179,12 @@
 				"custom_model_data": 12
 			},
 			"model": "gungaming:item/gun/ump9"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 13
+			},
+			"model": "gungaming:item/gun/remington_m1100"
 		}
 	]
 }
