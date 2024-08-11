@@ -2,26 +2,28 @@ package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.ammo.impl.NineMillimeter;
+import cz.jeme.programu.gungaming.item.attachment.disable.GripDisabled;
+import cz.jeme.programu.gungaming.item.attachment.disable.StockDisabled;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class M9 extends Gun {
+public class BerettaM9 extends Gun implements GripDisabled, StockDisabled {
     @Override
     protected @KeyPattern.Value @NotNull String provideKey() {
-        return "m9";
+        return "beretta_m9";
     }
 
     @Override
     protected @NotNull Component provideName() {
-        return Component.text("M9");
+        return Component.text("Beretta M9");
     }
 
     @Override
     protected @NotNull String provideDescription() {
-        return "Basic pistol";
+        return "Lousy pistol";
     }
 
     @Override
@@ -31,7 +33,7 @@ public class M9 extends Gun {
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.UNCOMMON;
+        return Rarity.COMMON;
     }
 
     @Override

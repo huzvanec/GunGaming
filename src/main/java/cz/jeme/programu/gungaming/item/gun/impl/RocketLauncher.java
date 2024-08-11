@@ -21,7 +21,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
-public class RocketLauncher extends Gun implements MagazineDisabled, SilencerDisabled {
+public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDisabled {
     @Override
     protected int provideMaxAmmo() {
         return 1;

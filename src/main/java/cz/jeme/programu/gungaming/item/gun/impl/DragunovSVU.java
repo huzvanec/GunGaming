@@ -2,14 +2,13 @@ package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.ammo.impl.SevenSixTwoMillimeter;
-import cz.jeme.programu.gungaming.item.attachment.disable.GripDisabled;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class SV98 extends Gun implements GripDisabled {
+public class DragunovSVU extends Gun {
     @Override
     protected int provideMaxAmmo() {
         return 10;
@@ -17,32 +16,32 @@ public class SV98 extends Gun implements GripDisabled {
 
     @Override
     protected int provideShootCooldown() {
-        return 28;
+        return 10;
     }
 
     @Override
     protected int provideReloadDuration() {
-        return 50;
+        return 41;
     }
 
     @Override
     protected double provideDamage() {
-        return 19;
+        return 6;
     }
 
     @Override
     protected double provideBulletVelocity() {
-        return 80;
+        return 60;
     }
 
     @Override
     protected double provideRecoil() {
-        return 0.3;
+        return .22;
     }
 
     @Override
     protected double provideInaccuracy() {
-        return 0.4;
+        return .7;
     }
 
     @Override
@@ -51,27 +50,27 @@ public class SV98 extends Gun implements GripDisabled {
     }
 
     @Override
-    protected @NotNull Component provideName() {
-        return Component.text("SV-98");
-    }
-
-    @Override
     protected @NotNull String provideDescription() {
-        return "Very powerful sniper rifle";
-    }
-
-    @Override
-    protected @NotNull Rarity provideRarity() {
-        return Rarity.LEGENDARY;
+        return "AK-47 but it's a DMR";
     }
 
     @Override
     protected @KeyPattern.Value @NotNull String provideKey() {
-        return "sv-98";
+        return "dragunov_svu";
+    }
+
+    @Override
+    protected @NotNull Rarity provideRarity() {
+        return Rarity.EPIC;
+    }
+
+    @Override
+    protected @NotNull Component provideName() {
+        return Component.text("Dragunov SVU");
     }
 
     @Override
     protected @NotNull Integer provideCustomModelData() {
-        return 8;
+        return 7;
     }
 }

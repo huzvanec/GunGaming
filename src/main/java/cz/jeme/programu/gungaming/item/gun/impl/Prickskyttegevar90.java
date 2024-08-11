@@ -1,7 +1,7 @@
 package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
-import cz.jeme.programu.gungaming.item.ammo.impl.SevenSixTwoMillimeter;
+import cz.jeme.programu.gungaming.item.ammo.impl.ThreeZeroEightSubsonicWinchester;
 import cz.jeme.programu.gungaming.item.attachment.disable.GripDisabled;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
@@ -9,7 +9,7 @@ import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class SV98 extends Gun implements GripDisabled {
+public class Prickskyttegevar90 extends Gun implements GripDisabled {
     @Override
     protected int provideMaxAmmo() {
         return 10;
@@ -17,47 +17,47 @@ public class SV98 extends Gun implements GripDisabled {
 
     @Override
     protected int provideShootCooldown() {
-        return 28;
+        return 32;
     }
 
     @Override
     protected int provideReloadDuration() {
-        return 50;
+        return 60;
     }
 
     @Override
     protected double provideDamage() {
-        return 19;
+        return 25;
     }
 
     @Override
     protected double provideBulletVelocity() {
-        return 80;
+        return 30;
     }
 
     @Override
     protected double provideRecoil() {
-        return 0.3;
+        return .2;
     }
 
     @Override
     protected double provideInaccuracy() {
-        return 0.4;
+        return .6;
     }
 
     @Override
     protected @NotNull Class<? extends Ammo> provideAmmoType() {
-        return SevenSixTwoMillimeter.class;
-    }
-
-    @Override
-    protected @NotNull Component provideName() {
-        return Component.text("SV-98");
+        return ThreeZeroEightSubsonicWinchester.class;
     }
 
     @Override
     protected @NotNull String provideDescription() {
-        return "Very powerful sniper rifle";
+        return "The best sniper rifle in the game";
+    }
+
+    @Override
+    protected @KeyPattern.Value @NotNull String provideKey() {
+        return "prickskyttegevar_90";
     }
 
     @Override
@@ -66,12 +66,12 @@ public class SV98 extends Gun implements GripDisabled {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
-        return "sv-98";
+    protected @NotNull Component provideName() {
+        return Component.text("Prickskyttegevär 90");
     }
 
     @Override
     protected @NotNull Integer provideCustomModelData() {
-        return 8;
+        return 9;
     }
 }

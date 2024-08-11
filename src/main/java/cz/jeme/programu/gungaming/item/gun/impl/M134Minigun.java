@@ -2,47 +2,47 @@ package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.ammo.impl.SevenSixTwoMillimeter;
-import cz.jeme.programu.gungaming.item.attachment.disable.GripDisabled;
+import cz.jeme.programu.gungaming.item.attachment.disable.AttachmentsDisabled;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class SV98 extends Gun implements GripDisabled {
+public class M134Minigun extends Gun implements AttachmentsDisabled {
     @Override
     protected int provideMaxAmmo() {
-        return 10;
+        return 200;
     }
 
     @Override
     protected int provideShootCooldown() {
-        return 28;
+        return 4;
     }
 
     @Override
     protected int provideReloadDuration() {
-        return 50;
+        return 98;
     }
 
     @Override
     protected double provideDamage() {
-        return 19;
+        return 2.5;
     }
 
     @Override
     protected double provideBulletVelocity() {
-        return 80;
+        return 40;
     }
 
     @Override
     protected double provideRecoil() {
-        return 0.3;
+        return .05;
     }
 
     @Override
     protected double provideInaccuracy() {
-        return 0.4;
+        return 1.3;
     }
 
     @Override
@@ -51,13 +51,13 @@ public class SV98 extends Gun implements GripDisabled {
     }
 
     @Override
-    protected @NotNull Component provideName() {
-        return Component.text("SV-98");
+    protected @NotNull String provideDescription() {
+        return "Gatling-like rotary minigun";
     }
 
     @Override
-    protected @NotNull String provideDescription() {
-        return "Very powerful sniper rifle";
+    protected @KeyPattern.Value @NotNull String provideKey() {
+        return "m134_minigun";
     }
 
     @Override
@@ -66,12 +66,22 @@ public class SV98 extends Gun implements GripDisabled {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
-        return "sv-98";
+    protected @NotNull Component provideName() {
+        return Component.text("M134 Minigun");
+    }
+
+    @Override
+    protected int provideBulletsPerShot() {
+        return 2;
+    }
+
+    @Override
+    protected int provideBulletCooldown() {
+        return 2;
     }
 
     @Override
     protected @NotNull Integer provideCustomModelData() {
-        return 8;
+        return 5;
     }
 }
