@@ -13,6 +13,7 @@ import cz.jeme.programu.gungaming.item.melee.MeleeEventHandler;
 import cz.jeme.programu.gungaming.item.throwable.ThrowableEventHandler;
 import cz.jeme.programu.gungaming.item.tracker.TrackerEventHandler;
 import cz.jeme.programu.gungaming.loot.crate.CrateEventHandler;
+import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import io.papermc.paper.event.player.PlayerStopUsingItemEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -194,5 +195,10 @@ public enum EventDistributor implements Listener {
     private static void onPlayerRecipeDiscover(final @NotNull PlayerRecipeDiscoverEvent event) {
         GameEventHandler.onPlayerRecipeDiscover(event);
         LobbyEventHandler.onPlayerRecipeDiscover(event);
+    }
+
+    @EventHandler
+    private static void onBlockPreDispense(final @NotNull BlockPreDispenseEvent event) {
+        ThrowableEventHandler.onBlockPreDispense(event);
     }
 }

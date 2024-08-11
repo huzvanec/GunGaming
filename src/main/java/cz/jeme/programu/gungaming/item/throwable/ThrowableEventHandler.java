@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.item.throwable;
 
 import cz.jeme.programu.gungaming.GlobalEventHandler;
+import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
@@ -37,5 +38,9 @@ public final class ThrowableEventHandler {
         final double maxDamage = ThrownHelper.MAX_DAMAGE_DATA.require(thrown);
         final double damage = Math.max(0, maxDamage - distance * throwable.damageDistanceRatio());
         event.setDamage(damage);
+    }
+
+    public static void onBlockPreDispense(final @NotNull BlockPreDispenseEvent event) {
+        if (Throwable.is(event.getItemStack())) event.setCancelled(true);
     }
 }
