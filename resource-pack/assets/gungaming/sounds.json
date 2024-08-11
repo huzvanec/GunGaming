@@ -129,9 +129,9 @@
             "gungaming:item/gun/reload/rocket_launcher"
         ]
     },
-    "item.mp5.held": {
+    "item.rocket_launcher.held": {
         "sounds": [
-            "gungaming:item/held/mp5"
+            "gungaming:item/held/rocket_launcher"
         ]
     },
     "item.mp5.shoot": {
@@ -144,9 +144,24 @@
             "gungaming:item/gun/reload/mp5"
         ]
     },
-    "item.rocket_launcher.held": {
+    "item.mp5.held": {
         "sounds": [
-            "gungaming:item/held/rocket_launcher"
+            "gungaming:item/held/mp5"
+        ]
+    },
+    "item.mac-10.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/mac-10"
+        ]
+    },
+    "item.mac-10.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/mac-10"
+        ]
+    },
+    "item.mac-10.held": {
+        "sounds": [
+            "gungaming:item/held/mac-10"
         ]
     },
     "entity.rocket.ambient": {

@@ -167,6 +167,12 @@
 				"custom_model_data": 10
 			},
 			"model": "gungaming:item/gun/mp5"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 11
+			},
+			"model": "gungaming:item/gun/mac-10"
 		}
 	]
 }
