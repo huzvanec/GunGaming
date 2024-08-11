@@ -1,17 +1,17 @@
 {
-    "item.m9.shoot": {
+    "item.beretta_m9.shoot": {
         "sounds": [
-            "gungaming:gun/shoot/m9"
+            "gungaming:gun/shoot/beretta_m9"
         ]
     },
-    "item.m9.reload": {
+    "item.beretta_m9.reload": {
         "sounds": [
-            "gungaming:gun/reload/m9"
+            "gungaming:gun/reload/beretta_m9"
         ]
     },
-    "item.m9.held": {
+    "item.beretta_m9.held": {
         "sounds": [
-            "gungaming:item/held/m9"
+            "gungaming:item/held/beretta_m9"
         ]
     },
     "item.nagant_m1895.shoot": {
