@@ -28,22 +28,22 @@ public class RemingtonM870 extends Gun implements MagazineDisabled {
 
     @Override
     protected double provideDamage() {
-        return 2.3D;
+        return 2.3;
     }
 
     @Override
     protected double provideBulletVelocity() {
-        return 40D;
+        return 40;
     }
 
     @Override
     protected double provideRecoil() {
-        return .05D;
+        return .05;
     }
 
     @Override
     protected double provideInaccuracy() {
-        return 4.5D;
+        return 4.5;
     }
 
     @Override
