@@ -26,6 +26,10 @@ import java.util.Random;
 
 public class AirStrikeStrobe extends Throwable {
 
+    protected AirStrikeStrobe() {
+        item.editMeta(meta -> meta.setMaxStackSize(1));
+    }
+
     @Override
     protected int provideThrowCooldown() {
         return 60;
