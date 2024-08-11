@@ -173,6 +173,12 @@
 				"custom_model_data": 11
 			},
 			"model": "gungaming:item/gun/mac-10"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 12
+			},
+			"model": "gungaming:item/gun/ump9"
 		}
 	]
 }

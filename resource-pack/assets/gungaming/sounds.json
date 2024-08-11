@@ -164,6 +164,21 @@
             "gungaming:item/held/mac-10"
         ]
     },
+    "item.ump9.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/ump9"
+        ]
+    },
+    "item.ump9.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/ump9"
+        ]
+    },
+    "item.ump9.held": {
+        "sounds": [
+            "gungaming:item/held/ump9"
+        ]
+    },
     "entity.rocket.ambient": {
         "sounds": [
             "gungaming:entity/ambient/rocket"

@@ -28,7 +28,7 @@ public class MAC10 extends Gun implements ScopeDisabled {
 
     @Override
     protected double provideDamage() {
-        return 2;
+        return 1.5;
     }
 
     @Override
@@ -74,11 +74,6 @@ public class MAC10 extends Gun implements ScopeDisabled {
     @Override
     protected int provideBulletsPerShot() {
         return 4;
-    }
-
-    @Override
-    protected int provideBulletCooldown() {
-        return 1;
     }
 
     @Override

@@ -8,7 +8,7 @@ import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class MP5 extends Gun {
+public class UMP9 extends Gun {
     @Override
     protected int provideMaxAmmo() {
         return 30;
@@ -16,7 +16,7 @@ public class MP5 extends Gun {
 
     @Override
     protected int provideShootCooldown() {
-        return 4;
+        return 12;
     }
 
     @Override
@@ -26,22 +26,22 @@ public class MP5 extends Gun {
 
     @Override
     protected double provideDamage() {
-        return 1;
+        return 4;
     }
 
     @Override
     protected double provideBulletVelocity() {
-        return 6;
+        return 7;
     }
 
     @Override
     protected double provideRecoil() {
-        return .04;
+        return .05;
     }
 
     @Override
     protected double provideInaccuracy() {
-        return 1.1;
+        return 0.8;
     }
 
     @Override
@@ -51,12 +51,12 @@ public class MP5 extends Gun {
 
     @Override
     protected @NotNull String provideDescription() {
-        return "decent accurate SMG";
+        return "3-round burst SMG";
     }
 
     @Override
     protected @KeyPattern.Value @NotNull String provideKey() {
-        return "mp5";
+        return "ump9";
     }
 
     @Override
@@ -66,12 +66,12 @@ public class MP5 extends Gun {
 
     @Override
     protected @NotNull Component provideName() {
-        return Component.text("MP5");
+        return Component.text("UMP9");
     }
 
     @Override
     protected int provideBulletsPerShot() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -81,6 +81,6 @@ public class MP5 extends Gun {
 
     @Override
     protected @NotNull Integer provideCustomModelData() {
-        return 10;
+        return 12;
     }
 }
