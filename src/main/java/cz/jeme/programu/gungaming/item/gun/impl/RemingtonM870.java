@@ -33,7 +33,7 @@ public class RemingtonM870 extends Gun implements MagazineDisabled {
 
     @Override
     protected double provideBulletVelocity() {
-        return 40;
+        return 5;
     }
 
     @Override

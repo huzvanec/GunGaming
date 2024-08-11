@@ -39,12 +39,12 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
 
     @Override
     protected double provideDamage() {
-        return 20;
+        return 25;
     }
 
     @Override
     protected double provideBulletVelocity() {
-        return 2;
+        return 1.5;
     }
 
     @Override
@@ -87,7 +87,6 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
 
     @Override
     protected void onShoot(final @NotNull PlayerInteractEvent event, final @NotNull AbstractArrow bullet) {
-        bullet.setGravity(false);
         ((SpectralArrow) bullet).setGlowingTicks(0);
 
         final Vector velocity = bullet.getVelocity();

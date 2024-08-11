@@ -31,7 +31,7 @@ public class DragunovSVU extends Gun {
 
     @Override
     protected double provideBulletVelocity() {
-        return 60;
+        return 12;
     }
 
     @Override

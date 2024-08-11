@@ -32,7 +32,7 @@ public class SV98 extends Gun implements GripDisabled {
 
     @Override
     protected double provideBulletVelocity() {
-        return 80;
+        return 15;
     }
 
     @Override

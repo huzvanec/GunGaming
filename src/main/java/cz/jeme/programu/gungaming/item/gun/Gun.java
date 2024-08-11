@@ -268,6 +268,7 @@ public abstract class Gun extends Weapon {
                 bulletVector,
                 arrow -> {
                     arrow.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
+                    arrow.setGravity(false);
                     BulletHelper.GUN_KEY_DATA.write(arrow, key.asString());
                     BulletHelper.DAMAGE_DATA.write(arrow, DAMAGE_DATA.require(item));
                     onShoot(event, arrow);

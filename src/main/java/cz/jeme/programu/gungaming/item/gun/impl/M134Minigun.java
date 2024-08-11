@@ -32,7 +32,7 @@ public class M134Minigun extends Gun implements AttachmentsDisabled {
 
     @Override
     protected double provideBulletVelocity() {
-        return 40;
+        return 8;
     }
 
     @Override

@@ -32,7 +32,7 @@ public class Prickskyttegevar90 extends Gun implements GripDisabled {
 
     @Override
     protected double provideBulletVelocity() {
-        return 30;
+        return 5;
     }
 
     @Override

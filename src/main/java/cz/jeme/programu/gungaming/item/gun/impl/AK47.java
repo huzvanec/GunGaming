@@ -31,7 +31,7 @@ public class AK47 extends Gun {
 
     @Override
     protected double provideBulletVelocity() {
-        return 40;
+        return 7;
     }
 
     @Override
