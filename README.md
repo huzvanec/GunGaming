@@ -2,7 +2,7 @@
 ## About
 GunGaming is an awesome Minecraft battle royale minigame.
 ## Supported versions
-Paper based servers 1.21<br>
+Paper based servers 1.21.1<br>
 **Bukkit and Spigot are not supported!**
 ## Building
 Requirements:
