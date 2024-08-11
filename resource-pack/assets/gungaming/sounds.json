@@ -194,6 +194,21 @@
             "gungaming:item/held/remington_m1100"
         ]
     },
+    "item.spas-12.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/spas-12"
+        ]
+    },
+    "item.spas-12.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/spas-12"
+        ]
+    },
+    "item.spas-12.held": {
+        "sounds": [
+            "gungaming:item/held/spas-12"
+        ]
+    },
     "entity.rocket.ambient": {
         "sounds": [
             "gungaming:entity/ambient/rocket"

@@ -185,6 +185,12 @@
 				"custom_model_data": 13
 			},
 			"model": "gungaming:item/gun/remington_m1100"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 14
+			},
+			"model": "gungaming:item/gun/spas-12"
 		}
 	]
 }
