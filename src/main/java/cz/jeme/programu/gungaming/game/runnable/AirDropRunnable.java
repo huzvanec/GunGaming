@@ -20,8 +20,8 @@ import java.util.Random;
 public final class AirDropRunnable extends GameRunnable {
     private final @NotNull Random random = new Random();
 
-    public static final @NotNull Sound AIR_DROP_AMBIENT_SOUND = Sound.sound(GunGaming.namespaced("block.air_drop.ambient"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound AIR_DROP_PING_SOUND = Sound.sound(GunGaming.namespaced("game.air_drop"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound AIR_DROP_AMBIENT_SOUND = Sound.sound(GunGaming.namespaced("game.air_drop"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound AIR_DROP_PING_SOUND = Sound.sound(GunGaming.namespaced("game.ping.air_drop"), Sound.Source.MASTER, 1, 1);
 
     private static final int MIN_BORDER_RADIUS = 10;
 

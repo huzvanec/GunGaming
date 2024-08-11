@@ -342,9 +342,9 @@ public abstract class Gun extends Weapon {
 
     protected final @NotNull Key shootSoundKey = GunGaming.namespaced("item." + key.value() + ".shoot");
     protected final @NotNull Key reloadSoundKey = GunGaming.namespaced("item." + key.value() + ".reload");
-    protected static final @NotNull Key OUT_OF_AMMO_SOUND_KEY = GunGaming.namespaced("gun.out_of_ammo");
-    protected static final @NotNull Key RELOAD_REQUIRED_SOUND_KEY = GunGaming.namespaced("gun.reload_required");
-    protected static final @NotNull Key RELOAD_ABORTED_SOUND_KEY = GunGaming.namespaced("gun.reload_aborted");
+    protected static final @NotNull Key OUT_OF_AMMO_SOUND_KEY = GunGaming.namespaced("item.gun.out_of_ammo");
+    protected static final @NotNull Key RELOAD_REQUIRED_SOUND_KEY = GunGaming.namespaced("item.gun.reload_required");
+    protected static final @NotNull Key RELOAD_ABORTED_SOUND_KEY = GunGaming.namespaced("item.gun.reload_aborted");
 
     protected final @NotNull Sound shootSound = Sound.sound(shootSoundKey, Sound.Source.PLAYER, 6.3F, 1);
     protected final @NotNull Sound reloadSound = Sound.sound(reloadSoundKey, Sound.Source.PLAYER, 2.5F, 1);

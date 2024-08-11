@@ -46,10 +46,10 @@ public final class Game {
     public static final @NotNull Data<Byte, Boolean> INVULNERABLE_DATA = Data.ofBoolean(GunGaming.namespaced("invulnerable"));
 
     public static final @NotNull Sound START_SOUND = Sound.sound(GunGaming.namespaced("game.start"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound DING_SOUND = Sound.sound(GunGaming.namespaced("game.ding"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound DONG_SOUND = Sound.sound(GunGaming.namespaced("game.dong"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound WARNING_SOUND = Sound.sound(GunGaming.namespaced("game.warning"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound INFO_SOUND = Sound.sound(GunGaming.namespaced("game.info"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound DING_SOUND = Sound.sound(GunGaming.namespaced("game.ping.ding"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound DONG_SOUND = Sound.sound(GunGaming.namespaced("game.ping.dong"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound WARNING_SOUND = Sound.sound(GunGaming.namespaced("game.ping.warning"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound INFO_SOUND = Sound.sound(GunGaming.namespaced("game.ping.info"), Sound.Source.MASTER, 1, 1);
     public static final @NotNull Sound END_SOUND = Sound.sound(GunGaming.namespaced("game.end"), Sound.Source.MASTER, 1, 1);
 
     private static @Nullable Game instance = null;
