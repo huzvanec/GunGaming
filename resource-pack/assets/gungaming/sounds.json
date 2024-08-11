@@ -1,4 +1,19 @@
 {
+    "item.gun.out_of_ammo": {
+        "sounds": [
+            "gungaming:item/gun/out_of_ammo"
+        ]
+    },
+    "item.gun.reload_required": {
+        "sounds": [
+            "gungaming:item/gun/reload_required"
+        ]
+    },
+    "item.gun.reload_aborted": {
+        "sounds": [
+            "gungaming:item/gun/reload_aborted"
+        ]
+    },
     "item.beretta_m9.shoot": {
         "sounds": [
             "gungaming:item/gun/shoot/beretta_m9"
@@ -74,21 +89,6 @@
             "gungaming:item/held/ak-47"
         ]
     },
-    "item.gun.out_of_ammo": {
-        "sounds": [
-            "gungaming:item/gun/out_of_ammo"
-        ]
-    },
-    "item.gun.reload_required": {
-        "sounds": [
-            "gungaming:item/gun/reload_required"
-        ]
-    },
-    "item.gun.reload_aborted": {
-        "sounds": [
-            "gungaming:item/gun/reload_aborted"
-        ]
-    },
     "item.dragunov_svu.shoot": {
         "sounds": [
             "gungaming:item/gun/shoot/dragunov_svu"
@@ -127,6 +127,21 @@
     "item.rocket_launcher.reload": {
         "sounds": [
             "gungaming:item/gun/reload/rocket_launcher"
+        ]
+    },
+    "item.mp5.held": {
+        "sounds": [
+            "gungaming:item/held/mp5"
+        ]
+    },
+    "item.mp5.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/mp5"
+        ]
+    },
+    "item.mp5.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/mp5"
         ]
     },
     "item.rocket_launcher.held": {

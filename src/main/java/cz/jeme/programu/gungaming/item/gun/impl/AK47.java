@@ -41,7 +41,7 @@ public class AK47 extends Gun {
 
     @Override
     protected double provideInaccuracy() {
-        return 1.7;
+        return 1;
     }
 
     @Override

@@ -58,7 +58,7 @@ public final class PlaceholderHelper {
         if (name == null)
             throw new RuntimeException("Unknown attachment category: " + clazz.getCanonicalName());
         disabled.editMeta(meta -> meta.displayName(
-                Components.of("<!i><red>%s cannot be applied to this weapon!".formatted(name))
+                Components.of("<!i><red>%s is inapplicable for this weapon!".formatted(name))
         ));
         return disabled;
     }
