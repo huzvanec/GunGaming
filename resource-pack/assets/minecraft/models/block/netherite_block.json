@@ -1,5 +1,5 @@
 {
-  "__gungaming__": "Reinforced Deepslate represents Reinforced Titanium",
+  "__gungaming__": "Netherite Block represents Reinforced Titanium",
   "parent": "minecraft:block/cube_all",
   "textures": {
     "all": "gungaming:block/reinforced_titanium"

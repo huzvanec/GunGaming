@@ -20,7 +20,7 @@ public class ReinforcedTitanium extends CustomBlock {
 
     @Override
     protected @NotNull Material provideMaterial() {
-        return Material.REINFORCED_DEEPSLATE;
+        return Material.NETHERITE_BLOCK;
     }
 
     @Override
