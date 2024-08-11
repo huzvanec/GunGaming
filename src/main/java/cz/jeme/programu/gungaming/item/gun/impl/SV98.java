@@ -42,7 +42,7 @@ public class SV98 extends Gun implements GripDisabled {
 
     @Override
     protected double provideInaccuracy() {
-        return 0.4;
+        return 0.1;
     }
 
     @Override

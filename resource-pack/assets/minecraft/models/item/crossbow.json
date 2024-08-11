@@ -112,7 +112,7 @@
 			"predicate": {
 				"custom_model_data": 1
 			},
-			"model": "gungaming:item/gun/m9"
+			"model": "gungaming:item/gun/beretta_m9"
 		},
 		{
 			"predicate": {
@@ -191,6 +191,30 @@
 				"custom_model_data": 14
 			},
 			"model": "gungaming:item/gun/spas-12"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 15
+			},
+			"model": "gungaming:item/gun/kriss_vector"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 16
+			},
+			"model": "gungaming:item/gun/scar-h"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 17
+			},
+			"model": "gungaming:item/gun/glock_18c"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 18
+			},
+			"model": "gungaming:item/gun/desert_eagle"
 		}
 	]
 }

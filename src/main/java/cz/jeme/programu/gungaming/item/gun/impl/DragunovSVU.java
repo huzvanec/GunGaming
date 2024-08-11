@@ -41,7 +41,7 @@ public class DragunovSVU extends Gun {
 
     @Override
     protected double provideInaccuracy() {
-        return .7;
+        return .3;
     }
 
     @Override

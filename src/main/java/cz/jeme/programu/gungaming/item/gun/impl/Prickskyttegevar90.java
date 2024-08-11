@@ -42,7 +42,7 @@ public class Prickskyttegevar90 extends Gun implements GripDisabled {
 
     @Override
     protected double provideInaccuracy() {
-        return .6;
+        return .3;
     }
 
     @Override

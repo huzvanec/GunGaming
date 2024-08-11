@@ -209,6 +209,66 @@
             "gungaming:item/held/spas-12"
         ]
     },
+    "item.kriss_vector.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/kriss_vector"
+        ]
+    },
+    "item.kriss_vector.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/kriss_vector"
+        ]
+    },
+    "item.kriss_vector.held": {
+        "sounds": [
+            "gungaming:item/held/kriss_vector"
+        ]
+    },
+    "item.scar-h.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/scar-h"
+        ]
+    },
+    "item.scar-h.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/scar-h"
+        ]
+    },
+    "item.scar-h.held": {
+        "sounds": [
+            "gungaming:item/held/scar-h"
+        ]
+    },
+    "item.glock_18c.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/glock_18c"
+        ]
+    },
+    "item.glock_18c.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/glock_18c"
+        ]
+    },
+    "item.glock_18c.held": {
+        "sounds": [
+            "gungaming:item/held/glock_18c"
+        ]
+    },
+    "item.desert_eagle.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/desert_eagle"
+        ]
+    },
+    "item.desert_eagle.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/desert_eagle"
+        ]
+    },
+    "item.desert_eagle.held": {
+        "sounds": [
+            "gungaming:item/held/desert_eagle"
+        ]
+    },
     "entity.rocket.ambient": {
         "sounds": [
             "gungaming:entity/ambient/rocket"

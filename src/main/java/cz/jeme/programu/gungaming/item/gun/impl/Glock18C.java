@@ -1,9 +1,8 @@
 package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
-import cz.jeme.programu.gungaming.item.ammo.impl.SevenSixTwoMillimeter;
+import cz.jeme.programu.gungaming.item.ammo.impl.NineMillimeter;
 import cz.jeme.programu.gungaming.item.attachment.disable.GripDisabled;
-import cz.jeme.programu.gungaming.item.attachment.disable.MagazineDisabled;
 import cz.jeme.programu.gungaming.item.attachment.disable.StockDisabled;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
@@ -11,69 +10,74 @@ import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class NagantM1895 extends Gun implements GripDisabled, MagazineDisabled, StockDisabled {
+public class Glock18C extends Gun implements GripDisabled, StockDisabled {
     @Override
     protected int provideMaxAmmo() {
-        return 7;
+        return 17;
     }
 
     @Override
     protected int provideShootCooldown() {
-        return 10;
+        return 4;
     }
 
     @Override
     protected int provideReloadDuration() {
-        return 37;
+        return 38;
     }
 
     @Override
     protected double provideDamage() {
-        return 4.5;
+        return 2;
     }
 
     @Override
     protected double provideBulletVelocity() {
-        return 6;
+        return 5;
     }
 
     @Override
     protected double provideRecoil() {
-        return .18;
+        return .04;
     }
 
     @Override
     protected double provideInaccuracy() {
-        return 1.1;
+        return 5;
     }
 
     @Override
     protected @NotNull Class<? extends Ammo> provideAmmoType() {
-        return SevenSixTwoMillimeter.class;
+        return NineMillimeter.class;
     }
 
     @Override
     protected @NotNull String provideDescription() {
-        return "Basic revolver";
+        return "fully automatic pistol with big spread";
     }
 
     @Override
     protected @KeyPattern.Value @NotNull String provideKey() {
-        return "nagant_m1895";
+        return "glock_18c";
     }
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.COMMON;
+        return Rarity.UNCOMMON;
     }
 
     @Override
     protected @NotNull Component provideName() {
-        return Component.text("Nagant M1895");
+        return Component.text("Glock 18C");
+    }
+
+    @Override
+    protected int provideBulletsPerShot() {
+        return 4;
     }
 
     @Override
     protected @NotNull Integer provideCustomModelData() {
-        return 2;
+        return 17;
     }
 }

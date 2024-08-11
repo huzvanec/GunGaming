@@ -2,49 +2,46 @@ package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.ammo.impl.SevenSixTwoMillimeter;
-import cz.jeme.programu.gungaming.item.attachment.disable.GripDisabled;
-import cz.jeme.programu.gungaming.item.attachment.disable.MagazineDisabled;
-import cz.jeme.programu.gungaming.item.attachment.disable.StockDisabled;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class NagantM1895 extends Gun implements GripDisabled, MagazineDisabled, StockDisabled {
+public class SCARH extends Gun {
     @Override
     protected int provideMaxAmmo() {
-        return 7;
+        return 20;
     }
 
     @Override
     protected int provideShootCooldown() {
-        return 10;
+        return 4;
     }
 
     @Override
     protected int provideReloadDuration() {
-        return 37;
+        return 54;
     }
 
     @Override
     protected double provideDamage() {
-        return 4.5;
+        return 5;
     }
 
     @Override
     protected double provideBulletVelocity() {
-        return 6;
+        return 8;
     }
 
     @Override
     protected double provideRecoil() {
-        return .18;
+        return .03;
     }
 
     @Override
     protected double provideInaccuracy() {
-        return 1.1;
+        return .5;
     }
 
     @Override
@@ -54,26 +51,36 @@ public class NagantM1895 extends Gun implements GripDisabled, MagazineDisabled, 
 
     @Override
     protected @NotNull String provideDescription() {
-        return "Basic revolver";
+        return "extremely accurate assault rifle with high damage";
     }
 
     @Override
     protected @KeyPattern.Value @NotNull String provideKey() {
-        return "nagant_m1895";
+        return "scar-h";
     }
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.COMMON;
+        return Rarity.LEGENDARY;
     }
 
     @Override
     protected @NotNull Component provideName() {
-        return Component.text("Nagant M1895");
+        return Component.text("SCAR-H");
+    }
+
+    @Override
+    protected int provideBulletsPerShot() {
+        return 2;
+    }
+
+    @Override
+    protected int provideBulletCooldown() {
+        return 2;
     }
 
     @Override
     protected @NotNull Integer provideCustomModelData() {
-        return 2;
+        return 16;
     }
 }

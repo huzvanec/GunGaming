@@ -43,7 +43,7 @@ public class RemingtonM1100 extends Gun implements MagazineDisabled {
 
     @Override
     protected double provideInaccuracy() {
-        return 8;
+        return 9;
     }
 
     @Override

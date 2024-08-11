@@ -33,7 +33,13 @@
 			"predicate": {
 				"custom_model_data": 5
 			},
-			"model": "gungaming:item/ammo/308_subsonic_winchester"
+			"model": "gungaming:item/ammo/.308_subsonic_winchester"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 6
+			},
+			"model": "gungaming:item/ammo/.50_action_express"
 		}
 	]
 }

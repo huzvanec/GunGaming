@@ -1,9 +1,8 @@
 package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
-import cz.jeme.programu.gungaming.item.ammo.impl.SevenSixTwoMillimeter;
+import cz.jeme.programu.gungaming.item.ammo.impl.FiveZeroActionExpress;
 import cz.jeme.programu.gungaming.item.attachment.disable.GripDisabled;
-import cz.jeme.programu.gungaming.item.attachment.disable.MagazineDisabled;
 import cz.jeme.programu.gungaming.item.attachment.disable.StockDisabled;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
@@ -11,7 +10,7 @@ import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class NagantM1895 extends Gun implements GripDisabled, MagazineDisabled, StockDisabled {
+public class DesertEagle extends Gun implements GripDisabled, StockDisabled {
     @Override
     protected int provideMaxAmmo() {
         return 7;
@@ -19,17 +18,17 @@ public class NagantM1895 extends Gun implements GripDisabled, MagazineDisabled, 
 
     @Override
     protected int provideShootCooldown() {
-        return 10;
+        return 7;
     }
 
     @Override
     protected int provideReloadDuration() {
-        return 37;
+        return 46;
     }
 
     @Override
     protected double provideDamage() {
-        return 4.5;
+        return 10;
     }
 
     @Override
@@ -39,41 +38,41 @@ public class NagantM1895 extends Gun implements GripDisabled, MagazineDisabled, 
 
     @Override
     protected double provideRecoil() {
-        return .18;
+        return .15;
     }
 
     @Override
     protected double provideInaccuracy() {
-        return 1.1;
+        return .9;
     }
 
     @Override
     protected @NotNull Class<? extends Ammo> provideAmmoType() {
-        return SevenSixTwoMillimeter.class;
+        return FiveZeroActionExpress.class;
     }
 
     @Override
     protected @NotNull String provideDescription() {
-        return "Basic revolver";
+        return "Pistol with very high DPS";
     }
 
     @Override
     protected @KeyPattern.Value @NotNull String provideKey() {
-        return "nagant_m1895";
+        return "desert_eagle";
     }
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.COMMON;
+        return Rarity.EPIC;
     }
 
     @Override
     protected @NotNull Component provideName() {
-        return Component.text("Nagant M1895");
+        return Component.text("Desert Eagle");
     }
 
     @Override
     protected @NotNull Integer provideCustomModelData() {
-        return 2;
+        return 18;
     }
 }

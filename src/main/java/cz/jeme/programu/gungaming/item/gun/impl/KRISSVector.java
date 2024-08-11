@@ -1,35 +1,32 @@
 package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
-import cz.jeme.programu.gungaming.item.ammo.impl.SevenSixTwoMillimeter;
-import cz.jeme.programu.gungaming.item.attachment.disable.GripDisabled;
-import cz.jeme.programu.gungaming.item.attachment.disable.MagazineDisabled;
-import cz.jeme.programu.gungaming.item.attachment.disable.StockDisabled;
+import cz.jeme.programu.gungaming.item.ammo.impl.NineMillimeter;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class NagantM1895 extends Gun implements GripDisabled, MagazineDisabled, StockDisabled {
+public class KRISSVector extends Gun {
     @Override
     protected int provideMaxAmmo() {
-        return 7;
+        return 33;
     }
 
     @Override
     protected int provideShootCooldown() {
-        return 10;
+        return 4;
     }
 
     @Override
     protected int provideReloadDuration() {
-        return 37;
+        return 30;
     }
 
     @Override
     protected double provideDamage() {
-        return 4.5;
+        return 3;
     }
 
     @Override
@@ -39,41 +36,46 @@ public class NagantM1895 extends Gun implements GripDisabled, MagazineDisabled, 
 
     @Override
     protected double provideRecoil() {
-        return .18;
+        return .05;
     }
 
     @Override
     protected double provideInaccuracy() {
-        return 1.1;
+        return .7;
     }
 
     @Override
     protected @NotNull Class<? extends Ammo> provideAmmoType() {
-        return SevenSixTwoMillimeter.class;
+        return NineMillimeter.class;
     }
 
     @Override
     protected @NotNull String provideDescription() {
-        return "Basic revolver";
+        return "Extremely fast and accurate SMG";
     }
 
     @Override
     protected @KeyPattern.Value @NotNull String provideKey() {
-        return "nagant_m1895";
+        return "kriss_vector";
     }
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.COMMON;
+        return Rarity.EPIC;
     }
 
     @Override
     protected @NotNull Component provideName() {
-        return Component.text("Nagant M1895");
+        return Component.text("KRISS Vector");
+    }
+
+    @Override
+    protected int provideBulletsPerShot() {
+        return 4;
     }
 
     @Override
     protected @NotNull Integer provideCustomModelData() {
-        return 2;
+        return 15;
     }
 }
