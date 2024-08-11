@@ -44,7 +44,7 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
 
     @Override
     protected double provideBulletVelocity() {
-        return 1.5;
+        return 2;
     }
 
     @Override

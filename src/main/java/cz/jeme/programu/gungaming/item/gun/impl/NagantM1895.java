@@ -34,7 +34,7 @@ public class NagantM1895 extends Gun implements GripDisabled, MagazineDisabled, 
 
     @Override
     protected double provideBulletVelocity() {
-        return 5;
+        return 6;
     }
 
     @Override
