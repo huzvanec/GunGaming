@@ -8,7 +8,6 @@ import cz.jeme.programu.gungaming.util.Lores;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -16,6 +15,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MirvGrenade extends Grenade {
     public static final double HORIZONTAL_POWER = 0.4;
@@ -77,15 +77,13 @@ public class MirvGrenade extends Grenade {
     protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
         final Location location = thrown.getLocation();
         location.createExplosion(thrown, 5F, false, true);
-        if (!(thrown.getShooter() instanceof final Player player))
-            throw new RuntimeException("The shooter is not a player!");
         final SmallGrenade smallGrenade = CustomItem.of(SmallGrenade.class);
         final ItemStack smallGrenadeItem = smallGrenade.item();
         for (int deg = 0; deg < 360; deg += 45) {
             final double rad = Math.toRadians(deg);
             final double x = Math.cos(rad) * HORIZONTAL_POWER;
             final double z = Math.sin(rad) * HORIZONTAL_POWER;
-            player.launchProjectile(
+            Objects.requireNonNull(thrown.getShooter(), "Shooter is null!").launchProjectile(
                     Snowball.class,
                     new Vector(x, VERTICAL_POWER, z),
                     snowball -> {

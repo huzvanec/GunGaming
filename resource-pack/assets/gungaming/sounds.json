@@ -146,22 +146,37 @@
     },
     "entity.frag_grenade.hit": {
         "sounds": [
-            "gungaming:throwable/explosion/frag_grenade"
+            "gungaming:throwable/hit/frag_grenade"
         ]
     },
     "entity.mirv_grenade.hit": {
         "sounds": [
-            "gungaming:throwable/explosion/mirv_grenade"
+            "gungaming:throwable/hit/mirv_grenade"
         ]
     },
     "entity.small_grenade.hit": {
         "sounds": [
-            "gungaming:throwable/explosion/small_grenade"
+            "gungaming:throwable/hit/small_grenade"
         ]
     },
     "entity.smoke_grenade.hit": {
         "sounds": [
-            "gungaming:throwable/explosion/smoke_grenade"
+            "gungaming:throwable/hit/smoke_grenade"
+        ]
+    },
+    "entity.air_strike_strobe.hit": {
+        "sounds": [
+            "gungaming:throwable/hit/air_strike_strobe"
+        ]
+    },
+    "entity.air_strike_bomb.hit": {
+        "sounds": [
+            "gungaming:throwable/hit/air_strike_bomb"
+        ]
+    },
+    "entity.air_strike.ambient": {
+        "sounds": [
+            "gungaming:throwable/air_strike_ambient"
         ]
     },
     "item.grenade.throw": {
@@ -176,7 +191,7 @@
     },
     "entity.molotov_cocktail.hit": {
         "sounds": [
-            "gungaming:throwable/explosion/molotov_cocktail"
+            "gungaming:throwable/hit/molotov_cocktail"
         ]
     },
     "item.wind_pearl.throw": {

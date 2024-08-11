@@ -40,6 +40,18 @@
 				"custom_model_data": 6
 			},
 			"model": "gungaming:item/throwable/wind_pearl"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 7
+			},
+			"model": "gungaming:item/throwable/air_strike_strobe"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 8
+			},
+			"model": "gungaming:item/throwable/air_strike_bomb"
 		}
 	]
 }
