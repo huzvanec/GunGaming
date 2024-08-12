@@ -40,6 +40,7 @@ public final class AttachmentMenu {
         fill();
 
         player.openInventory(inventory);
+        player.playSound(gun.heldSound(gunItem), player);
     }
 
     private void fill() {

@@ -40,6 +40,7 @@ public final class StatsMenu {
         fill();
 
         player.openInventory(inventory);
+        player.playSound(gun.heldSound(gunItem), player);
     }
 
     private static @NotNull ItemStack statItem(final @NotNull String name, final @NotNull List<String> lore, final @Nullable Integer customModelData) {
