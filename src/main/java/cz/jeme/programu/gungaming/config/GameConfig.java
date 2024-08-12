@@ -101,4 +101,9 @@ public final class GameConfig {
             IntegerArgumentType.integer(3, 60 * 60),
             10
     );
+    public static final @NotNull ConfigValue<Integer> DEATH_DROP_PERCENTAGE = value(
+            "death_drop_percentage",
+            IntegerArgumentType.integer(0, 100),
+            50
+    );
 }

@@ -96,7 +96,7 @@ public class AirStrikeStrobe extends Throwable {
     private static final @NotNull Random RANDOM = new Random();
 
     private static double nextAxis(final double radians) {
-        return RANDOM.nextDouble(radians * 2) - radians;
+        return RANDOM.nextDouble(-radians, radians);
     }
 
     private static void randomizeVector(final @NotNull Vector vector) {

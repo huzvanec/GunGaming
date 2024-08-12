@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming.game;
 
 import com.destroystokyo.paper.event.player.PlayerAdvancementCriterionGrantEvent;
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.game.runnable.countdown.Respawn;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.tracker.TeammateTracker;
@@ -21,10 +22,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 
 public final class GameEventHandler {
@@ -69,13 +67,17 @@ public final class GameEventHandler {
         event.getInventory().setResult(ItemStack.empty());
     }
 
+    private static final @NotNull Random RANDOM = new Random();
+
     private static void dropPlayerStuff(final @NotNull Player player) {
         final PlayerInventory inventory = player.getInventory();
         final World world = player.getWorld();
+        final double chance = GameConfig.DEATH_DROP_PERCENTAGE.get() / 100D;
         for (final ItemStack item : inventory) {
             if (item == null) continue;
             if (CustomItem.is(item, TeammateTracker.class)) continue;
-            world.dropItemNaturally(player.getLocation(), item);
+            if (RANDOM.nextDouble() <= chance)
+                world.dropItemNaturally(player.getLocation(), item);
             item.setAmount(0);
         }
     }

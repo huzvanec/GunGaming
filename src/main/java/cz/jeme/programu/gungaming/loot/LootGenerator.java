@@ -81,6 +81,6 @@ public enum LootGenerator {
         final int max = customItem.maxAmount();
 
         if (min == max) return min;
-        return random.nextInt((max - min) + 1) + min;
+        return random.nextInt(min, max + 1);
     }
 }
