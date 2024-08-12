@@ -27,7 +27,7 @@ public class SteyrElite extends Gun implements GripDisabled {
 
     @Override
     protected double provideDamage() {
-        return 14;
+        return 16;
     }
 
     @Override

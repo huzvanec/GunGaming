@@ -26,7 +26,7 @@ public class KRISSVector extends Gun {
 
     @Override
     protected double provideDamage() {
-        return 3;
+        return 1.2;
     }
 
     @Override

@@ -26,7 +26,7 @@ public class MP5 extends Gun {
 
     @Override
     protected double provideDamage() {
-        return 1;
+        return 1.6;
     }
 
     @Override

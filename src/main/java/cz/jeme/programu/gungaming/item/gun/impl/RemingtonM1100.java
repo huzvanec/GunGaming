@@ -18,7 +18,7 @@ public class RemingtonM1100 extends Gun implements MagazineDisabled {
 
     @Override
     protected int provideShootCooldown() {
-        return 9;
+        return 8;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class RemingtonM1100 extends Gun implements MagazineDisabled {
 
     @Override
     protected double provideDamage() {
-        return .9;
+        return 1.3;
     }
 
     @Override

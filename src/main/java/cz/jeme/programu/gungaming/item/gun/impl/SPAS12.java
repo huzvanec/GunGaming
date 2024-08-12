@@ -27,7 +27,7 @@ public class SPAS12 extends Gun implements MagazineDisabled {
 
     @Override
     protected double provideDamage() {
-        return 2.5;
+        return 1.7;
     }
 
     @Override

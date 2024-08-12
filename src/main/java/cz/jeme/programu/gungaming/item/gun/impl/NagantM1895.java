@@ -29,7 +29,7 @@ public class NagantM1895 extends Gun implements GripDisabled, MagazineDisabled, 
 
     @Override
     protected double provideDamage() {
-        return 4.5;
+        return 5;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class NagantM1895 extends Gun implements GripDisabled, MagazineDisabled, 
 
     @Override
     protected double provideInaccuracy() {
-        return 1.1;
+        return .8;
     }
 
     @Override

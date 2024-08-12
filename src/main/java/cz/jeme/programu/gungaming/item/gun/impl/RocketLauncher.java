@@ -39,7 +39,7 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
 
     @Override
     protected double provideDamage() {
-        return 25;
+        return 22;
     }
 
     @Override

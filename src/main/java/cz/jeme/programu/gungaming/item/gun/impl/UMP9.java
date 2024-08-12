@@ -26,7 +26,7 @@ public class UMP9 extends Gun {
 
     @Override
     protected double provideDamage() {
-        return 3.5;
+        return 3.2;
     }
 
     @Override

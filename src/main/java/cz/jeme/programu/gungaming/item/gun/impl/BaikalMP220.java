@@ -43,7 +43,7 @@ public class BaikalMP220 extends Gun implements GripDisabled, MagazineDisabled {
 
     @Override
     protected double provideInaccuracy() {
-        return 3;
+        return 4;
     }
 
     @Override

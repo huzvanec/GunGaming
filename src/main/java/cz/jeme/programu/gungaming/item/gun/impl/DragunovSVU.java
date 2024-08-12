@@ -26,7 +26,7 @@ public class DragunovSVU extends Gun {
 
     @Override
     protected double provideDamage() {
-        return 6;
+        return 10.5;
     }
 
     @Override

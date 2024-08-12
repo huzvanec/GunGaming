@@ -73,8 +73,11 @@ public final class GameEventHandler {
         for (final ItemStack item : inventory) {
             if (item == null) continue;
             if (CustomItem.is(item, TeammateTracker.class)) continue;
-            if (RANDOM.nextDouble() <= chance)
-                world.dropItemNaturally(player.getLocation(), item);
+            final int amount = item.getAmount();
+            int newAmount = amount;
+            for (int i = 0; i < amount; i++) if (RANDOM.nextDouble() > chance) newAmount--;
+            item.setAmount(newAmount);
+            world.dropItemNaturally(player.getLocation(), item);
             item.setAmount(0);
         }
     }

@@ -26,7 +26,7 @@ public class AK47 extends Gun {
 
     @Override
     protected double provideDamage() {
-        return 1.2;
+        return 2.3;
     }
 
     @Override

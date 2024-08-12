@@ -53,7 +53,7 @@ public class BerettaM9 extends Gun implements GripDisabled, StockDisabled {
 
     @Override
     protected double provideDamage() {
-        return 3;
+        return 4;
     }
 
     @Override

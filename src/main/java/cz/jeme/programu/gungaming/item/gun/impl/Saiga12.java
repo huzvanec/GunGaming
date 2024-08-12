@@ -41,7 +41,7 @@ public class Saiga12 extends Gun {
 
     @Override
     protected double provideInaccuracy() {
-        return 3;
+        return 4;
     }
 
     @Override

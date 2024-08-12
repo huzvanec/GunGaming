@@ -28,7 +28,7 @@ public class DesertEagle extends Gun implements GripDisabled, StockDisabled {
 
     @Override
     protected double provideDamage() {
-        return 10;
+        return 8;
     }
 
     @Override
