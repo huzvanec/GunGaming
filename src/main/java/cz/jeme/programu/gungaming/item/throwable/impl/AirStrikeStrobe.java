@@ -42,7 +42,7 @@ public class AirStrikeStrobe extends Throwable {
 
     @Override
     protected @NotNull String provideDescription() {
-        return "Calls an air strike where it's thrown";
+        return "throw this to call an air strike";
     }
 
     @Override

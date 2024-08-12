@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming;
 
 import cz.jeme.programu.gungaming.command.GGCommand;
 import cz.jeme.programu.gungaming.game.Game;
+import cz.jeme.programu.gungaming.game.lobby.Lobby;
 import cz.jeme.programu.gungaming.item.attachment.ZoomManager;
 import cz.jeme.programu.gungaming.item.gun.ReloadManager;
 import cz.jeme.programu.gungaming.loot.crate.CrateGenerator;
@@ -21,11 +22,12 @@ import java.util.logging.Logger;
 public final class GunGaming extends JavaPlugin {
     private static @Nullable GunGaming instance;
     public static final @NotNull String NAMESPACE = "gungaming";
-    @SuppressWarnings("NotNullFieldNotInitialized")
-    private static @NotNull Logger logger;
+    private static @Nullable Logger logger;
 
     @Override
     public void onEnable() {
+        if (instance != null)
+            throw new IllegalStateException("Gungaming instance already exists! Something is very wrong!");
         instance = this;
         logger = getLogger();
         ElementManager.INSTANCE.registerElements(
@@ -53,8 +55,8 @@ public final class GunGaming extends JavaPlugin {
         ZoomManager.INSTANCE.zoomOutAll();
         ReloadManager.INSTANCE.abortReloadAll(false);
         CrateGenerator.INSTANCE.removeCrates(null);
-        if (!Game.running()) return;
-        Game.instance().stopGame();
+        if (Lobby.enabled()) Lobby.instance().disable();
+        if (Game.running()) Game.instance().stopGame();
     }
 
     public static @NotNull GunGaming plugin() {
@@ -66,6 +68,6 @@ public final class GunGaming extends JavaPlugin {
     }
 
     public static @NotNull Logger logger() {
-        return logger;
+        return Objects.requireNonNull(logger, "GunGaming has not yet been initialized!");
     }
 }
