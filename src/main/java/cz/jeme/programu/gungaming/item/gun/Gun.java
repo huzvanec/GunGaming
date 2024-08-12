@@ -196,7 +196,7 @@ public abstract class Gun extends Weapon {
     }
 
     public final boolean shotgun() {
-        return bulletCooldown == 0;
+        return bulletCooldown == 0 && bulletsPerShot > 1;
     }
 
     // shooting
