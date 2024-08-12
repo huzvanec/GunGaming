@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
 import java.util.Collection;
@@ -24,7 +25,7 @@ final class TrackerRunnable extends BukkitRunnable {
 
     public TrackerRunnable() {
         running = true;
-        runTaskTimer(GunGaming.plugin(), 0L, 15L);
+        runTaskTimer(GunGaming.plugin(), 0L, 20L);
     }
 
     private static final @NotNull DecimalFormat FORMATTER = new DecimalFormat("00.00");
@@ -41,10 +42,17 @@ final class TrackerRunnable extends BukkitRunnable {
 
             if (!isMainHand && !CustomItem.is(offHand, PlayerTracker.class)) {
                 player.setCompassTarget(player.getWorld().getSpawnLocation());
+                for (final ItemStack item : player.getInventory()) {
+                    resetTracker(item);
+                }
                 continue;
             }
 
             final ItemStack item = isMainHand ? mainHand : offHand;
+            for (final ItemStack invItem : player.getInventory()) {
+                if (invItem == item) continue;
+                resetTracker(invItem);
+            }
             final PlayerTracker tracker = CustomItem.of(item, PlayerTracker.class);
 
             Player nearestPlayer = null;
@@ -70,6 +78,10 @@ final class TrackerRunnable extends BukkitRunnable {
             }
 
             player.setCompassTarget(nearestPlayer.getLocation());
+            item.editMeta(meta -> {
+                PlayerTracker.TRACKER_ACTIVE_DATA.write(meta, true);
+                meta.setCustomModelData(tracker.activeCustomModelData());
+            });
 
             if (hasGun) continue;
 
@@ -82,5 +94,15 @@ final class TrackerRunnable extends BukkitRunnable {
                     )
             ));
         }
+    }
+
+    private void resetTracker(final @Nullable ItemStack item) {
+        if (!PlayerTracker.TRACKER_ACTIVE_DATA.read(item).orElse(false)) return;
+        assert item != null;
+        final PlayerTracker tracker = CustomItem.of(item, PlayerTracker.class);
+        item.editMeta(meta -> {
+            PlayerTracker.TRACKER_ACTIVE_DATA.write(meta, false);
+            meta.setCustomModelData(tracker.inactiveCustomModelData());
+        });
     }
 }

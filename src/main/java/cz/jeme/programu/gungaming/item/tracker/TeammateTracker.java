@@ -32,14 +32,19 @@ public class TeammateTracker extends PlayerTracker implements SingleLoot {
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 2;
-    }
-
-    @Override
     protected boolean validate(final @NotNull Player player, final @NotNull Player trackPlayer) {
         return Game.running() &&
                GameConfig.TEAM_PLAYERS.get() > 1 &&
                GameTeam.ofPlayer(player).players().contains(trackPlayer);
+    }
+
+    @Override
+    protected int provideInactiveCustomModelData() {
+        return 3;
+    }
+
+    @Override
+    protected int provideActiveCustomModelData() {
+        return 4;
     }
 }

@@ -32,8 +32,13 @@ public class EnemyTracker extends PlayerTracker implements SingleLoot {
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
+    protected int provideInactiveCustomModelData() {
         return 1;
+    }
+
+    @Override
+    protected int provideActiveCustomModelData() {
+        return 2;
     }
 
     @Override
