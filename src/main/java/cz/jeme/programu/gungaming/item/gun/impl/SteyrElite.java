@@ -9,40 +9,40 @@ import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class SV98 extends Gun implements GripDisabled {
+public class SteyrElite extends Gun implements GripDisabled {
     @Override
     protected int provideMaxAmmo() {
-        return 10;
+        return 5;
     }
 
     @Override
     protected int provideShootCooldown() {
-        return 26;
+        return 30;
     }
 
     @Override
     protected int provideReloadDuration() {
-        return 50;
+        return 52;
     }
 
     @Override
     protected double provideDamage() {
-        return 19;
+        return 14;
     }
 
     @Override
     protected double provideBulletVelocity() {
-        return 15;
+        return 13;
     }
 
     @Override
     protected double provideRecoil() {
-        return 0.3;
+        return .3;
     }
 
     @Override
     protected double provideInaccuracy() {
-        return 0.1;
+        return .2;
     }
 
     @Override
@@ -51,27 +51,27 @@ public class SV98 extends Gun implements GripDisabled {
     }
 
     @Override
-    protected @NotNull Component provideName() {
-        return Component.text("SV-98");
-    }
-
-    @Override
     protected @NotNull String provideDescription() {
-        return "Very powerful sniper rifle";
-    }
-
-    @Override
-    protected @NotNull Rarity provideRarity() {
-        return Rarity.LEGENDARY;
+        return "lightweight sniper rifle";
     }
 
     @Override
     protected @KeyPattern.Value @NotNull String provideKey() {
-        return "sv-98";
+        return "steyr_elite";
+    }
+
+    @Override
+    protected @NotNull Rarity provideRarity() {
+        return Rarity.EPIC;
+    }
+
+    @Override
+    protected @NotNull Component provideName() {
+        return Component.text("Steyr Elite");
     }
 
     @Override
     protected @NotNull Integer provideCustomModelData() {
-        return 8;
+        return 22;
     }
 }

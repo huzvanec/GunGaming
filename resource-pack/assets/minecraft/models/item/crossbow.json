@@ -215,6 +215,30 @@
 				"custom_model_data": 18
 			},
 			"model": "gungaming:item/gun/desert_eagle"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 19
+			},
+			"model": "gungaming:item/gun/baikal_mp220"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 20
+			},
+			"model": "gungaming:item/gun/saiga-12"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 21
+			},
+			"model": "gungaming:item/gun/beretta_93r"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 22
+			},
+			"model": "gungaming:item/gun/steyr_elite"
 		}
 	]
 }

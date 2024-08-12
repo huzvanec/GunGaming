@@ -1,77 +1,88 @@
 package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
-import cz.jeme.programu.gungaming.item.ammo.impl.SevenSixTwoMillimeter;
+import cz.jeme.programu.gungaming.item.ammo.impl.NineMillimeter;
 import cz.jeme.programu.gungaming.item.attachment.disable.GripDisabled;
+import cz.jeme.programu.gungaming.item.attachment.disable.StockDisabled;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class SV98 extends Gun implements GripDisabled {
+public class Beretta93R extends Gun implements GripDisabled, StockDisabled {
     @Override
     protected int provideMaxAmmo() {
-        return 10;
+        return 20;
     }
 
     @Override
     protected int provideShootCooldown() {
-        return 26;
+        return 10;
     }
 
     @Override
     protected int provideReloadDuration() {
-        return 50;
+        return 37;
     }
 
     @Override
     protected double provideDamage() {
-        return 19;
+        return 2;
     }
 
     @Override
     protected double provideBulletVelocity() {
-        return 15;
+        return 5;
     }
 
     @Override
     protected double provideRecoil() {
-        return 0.3;
+        return .05;
     }
 
     @Override
     protected double provideInaccuracy() {
-        return 0.1;
+        return .9;
     }
 
     @Override
     protected @NotNull Class<? extends Ammo> provideAmmoType() {
-        return SevenSixTwoMillimeter.class;
-    }
-
-    @Override
-    protected @NotNull Component provideName() {
-        return Component.text("SV-98");
+        return NineMillimeter.class;
     }
 
     @Override
     protected @NotNull String provideDescription() {
-        return "Very powerful sniper rifle";
-    }
-
-    @Override
-    protected @NotNull Rarity provideRarity() {
-        return Rarity.LEGENDARY;
+        return "basic 3-round burst pistol";
     }
 
     @Override
     protected @KeyPattern.Value @NotNull String provideKey() {
-        return "sv-98";
+        return "beretta_93r";
+    }
+
+    @Override
+    protected @NotNull Rarity provideRarity() {
+        return Rarity.UNCOMMON;
+    }
+
+    @Override
+    protected @NotNull Component provideName() {
+        return Component.text("Beretta 93R");
+    }
+
+    @Override
+    protected int provideBulletsPerShot() {
+        return 3;
+    }
+
+    @Override
+    protected int provideBulletCooldown() {
+        return 2;
     }
 
     @Override
     protected @NotNull Integer provideCustomModelData() {
-        return 8;
+        return 21;
     }
 }

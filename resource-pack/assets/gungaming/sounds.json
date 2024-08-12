@@ -269,6 +269,66 @@
             "gungaming:item/held/desert_eagle"
         ]
     },
+    "item.baikal_mp220.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/baikal_mp220"
+        ]
+    },
+    "item.baikal_mp220.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/baikal_mp220"
+        ]
+    },
+    "item.baikal_mp220.held": {
+        "sounds": [
+            "gungaming:item/held/baikal_mp220"
+        ]
+    },
+    "item.saiga-12.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/saiga-12"
+        ]
+    },
+    "item.saiga-12.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/saiga-12"
+        ]
+    },
+    "item.saiga-12.held": {
+        "sounds": [
+            "gungaming:item/held/saiga-12"
+        ]
+    },
+    "item.beretta_93r.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/beretta_93r"
+        ]
+    },
+    "item.beretta_93r.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/beretta_93r"
+        ]
+    },
+    "item.beretta_93r.held": {
+        "sounds": [
+            "gungaming:item/held/beretta_93r"
+        ]
+    },
+    "item.steyr_elite.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/steyr_elite"
+        ]
+    },
+    "item.steyr_elite.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/steyr_elite"
+        ]
+    },
+    "item.steyr_elite.held": {
+        "sounds": [
+            "gungaming:item/held/steyr_elite"
+        ]
+    },
     "entity.rocket.ambient": {
         "sounds": [
             "gungaming:entity/ambient/rocket"

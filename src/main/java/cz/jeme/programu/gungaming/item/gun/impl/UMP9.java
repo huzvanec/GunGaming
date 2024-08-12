@@ -31,7 +31,7 @@ public class UMP9 extends Gun {
 
     @Override
     protected double provideBulletVelocity() {
-        return 7;
+        return 6;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class UMP9 extends Gun {
 
     @Override
     protected @NotNull String provideDescription() {
-        return "3-round burst SMG";
+        return "3-round burst SMG with great accuracy";
     }
 
     @Override
