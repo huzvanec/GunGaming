@@ -7,16 +7,22 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Grenade extends Throwable {
-
-    protected final @NotNull Key throwSoundKey = GunGaming.namespaced("item.grenade.throw");
-    protected final @NotNull Sound throwSound = Sound.sound(throwSoundKey, Sound.Source.PLAYER, 1.9F, 1);
-
     protected Grenade() {
         addTags("grenade");
     }
 
+    protected final @NotNull Key throwSoundKey = GunGaming.namespaced("item.grenade.throw");
+    protected final @NotNull Sound throwSound = Sound.sound(throwSoundKey, Sound.Source.PLAYER, 1.9F, 1);
+
     @Override
     public @NotNull Sound throwSound(final @NotNull ItemStack item) {
         return throwSound;
+    }
+
+    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.namespaced("item.grenade.held"), Sound.Source.PLAYER, 1.9F, 1);
+
+    @Override
+    public @NotNull Sound heldSound(final @NotNull ItemStack item) {
+        return heldSound;
     }
 }

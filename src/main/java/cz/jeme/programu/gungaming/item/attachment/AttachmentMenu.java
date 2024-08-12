@@ -6,6 +6,7 @@ import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.attachment.disable.*;
 import cz.jeme.programu.gungaming.item.attachment.impl.Silencer;
 import cz.jeme.programu.gungaming.item.gun.Gun;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
@@ -19,6 +20,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public final class AttachmentMenu {
+    private static final @NotNull Sound APPLY_SOUND = Sound.sound(GunGaming.namespaced("item.attachment.apply"), Sound.Source.PLAYER, 1, 1);
+    private static final @NotNull Sound REMOVE_SOUND = Sound.sound(GunGaming.namespaced("item.attachment.remove"), Sound.Source.PLAYER, 1, 1);
+
     private final @NotNull HumanEntity player;
     private final @NotNull ItemStack gunItem;
     private @NotNull ItemStack gunItemBackup;
@@ -171,6 +175,7 @@ public final class AttachmentMenu {
         gunItemBackup = gunItem.clone();
         attachment.apply(player, gunItem);
         gun.updateItem(gunItem);
+        player.playSound(APPLY_SOUND, player);
     }
 
     private void remove(final int slot, final @NotNull ItemStack attachmentItem, final boolean setPlaceholder) {
@@ -180,6 +185,7 @@ public final class AttachmentMenu {
 //        player.sendMessage(Component.text("Removed: ").append(attachment.name()));
         attachment.remove(player, gunItem);
         gun.updateItem(gunItem);
+        player.playSound(REMOVE_SOUND, player);
         if (!setPlaceholder) return;
         Bukkit.getScheduler().runTaskLater(
                 GunGaming.plugin(),

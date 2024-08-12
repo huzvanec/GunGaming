@@ -119,6 +119,21 @@
             "gungaming:item/held/sv-98"
         ]
     },
+    "item.prickskyttegevar_90.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/prickskyttegevar_90"
+        ]
+    },
+    "item.prickskyttegevar_90.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/prickskyttegevar_90"
+        ]
+    },
+    "item.prickskyttegevar_90.held": {
+        "sounds": [
+            "gungaming:item/held/prickskyttegevar_90"
+        ]
+    },
     "item.rocket_launcher.shoot": {
         "sounds": [
             "gungaming:item/gun/shoot/rocket_launcher"
@@ -434,19 +449,59 @@
             "gungaming:item/consumable/burp/bandage"
         ]
     },
-    "item.prickskyttegevar_90.shoot": {
+    "item.soda.held": {
         "sounds": [
-            "gungaming:item/gun/shoot/prickskyttegevar_90"
+            "gungaming:item/held/soda"
         ]
     },
-    "item.prickskyttegevar_90.reload": {
+    "item.pills.held": {
         "sounds": [
-            "gungaming:item/gun/reload/prickskyttegevar_90"
+            "gungaming:item/held/pills"
         ]
     },
-    "item.prickskyttegevar_90.held": {
+    "item.medkit.held": {
         "sounds": [
-            "gungaming:item/held/prickskyttegevar_90"
+            "gungaming:item/held/medkit"
+        ]
+    },
+    "item.bandage.held": {
+        "sounds": [
+            "gungaming:item/held/bandage"
+        ]
+    },
+    "item.ammo.held": {
+        "sounds": [
+            "gungaming:item/held/ammo"
+        ]
+    },
+    "item.grenade.held": {
+        "sounds": [
+            "gungaming:item/held/grenade"
+        ]
+    },
+    "item.tracker.held": {
+        "sounds": [
+            "gungaming:item/held/tracker"
+        ]
+    },
+    "item.armor.held": {
+        "sounds": [
+            "gungaming:item/held/armor"
+        ]
+    },
+    "item.attachment.held": {
+        "sounds": [
+            "gungaming:item/held/attachment"
+        ]
+    },
+    "item.attachment.apply": {
+        "sounds": [
+            "gungaming:item/attachment/apply"
+        ]
+    },
+    "item.attachment.remove": {
+        "sounds": [
+            "gungaming:item/attachment/remove"
         ]
     },
     "game.start": {

@@ -1,7 +1,8 @@
-package cz.jeme.programu.gungaming.item.impl;
+package cz.jeme.programu.gungaming.item.armor.impl;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.item.armor.Helmet;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.util.Packets;
 import net.kyori.adventure.key.KeyPattern;
@@ -14,12 +15,9 @@ import net.minecraft.world.entity.Entity;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -30,20 +28,24 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class ThermalGoggles extends CustomItem {
+public class ThermalGoggles extends Helmet {
     protected ThermalGoggles() {
-        item.editMeta(Damageable.class, meta -> {
-            meta.addAttributeModifier(
-                    Attribute.GENERIC_ARMOR,
-                    new AttributeModifier(
-                            GunGaming.namespaced(key.value() + "_generic_armor"),
-                            0,
-                            AttributeModifier.Operation.ADD_NUMBER
-                    )
-            );
-            meta.setMaxDamage(15);
-        });
         new Updater();
+    }
+
+    @Override
+    protected double provideArmor() {
+        return 0;
+    }
+
+    @Override
+    protected double provideToughness() {
+        return 0;
+    }
+
+    @Override
+    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+        return List.of();
     }
 
     @Override
@@ -54,16 +56,6 @@ public class ThermalGoggles extends CustomItem {
     @Override
     protected @NotNull Material provideMaterial() {
         return Material.CHAINMAIL_HELMET;
-    }
-
-    @Override
-    protected int provideMinAmount() {
-        return 1;
-    }
-
-    @Override
-    protected int provideMaxAmount() {
-        return 1;
     }
 
     @Override

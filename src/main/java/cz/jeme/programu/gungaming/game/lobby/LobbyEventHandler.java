@@ -5,6 +5,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerRecipeDiscoverEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,6 +40,11 @@ public final class LobbyEventHandler {
     }
 
     public static void onPlayerAdvancementCriterionGrant(final @NotNull PlayerAdvancementCriterionGrantEvent event) {
+        if (!Lobby.enabled()) return;
+        event.setCancelled(true);
+    }
+
+    public static void onPlayerPortal(final @NotNull PlayerPortalEvent event) {
         if (!Lobby.enabled()) return;
         event.setCancelled(true);
     }

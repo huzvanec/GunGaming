@@ -1,8 +1,10 @@
 package cz.jeme.programu.gungaming.item.attachment;
 
 import cz.jeme.programu.gungaming.CustomElement;
+import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.util.Components;
+import net.kyori.adventure.sound.Sound;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
@@ -66,6 +68,13 @@ public abstract class Attachment extends CustomItem {
     @Override
     protected final @NotNull String provideType() {
         return "attachment";
+    }
+
+    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.namespaced("item.attachment.held"), Sound.Source.PLAYER, 1.9F, 1);
+
+    @Override
+    public @NotNull Sound heldSound(final @NotNull ItemStack item) {
+        return heldSound;
     }
 
     @Override

@@ -69,7 +69,7 @@ public final class GGCommand {
 
     private static @NotNull LiteralCommandNode<CommandSourceStack> build() {
         return literal("gg")
-                .requires(source -> source.getSender().hasPermission("gungaming.gg"))
+                .requires(source -> source.getSender().hasPermission("gungaming.gg") || isAdmin(source))
                 .executes(GGCommand::version)
                 .then(literal("version")
                         .executes(GGCommand::version)

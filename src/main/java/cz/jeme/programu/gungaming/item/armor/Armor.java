@@ -4,6 +4,7 @@ import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.loot.SingleLoot;
 import cz.jeme.programu.gungaming.util.Lores;
+import net.kyori.adventure.sound.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlotGroup;
@@ -70,6 +71,13 @@ public abstract class Armor extends CustomItem implements SingleLoot {
     @Override
     protected int provideMaxAmount() {
         return 1;
+    }
+
+    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.namespaced("item.armor.held"), Sound.Source.PLAYER, 1.9F, 1);
+
+    @Override
+    public @NotNull Sound heldSound(final @NotNull ItemStack item) {
+        return heldSound;
     }
 
     @Override

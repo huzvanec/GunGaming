@@ -201,4 +201,10 @@ public enum EventDistributor implements Listener {
     private static void onBlockPreDispense(final @NotNull BlockPreDispenseEvent event) {
         ThrowableEventHandler.onBlockPreDispense(event);
     }
+
+    @EventHandler
+    private static void onPlayerPortal(final @NotNull PlayerPortalEvent event) {
+        GameEventHandler.onPlayerPortal(event);
+        LobbyEventHandler.onPlayerPortal(event);
+    }
 }

@@ -13,10 +13,7 @@ import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRecipeDiscoverEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
@@ -192,6 +189,11 @@ public final class GameEventHandler {
     }
 
     public static void onPlayerRecipeDiscover(final @NotNull PlayerRecipeDiscoverEvent event) {
+        if (!Game.running()) return;
+        event.setCancelled(true);
+    }
+
+    public static void onPlayerPortal(final @NotNull PlayerPortalEvent event) {
         if (!Game.running()) return;
         event.setCancelled(true);
     }
