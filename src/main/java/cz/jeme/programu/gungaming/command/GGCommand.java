@@ -50,6 +50,10 @@ public final class GGCommand {
     private static final int SUCCESS = Command.SINGLE_SUCCESS;
     private static final int FAILURE = 0;
 
+    private static boolean isAdmin(final @NotNull CommandSourceStack source) {
+        return source.getSender().hasPermission("gungaming.gg.admin");
+    }
+
     private GGCommand() {
         throw new AssertionError();
     }
@@ -83,6 +87,7 @@ public final class GGCommand {
                         )
                 )
                 .then(literal("crates")
+                        .requires(GGCommand::isAdmin)
                         .then(literal("generation")
                                 .then(literal("start")
                                         .executes(GGCommand::startGeneration)
@@ -109,6 +114,7 @@ public final class GGCommand {
                         )
                 )
                 .then(literal("game")
+                        .requires(GGCommand::isAdmin)
                         .then(literal("start")
                                 .executes(GGCommand::startGame)
                         )
@@ -128,6 +134,7 @@ public final class GGCommand {
                         )
                 )
                 .then(literal("config")
+                        .requires(GGCommand::isAdmin)
                         .then(configVisitor("game", GameConfig.values()))
                         .then(configVisitor("generation", GenerationConfig.values()))
                 )

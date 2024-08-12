@@ -28,7 +28,7 @@ public abstract class Grip extends Attachment {
 
     public static @NotNull ItemStack placeholder(final @NotNull ItemStack gunItem) {
         final Gun gun = Gun.of(gunItem);
-        final ItemStack placeholder = gun.bulletCooldown() == 0 ? SHOTGUN_PLACEHOLDER : PLACEHOLDER;
+        final ItemStack placeholder = gun.shotgun() ? SHOTGUN_PLACEHOLDER : PLACEHOLDER;
         return placeholder.clone();
     }
 

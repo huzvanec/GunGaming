@@ -93,7 +93,7 @@ public final class StatsMenu {
                 8
         );
         inventory.setItem(0, basicInfo);
-        final boolean shotgun = gun.bulletCooldown() == 0;
+        final boolean shotgun = gun.shotgun();
         // damage
         final double damage = Gun.DAMAGE_DATA.require(gunItem);
         final Silencer silencer = Silencer.GUN_SILENCER_KEY_DATA.read(gunItem)

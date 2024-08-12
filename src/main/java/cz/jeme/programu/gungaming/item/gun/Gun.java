@@ -195,6 +195,10 @@ public abstract class Gun extends Weapon {
         return magazineless;
     }
 
+    public final boolean shotgun() {
+        return bulletCooldown == 0;
+    }
+
     // shooting
 
     @Override
@@ -246,10 +250,10 @@ public abstract class Gun extends Weapon {
             return;
         }
         // the player isn't in creative mode && (the gun is not a shotgun || the shotgun is shooting its last bullet)
-        if (!creative && (bulletCooldown != 0 || round == bulletsPerShot))
+        if (!creative && (!shotgun() || round == bulletsPerShot))
             Gun.removeAmmo(item, 1);
 
-        if (bulletCooldown != 0 || round == 1) {
+        if (!shotgun() || round == 1) {
             player.getWorld().playSound(shootSound(item), player);
         }
 
@@ -260,7 +264,7 @@ public abstract class Gun extends Weapon {
 
         final double bulletVelocity = BULLET_VELOCITY_DATA.require(item);
         final Vector bulletVector = player.getLocation().getDirection().multiply(bulletVelocity);
-        final double inaccuracyMultiplier = bulletCooldown == 0 && Grip.GUN_GRIP_KEY_DATA.check(item) ? 4 : 1;
+        final double inaccuracyMultiplier = shotgun() && Grip.GUN_GRIP_KEY_DATA.check(item) ? 4 : 1;
         randomizeVector(bulletVector, INACCURACY_DATA.require(item) * inaccuracyMultiplier);
 
         player.launchProjectile(
