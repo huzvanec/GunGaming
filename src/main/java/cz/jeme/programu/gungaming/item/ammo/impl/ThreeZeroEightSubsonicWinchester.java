@@ -19,7 +19,7 @@ public class ThreeZeroEightSubsonicWinchester extends Ammo {
 
     @Override
     protected int provideMaxAmount() {
-        return 12;
+        return 7;
     }
 
     @Override

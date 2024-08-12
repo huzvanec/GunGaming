@@ -39,7 +39,7 @@ public class WoodenCrate extends Crate {
                 Rarity.COMMON, 22,
                 Rarity.UNCOMMON, 19,
                 Rarity.RARE, 16,
-                Rarity.EPIC, 2,
+                Rarity.EPIC, 3,
                 Rarity.LEGENDARY, 1
         );
     }
@@ -56,7 +56,7 @@ public class WoodenCrate extends Crate {
 
     @Override
     protected double provideSpawnPercentage() {
-        return .0005;
+        return .0007;
     }
 
     @Override

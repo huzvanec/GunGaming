@@ -34,11 +34,11 @@ public class NineMillimeter extends Ammo {
 
     @Override
     protected int provideMinAmount() {
-        return 4;
+        return 6;
     }
 
     @Override
     protected int provideMaxAmount() {
-        return 17;
+        return 24;
     }
 }

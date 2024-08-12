@@ -46,7 +46,7 @@ public class GoldenCrate extends Crate {
 
     @Override
     protected double provideSpawnPercentage() {
-        return .00006;
+        return .00008;
     }
 
     @Override

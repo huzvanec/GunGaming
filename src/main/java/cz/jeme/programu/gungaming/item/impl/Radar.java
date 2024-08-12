@@ -33,7 +33,7 @@ public class Radar extends CustomItem implements SingleLoot {
     public static final @NotNull Data<Byte, Boolean> RADAR_INITIALIZED_DATA = Data.ofBoolean(GunGaming.namespaced("radar_initialized"));
 
     protected Radar() {
-        item.editMeta(meta -> meta.setMaxStackSize(64));
+        item.editMeta(meta -> meta.setMaxStackSize(1));
 
         Bukkit.getScheduler().runTaskTimer(
                 GunGaming.plugin(),

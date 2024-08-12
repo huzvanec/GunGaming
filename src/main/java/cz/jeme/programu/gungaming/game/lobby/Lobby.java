@@ -21,7 +21,7 @@ public final class Lobby {
     private final @NotNull Audience audience;
     private final @NotNull World world;
     private final @NotNull Location spawn;
-    private final @NotNull ActionRunnable actionRunnable;
+    private final @NotNull LobbyRunnable lobbyRunnable;
 
     @SuppressWarnings("UnstableApiUsage")
     public Lobby(final @NotNull CommandSourceStack source) {
@@ -47,7 +47,7 @@ public final class Lobby {
         spawn = new Location(world, x + .5, y, z + .5);
         Bukkit.getOnlinePlayers().forEach(this::playerSetup);
         Game.worldSetup(world);
-        actionRunnable = new ActionRunnable();
+        lobbyRunnable = new LobbyRunnable();
     }
 
     public void playerSetup(final @NotNull Player player) {
@@ -57,7 +57,7 @@ public final class Lobby {
     }
 
     public void disable() {
-        actionRunnable.cancel();
+        lobbyRunnable.cancel();
         instance = null;
     }
 

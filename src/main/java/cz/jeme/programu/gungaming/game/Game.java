@@ -180,6 +180,8 @@ public final class Game {
         world.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
         world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
         world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, false);
+        world.setGameRule(GameRule.DO_TILE_DROPS, true);
+        world.setGameRule(GameRule.DO_FIRE_TICK, false);
         world.setTime(GameConfig.WORLD_TIME.get());
         world.setClearWeatherDuration(99);
         world.getEntities().stream()

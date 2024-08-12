@@ -34,11 +34,11 @@ public class TwelveGauge extends Ammo {
 
     @Override
     protected int provideMinAmount() {
-        return 2;
+        return 3;
     }
 
     @Override
     protected int provideMaxAmount() {
-        return 8;
+        return 9;
     }
 }

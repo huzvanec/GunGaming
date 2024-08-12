@@ -24,12 +24,12 @@ public class SevenSixTwoMillimeter extends Ammo {
 
     @Override
     protected int provideMinAmount() {
-        return 3;
+        return 5;
     }
 
     @Override
     protected int provideMaxAmount() {
-        return 12;
+        return 18;
     }
 
     @Override
