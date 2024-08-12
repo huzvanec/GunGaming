@@ -28,7 +28,7 @@ public class MirvGrenade extends Grenade {
 
     @Override
     protected double provideMaxDamage() {
-        return 28D;
+        return 25;
     }
 
     @Override

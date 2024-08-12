@@ -35,6 +35,6 @@ public class DiamondSword extends Melee {
 
     @Override
     protected double provideDamage() {
-        return 12;
+        return 10;
     }
 }
