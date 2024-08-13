@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public final class ResourcePackEventHandler {
-    private static final boolean RESOURCE_PACK_ENABLED = false;
+    private static final boolean RESOURCE_PACK_ENABLED = true;
 
     private static final @NotNull Component RESOURCE_PACK_MESSAGE = Components.of("""
                     <b><dark_blue>============================================================</b>
@@ -36,7 +36,7 @@ public final class ResourcePackEventHandler {
                     Components.latinString("Without it you wouldn't get the awesome gaming experience.")
             )
     );
-    private static final @NotNull String VERSION = "v1.0rc2";
+    private static final @NotNull String VERSION = "v1.0.1";
     private static final @NotNull String REPO_DOWNLOAD = "https://github.com/huzvanec/GunGaming/releases/download/" + VERSION + "/";
     private static final @NotNull String RESOURCE_PACK_URL = REPO_DOWNLOAD + "resource-pack.zip";
     private static final @NotNull String RESOURCE_PACK_HASH_URL = REPO_DOWNLOAD + "resource-pack.sha1";
