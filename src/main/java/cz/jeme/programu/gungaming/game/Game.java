@@ -188,6 +188,7 @@ public final class Game {
         world.getEntities().stream()
                 .filter(entity -> entity.getType() != EntityType.PLAYER)
                 .forEach(Entity::remove);
+        world.setDifficulty(Difficulty.NORMAL);
     }
 
     @ApiStatus.Internal
