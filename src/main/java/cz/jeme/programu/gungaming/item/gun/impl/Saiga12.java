@@ -16,7 +16,7 @@ public class Saiga12 extends Gun {
 
     @Override
     protected int provideShootCooldown() {
-        return 6;
+        return 8;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class Saiga12 extends Gun {
 
     @Override
     protected double provideDamage() {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class Saiga12 extends Gun {
 
     @Override
     protected double provideInaccuracy() {
-        return 4;
+        return 5;
     }
 
     @Override
