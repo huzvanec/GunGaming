@@ -95,11 +95,12 @@ public final class Game {
             audience.sendMessage(Components.prefix("<red>Not enough players for this team configuration!"));
             throw new IllegalStateException("Not enough players to create teams!");
         }
-        if (players.size() / teamPlayers <= 1) {
+        final int teamCount = players.size() / teamPlayers;
+        if (teamCount <= 1) {
             audience.sendMessage(Components.prefix("<red>There must be at least 2 teams to start a game!"));
             throw new IllegalStateException("Not enough players to start a game!");
         }
-        if (players.size() / teamPlayers > GameTeam.TEAM_COUNT) {
+        if (teamCount > GameTeam.TEAM_COUNT) {
             audience.sendMessage(Components.prefix("<red>Too many players for this team configuration!"));
             throw new IllegalStateException("Too many players to create teams!");
         }
@@ -401,7 +402,7 @@ public final class Game {
             }
             final String color = rankToColor(rank);
             messages.add(Components.of("<b>").append(rankComponent.append(Components.of(
-                    "</b> [" + score + "]: "
+                    "<!b> [" + score + "]: "
                     + String.join(color + ", ", players)
             ))));
             rank++;
