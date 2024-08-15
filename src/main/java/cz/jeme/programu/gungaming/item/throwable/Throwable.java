@@ -61,7 +61,7 @@ public abstract class Throwable extends CustomItem {
     protected abstract double provideMaxDamage();
 
     protected double provideMinDamage() {
-        return maxDamage / 5;
+        return maxDamage / 4;
     }
 
     protected double provideDamageDistanceRatio() {
