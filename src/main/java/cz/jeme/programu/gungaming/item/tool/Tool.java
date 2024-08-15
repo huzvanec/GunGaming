@@ -37,4 +37,8 @@ public abstract class Tool extends CustomItem implements SingleLoot {
     protected int provideMaxAmount() {
         return 1;
     }
+
+    public final double attackSpeed() {
+        return attackSpeed;
+    }
 }

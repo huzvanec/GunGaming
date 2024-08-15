@@ -401,7 +401,7 @@ public final class Game {
             }
             final String color = rankToColor(rank);
             messages.add(Components.of("<b>").append(rankComponent.append(Components.of(
-                    " [" + score + "]: "
+                    "</b> [" + score + "]: "
                     + String.join(color + ", ", players)
             ))));
             rank++;
