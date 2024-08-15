@@ -23,7 +23,7 @@ public class EnemyTracker extends PlayerTracker implements SingleLoot {
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.EPIC;
+        return Rarity.LEGENDARY;
     }
 
     @Override
