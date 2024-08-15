@@ -89,7 +89,7 @@ public class AirStrikeStrobe extends Throwable {
     private static final int BOMB_WAVES = 4;
     private static final long BOMB_WAVE_TIME = 30; // the amount of ticks between separate bomb waves
     private static final double BOMB_FORCE = 5; // the force used to drop the bombs down
-    private static final long BOMB_DELAY = 5 * 20; // the amount of ticks before the bombs start spawning
+    private static final long BOMB_DELAY = 52; // the amount of ticks before the bombs start spawning
     private static final double BOMB_INACCURACY = 1;
     private static final int CENTER_OFFSET = 5; // the offset of the bombing center (forwards) in blocks
 
