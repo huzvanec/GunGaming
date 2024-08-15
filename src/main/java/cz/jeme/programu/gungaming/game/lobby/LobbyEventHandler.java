@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.game.lobby;
 
 import com.destroystokyo.paper.event.player.PlayerAdvancementCriterionGrantEvent;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -26,7 +27,9 @@ public final class LobbyEventHandler {
 
     public static void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
         if (!Lobby.enabled()) return;
-        Lobby.instance().playerSetup(event.getPlayer());
+        final Player player = event.getPlayer();
+        player.clearTitle();
+        Lobby.instance().playerSetup(player);
     }
 
     public static void onFoodLevelChange(final @NotNull FoodLevelChangeEvent event) {

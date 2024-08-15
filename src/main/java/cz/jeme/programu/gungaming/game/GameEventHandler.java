@@ -90,7 +90,7 @@ public final class GameEventHandler {
             item.setAmount(amount - dropAmount);
         }
         final Component deathMessage = event.deathMessage();
-        new Respawn(Objects.requireNonNull(Game.instance()), player);
+        new Respawn(Game.instance(), player);
         if (deathMessage != null)
             Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(
                     Components.of("<#FF0000>☠ ").append(deathMessage))
@@ -129,6 +129,7 @@ public final class GameEventHandler {
     public static void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
         if (!Game.running()) return;
         final Player player = event.getPlayer();
+        player.clearTitle();
         final Game game = Game.instance();
         player.setGameMode(GameMode.SPECTATOR);
         final double x = player.getX();
