@@ -52,4 +52,9 @@ public final class GenerationConfig {
             IntegerArgumentType.integer(100, 10_000),
             1000
     );
+    public static final @NotNull ConfigValue<Integer> GUN_AMMO_PERCENTAGE = value(
+            "gun_ammo_percentage",
+            IntegerArgumentType.integer(0, 100),
+            100
+    );
 }

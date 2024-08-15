@@ -1,7 +1,9 @@
 package cz.jeme.programu.gungaming.loot;
 
 import cz.jeme.programu.gungaming.ElementManager;
+import cz.jeme.programu.gungaming.config.GenerationConfig;
 import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.crate.Crate;
 import cz.jeme.programu.gungaming.loot.crate.CrateFilter;
 import org.bukkit.inventory.ItemStack;
@@ -47,6 +49,10 @@ public enum LootGenerator {
                     if (customItem == null) return null;
                     final ItemStack item = customItem.item();
                     item.setAmount(randomAmount(customItem));
+                    if (customItem instanceof final Gun gun) {
+                        final double ammoPercentage = GenerationConfig.GUN_AMMO_PERCENTAGE.get() / 100D;
+                        Gun.setAmmo(item, (int) Math.round(gun.maxAmmo() * ammoPercentage));
+                    }
                     return item;
                 })
                 .toArray(ItemStack[]::new);
