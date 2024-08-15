@@ -27,7 +27,7 @@ public class Prickskyttegevar90 extends Gun implements GripDisabled {
 
     @Override
     protected double provideDamage() {
-        return 28;
+        return 24;
     }
 
     @Override

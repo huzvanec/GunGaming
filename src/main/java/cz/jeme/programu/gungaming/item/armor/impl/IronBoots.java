@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class IronBoots extends Boots {
     @Override
     protected double provideArmor() {
-        return 2;
+        return 1;
     }
 
     @Override

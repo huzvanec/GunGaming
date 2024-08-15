@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 public class TitaniumLeggings extends Leggings {
     @Override
     protected double provideArmor() {
-        return 8;
+        return 6;
     }
 
     @Override
     protected double provideToughness() {
-        return 3;
+        return 2;
     }
 
     @Override

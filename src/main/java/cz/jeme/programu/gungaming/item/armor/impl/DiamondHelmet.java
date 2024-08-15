@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 public class DiamondHelmet extends Helmet {
     @Override
     protected double provideArmor() {
-        return 3;
+        return 2;
     }
 
     @Override
     protected double provideToughness() {
-        return 2;
+        return 1;
     }
 
     @Override

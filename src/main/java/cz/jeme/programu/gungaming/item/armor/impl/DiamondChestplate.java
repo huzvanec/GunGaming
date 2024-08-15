@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 public class DiamondChestplate extends Chestplate {
     @Override
     protected double provideArmor() {
-        return 8;
+        return 6;
     }
 
     @Override
     protected double provideToughness() {
-        return 2;
+        return 1;
     }
 
     @Override

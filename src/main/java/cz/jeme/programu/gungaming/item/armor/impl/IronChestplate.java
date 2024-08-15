@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class IronChestplate extends Chestplate {
     @Override
     protected double provideArmor() {
-        return 6;
+        return 4;
     }
 
     @Override

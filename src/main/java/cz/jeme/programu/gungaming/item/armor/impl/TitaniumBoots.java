@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 public class TitaniumBoots extends Boots {
     @Override
     protected double provideArmor() {
-        return 5;
+        return 3;
     }
 
     @Override
     protected double provideToughness() {
-        return 3;
+        return 2;
     }
 
     @Override
