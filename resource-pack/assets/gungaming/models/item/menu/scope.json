@@ -1,7 +1,7 @@
 {
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"layer0": "gungaming:item/scope"
+		"layer0": "gungaming:item/menu/scope"
 	},
 	"display": {
 		"thirdperson_righthand": {
