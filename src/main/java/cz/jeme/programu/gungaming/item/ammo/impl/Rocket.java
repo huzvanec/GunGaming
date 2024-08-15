@@ -29,7 +29,7 @@ public class Rocket extends Ammo {
 
     @Override
     protected int provideMaxAmount() {
-        return 3;
+        return 2;
     }
 
     @Override
