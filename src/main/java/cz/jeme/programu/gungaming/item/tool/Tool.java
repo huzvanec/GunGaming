@@ -6,6 +6,7 @@ import cz.jeme.programu.gungaming.loot.SingleLoot;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlotGroup;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class Tool extends CustomItem implements SingleLoot {
     protected final double attackSpeed = provideAttackSpeed();
@@ -36,6 +37,11 @@ public abstract class Tool extends CustomItem implements SingleLoot {
     @Override
     protected int provideMaxAmount() {
         return 1;
+    }
+
+    @Override
+    protected final @NotNull String provideType() {
+        return "tool";
     }
 
     public final double attackSpeed() {
