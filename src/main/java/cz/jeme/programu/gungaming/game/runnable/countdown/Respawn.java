@@ -80,6 +80,7 @@ public final class Respawn extends Countdown {
                     final Block up2 = world.getBlockAt(x, y + 2, z);
                     if (!(up1.isEmpty() && up2.isEmpty())) break;
                     respawn(up1.getLocation().add(.5, 0, .5));
+                    return;
                 }
                 final int y = world.getHighestBlockYAt(x, z) + 1;
                 respawn(new Location(

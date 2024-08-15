@@ -64,7 +64,7 @@ public final class GameConfig {
     public static final @NotNull ConfigValue<Integer> COUNTDOWN_SECONDS = value(
             "countdown_seconds",
             IntegerArgumentType.integer(3, 10 * 60),
-            30
+            20
     );
     public static final @NotNull ConfigValue<Integer> GRACE_PERIOD_SECONDS = value(
             "grace_period_seconds",
@@ -74,7 +74,7 @@ public final class GameConfig {
     public static final @NotNull ConfigValue<Integer> RESPAWN_SECONDS = value(
             "respawn_seconds",
             IntegerArgumentType.integer(3, 60 * 60),
-            30
+            20
     );
     public static final @NotNull ConfigValue<Integer> REFILL_SECONDS = value(
             "refill_seconds",
