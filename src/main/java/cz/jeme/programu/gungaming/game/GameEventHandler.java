@@ -66,9 +66,13 @@ public final class GameEventHandler {
 
     private static final @NotNull Random RANDOM = new Random();
 
-    private static void dropPlayerStuff(final @NotNull Player player) {
-        final PlayerInventory inventory = player.getInventory();
+    public static void onPlayerDeath(final @NotNull PlayerDeathEvent event) {
+        if (!Game.running()) return;
+        event.setCancelled(true);
+        final Player player = event.getPlayer();
+        final Location location = player.getLocation();
         final World world = player.getWorld();
+        final PlayerInventory inventory = player.getInventory();
         final double chance = GameConfig.DEATH_DROP_PERCENTAGE.get() / 100D;
         for (final ItemStack item : inventory) {
             if (item == null) continue;
@@ -82,17 +86,10 @@ public final class GameEventHandler {
                 }
             }
             item.setAmount(dropAmount);
-            world.dropItemNaturally(player.getLocation(), item);
+            world.dropItemNaturally(location, item);
             item.setAmount(amount - dropAmount);
         }
-    }
-
-    public static void onPlayerDeath(final @NotNull PlayerDeathEvent event) {
-        if (!Game.running()) return;
-        final Player player = event.getPlayer();
-        event.setCancelled(true);
         final Component deathMessage = event.deathMessage();
-        dropPlayerStuff(player);
         new Respawn(Objects.requireNonNull(Game.instance()), player);
         if (deathMessage != null)
             Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(
@@ -158,8 +155,16 @@ public final class GameEventHandler {
         if (!Game.running()) return;
         final Player player = event.getPlayer();
         final boolean gamePlayer = Game.instance().removePlayer(player);
+        final Location location = player.getLocation();
+        final World world = player.getWorld();
+        final PlayerInventory inventory = player.getInventory();
         if (gamePlayer) {
-            dropPlayerStuff(player);
+            for (final ItemStack item : inventory) {
+                if (item == null) continue;
+                if (CustomItem.is(item, TeammateTracker.class)) continue;
+                world.dropItemNaturally(location, item);
+            }
+            inventory.clear();
             event.quitMessage(Components.of("<#FF0000>❌ ").append(
                             player.teamDisplayName().append(
                                     Components.of("<#FF0000> left the game and got eliminated")
