@@ -1,15 +1,16 @@
 package cz.jeme.programu.gungaming.game.runnable.countdown;
 
+import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.game.GameTeam;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.title.Title;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,7 +48,16 @@ public final class Respawn extends Countdown {
 
     private void respawn(final @NotNull Location location) {
         player.teleport(location);
+        Game.INVULNERABLE_DATA.write(player, true);
         player.setGameMode(GameMode.SURVIVAL);
+        Bukkit.getScheduler().runTaskLater(
+                GunGaming.plugin(),
+                () -> {
+                    if (!player.isValid()) return;
+                    Game.INVULNERABLE_DATA.write(player, false);
+                },
+                GameConfig.RESPAWN_PROTECTION_SECONDS.get() * 20
+        );
     }
 
     @Override
@@ -61,14 +71,22 @@ public final class Respawn extends Countdown {
             if (teammate.isPresent()) {
                 final Location location = teammate.get().getLocation();
                 final World world = location.getWorld();
-                final double x = location.getX();
-                final double z = location.getZ();
-                final int y = world.getHighestBlockYAt(location.getBlockX(), location.getBlockZ()) + 1;
+                final int x = location.getBlockX();
+                final int z = location.getBlockZ();
+                for (int y = location.getBlockY(); y > world.getMinHeight(); y--) {
+                    final Block block = world.getBlockAt(x, y, z);
+                    if (block.isEmpty()) continue;
+                    final Block up1 = world.getBlockAt(x, y + 1, z);
+                    final Block up2 = world.getBlockAt(x, y + 2, z);
+                    if (!(up1.isEmpty() && up2.isEmpty())) break;
+                    respawn(up1.getLocation().add(.5, 0, .5));
+                }
+                final int y = world.getHighestBlockYAt(x, z) + 1;
                 respawn(new Location(
                         world,
-                        x,
+                        x + .5,
                         y,
-                        z
+                        z + .5
                 ));
                 return;
             }

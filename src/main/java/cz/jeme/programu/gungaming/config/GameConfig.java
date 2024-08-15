@@ -106,4 +106,9 @@ public final class GameConfig {
             IntegerArgumentType.integer(0, 100),
             50
     );
+    public static final @NotNull ConfigValue<Integer> RESPAWN_PROTECTION_SECONDS = value(
+            "respawn_protection_seconds",
+            IntegerArgumentType.integer(0, 10 * 60),
+            15
+    );
 }
