@@ -55,6 +55,6 @@ public final class GenerationConfig {
     public static final @NotNull ConfigValue<Integer> GUN_AMMO_PERCENTAGE = value(
             "gun_ammo_percentage",
             IntegerArgumentType.integer(0, 100),
-            100
+            50
     );
 }

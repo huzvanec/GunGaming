@@ -3,6 +3,7 @@ package cz.jeme.programu.gungaming.item;
 import com.google.common.collect.HashMultimap;
 import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.loot.crate.Crate;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
@@ -76,6 +77,10 @@ public abstract class CustomItem extends CustomElement {
 
     protected final void addTags(final String @NotNull ... addTags) {
         tags.addAll(Arrays.asList(addTags));
+    }
+
+    @ApiStatus.Internal
+    public void generated(final @NotNull ItemStack item, final @NotNull Crate crate) {
     }
 
     // providers

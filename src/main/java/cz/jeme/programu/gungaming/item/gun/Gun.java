@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming.item.gun;
 
 import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.config.GenerationConfig;
 import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.Weapon;
@@ -11,10 +12,8 @@ import cz.jeme.programu.gungaming.item.attachment.Magazine;
 import cz.jeme.programu.gungaming.item.attachment.Scope;
 import cz.jeme.programu.gungaming.item.attachment.ZoomManager;
 import cz.jeme.programu.gungaming.item.attachment.impl.Silencer;
-import cz.jeme.programu.gungaming.util.Components;
-import cz.jeme.programu.gungaming.util.Inventories;
-import cz.jeme.programu.gungaming.util.Lores;
-import cz.jeme.programu.gungaming.util.Packets;
+import cz.jeme.programu.gungaming.loot.crate.Crate;
+import cz.jeme.programu.gungaming.util.*;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.minecraft.network.protocol.Packet;
@@ -428,6 +427,14 @@ public abstract class Gun extends Weapon {
         lore.add("<yellow>[Right click to edit attachments]");
         lore.add("<yellow>[Shift right click to view stats]");
         return lore;
+    }
+
+    @Override
+    public void generated(final @NotNull ItemStack item, final @NotNull Crate crate) {
+        final int maxAmmo = MAX_AMMO_DATA.require(item);
+        final double chance = GenerationConfig.GUN_AMMO_PERCENTAGE.get() / 100D;
+        final int ammo = RandomUtils.nextChanced(chance, maxAmmo);
+        setAmmo(item, ammo);
     }
 
     @Override
