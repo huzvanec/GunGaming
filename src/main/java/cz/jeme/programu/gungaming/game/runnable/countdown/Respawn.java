@@ -6,22 +6,22 @@ import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.game.GameTeam;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.title.Title;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.util.Optional;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @ApiStatus.Internal
 public final class Respawn extends Countdown {
-    private static final @NotNull Random RANDOM = new Random();
-
+    private final @NotNull ThreadLocalRandom random = ThreadLocalRandom.current();
     private final @NotNull Player player;
     private final @NotNull Game game;
 
@@ -99,8 +99,8 @@ public final class Respawn extends Countdown {
         final int zMax = game.zMax() - BORDER_BLOCKS;
         respawning:
         for (int i = 0; i < 1000; i++) {
-            final int x = RANDOM.nextInt(Math.abs(xMax - xMin)) + xMin;
-            final int z = RANDOM.nextInt(Math.abs(zMax - zMin)) + zMin;
+            final int x = random.nextInt(Math.abs(xMax - xMin)) + xMin;
+            final int z = random.nextInt(Math.abs(zMax - zMin)) + zMin;
             for (int y = world.getMaxHeight() - 3; y > world.getMinHeight(); y--) {
                 final Block block = world.getBlockAt(x, y, z);
                 if (block.isEmpty() || !block.getType().isOccluding()) continue;

@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AirStrikeStrobe extends Throwable {
 
@@ -93,10 +93,8 @@ public class AirStrikeStrobe extends Throwable {
     private static final double BOMB_INACCURACY = 1;
     private static final int CENTER_OFFSET = 5; // the offset of the bombing center (forwards) in blocks
 
-    private static final @NotNull Random RANDOM = new Random();
-
     private static double nextAxis(final double radians) {
-        return RANDOM.nextDouble(-radians, radians);
+        return ThreadLocalRandom.current().nextDouble(-radians, radians);
     }
 
     private static void randomizeVector(final @NotNull Vector vector) {

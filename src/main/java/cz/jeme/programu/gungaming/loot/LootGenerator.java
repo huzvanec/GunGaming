@@ -9,13 +9,17 @@ import cz.jeme.programu.gungaming.loot.crate.CrateFilter;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public enum LootGenerator {
     INSTANCE;
 
-    private final @NotNull Random random = new Random();
+    private final @NotNull ThreadLocalRandom random = ThreadLocalRandom.current();
     private final @NotNull Set<CustomItem> loot = ElementManager.INSTANCE.elements().stream()
             .filter(CustomItem.class::isInstance)
             .map(CustomItem.class::cast)

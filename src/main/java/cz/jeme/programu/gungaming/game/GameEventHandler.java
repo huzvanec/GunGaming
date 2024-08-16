@@ -7,6 +7,7 @@ import cz.jeme.programu.gungaming.game.runnable.countdown.Respawn;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.tracker.TeammateTracker;
 import cz.jeme.programu.gungaming.util.Components;
+import cz.jeme.programu.gungaming.util.RandomUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
@@ -19,7 +20,10 @@ import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 
 public final class GameEventHandler {
@@ -64,8 +68,6 @@ public final class GameEventHandler {
         event.getInventory().setResult(ItemStack.empty());
     }
 
-    private static final @NotNull Random RANDOM = new Random();
-
     public static void onPlayerDeath(final @NotNull PlayerDeathEvent event) {
         if (!Game.running()) return;
         event.setCancelled(true);
@@ -78,13 +80,7 @@ public final class GameEventHandler {
             if (item == null) continue;
             if (CustomItem.is(item, TeammateTracker.class)) continue;
             final int amount = item.getAmount();
-            int dropAmount = amount;
-            for (int i = 0; i < amount; i++) {
-                if (RANDOM.nextDouble() > chance) {
-                    dropAmount--;
-                    if (dropAmount == 0) break;
-                }
-            }
+            final int dropAmount = RandomUtils.nextChanced(chance, amount);
             item.setAmount(dropAmount);
             world.dropItemNaturally(location, item);
             item.setAmount(amount - dropAmount);
