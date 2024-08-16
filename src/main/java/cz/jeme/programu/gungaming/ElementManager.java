@@ -49,7 +49,7 @@ public enum ElementManager {
             construct(elements);
         }
         final long duration = System.currentTimeMillis() - start;
-        GunGaming.logger().info("Elements registered successfully (" + duration + " ms)");
+        GunGaming.logger().info("Elements registered successfully. (took %s ms)".formatted(duration));
     }
 
     private void construct(final @NotNull List<Set<Class<? extends CustomElement>>> elements) {

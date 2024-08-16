@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.game;
 
+import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -58,6 +59,9 @@ public enum GameTeam {
         team.color(color);
         team.setAllowFriendlyFire(true); // handled in GameEventHandler#onEntityDamageByEntity
         team.setCanSeeFriendlyInvisibles(true);
+        team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.FOR_OWN_TEAM);
+        if (!GameConfig.SHOW_PLAYER_NAMETAGS.get())
+            team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
         ACTIVE_TEAMS.add(this);
     }
 

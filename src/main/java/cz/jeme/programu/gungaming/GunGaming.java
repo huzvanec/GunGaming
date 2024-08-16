@@ -26,6 +26,7 @@ public final class GunGaming extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        final long start = System.currentTimeMillis();
         if (instance != null)
             throw new IllegalStateException("Gungaming instance already exists! Something is very wrong!");
         instance = this;
@@ -40,10 +41,13 @@ public final class GunGaming extends JavaPlugin {
         } catch (final ClassNotFoundException ignored) {
         }
         Bukkit.getPluginManager().registerEvents(EventDistributor.INSTANCE, this);
+        final long initDuration = System.currentTimeMillis() - start;
+        logger.info("Successfully enabled. (took %s ms)".formatted(initDuration));
     }
 
     @SuppressWarnings("UnstableApiUsage")
     private void registerCommands() {
+        logger().info("Registering commands...");
         getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
             GGCommand.register(this, commands);

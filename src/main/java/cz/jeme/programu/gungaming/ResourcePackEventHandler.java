@@ -43,6 +43,7 @@ public final class ResourcePackEventHandler {
     private static final @NotNull String RESOURCE_PACK_HASH;
 
     static {
+        GunGaming.logger().info("Downloading resource pack hash...");
         try {
             final URL url = new URI(RESOURCE_PACK_HASH_URL).toURL();
             final BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));

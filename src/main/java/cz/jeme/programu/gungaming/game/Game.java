@@ -155,6 +155,7 @@ public final class Game {
             player.setGameMode(GameMode.SPECTATOR);
             FROZEN_DATA.write(player, true);
             player.showBossBar(bossBar);
+            player.setScoreboard(scoreboard);
             if (teamPlayers > 1) player.getInventory().setItem(8, teammateTracker);
         }
 
@@ -248,12 +249,14 @@ public final class Game {
                 extraCount--;
             }
         }
-//        System.out.println();
-//        for (final int row : rows) {
-//            final String star = row == base && points - base * rowCount != 0 ? " *" : "* ";
-//            System.out.println(star.repeat(row));
-//        }
-//        if (rows.stream().mapToInt(i -> i).sum() != points) throw new RuntimeException("Points do not match!");
+/*
+        System.out.println();
+        for (final int row : rows) {
+            final String star = row == base && points - base * rowCount != 0 ? " *" : "* ";
+            System.out.println(star.repeat(row));
+        }
+        if (rows.stream().mapToInt(i -> i).sum() != points) throw new RuntimeException("Points do not match!");
+*/
         final Iterator<GameTeam> teamIterator = GameTeam.activeTeams().iterator();
         final double offsetZ = size / (rowCount + 1D);
         for (int rowId = 0; rowId < rows.size(); rowId++) {

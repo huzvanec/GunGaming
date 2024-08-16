@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.config;
 
 import com.mojang.brigadier.arguments.ArgumentType;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.commands.arguments.coordinates.Coordinates;
 import net.minecraft.commands.arguments.coordinates.Vec2Argument;
@@ -64,7 +65,7 @@ public final class GameConfig {
     public static final @NotNull ConfigValue<Integer> COUNTDOWN_SECONDS = value(
             "countdown_seconds",
             IntegerArgumentType.integer(3, 10 * 60),
-            20
+            10
     );
     public static final @NotNull ConfigValue<Integer> GRACE_PERIOD_SECONDS = value(
             "grace_period_seconds",
@@ -74,7 +75,7 @@ public final class GameConfig {
     public static final @NotNull ConfigValue<Integer> RESPAWN_SECONDS = value(
             "respawn_seconds",
             IntegerArgumentType.integer(3, 60 * 60),
-            20
+            30
     );
     public static final @NotNull ConfigValue<Integer> REFILL_SECONDS = value(
             "refill_seconds",
@@ -110,5 +111,10 @@ public final class GameConfig {
             "respawn_protection_seconds",
             IntegerArgumentType.integer(0, 10 * 60),
             15
+    );
+    public static final @NotNull ConfigValue<Boolean> SHOW_PLAYER_NAMETAGS = value(
+            "show_player_nametags",
+            BoolArgumentType.bool(),
+            false
     );
 }
