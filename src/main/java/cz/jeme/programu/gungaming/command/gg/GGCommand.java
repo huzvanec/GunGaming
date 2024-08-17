@@ -1,4 +1,4 @@
-package cz.jeme.programu.gungaming.command;
+package cz.jeme.programu.gungaming.command.gg;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.ArgumentType;

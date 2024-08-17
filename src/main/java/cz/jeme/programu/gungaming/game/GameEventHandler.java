@@ -8,7 +8,9 @@ import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.tracker.TeammateTracker;
 import cz.jeme.programu.gungaming.util.Components;
 import cz.jeme.programu.gungaming.util.RandomUtils;
+import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -20,9 +22,9 @@ import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
 
@@ -206,5 +208,28 @@ public final class GameEventHandler {
     public static void onPlayerPortal(final @NotNull PlayerPortalEvent event) {
         if (!Game.running()) return;
         event.setCancelled(true);
+    }
+
+    public static void onAsyncChat(final @NotNull AsyncChatEvent event) {
+        if (!Game.running()) return;
+        event.setCancelled(true);
+        final Player player = event.getPlayer();
+        final Game.ChatMode mode = Game.instance().chatMode(player);
+        final Component prefix;
+        final Collection<? extends Player> recipients;
+        if (mode == Game.ChatMode.TEAM) {
+            final GameTeam team = GameTeam.ofPlayer(player);
+            prefix = Components.of("<dark_gray>[").append(
+                    team.color().append(Components.of("<b>TEAM"))
+            ).append(Component.text("] "));
+            recipients = team.players();
+        } else {
+            prefix = Component.empty();
+            recipients = Bukkit.getOnlinePlayers();
+        }
+        final Component message = prefix.append(player.teamDisplayName()).append(
+                Components.of("<dark_gray>: ")
+        ).append(event.message().color(NamedTextColor.WHITE));
+        recipients.forEach(r -> r.sendMessage(message));
     }
 }

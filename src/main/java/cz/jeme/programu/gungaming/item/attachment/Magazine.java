@@ -2,7 +2,7 @@ package cz.jeme.programu.gungaming.item.attachment;
 
 import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
-import cz.jeme.programu.gungaming.command.GGCommand;
+import cz.jeme.programu.gungaming.command.gg.GGCommand;
 import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.gun.Gun;

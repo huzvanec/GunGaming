@@ -82,6 +82,25 @@ public final class Game {
     private final @NotNull List<Player> players;
     private boolean gracePeriod = true;
 
+    public enum ChatMode {
+        TEAM,
+        ALL;
+
+        @Override
+        public @NotNull String toString() {
+            return name().toLowerCase();
+        }
+
+        private static final @NotNull List<ChatMode> CACHED = List.of(values());
+
+        public static @NotNull List<ChatMode> cached() {
+            return CACHED;
+        }
+    }
+
+    private final @NotNull Map<UUID, ChatMode> chatModes = new HashMap<>();
+
+
     @SuppressWarnings("UnstableApiUsage")
     public Game(final @NotNull CommandSourceStack source) {
         this.audience = source.getSender();
@@ -110,7 +129,7 @@ public final class Game {
         final int teamCount = autoTeamPlayers.size() / teamPlayerCount + GameTeam.overrideTeams().size();
         if (teamCount <= 1) {
             audience.sendMessage(Components.prefix("<red>There must be at least 2 teams to start a game!"));
-            throw new IllegalStateException("Not enough teams to start a game!");
+//            throw new IllegalStateException("Not enough teams to start a game!");
         }
         if (teamCount > GameTeam.COUNT) {
             audience.sendMessage(Components.prefix("<red>Too many players for this team configuration!"));
@@ -176,7 +195,10 @@ public final class Game {
             FROZEN_DATA.write(player, true);
             player.showBossBar(bossBar);
             player.setScoreboard(scoreboard);
-            if (GameTeam.ofPlayer(player).size() > 1) player.getInventory().setItem(8, teammateTracker);
+            if (GameTeam.ofPlayer(player).size() > 1) {
+                chatModes.put(player.getUniqueId(), ChatMode.TEAM);
+                player.getInventory().setItem(8, teammateTracker);
+            }
         }
 
         xMin = centerX - size / 2;
@@ -521,5 +543,13 @@ public final class Game {
 
     public boolean gracePeriod() {
         return gracePeriod;
+    }
+
+    public @NotNull ChatMode chatMode(final @NotNull Player player) {
+        return chatModes.getOrDefault(player.getUniqueId(), ChatMode.ALL);
+    }
+
+    public void chatMode(final @NotNull Player player, final @NotNull ChatMode chatMode) {
+        chatModes.put(player.getUniqueId(), chatMode);
     }
 }

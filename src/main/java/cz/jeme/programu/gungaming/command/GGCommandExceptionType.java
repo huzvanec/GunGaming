@@ -9,7 +9,7 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("UnstableApiUsage")
-class GGCommandExceptionType implements CommandExceptionType {
+public class GGCommandExceptionType implements CommandExceptionType {
     protected final @NotNull Message message;
 
     public GGCommandExceptionType(final @NotNull Message message) {

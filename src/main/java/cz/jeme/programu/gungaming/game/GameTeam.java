@@ -132,11 +132,12 @@ public enum GameTeam {
     public void unregister() {
         team().unregister();
         team = null;
-        players.forEach(player -> {
+        final List<Player> allPlayers = new ArrayList<>(players);
+        allPlayers.addAll(removedPlayers);
+        allPlayers.forEach(player -> {
             PLAYER_TEAMS.remove(player.getUniqueId());
             objective().getScore(player).resetScore();
         });
-        removedPlayers.forEach(player -> objective().getScore(player).resetScore());
         objective = null;
         ACTIVE_TEAMS.remove(this);
         players.clear();
@@ -161,7 +162,6 @@ public enum GameTeam {
     public boolean removePlayer(final @NotNull Player player) {
         if (players.remove(player)) {
             removedPlayers.add(player);
-            PLAYER_TEAMS.remove(player.getUniqueId());
             System.out.println(players);
             if (players.isEmpty()) {
                 unregister();
@@ -207,7 +207,6 @@ public enum GameTeam {
     private static final @NotNull List<GameTeam> VALUES = List.of(values());
     public static final int COUNT = VALUES.size();
 
-    @ApiStatus.Internal
     public static @NotNull List<GameTeam> cached() {
         return VALUES;
     }
@@ -236,6 +235,10 @@ public enum GameTeam {
 
     public static @NotNull GameTeam ofPlayer(final @NotNull Player player) {
         return Objects.requireNonNull(PLAYER_TEAMS.get(player.getUniqueId()), "Unknown player!");
+    }
+
+    public static boolean isPlayer(final @NotNull Player player) {
+        return PLAYER_TEAMS.containsKey(player.getUniqueId());
     }
 
     public static void unregisterAll() {

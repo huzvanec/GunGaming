@@ -1,4 +1,4 @@
-package cz.jeme.programu.gungaming.command;
+package cz.jeme.programu.gungaming.command.gg;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -7,6 +7,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.command.GGCommandExceptionType;
 import cz.jeme.programu.gungaming.game.GameTeam;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;

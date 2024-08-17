@@ -14,6 +14,7 @@ import cz.jeme.programu.gungaming.item.throwable.ThrowableEventHandler;
 import cz.jeme.programu.gungaming.item.tracker.TrackerEventHandler;
 import cz.jeme.programu.gungaming.loot.crate.CrateEventHandler;
 import io.papermc.paper.event.block.BlockPreDispenseEvent;
+import io.papermc.paper.event.player.AsyncChatEvent;
 import io.papermc.paper.event.player.PlayerStopUsingItemEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -206,5 +207,10 @@ public enum EventDistributor implements Listener {
     private static void onPlayerPortal(final @NotNull PlayerPortalEvent event) {
         GameEventHandler.onPlayerPortal(event);
         LobbyEventHandler.onPlayerPortal(event);
+    }
+
+    @EventHandler
+    private static void onAsyncChat(final @NotNull AsyncChatEvent event) {
+        GameEventHandler.onAsyncChat(event);
     }
 }

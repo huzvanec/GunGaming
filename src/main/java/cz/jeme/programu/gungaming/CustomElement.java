@@ -7,7 +7,6 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public abstract class CustomElement {
     public static final @NotNull Data<String, String> KEY_DATA = Data.ofString(GunGaming.namespaced("element_key"));
@@ -41,21 +40,6 @@ public abstract class CustomElement {
 
     public final @NotNull Component strippedName() {
         return strippedName;
-    }
-
-    // object
-
-    @Override
-    public final boolean equals(final @Nullable Object o) {
-        if (this == o) return true;
-        if (!(o instanceof final CustomElement that)) return false;
-
-        return key.equals(that.key);
-    }
-
-    @Override
-    public final int hashCode() {
-        return key.hashCode();
     }
 
     // static accessors
