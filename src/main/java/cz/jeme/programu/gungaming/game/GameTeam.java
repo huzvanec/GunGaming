@@ -25,13 +25,13 @@ public enum GameTeam {
     GOLD(GunGaming.namespaced("gold"), "Gold", NamedTextColor.GOLD),
     PURPLE(GunGaming.namespaced("purple"), "Purple", NamedTextColor.DARK_PURPLE),
     WHITE(GunGaming.namespaced("white"), "White", NamedTextColor.WHITE),
-    BLACK(GunGaming.namespaced("black"), "Black", NamedTextColor.BLACK),
     DARK_BLUE(GunGaming.namespaced("dark_blue"), "Dark Blue", NamedTextColor.DARK_BLUE),
     DARK_RED(GunGaming.namespaced("dark_red"), "Dark Red", NamedTextColor.DARK_RED),
     DARK_GREEN(GunGaming.namespaced("dark_green"), "Dark Green", NamedTextColor.DARK_GREEN),
     DARK_AQUA(GunGaming.namespaced("dark_aqua"), "Dark Aqua", NamedTextColor.DARK_AQUA),
     GRAY(GunGaming.namespaced("gray"), "Gray", NamedTextColor.GRAY),
-    DARK_GRAY(GunGaming.namespaced("dark_gray"), "Dark Gray", NamedTextColor.DARK_GRAY);
+    DARK_GRAY(GunGaming.namespaced("dark_gray"), "Dark Gray", NamedTextColor.DARK_GRAY),
+    BLACK(GunGaming.namespaced("black"), "Black", NamedTextColor.BLACK);
 
     private final @NotNull Key key;
     private final @NotNull String displayName;
