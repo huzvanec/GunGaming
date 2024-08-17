@@ -5,6 +5,7 @@ import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.item.throwable.ThrownHelper;
 import cz.jeme.programu.gungaming.loot.Rarity;
+import cz.jeme.programu.gungaming.util.RandomUtils;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
@@ -22,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class AirStrikeStrobe extends Throwable {
 
@@ -93,14 +93,10 @@ public class AirStrikeStrobe extends Throwable {
     private static final double BOMB_INACCURACY = 1;
     private static final int CENTER_OFFSET = 5; // the offset of the bombing center (forwards) in blocks
 
-    private static double nextAxis(final double radians) {
-        return ThreadLocalRandom.current().nextDouble(-radians, radians);
-    }
-
     private static void randomizeVector(final @NotNull Vector vector) {
         final double rad = Math.toRadians(BOMB_INACCURACY);
-        vector.rotateAroundX(nextAxis(rad));
-        vector.rotateAroundZ(nextAxis(rad));
+        vector.rotateAroundX(RandomUtils.nextAxis(rad));
+        vector.rotateAroundZ(RandomUtils.nextAxis(rad));
     }
 
     @Override

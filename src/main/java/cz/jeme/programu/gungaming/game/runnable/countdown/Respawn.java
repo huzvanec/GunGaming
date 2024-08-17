@@ -63,8 +63,9 @@ public final class Respawn extends Countdown {
     @Override
     protected void expire() {
         player.clearTitle();
-        if (GameConfig.TEAM_PLAYERS.get() > 1) {
-            final Optional<Player> teammate = GameTeam.ofPlayer(player).players().stream()
+        final GameTeam team = GameTeam.ofPlayer(player);
+        if (team.size() > 1) {
+            final Optional<Player> teammate = team.players().stream()
                     .filter(p -> p.getGameMode() != GameMode.SPECTATOR)
                     .filter(p -> !p.getUniqueId().equals(player.getUniqueId()))
                     .findFirst();

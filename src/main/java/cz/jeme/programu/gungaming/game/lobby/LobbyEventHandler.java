@@ -28,7 +28,6 @@ public final class LobbyEventHandler {
     public static void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
         if (!Lobby.enabled()) return;
         final Player player = event.getPlayer();
-        player.clearTitle();
         Lobby.instance().playerSetup(player);
     }
 

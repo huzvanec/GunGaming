@@ -69,7 +69,7 @@ public final class Game {
     private final @NotNull World world;
     private final int duration = GameConfig.GAME_SECONDS.get();
     private final int size = GameConfig.SIZE.get();
-    private final int teamPlayers = GameConfig.TEAM_PLAYERS.get();
+    private final int teamPlayerCount = GameConfig.TEAM_PLAYERS.get();
     private final int centerX;
     private final int centerZ;
     private final int xMin;
@@ -91,16 +91,28 @@ public final class Game {
             throw new IllegalStateException("There can be only one instance of Game!");
         }
         players = new ArrayList<>(Bukkit.getOnlinePlayers());
-        if (players.size() % teamPlayers != 0) {
+        // players that should be auto-assigned to teams
+        final Map<Player, GameTeam> overrideTeamPlayers = new HashMap<>();
+        final List<Player> autoTeamPlayers = new ArrayList<>(players);
+        // resort players into auto and override
+        final Iterator<Player> autoTeamPlayerIterator = autoTeamPlayers.iterator();
+        while (autoTeamPlayerIterator.hasNext()) {
+            final Player player = autoTeamPlayerIterator.next();
+            final GameTeam overriden = GameTeam.overrideRegistry().get(player.getUniqueId());
+            if (overriden == null) continue;
+            autoTeamPlayerIterator.remove();
+            overrideTeamPlayers.put(player, overriden);
+        }
+        if (autoTeamPlayers.size() % teamPlayerCount != 0) {
             audience.sendMessage(Components.prefix("<red>Not enough players for this team configuration!"));
             throw new IllegalStateException("Not enough players to create teams!");
         }
-        final int teamCount = players.size() / teamPlayers;
+        final int teamCount = autoTeamPlayers.size() / teamPlayerCount + GameTeam.overrideTeams().size();
         if (teamCount <= 1) {
             audience.sendMessage(Components.prefix("<red>There must be at least 2 teams to start a game!"));
-            throw new IllegalStateException("Not enough players to start a game!");
+//            throw new IllegalStateException("Not enough teams to start a game!");
         }
-        if (teamCount > GameTeam.TEAM_COUNT) {
+        if (teamCount > GameTeam.COUNT) {
             audience.sendMessage(Components.prefix("<red>Too many players for this team configuration!"));
             throw new IllegalStateException("Too many players to create teams!");
         }
@@ -133,17 +145,25 @@ public final class Game {
                 Components.of("<#00FFFF><b>" + Components.latinString("Kills"))
         );
         // setting up teams
-        final List<GameTeam> teams = new ArrayList<>();
-        for (int i = 0; i < players.size() / teamPlayers; i++) {
-            final GameTeam team = GameTeam.ofOrdinal(i);
-            team.register(kills);
-            teams.add(team);
+        GameTeam.overrideTeams().forEach(team -> team.register(kills)); // register overriden teams
+        // register overriden players
+        for (final Map.Entry<Player, GameTeam> entry : overrideTeamPlayers.entrySet()) {
+            entry.getValue().addPlayer(entry.getKey());
         }
-        Collections.shuffle(teams);
-        Collections.shuffle(players);
-        for (int i = 0; i < players.size(); i++) {
-            final Player player = players.get(i);
-            final GameTeam team = teams.get(i / teamPlayers);
+        // generate auto teams
+        final List<GameTeam> autoTeams = new ArrayList<>();
+        int o = 0;
+        while (autoTeams.size() < autoTeamPlayers.size() / teamPlayerCount) {
+            final GameTeam team = GameTeam.ofOrdinal(o++);
+            if (team.hasOverrides()) continue;
+            team.register(kills);
+            autoTeams.add(team);
+        }
+        Collections.shuffle(autoTeams);
+        Collections.shuffle(autoTeamPlayers);
+        for (int i = 0; i < autoTeamPlayers.size(); i++) {
+            final Player player = autoTeamPlayers.get(i);
+            final GameTeam team = autoTeams.get(i / teamPlayerCount);
             team.addPlayer(player);
         }
 
@@ -156,7 +176,7 @@ public final class Game {
             FROZEN_DATA.write(player, true);
             player.showBossBar(bossBar);
             player.setScoreboard(scoreboard);
-            if (teamPlayers > 1) player.getInventory().setItem(8, teammateTracker);
+            if (GameTeam.ofPlayer(player).size() > 1) player.getInventory().setItem(8, teammateTracker);
         }
 
         xMin = centerX - size / 2;
@@ -194,8 +214,9 @@ public final class Game {
 
     @ApiStatus.Internal
     public static void playerSetup(final @NotNull Player player) {
-        player.closeInventory();
         player.spigot().respawn();
+        player.clearTitle();
+        player.closeInventory();
         player.clearActivePotionEffects();
         final PlayerInventory inventory = player.getInventory();
         inventory.clear();
@@ -228,7 +249,7 @@ public final class Game {
     }
 
     public void teleportPlayers() {
-        final int points = players.size() / teamPlayers;
+        final int points = GameTeam.activeTeams().size();
         final int rowCount = (int) Math.ceil(Math.sqrt(points)); // how many rows will the shape have
         final int base = points / rowCount; // minimum amount of cols in a row
         final int extra = base + 1; // extra (maximum) amount of cols in a row
@@ -402,7 +423,10 @@ public final class Game {
                 }
                 // title end
                 teamPlayers.addAll(team.removedPlayers());
-                teamPlayers.forEach(player -> players.add(color + player.getName()));
+                teamPlayers.forEach(player -> {
+                    final String playerScore = team.players().size() > 1 ? "[" + team.score(player) + "] " : "";
+                    players.add(color + playerScore + player.getName());
+                });
             }
             final String color = rankToColor(rank);
             messages.add(Components.of("<b>").append(rankComponent.append(Components.of(
@@ -426,7 +450,7 @@ public final class Game {
                 () -> {
                     if (contained) {
                         final GameTeam team = GameTeam.ofPlayer(player);
-                        if (team.removePlayer(player) && teamPlayers > 1)
+                        if (team.removePlayer(player) && teamPlayerCount > 1)
                             Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(
                                             Components.of("<#FF0000>❌ The ").append(
                                                     team.color().append(Components.of(

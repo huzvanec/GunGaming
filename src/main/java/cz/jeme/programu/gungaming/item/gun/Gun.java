@@ -38,7 +38,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Gun extends Weapon {
     public static final @NotNull Data<Integer, Integer> MAX_AMMO_DATA = Data.ofInteger(GunGaming.namespaced("gun_max_ammo"));
@@ -296,15 +295,11 @@ public abstract class Gun extends Weapon {
                 bulletCooldown);
     }
 
-    private static double nextAxis(final double radians) {
-        return ThreadLocalRandom.current().nextDouble(-radians, radians);
-    }
-
     private static void randomizeVector(final @NotNull Vector vector, final double inaccuracy) {
         final double rad = Math.toRadians(inaccuracy);
-        vector.rotateAroundX(nextAxis(rad));
-        vector.rotateAroundY(nextAxis(rad));
-        vector.rotateAroundZ(nextAxis(rad));
+        vector.rotateAroundX(RandomUtils.nextAxis(rad));
+        vector.rotateAroundY(RandomUtils.nextAxis(rad));
+        vector.rotateAroundZ(RandomUtils.nextAxis(rad));
     }
 
     protected void onShoot(final @NotNull PlayerInteractEvent event, final @NotNull AbstractArrow bullet) {

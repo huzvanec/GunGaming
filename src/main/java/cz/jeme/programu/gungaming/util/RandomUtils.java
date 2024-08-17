@@ -16,6 +16,10 @@ public final class RandomUtils {
         return value;
     }
 
+    public static double nextAxis(final double radians) {
+        return ThreadLocalRandom.current().nextDouble(-radians, radians);
+    }
+
 /*
 private static void testNextChanced() {
         final int tests = 1_000_000;

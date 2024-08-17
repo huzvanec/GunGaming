@@ -13,6 +13,7 @@ import cz.jeme.programu.gungaming.config.ConfigValue;
 import cz.jeme.programu.gungaming.config.GameConfig;
 import cz.jeme.programu.gungaming.config.GenerationConfig;
 import cz.jeme.programu.gungaming.game.Game;
+import cz.jeme.programu.gungaming.game.GameTeam;
 import cz.jeme.programu.gungaming.game.lobby.Lobby;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.loot.crate.CrateGenerator;
@@ -38,6 +39,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -95,7 +97,7 @@ public final class GGCommand {
                                 .then(literal("cancel")
                                         .executes(GGCommand::cancelGeneration)
                                 )
-                                .then(literal("air_drop")
+                                .then(literal("airdrop")
                                         .then(argument("pos", ArgumentTypes.blockPosition())
                                                 .executes(GGCommand::generateAirDrop)
                                         )
@@ -130,6 +132,28 @@ public final class GGCommand {
                                 )
                                 .then(literal("disable")
                                         .executes(GGCommand::disableLobby)
+                                )
+                        )
+                        .then(literal("teams")
+                                .then(literal("reset")
+                                        .executes(GGCommand::resetTeams)
+                                )
+                                .then(literal("override")
+                                        .then(argument("team", new GameTeamArgument())
+                                                .then(literal("add")
+                                                        .then(argument("targets", ArgumentTypes.players())
+                                                                .executes(GGCommand::teamAdd)
+                                                        )
+                                                )
+                                                .then(literal("remove")
+                                                        .then(argument("targets", ArgumentTypes.players())
+                                                                .executes(GGCommand::teamRemove)
+                                                        )
+                                                )
+                                                .then(literal("clear")
+                                                        .executes(GGCommand::teamClear)
+                                                )
+                                        )
                                 )
                         )
                 )
@@ -186,12 +210,17 @@ public final class GGCommand {
     }
 
     private static int give(final @NotNull CommandContext<CommandSourceStack> ctx, final int count) throws CommandSyntaxException {
+        final CommandSender sender = ctx.getSource().getSender();
         final List<Player> targets = ctx.getArgument("targets", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource());
+        if (targets.isEmpty()) {
+            sender.sendMessage(Components.prefix("<red>No player was found!"));
+            return FAILURE;
+        }
         final CustomItem customItem = ctx.getArgument("item", CustomItem.class);
         final ItemStack item = customItem.item();
         final int maxCount = item.getMaxStackSize() * 100;
         if (count > maxCount) {
-            ctx.getSource().getSender().sendMessage(
+            sender.sendMessage(
                     Component.text("Can't give more than %d of ".formatted(maxCount))
                             .color(NamedTextColor.RED)
                             .append(Component.text()
@@ -342,6 +371,84 @@ public final class GGCommand {
         }
         Lobby.instance().disable();
         sender.sendMessage(Components.prefix("<green>Lobby disabled successfully"));
+        return SUCCESS;
+    }
+
+    private static int resetTeams(final @NotNull CommandContext<CommandSourceStack> ctx) {
+        final CommandSender sender = ctx.getSource().getSender();
+        if (Game.running()) {
+            sender.sendMessage(Components.prefix("<red>You can't modify teams while a game is running!"));
+            return FAILURE;
+        }
+        GameTeam.cached().forEach(GameTeam::clearOverrides);
+        sender.sendMessage(Components.prefix("<green>Team overrides reset successfully"));
+        return SUCCESS;
+    }
+
+    private static int teamAdd(final @NotNull CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        final CommandSender sender = ctx.getSource().getSender();
+        if (Game.running()) {
+            sender.sendMessage(Components.prefix("<red>You can't modify teams while a game is running!"));
+            return FAILURE;
+        }
+        final GameTeam team = ctx.getArgument("team", GameTeam.class);
+        final List<Player> targets = ctx.getArgument("targets", PlayerSelectorArgumentResolver.class)
+                .resolve(ctx.getSource());
+        if (targets.isEmpty()) {
+            sender.sendMessage(Components.prefix("<red>No player was found!"));
+            return FAILURE;
+        }
+        targets.forEach(team::addOverride);
+        sender.sendMessage(team.color().append(
+                Components.prefix(team.displayName() + "<green> override added successfully: "
+                                  + String.join(", ", targets.stream().map(Player::getName).toList())))
+        );
+        return SUCCESS;
+    }
+
+    private static int teamRemove(final @NotNull CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        final CommandSender sender = ctx.getSource().getSender();
+        if (Game.running()) {
+            sender.sendMessage(Components.prefix("<red>You can't modify teams while a game is running!"));
+            return FAILURE;
+        }
+        final GameTeam team = ctx.getArgument("team", GameTeam.class);
+        final List<Player> targets = ctx.getArgument("targets", PlayerSelectorArgumentResolver.class)
+                .resolve(ctx.getSource());
+        if (targets.isEmpty()) {
+            sender.sendMessage(Components.prefix("<red>No player was found!"));
+            return FAILURE;
+        }
+        final List<String> removed = new ArrayList<>();
+        targets.stream()
+                .filter(team::removeOverride)
+                .map(Player::getName)
+                .forEach(removed::add);
+        if (removed.isEmpty()) {
+            sender.sendMessage(Components.prefix("<red>No override was removed!"));
+            return FAILURE;
+        }
+        sender.sendMessage(team.color().append(
+                Components.prefix(team.displayName() + "<green> override removed successfully: "
+                                  + String.join(", ", removed)))
+        );
+        return SUCCESS;
+    }
+
+    private static int teamClear(final @NotNull CommandContext<CommandSourceStack> ctx) {
+        final CommandSender sender = ctx.getSource().getSender();
+        if (Game.running()) {
+            sender.sendMessage(Components.prefix("<red>You can't modify teams while a game is running!"));
+            return FAILURE;
+        }
+        final GameTeam team = ctx.getArgument("team", GameTeam.class);
+        if (!team.clearOverrides()) {
+            sender.sendMessage(Components.prefix("<red>This team has no overrides to remove!"));
+            return FAILURE;
+        }
+        sender.sendMessage(team.color().append(
+                Components.prefix(team.displayName() + "<green> overrides removed successfully"))
+        );
         return SUCCESS;
     }
 }
