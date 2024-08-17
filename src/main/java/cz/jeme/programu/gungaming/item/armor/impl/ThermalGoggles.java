@@ -65,7 +65,7 @@ public class ThermalGoggles extends Helmet {
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.LEGENDARY;
+        return Rarity.EPIC;
     }
 
     @Override
