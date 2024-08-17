@@ -6,13 +6,17 @@ import net.minecraft.commands.arguments.coordinates.Coordinates;
 import net.minecraft.core.BlockPos;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 public final class ConfigValue<T> {
+    private static final @NotNull Pattern NAME_PATTERN = Pattern.compile("[a-z0-9_]+");
+
     private final @NotNull String name;
     private final @NotNull ArgumentType<T> type;
     private @NotNull T value;
 
     ConfigValue(final @NotNull String name, final @NotNull ArgumentType<T> type, final @NotNull T defaultValue) {
-        if (!name.matches("[a-z0-9_]+"))
+        if (!NAME_PATTERN.matcher(name).matches())
             throw new IllegalArgumentException("Name contains invalid characters!");
         this.name = name;
         this.type = type;
