@@ -159,14 +159,11 @@ public enum GameTeam {
     }
 
     public boolean removePlayer(final @NotNull Player player) {
-        System.out.println("rm");
         if (players.remove(player)) {
             removedPlayers.add(player);
             PLAYER_TEAMS.remove(player.getUniqueId());
-            System.out.println("yes");
             System.out.println(players);
             if (players.isEmpty()) {
-                System.out.println("unreg");
                 unregister();
                 return true;
             }
