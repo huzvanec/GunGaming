@@ -6,6 +6,7 @@ import cz.jeme.programu.gungaming.data.Data;
 import cz.jeme.programu.gungaming.game.Game;
 import cz.jeme.programu.gungaming.game.GameTeam;
 import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.item.armor.impl.StealthHelmet;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.loot.SingleLoot;
 import cz.jeme.programu.gungaming.loot.crate.CrateGenerator;
@@ -17,10 +18,7 @@ import net.kyori.adventure.text.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -111,8 +109,17 @@ public class Radar extends CustomItem implements SingleLoot {
 
         private static final int MAP_SIZE = 128; // do not change, it wont work, because Maps#update works only for a small radius around the player
 
+        @SuppressWarnings("deprecation")
         @Override
         public void render(final @NotNull MapView map, final @NotNull MapCanvas canvas, final @NotNull Player player) {
+            if (StealthHelmet.hasEquipped(player)) {
+                canvas.setCursors(new MapCursorCollection());
+                for (int y = 0; y < MAP_SIZE; y++)
+                    for (int x = 0; x < MAP_SIZE; x++)
+                        canvas.setPixel(x, y, (byte) 0);
+                player.sendActionBar(StealthHelmet.WARNING);
+                return;
+            }
             renderCursors(map, canvas, player);
             renderWorld(map, canvas, player);
         }
@@ -133,6 +140,7 @@ public class Radar extends CustomItem implements SingleLoot {
                 if (!mapPlayer.isValid()) continue; // don't show dead players
                 if (mapPlayer.getGameMode() == GameMode.SPECTATOR) continue; // don't show spectators
                 if (mapPlayer.getUniqueId().equals(player.getUniqueId())) continue; // it's me lol
+                if (StealthHelmet.hasEquipped(mapPlayer)) continue; // don't track phantom hats
                 final Location mapPlayerLocation = mapPlayer.getLocation();
                 final int mapX = (mapPlayerLocation.getBlockX() - playerLocation.getBlockX()) * 2;
                 final int mapY = (mapPlayerLocation.getBlockZ() - playerLocation.getBlockZ()) * 2;

@@ -2,7 +2,7 @@ package cz.jeme.programu.gungaming.item.tracker;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.CustomItem;
-import cz.jeme.programu.gungaming.item.gun.Gun;
+import cz.jeme.programu.gungaming.item.armor.impl.StealthHelmet;
 import cz.jeme.programu.gungaming.util.Components;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -35,21 +35,24 @@ final class TrackerRunnable extends BukkitRunnable {
         final Collection<? extends Player> players = Bukkit.getOnlinePlayers();
         for (final Player player : players) {
             final PlayerInventory inventory = player.getInventory();
+
             final ItemStack mainHand = inventory.getItemInMainHand();
-            final ItemStack offHand = inventory.getItemInOffHand();
-
             final boolean isMainHand = CustomItem.is(mainHand, PlayerTracker.class);
+            final ItemStack offHand = inventory.getItemInOffHand();
+            final boolean isOffHand = CustomItem.is(offHand, PlayerTracker.class);
 
-            if (!isMainHand && !CustomItem.is(offHand, PlayerTracker.class)) {
+            final boolean hasPhantomHat = StealthHelmet.hasEquipped(player);
+
+            if (hasPhantomHat || !(isMainHand || isOffHand)) {
+                if (hasPhantomHat && (isMainHand || isOffHand))
+                    player.sendActionBar(StealthHelmet.WARNING);
                 player.setCompassTarget(player.getWorld().getSpawnLocation());
-                for (final ItemStack item : player.getInventory()) {
-                    resetTracker(item);
-                }
+                for (final ItemStack invItem : inventory) resetTracker(invItem);
                 continue;
             }
 
             final ItemStack item = isMainHand ? mainHand : offHand;
-            for (final ItemStack invItem : player.getInventory()) {
+            for (final ItemStack invItem : inventory) {
                 if (invItem == item) continue;
                 resetTracker(invItem);
             }
@@ -61,6 +64,7 @@ final class TrackerRunnable extends BukkitRunnable {
                 if (!trackPlayer.isValid()) continue; // don't track dead players
                 if (trackPlayer.getGameMode() == GameMode.SPECTATOR) continue; // don't track spectators
                 if (trackPlayer.getUniqueId().equals(player.getUniqueId())) continue; // that's me lol
+                if (StealthHelmet.hasEquipped(trackPlayer)) continue; // don't track phantom hats
                 if (!tracker.validate(player, trackPlayer)) continue;
                 final double newDistance = player.getLocation().distance(trackPlayer.getLocation());
                 if (newDistance < distance) {
@@ -69,11 +73,8 @@ final class TrackerRunnable extends BukkitRunnable {
                 }
             }
 
-            final boolean hasGun = Gun.is(mainHand) || Gun.is(offHand);
-
             if (nearestPlayer == null) {
-                if (!hasGun)
-                    player.sendActionBar(Components.of("<red>There are no players to track!"));
+                player.sendActionBar(Components.of("<red>There are no players to track!"));
                 continue;
             }
 
@@ -82,8 +83,6 @@ final class TrackerRunnable extends BukkitRunnable {
                 PlayerTracker.TRACKER_ACTIVE_DATA.write(meta, true);
                 meta.setCustomModelData(tracker.activeCustomModelData());
             });
-
-            if (hasGun) continue;
 
             final double phase = Math.min(distance / 100D, 1);
 
