@@ -58,6 +58,12 @@
 				"custom_model_data": 9
 			},
 			"model": "gungaming:item/ammo/rocket"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 10
+			},
+			"model": "gungaming:item/throwable/poisonous_grenade"
 		}
 	]
 }

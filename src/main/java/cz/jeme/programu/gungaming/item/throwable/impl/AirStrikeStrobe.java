@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class AirStrikeStrobe extends Throwable {
+    private static final @NotNull Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(Color.RED, 6);
 
     protected AirStrikeStrobe() {
         item.editMeta(meta -> meta.setMaxStackSize(1));
@@ -132,7 +133,7 @@ public class AirStrikeStrobe extends Throwable {
                 }
                 final double offsetY = 10;
                 final Location particleLocation = location.clone().add(0, offsetY, 0);
-                world.spawnParticle(Particle.DUST, particleLocation, 10, .5, offsetY, .5, 0, new Particle.DustOptions(Color.RED, 3));
+                world.spawnParticle(Particle.DUST, particleLocation, 10, .5, offsetY, .5, 0, DUST_OPTIONS);
                 counter++;
             }
         }.runTaskTimer(GunGaming.plugin(), 0L, 1L);

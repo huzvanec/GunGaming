@@ -384,6 +384,16 @@
             "gungaming:entity/hit/air_strike_bomb"
         ]
     },
+    "entity.molotov_cocktail.hit": {
+        "sounds": [
+            "gungaming:entity/hit/molotov_cocktail"
+        ]
+    },
+    "entity.poisonous_grenade.hit": {
+        "sounds": [
+            "gungaming:entity/hit/poisonous_grenade"
+        ]
+    },
     "entity.air_strike.ambient": {
         "sounds": [
             "gungaming:entity/ambient/air_strike"
@@ -397,11 +407,6 @@
     "item.molotov_cocktail.throw": {
         "sounds": [
             "gungaming:item/throwable/throw/molotov_cocktail"
-        ]
-    },
-    "entity.molotov_cocktail.hit": {
-        "sounds": [
-            "gungaming:entity/hit/molotov_cocktail"
         ]
     },
     "item.wind_pearl.throw": {
