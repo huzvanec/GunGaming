@@ -409,6 +409,11 @@
             "gungaming:item/throwable/throw/wind_pearl"
         ]
     },
+    "item.air_strike_strobe.throw": {
+        "sounds": [
+            "gungaming:item/throwable/throw/air_strike_strobe"
+        ]
+    },
     "item.soda.eat": {
         "sounds": [
             "gungaming:item/consumable/eat/soda"
