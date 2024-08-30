@@ -52,6 +52,12 @@
 				"custom_model_data": 8
 			},
 			"model": "gungaming:item/throwable/air_strike_bomb"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 9
+			},
+			"model": "gungaming:item/ammo/rocket"
 		}
 	]
 }

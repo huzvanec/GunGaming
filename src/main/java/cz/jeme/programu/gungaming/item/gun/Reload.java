@@ -1,6 +1,8 @@
 package cz.jeme.programu.gungaming.item.gun;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.item.tracker.PlayerTracker;
 import cz.jeme.programu.gungaming.util.Components;
 import cz.jeme.programu.gungaming.util.Inventories;
 import net.kyori.adventure.sound.Sound;
@@ -8,8 +10,10 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
 
@@ -27,19 +31,7 @@ final class Reload extends BukkitRunnable {
     private final @NotNull Gun gun;
     private long startTime;
 
-    private final @NotNull BukkitRunnable actionRunnable = new BukkitRunnable() {
-        private static final @NotNull DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("0.0");
-
-        @Override
-        public void run() {
-            final long currentTime = System.currentTimeMillis();
-            final double seconds = (startTime + reloadCooldown * 50L - currentTime) / 1000D;
-
-            player.sendActionBar(Components.of(
-                    "<#00FFFF>Reloading [" + DECIMAL_FORMATTER.format(Math.max(seconds, 0)) + "]"
-            ));
-        }
-    };
+    private final @Nullable ActionRunnable actionRunnable;
 
     public Reload(final @NotNull Player player, final @NotNull ItemStack item, final @NotNull Gun gun,
                   final int reloadAmmo, @NotNull final ItemStack ammoItem, final int reloadCooldown) {
@@ -56,7 +48,13 @@ final class Reload extends BukkitRunnable {
         sound = gun.reloadSound(item);
         newReload();
         startTime = System.currentTimeMillis();
-        actionRunnable.runTaskTimer(GunGaming.plugin(), 0L, 2L);
+
+        final PlayerInventory inventory = player.getInventory();
+        final ItemStack mainHand = inventory.getItemInMainHand();
+        final boolean mainHandTracker = mainHand != item && CustomItem.is(mainHand, PlayerTracker.class);
+        final ItemStack offHand = inventory.getItemInOffHand();
+        final boolean offHandTracker = offHand != item && CustomItem.is(offHand, PlayerTracker.class);
+        actionRunnable = mainHandTracker || offHandTracker ? null : new ActionRunnable();
         runTaskTimer(GunGaming.plugin(), reloadCooldown, reloadCooldown);
     }
 
@@ -99,7 +97,7 @@ final class Reload extends BukkitRunnable {
 
     @Override
     public synchronized void cancel() throws IllegalStateException {
-        actionRunnable.cancel();
+        if (actionRunnable != null) actionRunnable.cancel();
         super.cancel();
         player.setCooldown(material, 0);
         player.getWorld().stopSound(sound);
@@ -112,5 +110,23 @@ final class Reload extends BukkitRunnable {
 
     public @NotNull Gun gun() {
         return gun;
+    }
+
+    private class ActionRunnable extends BukkitRunnable {
+        private static final @NotNull DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("0.0");
+
+        private ActionRunnable() {
+            runTaskTimer(GunGaming.plugin(), 0L, 2L);
+        }
+
+        @Override
+        public void run() {
+            final long currentTime = System.currentTimeMillis();
+            final double seconds = (startTime + reloadCooldown * 50L - currentTime) / 1000D;
+
+            player.sendActionBar(Components.of(
+                    "<#00FFFF>Reloading [" + DECIMAL_FORMATTER.format(Math.max(seconds, 0)) + "]"
+            ));
+        }
     }
 }

@@ -1,7 +1,8 @@
 package cz.jeme.programu.gungaming.item.throwable.impl;
 
-import cz.jeme.programu.gungaming.item.CustomItem;
+import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.item.throwable.Grenade;
+import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.item.throwable.ThrownHelper;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.util.Lores;
@@ -77,7 +78,7 @@ public class MirvGrenade extends Grenade {
     protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
         final Location location = thrown.getLocation();
         location.createExplosion(thrown, 5F, false, true);
-        final SmallGrenade smallGrenade = CustomItem.of(SmallGrenade.class);
+        final SmallGrenade smallGrenade = CustomElement.of(SmallGrenade.class);
         final ItemStack smallGrenadeItem = smallGrenade.item();
         for (int deg = 0; deg < 360; deg += 45) {
             final double rad = Math.toRadians(deg);
@@ -88,7 +89,7 @@ public class MirvGrenade extends Grenade {
                     new Vector(x, VERTICAL_POWER, z),
                     snowball -> {
                         ThrownHelper.THROWABLE_KEY_DATA.write(snowball, smallGrenade.key().asString());
-                        ThrownHelper.MAX_DAMAGE_DATA.write(snowball, MAX_DAMAGE_DATA.require(smallGrenadeItem));
+                        ThrownHelper.MAX_DAMAGE_DATA.write(snowball, Throwable.MAX_DAMAGE_DATA.require(smallGrenadeItem));
                         snowball.setItem(smallGrenadeItem);
                         snowball.teleport(location);
                     }

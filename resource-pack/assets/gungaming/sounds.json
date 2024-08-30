@@ -349,9 +349,9 @@
             "gungaming:entity/ambient/rocket"
         ]
     },
-    "entity.rocket.hit": {
+    "entity.rocket_throwable.hit": {
         "sounds": [
-            "gungaming:entity/hit/rocket"
+            "gungaming:entity/hit/rocket_throwable"
         ]
     },
     "entity.frag_grenade.hit": {

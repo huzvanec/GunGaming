@@ -1,11 +1,15 @@
 package cz.jeme.programu.gungaming.item.gun.impl;
 
+import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.ammo.impl.Rocket;
 import cz.jeme.programu.gungaming.item.attachment.disable.MagazineDisabled;
 import cz.jeme.programu.gungaming.item.attachment.disable.SilencerDisabled;
+import cz.jeme.programu.gungaming.item.gun.BulletHelper;
 import cz.jeme.programu.gungaming.item.gun.Gun;
+import cz.jeme.programu.gungaming.item.throwable.ThrownHelper;
+import cz.jeme.programu.gungaming.item.throwable.impl.RocketThrowable;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.sound.Sound;
@@ -14,6 +18,8 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.AbstractArrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Snowball;
 import org.bukkit.entity.SpectralArrow;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -21,7 +27,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDisabled {
+    public static final double MAX_DAMAGE = 30;
+
     @Override
     protected int provideMaxAmmo() {
         return 1;
@@ -39,7 +49,7 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
 
     @Override
     protected double provideDamage() {
-        return 22;
+        return MAX_DAMAGE;
     }
 
     @Override
@@ -83,10 +93,10 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
     }
 
     protected static final @NotNull Sound ROCKET_SOUND = Sound.sound(GunGaming.namespaced("entity.rocket.ambient"), Sound.Source.HOSTILE, 3F, 1F);
-    protected static final @NotNull Sound EXPLOSION_SOUND = Sound.sound(GunGaming.namespaced("entity.rocket.hit"), Sound.Source.HOSTILE, 50F, 1F);
 
     @Override
     protected void onShoot(final @NotNull PlayerInteractEvent event, final @NotNull AbstractArrow bullet) {
+        BulletHelper.DAMAGE_DATA.write(bullet, 0D); // remove bullet damage, the actual damage is dealt by Rocket Throwable explosion
         ((SpectralArrow) bullet).setGlowingTicks(0);
 
         final Vector velocity = bullet.getVelocity();
@@ -115,10 +125,21 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
     @Override
     protected void onBulletHit(final @NotNull ProjectileHitEvent event, final @NotNull AbstractArrow bullet) {
         final Location location = bullet.getLocation();
-        location.createExplosion(bullet, 7F, true, true);
-        final World world = bullet.getWorld();
-        world.stopSound(ROCKET_SOUND);
-        world.playSound(EXPLOSION_SOUND, location.x(), location.y(), location.z());
+        final RocketThrowable throwable = CustomElement.of(RocketThrowable.class);
+        final Entity hit = event.getHitEntity();
+        Objects.requireNonNull(bullet.getShooter(), "Shooter is null!").launchProjectile(
+                Snowball.class,
+                hit == null ? bullet.getVelocity() : null,
+                snowball -> {
+                    ThrownHelper.THROWABLE_KEY_DATA.write(snowball, throwable.key().asString());
+                    ThrownHelper.MAX_DAMAGE_DATA.write(snowball, throwable.maxDamage());
+                    snowball.setItem(throwable.item());
+                    snowball.teleport(location);
+                    if (hit == null) return;
+                    snowball.hitEntity(hit);
+                }
+        );
+        bullet.getWorld().stopSound(ROCKET_SOUND);
         bullet.remove();
     }
 
