@@ -60,7 +60,7 @@ public class Mine extends CustomBlock {
 
     @Override
     protected int provideMaxAmount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class Mine extends CustomBlock {
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.EPIC;
+        return Rarity.RARE;
     }
 
     @Override
