@@ -514,6 +514,11 @@
             "gungaming:item/attachment/remove"
         ]
     },
+    "item.detector_boots.warning": {
+        "sounds": [
+            "gungaming:item/detector_boots_warning"
+        ]
+    },
     "game.start": {
         "sounds": [
             "gungaming:game/start"
@@ -552,6 +557,26 @@
     "game.ping.air_drop": {
         "sounds": [
             "gungaming:game/ping/air_drop"
+        ]
+    },
+    "block.mine.activating": {
+        "sounds": [
+            "gungaming:block/mine/activating"
+        ]
+    },
+    "block.mine.activated": {
+        "sounds": [
+            "gungaming:block/mine/activated"
+        ]
+    },
+    "block.mine.warning": {
+        "sounds": [
+            "gungaming:block/mine/warning"
+        ]
+    },
+    "block.mine.explosion": {
+        "sounds": [
+            "gungaming:block/mine/explosion"
         ]
     }
 }

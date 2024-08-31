@@ -18,6 +18,7 @@ import io.papermc.paper.event.player.AsyncChatEvent;
 import io.papermc.paper.event.player.PlayerStopUsingItemEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -212,5 +213,10 @@ public enum EventDistributor implements Listener {
     @EventHandler
     private static void onAsyncChat(final @NotNull AsyncChatEvent event) {
         GameEventHandler.onAsyncChat(event);
+    }
+
+    @EventHandler
+    private static void onBlockPlace(final @NotNull BlockPlaceEvent event) {
+        BlockEventHandler.onBlockPlace(event);
     }
 }

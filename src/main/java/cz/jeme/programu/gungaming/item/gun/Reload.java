@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.item.gun;
 
 import cz.jeme.programu.gungaming.GunGaming;
+import cz.jeme.programu.gungaming.item.ActionItem;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.tracker.PlayerTracker;
 import cz.jeme.programu.gungaming.util.Components;
@@ -51,10 +52,10 @@ final class Reload extends BukkitRunnable {
 
         final PlayerInventory inventory = player.getInventory();
         final ItemStack mainHand = inventory.getItemInMainHand();
-        final boolean mainHandTracker = mainHand != item && CustomItem.is(mainHand, PlayerTracker.class);
+        final boolean mainHandAction = mainHand != item && CustomItem.is(mainHand) && CustomItem.of(mainHand) instanceof ActionItem;
         final ItemStack offHand = inventory.getItemInOffHand();
-        final boolean offHandTracker = offHand != item && CustomItem.is(offHand, PlayerTracker.class);
-        actionRunnable = mainHandTracker || offHandTracker ? null : new ActionRunnable();
+        final boolean offHandAction = offHand != item && CustomItem.is(offHand) && CustomItem.of(offHand) instanceof ActionItem;
+        actionRunnable = mainHandAction || offHandAction ? null : new ActionRunnable();
         runTaskTimer(GunGaming.plugin(), reloadCooldown, reloadCooldown);
     }
 

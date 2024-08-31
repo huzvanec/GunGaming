@@ -7,6 +7,7 @@ import cz.jeme.programu.gungaming.loot.Rarity;
 import cz.jeme.programu.gungaming.util.Components;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.ItemStack;
@@ -64,5 +65,11 @@ public final class BlockEventHandler {
             case RARE -> Rarity.RARE;
             case EPIC -> Rarity.LEGENDARY;
         };
+    }
+
+    public static void onBlockPlace(final @NotNull BlockPlaceEvent event) {
+        final ItemStack item = event.getItemInHand();
+        if (!CustomBlock.is(item)) return;
+        CustomBlock.of(item).onPlace(event);
     }
 }

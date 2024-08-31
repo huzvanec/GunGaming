@@ -93,6 +93,7 @@ public class AirStrikeStrobe extends Throwable {
     private static final long BOMB_DELAY = 52; // the amount of ticks before the bombs start spawning
     private static final double BOMB_INACCURACY = 1;
     private static final int CENTER_OFFSET = 5; // the offset of the bombing center (forwards) in blocks
+    private static final double PARTICLE_OFFSET_Y = 10;
 
     private static void randomizeVector(final @NotNull Vector vector) {
         final double rad = Math.toRadians(BOMB_INACCURACY);
@@ -122,6 +123,7 @@ public class AirStrikeStrobe extends Throwable {
         final ItemStack bombItem = bomb.item();
         final ProjectileSource shooter = Objects.requireNonNull(thrown.getShooter(), "Shooter is null!");
         // particles
+        final Location particleLocation = location.clone().add(0, PARTICLE_OFFSET_Y, 0);
         new BukkitRunnable() {
             private long counter = 0;
 
@@ -131,9 +133,7 @@ public class AirStrikeStrobe extends Throwable {
                     cancel();
                     return;
                 }
-                final double offsetY = 10;
-                final Location particleLocation = location.clone().add(0, offsetY, 0);
-                world.spawnParticle(Particle.DUST, particleLocation, 10, .5, offsetY, .5, 0, DUST_OPTIONS);
+                world.spawnParticle(Particle.DUST, particleLocation, 10, .5, PARTICLE_OFFSET_Y, .5, 0, DUST_OPTIONS);
                 counter++;
             }
         }.runTaskTimer(GunGaming.plugin(), 0L, 1L);

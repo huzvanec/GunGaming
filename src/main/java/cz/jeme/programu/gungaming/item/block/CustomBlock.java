@@ -3,6 +3,7 @@ package cz.jeme.programu.gungaming.item.block;
 import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import org.bukkit.Material;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +26,9 @@ public abstract class CustomBlock extends CustomItem {
     @Override
     protected final @NotNull String provideType() {
         return "block";
+    }
+
+    protected void onPlace(final @NotNull BlockPlaceEvent event) {
     }
 
     // static accessors
