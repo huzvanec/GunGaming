@@ -18,6 +18,7 @@ import org.bukkit.Material;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -31,6 +32,7 @@ import java.util.List;
 public class ThermalGoggles extends Helmet {
     protected ThermalGoggles() {
         new Updater();
+        item.editMeta(Damageable.class, meta -> meta.setMaxDamage(10));
     }
 
     @Override

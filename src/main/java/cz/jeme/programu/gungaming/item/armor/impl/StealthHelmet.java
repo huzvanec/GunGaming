@@ -9,6 +9,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -16,6 +17,10 @@ import java.util.List;
 public class StealthHelmet extends Helmet {
     private static final @NotNull String DISPLAY_NAME = "Stealth Helmet";
     public static final @NotNull Component WARNING = Components.of("<red>You are wearing a " + DISPLAY_NAME + "!");
+
+    protected StealthHelmet() {
+        item.editMeta(Damageable.class, meta -> meta.setMaxDamage(10));
+    }
 
     @Override
     protected double provideArmor() {
