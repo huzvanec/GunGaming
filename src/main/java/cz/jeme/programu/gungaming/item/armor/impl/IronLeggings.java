@@ -20,7 +20,7 @@ public class IronLeggings extends Leggings {
 
     @Override
     protected @NotNull String provideDescription() {
-        return "";
+        return "basic leggings";
     }
 
     @Override
