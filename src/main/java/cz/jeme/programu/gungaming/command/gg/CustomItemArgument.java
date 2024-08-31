@@ -11,6 +11,7 @@ import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.command.GGCommandExceptionType;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.ElementManager;
+import cz.jeme.programu.gungaming.loot.Rarity;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import net.kyori.adventure.key.Key;
@@ -52,6 +53,7 @@ final class CustomItemArgument implements CustomArgumentType<CustomItem, Key> {
         while (reader.canRead()) reader.skip();
         final String current = reader.getString().substring(builder.getStart(), reader.getCursor());
         ElementManager.INSTANCE.getItems(tag).stream()
+                .filter(item -> item.rarity() != Rarity.UNOBTAINABLE)
                 .map(item -> item.key().asString())
                 .filter(keyStr -> keyStr.contains(current.toLowerCase()))
                 .forEach(builder::suggest);
