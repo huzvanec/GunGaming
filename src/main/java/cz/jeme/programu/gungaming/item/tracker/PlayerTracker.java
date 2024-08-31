@@ -2,7 +2,6 @@ package cz.jeme.programu.gungaming.item.tracker;
 
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.data.Data;
-import cz.jeme.programu.gungaming.item.ActionItem;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.loot.SingleLoot;
 import net.kyori.adventure.sound.Sound;
@@ -11,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class PlayerTracker extends CustomItem implements SingleLoot, ActionItem {
+public abstract class PlayerTracker extends CustomItem implements SingleLoot {
     public static final @NotNull Data<Byte, Boolean> TRACKER_ACTIVE_DATA = Data.ofBoolean(GunGaming.namespaced("player_tracker"));
 
     protected final int inactiveCustomModelData = provideInactiveCustomModelData();

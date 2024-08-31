@@ -1,7 +1,6 @@
 package cz.jeme.programu.gungaming.item.armor.impl;
 
 import cz.jeme.programu.gungaming.GunGaming;
-import cz.jeme.programu.gungaming.item.ActionItem;
 import cz.jeme.programu.gungaming.item.CustomItem;
 import cz.jeme.programu.gungaming.item.armor.Boots;
 import cz.jeme.programu.gungaming.item.block.impl.Mine;
@@ -22,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class DetectorBoots extends Boots implements ActionItem {
+public class DetectorBoots extends Boots {
     private static final double MINE_RANGE = Mine.MINE_CHECK_RADIUS;
     private static final double DETECTION_RANGE = MINE_RANGE + 15;
     private static final @NotNull DecimalFormat FORMATTER = new DecimalFormat("00.00");
