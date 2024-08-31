@@ -17,11 +17,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @ApiStatus.Internal
 public final class Respawn extends Countdown {
-    private final @NotNull ThreadLocalRandom random = ThreadLocalRandom.current();
+    private final @NotNull Random random = ThreadLocalRandom.current();
     private final @NotNull Player player;
     private final @NotNull Game game;
 

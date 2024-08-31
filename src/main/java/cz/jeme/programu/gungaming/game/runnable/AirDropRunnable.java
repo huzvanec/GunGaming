@@ -14,11 +14,12 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @ApiStatus.Internal
 public final class AirDropRunnable extends GameRunnable {
-    private final @NotNull ThreadLocalRandom random = ThreadLocalRandom.current();
+    private final @NotNull Random random = ThreadLocalRandom.current();
 
     public static final @NotNull Sound AIR_DROP_AMBIENT_SOUND = Sound.sound(GunGaming.namespaced("game.air_drop"), Sound.Source.MASTER, 1, 1);
     public static final @NotNull Sound AIR_DROP_PING_SOUND = Sound.sound(GunGaming.namespaced("game.ping.air_drop"), Sound.Source.MASTER, 1, 1);

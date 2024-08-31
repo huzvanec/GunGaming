@@ -14,10 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -101,7 +98,7 @@ final class Generation extends BukkitRunnable {
         super.cancel();
     }
 
-    private final @NotNull ThreadLocalRandom random = ThreadLocalRandom.current();
+    private final @NotNull Random random = ThreadLocalRandom.current();
 
     private void generate(final @NotNull Crate crate, final int x, final int z) {
         final List<Integer> heights = new ArrayList<>();
