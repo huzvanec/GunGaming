@@ -1,20 +1,28 @@
-#!/bin/bash
+#!/bin/zsh
 
-RESOURCE_PACK_FOLDER="resource-pack"
-OUTPUT_FOLDER="build"
-HASH_FILE="${OUTPUT_FOLDER}/resource-pack.sha1"
-ZIP_FILE="${OUTPUT_FOLDER}/resource-pack.zip"
+BASE="${PWD}"
+RESOURCE_PACK="${BASE}/resource-pack"
+OUTPUT="${BASE}/build"
+WORK="${OUTPUT}/tmp/resourcePack"
+HASH_OUTPUT="${OUTPUT}/resource-pack.sha1"
+ZIP_OUTPUT="${OUTPUT}/resource-pack.zip"
 
-mkdir "${OUTPUT_FOLDER}" >/dev/null 2>&1
+mkdir -p "${OUTPUT}"
 
-rm "${HASH_FILE}" >/dev/null 2>&1
-rm "${ZIP_FILE}" >/dev/null 2>&1
+# Cleanup
+rm -rf "${WORK}"
+mkdir -p "${WORK}"
+rm -f "${HASH_OUTPUT}"
+rm -f "${ZIP_OUTPUT}"
+
+cp -r "${RESOURCE_PACK}/"* "${WORK}"
+pngquant -vf --skip-if-larger --strip --ext .png "${WORK}"/**/*.png
 
 # cd: zip only the contents of the resource pack folder, not the folder itself
-cd "${RESOURCE_PACK_FOLDER}" && \
-zip -r "../${ZIP_FILE}" . -x '*.kra' '*.xcf' '*~' && \
-cd ..
+cd "${WORK}" && \
+zip -r "${ZIP_OUTPUT}" . -x '*.kra' '*.xcf' '*~' && \
+cd "${BASE}" || exit 1
 
 echo "Generating SHA-1..."
-sha1sum "${ZIP_FILE}" | awk '{ print $1 }' | tr -d '\n' >"${HASH_FILE}"
+sha1sum "${ZIP_OUTPUT}" | awk '{ print $1 }' | tr -d '\n' >"${HASH_OUTPUT}"
 echo "Done!"
