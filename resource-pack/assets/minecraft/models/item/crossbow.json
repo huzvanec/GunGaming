@@ -245,6 +245,12 @@
 				"custom_model_data": 23
 			},
 			"model": "gungaming:item/gun/m1918_bar"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 24
+			},
+			"model": "gungaming:item/gun/famas"
 		}
 	]
 }

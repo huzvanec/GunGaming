@@ -359,6 +359,21 @@
             "gungaming:item/held/m1918_bar"
         ]
     },
+    "item.famas.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/famas"
+        ]
+    },
+    "item.famas.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/famas"
+        ]
+    },
+    "item.famas.held": {
+        "sounds": [
+            "gungaming:item/held/famas"
+        ]
+    },
     "entity.rocket.ambient": {
         "sounds": [
             "gungaming:entity/ambient/rocket"
