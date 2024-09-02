@@ -1,19 +1,16 @@
 package cz.jeme.programu.gungaming.item.throwable.impl;
 
 import cz.jeme.programu.gungaming.item.block.impl.Mine;
+import cz.jeme.programu.gungaming.item.throwable.MineChainTrigger;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.loot.Rarity;
-import cz.jeme.programu.gungaming.util.Lores;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
-public class MineThrowable extends Throwable {
+public class MineThrowable extends Throwable implements MineChainTrigger {
     @Override
     protected int provideThrowCooldown() {
         return 40;
@@ -61,6 +58,11 @@ public class MineThrowable extends Throwable {
 
     @Override
     protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
-        thrown.getLocation().createExplosion(thrown, 7F, true, true);
+        thrown.getLocation().createExplosion(thrown, 6, true, true);
+    }
+
+    @Override
+    public double triggerRadius() {
+        return 7;
     }
 }

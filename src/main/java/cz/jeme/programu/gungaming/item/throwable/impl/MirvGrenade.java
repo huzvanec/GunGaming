@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming.item.throwable.impl;
 
 import cz.jeme.programu.gungaming.CustomElement;
 import cz.jeme.programu.gungaming.item.throwable.Grenade;
+import cz.jeme.programu.gungaming.item.throwable.MineChainTrigger;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.item.throwable.ThrownHelper;
 import cz.jeme.programu.gungaming.loot.Rarity;
@@ -18,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 
-public class MirvGrenade extends Grenade {
+public class MirvGrenade extends Grenade implements MineChainTrigger {
     public static final double HORIZONTAL_POWER = 0.4;
     public static final double VERTICAL_POWER = 0.4;
 
@@ -95,5 +96,10 @@ public class MirvGrenade extends Grenade {
                     }
             );
         }
+    }
+
+    @Override
+    public double triggerRadius() {
+        return 6;
     }
 }

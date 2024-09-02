@@ -12,7 +12,9 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.AbstractArrow;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -24,9 +26,10 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Mine extends CustomBlock {
-    public static final int MAX_DAMAGE = 32;
+    public static final int MAX_DAMAGE = 30;
     public static final int ACTIVATION_TIME = 6 * 20; // ticks
-    public static final double MINE_CHECK_RADIUS = 3; // blocks
+    public static final double ENTITY_CHECK_RADIUS = 3; // blocks
+    public static final double BULLET_CHECK_RADIUS = 3; // blocks
     private static final @NotNull Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(Color.RED, 1);
 
     private static final @NotNull Sound ACTIVATING_SOUND = Sound.sound(GunGaming.namespaced("block.mine.activating"), Sound.Source.BLOCK, 2, 1);
@@ -54,12 +57,12 @@ public class Mine extends CustomBlock {
 
     @Override
     protected int provideMinAmount() {
-        return 2;
+        return 1;
     }
 
     @Override
     protected int provideMaxAmount() {
-        return 6;
+        return 4;
     }
 
     @Override
@@ -69,7 +72,7 @@ public class Mine extends CustomBlock {
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.EPIC;
+        return Rarity.RARE;
     }
 
     @Override
@@ -122,7 +125,7 @@ public class Mine extends CustomBlock {
         }.runTaskTimer(GunGaming.plugin(), 0L, 1L);
     }
 
-    private static void explode(final @NotNull ActiveMine mine) {
+    public static void explode(final @NotNull ActiveMine mine) {
         MINES.remove(mine);
         final Location location = mine.location();
         final World world = location.getWorld();
@@ -150,23 +153,25 @@ public class Mine extends CustomBlock {
         );
     }
 
-    public static @NotNull Queue<ActiveMine> active() {
+    public static @NotNull Queue<ActiveMine> activeMines() {
         return MINES;
     }
 
     private static class MineCheckRunnable extends BukkitRunnable {
         public MineCheckRunnable() {
-            runTaskTimer(GunGaming.plugin(), 0L, 10L);
+            runTaskTimer(GunGaming.plugin(), 0L, 1L);
         }
 
         @Override
         public void run() {
-            MINES.forEach(m -> m.location().getNearbyEntitiesByType(Entity.class, MINE_CHECK_RADIUS).stream()
-                    .filter(e -> e instanceof LivingEntity || e instanceof Projectile)
-                    .filter(e -> !(e instanceof final Player p) || p.getGameMode() != GameMode.SPECTATOR)
-                    .findAny()
-                    .ifPresent(e -> explode(m))
-            );
+            for (final ActiveMine mine : MINES) {
+                final Location location = mine.location();
+                if (location.getNearbyEntitiesByType(AbstractArrow.class, BULLET_CHECK_RADIUS).stream()
+                            .anyMatch(a -> !a.isInBlock()) ||
+                    location.getNearbyLivingEntities(ENTITY_CHECK_RADIUS).stream()
+                            .anyMatch(e -> !(e instanceof final Player p && p.getGameMode() == GameMode.SPECTATOR))
+                ) explode(mine);
+            }
         }
     }
 

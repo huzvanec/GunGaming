@@ -22,7 +22,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class DetectorBoots extends Boots {
-    private static final double MINE_RANGE = Mine.MINE_CHECK_RADIUS;
+    private static final double MINE_RANGE = Mine.ENTITY_CHECK_RADIUS;
     private static final double DETECTION_RANGE = MINE_RANGE + 15;
     private static final @NotNull DecimalFormat FORMATTER = new DecimalFormat("00.00");
     private static final @NotNull Sound WARNING_SOUND = Sound.sound(GunGaming.namespaced("item.detector_boots.warning"), Sound.Source.PLAYER, 1, 1);
@@ -87,13 +87,13 @@ public class DetectorBoots extends Boots {
             for (final Player player : Bukkit.getOnlinePlayers()) {
                 if (!CustomItem.is(player.getInventory().getBoots(), DetectorBoots.class)) continue;
                 final Location location = player.getLocation();
-                final double distance = Mine.active().stream()
+                final double distance = Mine.activeMines().stream()
                                                 .mapToDouble(mine -> mine.location().distance(location))
                                                 .min()
                                                 .orElse(MINE_RANGE + DETECTION_RANGE + 1) - MINE_RANGE;
                 if (distance > DETECTION_RANGE) continue;
                 player.playSound(WARNING_SOUND, player);
-                final double phase = Math.min(1, distance / (DETECTION_RANGE + Mine.MINE_CHECK_RADIUS));
+                final double phase = Math.min(1, distance / (DETECTION_RANGE + Mine.ENTITY_CHECK_RADIUS));
                 player.sendActionBar(Components.of("<red>Mine <transition:#FF0000:#FFFF00:#00FF00:" + phase
                                                    + ">" + FORMATTER.format(Math.max(0, distance)) + "</transition> blocks away!"));
             }

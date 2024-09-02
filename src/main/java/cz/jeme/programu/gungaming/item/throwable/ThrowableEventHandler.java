@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.item.throwable;
 
 import cz.jeme.programu.gungaming.GlobalEventHandler;
+import cz.jeme.programu.gungaming.item.block.impl.Mine;
 import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -18,7 +19,12 @@ public final class ThrowableEventHandler {
     public static void onProjectileHit(final @NotNull ProjectileHitEvent event) {
         if (!(event.getEntity() instanceof final Snowball thrown)) return;
         if (!ThrownHelper.isThrown(thrown)) return;
-        ThrownHelper.getThrowable(thrown).thrownHit(event, thrown);
+        final Throwable throwable = ThrownHelper.getThrowable(thrown);
+        if (throwable instanceof final MineChainTrigger trigger)
+            Mine.activeMines().stream()
+                    .filter(m -> m.location().distance(thrown.getLocation()) <= trigger.triggerRadius())
+                    .forEach(Mine::explode);
+        throwable.thrownHit(event, thrown);
     }
 
     public static void onEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent event) {

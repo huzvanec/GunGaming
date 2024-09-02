@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.item.throwable.impl;
 
 import cz.jeme.programu.gungaming.item.gun.impl.RocketLauncher;
+import cz.jeme.programu.gungaming.item.throwable.MineChainTrigger;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
@@ -9,7 +10,7 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class RocketThrowable extends Throwable {
+public class RocketThrowable extends Throwable implements MineChainTrigger {
     @Override
     protected int provideThrowCooldown() {
         return 40;
@@ -58,5 +59,10 @@ public class RocketThrowable extends Throwable {
     @Override
     protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
         thrown.getLocation().createExplosion(thrown, 7F, true, true);
+    }
+
+    @Override
+    public double triggerRadius() {
+        return 8;
     }
 }

@@ -1,6 +1,7 @@
 package cz.jeme.programu.gungaming.item.throwable.impl;
 
 import cz.jeme.programu.gungaming.item.throwable.Grenade;
+import cz.jeme.programu.gungaming.item.throwable.MineChainTrigger;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
@@ -8,7 +9,7 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class SmallGrenade extends Grenade {
+public class SmallGrenade extends Grenade implements MineChainTrigger {
     public static final double MAX_DAMAGE = 14;
 
     @Override
@@ -59,5 +60,10 @@ public class SmallGrenade extends Grenade {
     @Override
     protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
         thrown.getLocation().createExplosion(thrown, 2.2F, false, true);
+    }
+
+    @Override
+    public double triggerRadius() {
+        return 3;
     }
 }

@@ -1,5 +1,6 @@
 package cz.jeme.programu.gungaming.item.throwable.impl;
 
+import cz.jeme.programu.gungaming.item.throwable.MineChainTrigger;
 import cz.jeme.programu.gungaming.item.throwable.Throwable;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
@@ -8,7 +9,7 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class AirStrikeBomb extends Throwable {
+public class AirStrikeBomb extends Throwable implements MineChainTrigger {
     @Override
     protected int provideThrowCooldown() {
         return 100;
@@ -57,5 +58,10 @@ public class AirStrikeBomb extends Throwable {
     @Override
     protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
         thrown.getLocation().createExplosion(thrown, 5F, false, true);
+    }
+
+    @Override
+    public double triggerRadius() {
+        return 6;
     }
 }
