@@ -169,7 +169,7 @@ public class Mine extends CustomBlock {
                 if (location.getNearbyEntitiesByType(AbstractArrow.class, BULLET_CHECK_RADIUS).stream()
                             .anyMatch(a -> !a.isInBlock()) ||
                     location.getNearbyLivingEntities(ENTITY_CHECK_RADIUS).stream()
-                            .anyMatch(e -> !(e instanceof final Player p && p.getGameMode() == GameMode.SPECTATOR))
+                            .anyMatch(e -> !(e instanceof final Player p && (p.getGameMode() == GameMode.SPECTATOR || p.isSneaking())))
                 ) explode(mine);
             }
         }
