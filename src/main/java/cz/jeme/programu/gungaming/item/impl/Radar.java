@@ -112,6 +112,10 @@ public class Radar extends CustomItem implements SingleLoot {
         @SuppressWarnings("deprecation")
         @Override
         public void render(final @NotNull MapView map, final @NotNull MapCanvas canvas, final @NotNull Player player) {
+            final PlayerInventory inventory = player.getInventory();
+            final ItemStack mainHand = inventory.getItemInMainHand();
+            final ItemStack offHand = inventory.getItemInOffHand();
+            if (!(CustomItem.is(mainHand, Radar.class) || CustomItem.is(offHand, Radar.class))) return;
             if (StealthHelmet.hasEquipped(player)) {
                 canvas.setCursors(new MapCursorCollection());
                 for (int y = 0; y < MAP_SIZE; y++)
