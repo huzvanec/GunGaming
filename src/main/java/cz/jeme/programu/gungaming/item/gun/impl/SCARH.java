@@ -26,7 +26,7 @@ public class SCARH extends Gun {
 
     @Override
     protected double provideDamage() {
-        return 3;
+        return 3.8;
     }
 
     @Override
