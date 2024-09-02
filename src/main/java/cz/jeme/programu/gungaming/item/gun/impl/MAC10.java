@@ -2,6 +2,7 @@ package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.ammo.impl.NineMillimeter;
+import cz.jeme.programu.gungaming.item.attachment.disable.GripDisabled;
 import cz.jeme.programu.gungaming.item.attachment.disable.ScopeDisabled;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
@@ -9,7 +10,7 @@ import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class MAC10 extends Gun implements ScopeDisabled {
+public class MAC10 extends Gun implements GripDisabled, ScopeDisabled {
 
     @Override
     protected int provideMaxAmmo() {

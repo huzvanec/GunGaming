@@ -22,6 +22,7 @@ import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.AbstractArrow;
@@ -256,12 +257,13 @@ public abstract class Gun extends Weapon {
         }
 
         final double recoil = RECOIL_DATA.require(item);
-        final Vector recoilVector = player.getLocation().getDirection().multiply(recoil);
+        final Location location = player.getLocation();
+        final Vector recoilVector = location.getDirection().multiply(recoil);
         recoilVector.setY(recoilVector.getY() * RECOIL_Y_MULTIPLIER);
         player.setVelocity(player.getVelocity().subtract(recoilVector));
 
         final double bulletVelocity = BULLET_VELOCITY_DATA.require(item);
-        final Vector bulletVector = player.getLocation().getDirection().multiply(bulletVelocity);
+        final Vector bulletVector = location.getDirection().multiply(bulletVelocity);
         final double inaccuracyMultiplier = shotgun() && Grip.GUN_GRIP_KEY_DATA.check(item) ? 4 : 1;
         randomizeVector(bulletVector, INACCURACY_DATA.require(item) * inaccuracyMultiplier);
 
