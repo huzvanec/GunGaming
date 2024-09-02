@@ -2,13 +2,15 @@ package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.ammo.impl.FiveFiveSixMillimeter;
+import cz.jeme.programu.gungaming.item.attachment.disable.GripDisabled;
+import cz.jeme.programu.gungaming.item.attachment.disable.StockDisabled;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class QBZ95 extends Gun {
+public class QBZ95 extends Gun implements GripDisabled, StockDisabled {
     @Override
     protected int provideMaxAmmo() {
         return 75;

@@ -2,13 +2,15 @@ package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.ammo.impl.SevenSixTwoMillimeter;
+import cz.jeme.programu.gungaming.item.attachment.disable.GripDisabled;
+import cz.jeme.programu.gungaming.item.attachment.disable.SilencerDisabled;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class M1918BAR extends Gun {
+public class M1918BAR extends Gun implements SilencerDisabled, GripDisabled {
     @Override
     protected int provideMaxAmmo() {
         return 20;

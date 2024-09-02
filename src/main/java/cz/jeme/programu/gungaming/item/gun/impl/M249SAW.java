@@ -26,7 +26,7 @@ public class M249SAW extends Gun {
 
     @Override
     protected double provideDamage() {
-        return 3.2;
+        return 3.1;
     }
 
     @Override

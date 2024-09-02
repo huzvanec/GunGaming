@@ -2,13 +2,14 @@ package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
 import cz.jeme.programu.gungaming.item.ammo.impl.FiveFiveSixMillimeter;
+import cz.jeme.programu.gungaming.item.attachment.disable.StockDisabled;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class FAMAS extends Gun {
+public class FAMAS extends Gun implements StockDisabled {
     @Override
     protected int provideMaxAmmo() {
         return 25;
