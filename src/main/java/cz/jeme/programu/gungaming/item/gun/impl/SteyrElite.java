@@ -1,7 +1,7 @@
 package cz.jeme.programu.gungaming.item.gun.impl;
 
 import cz.jeme.programu.gungaming.item.ammo.Ammo;
-import cz.jeme.programu.gungaming.item.ammo.impl.SevenSixTwoMillimeter;
+import cz.jeme.programu.gungaming.item.ammo.impl.FiveFiveSixMillimeter;
 import cz.jeme.programu.gungaming.item.attachment.disable.GripDisabled;
 import cz.jeme.programu.gungaming.item.gun.Gun;
 import cz.jeme.programu.gungaming.loot.Rarity;
@@ -47,7 +47,7 @@ public class SteyrElite extends Gun implements GripDisabled {
 
     @Override
     protected @NotNull Class<? extends Ammo> provideAmmoType() {
-        return SevenSixTwoMillimeter.class;
+        return FiveFiveSixMillimeter.class;
     }
 
     @Override

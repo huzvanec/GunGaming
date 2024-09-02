@@ -40,6 +40,12 @@
 				"custom_model_data": 6
 			},
 			"model": "gungaming:item/ammo/.50_action_express"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 7
+			},
+			"model": "gungaming:item/ammo/5.56mm"
 		}
 	]
 }
