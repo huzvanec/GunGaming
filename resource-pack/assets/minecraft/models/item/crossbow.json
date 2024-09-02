@@ -239,6 +239,12 @@
 				"custom_model_data": 22
 			},
 			"model": "gungaming:item/gun/steyr_elite"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 23
+			},
+			"model": "gungaming:item/gun/m1918_bar"
 		}
 	]
 }

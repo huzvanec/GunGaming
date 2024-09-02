@@ -344,6 +344,21 @@
             "gungaming:item/held/steyr_elite"
         ]
     },
+    "item.m1918_bar.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/m1918_bar"
+        ]
+    },
+    "item.m1918_bar.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/m1918_bar"
+        ]
+    },
+    "item.m1918_bar.held": {
+        "sounds": [
+            "gungaming:item/held/m1918_bar"
+        ]
+    },
     "entity.rocket.ambient": {
         "sounds": [
             "gungaming:entity/ambient/rocket"
