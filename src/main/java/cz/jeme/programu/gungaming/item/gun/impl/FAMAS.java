@@ -26,7 +26,7 @@ public class FAMAS extends Gun {
 
     @Override
     protected double provideDamage() {
-        return 3.91;
+        return 3;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class FAMAS extends Gun {
 
     @Override
     protected @NotNull String provideDescription() {
-        return "very accurate 3-round SMG with high DPS";
+        return "very accurate 3-round SMG with high fire rate";
     }
 
     @Override
