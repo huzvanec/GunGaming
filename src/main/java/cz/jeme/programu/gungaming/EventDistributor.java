@@ -16,6 +16,7 @@ import cz.jeme.programu.gungaming.loot.crate.CrateEventHandler;
 import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import io.papermc.paper.event.player.PlayerStopUsingItemEvent;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -32,6 +33,7 @@ public enum EventDistributor implements Listener {
 
     @EventHandler
     private static void onPlayerInteract(final @NotNull PlayerInteractEvent event) {
+        if (event.getPlayer().getGameMode() == GameMode.SPECTATOR) return;
         ItemEventHandler.onPlayerInteract(event);
         CrateEventHandler.onPlayerInteract(event);
         LobbyEventHandler.onPlayerInteract(event);
