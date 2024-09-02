@@ -389,6 +389,21 @@
             "gungaming:item/held/hk416"
         ]
     },
+    "item.qbz-95.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/qbz-95"
+        ]
+    },
+    "item.qbz-95.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/qbz-95"
+        ]
+    },
+    "item.qbz-95.held": {
+        "sounds": [
+            "gungaming:item/held/qbz-95"
+        ]
+    },
     "entity.rocket.ambient": {
         "sounds": [
             "gungaming:entity/ambient/rocket"

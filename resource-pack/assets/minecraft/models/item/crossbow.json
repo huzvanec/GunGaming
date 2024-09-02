@@ -257,6 +257,12 @@
 				"custom_model_data": 25
 			},
 			"model": "gungaming:item/gun/hk416"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 26
+			},
+			"model": "gungaming:item/gun/qbz-95"
 		}
 	]
 }
