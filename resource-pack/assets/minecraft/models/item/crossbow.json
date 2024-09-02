@@ -251,6 +251,12 @@
 				"custom_model_data": 24
 			},
 			"model": "gungaming:item/gun/famas"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 25
+			},
+			"model": "gungaming:item/gun/hk416"
 		}
 	]
 }

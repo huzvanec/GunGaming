@@ -374,6 +374,21 @@
             "gungaming:item/held/famas"
         ]
     },
+    "item.hk416.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/hk416"
+        ]
+    },
+    "item.hk416.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/hk416"
+        ]
+    },
+    "item.hk416.held": {
+        "sounds": [
+            "gungaming:item/held/hk416"
+        ]
+    },
     "entity.rocket.ambient": {
         "sounds": [
             "gungaming:entity/ambient/rocket"
