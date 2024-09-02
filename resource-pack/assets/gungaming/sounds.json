@@ -404,6 +404,21 @@
             "gungaming:item/held/qbz-95"
         ]
     },
+    "item.m249_saw.shoot": {
+        "sounds": [
+            "gungaming:item/gun/shoot/m249_saw"
+        ]
+    },
+    "item.m249_saw.reload": {
+        "sounds": [
+            "gungaming:item/gun/reload/m249_saw"
+        ]
+    },
+    "item.m249_saw.held": {
+        "sounds": [
+            "gungaming:item/held/m249_saw"
+        ]
+    },
     "entity.rocket.ambient": {
         "sounds": [
             "gungaming:entity/ambient/rocket"
