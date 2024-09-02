@@ -27,7 +27,7 @@ public class M134Minigun extends Gun implements AttachmentsDisabled {
 
     @Override
     protected double provideDamage() {
-        return 2.5;
+        return 3;
     }
 
     @Override
