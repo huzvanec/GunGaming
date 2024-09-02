@@ -12,8 +12,7 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Snowball;
+import org.bukkit.entity.*;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -55,12 +54,12 @@ public class Mine extends CustomBlock {
 
     @Override
     protected int provideMinAmount() {
-        return 1;
+        return 2;
     }
 
     @Override
     protected int provideMaxAmount() {
-        return 4;
+        return 6;
     }
 
     @Override
@@ -70,7 +69,7 @@ public class Mine extends CustomBlock {
 
     @Override
     protected @NotNull Rarity provideRarity() {
-        return Rarity.RARE;
+        return Rarity.EPIC;
     }
 
     @Override
@@ -162,9 +161,12 @@ public class Mine extends CustomBlock {
 
         @Override
         public void run() {
-            MINES.stream()
-                    .filter(mine -> !mine.location().getNearbyLivingEntities(MINE_CHECK_RADIUS).isEmpty())
-                    .forEach(Mine::explode);
+            MINES.forEach(m -> m.location().getNearbyEntitiesByType(Entity.class, MINE_CHECK_RADIUS).stream()
+                    .filter(e -> e instanceof LivingEntity || e instanceof Projectile)
+                    .filter(e -> !(e instanceof final Player p) || p.getGameMode() != GameMode.SPECTATOR)
+                    .findAny()
+                    .ifPresent(e -> explode(m))
+            );
         }
     }
 
