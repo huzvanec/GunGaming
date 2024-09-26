@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle('1.21.1-R0.1-SNAPSHOT')
-    implementation 'io.github.classgraph:classgraph:4.8.175'
+    implementation 'io.github.classgraph:classgraph:4.8.176'
 }
 
 def targetJavaVersion = 21
