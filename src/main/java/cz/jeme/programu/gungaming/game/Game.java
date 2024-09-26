@@ -129,7 +129,7 @@ public final class Game {
         final int teamCount = autoTeamPlayers.size() / teamPlayerCount + GameTeam.overrideTeams().size();
         if (teamCount <= 1) {
             audience.sendMessage(Components.prefix("<red>There must be at least 2 teams to start a game!"));
-//            throw new IllegalStateException("Not enough teams to start a game!");
+            throw new IllegalStateException("Not enough teams to start a game!");
         }
         if (teamCount > GameTeam.COUNT) {
             audience.sendMessage(Components.prefix("<red>Too many players for this team configuration!"));
