@@ -164,7 +164,7 @@ public abstract class CustomItem extends CustomElement {
 
     // sound
 
-    protected final @NotNull Key heldSoundKey = GunGaming.namespaced("item." + key.value() + ".held");
+    protected final @NotNull Key heldSoundKey = GunGaming.key("item." + key.value() + ".held");
     protected final @NotNull Sound heldSound = Sound.sound(heldSoundKey, Sound.Source.PLAYER, 1.9F, 1);
 
     public @NotNull Sound heldSound(final @NotNull ItemStack item) {

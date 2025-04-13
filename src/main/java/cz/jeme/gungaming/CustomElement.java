@@ -9,9 +9,9 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class CustomElement {
-    public static final @NotNull Data<String, String> KEY_DATA = Data.ofString(GunGaming.namespaced("element_key"));
+    public static final @NotNull Data<String, String> KEY_DATA = Data.ofString(GunGaming.key("element_key"));
 
-    protected final @NotNull Key key = GunGaming.namespaced(provideKey());
+    protected final @NotNull Key key = GunGaming.key(provideKey());
     protected final @NotNull Rarity rarity = provideRarity();
     protected final @NotNull Component name = rarity.color().append(provideName());
     protected final @NotNull Component strippedName = Component.text(Components.strip(name));

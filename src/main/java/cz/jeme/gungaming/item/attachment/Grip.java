@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public abstract class Grip extends Attachment {
-    public static final @NotNull Data<String, String> GUN_GRIP_KEY_DATA = Data.ofString(GunGaming.namespaced("gun_grip_key"));
+    public static final @NotNull Data<String, String> GUN_GRIP_KEY_DATA = Data.ofString(GunGaming.key("gun_grip_key"));
     private static final @NotNull ItemStack PLACEHOLDER = PlaceholderHelper.placeholder(meta -> {
         meta.displayName(Components.of("<!i><gray>Grip"));
         meta.setCustomModelData(2);

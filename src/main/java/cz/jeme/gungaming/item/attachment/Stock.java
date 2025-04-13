@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class Stock extends Attachment {
-    public static final @NotNull Data<String, String> GUN_STOCK_KEY_DATA = Data.ofString(GunGaming.namespaced("gun_stock_key"));
+    public static final @NotNull Data<String, String> GUN_STOCK_KEY_DATA = Data.ofString(GunGaming.key("gun_stock_key"));
     private static final @NotNull ItemStack PLACEHOLDER = PlaceholderHelper.placeholder(meta -> {
         meta.displayName(Components.of("<!i><gray>Stock"));
         meta.setCustomModelData(5);

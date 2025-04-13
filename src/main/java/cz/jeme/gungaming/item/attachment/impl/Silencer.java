@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class Silencer extends Attachment {
-    public static final @NotNull Data<String, String> GUN_SILENCER_KEY_DATA = Data.ofString(GunGaming.namespaced("gun_silencer_key"));
+    public static final @NotNull Data<String, String> GUN_SILENCER_KEY_DATA = Data.ofString(GunGaming.key("gun_silencer_key"));
     private static final @NotNull ItemStack PLACEHOLDER = PlaceholderHelper.placeholder(meta -> {
         meta.displayName(Components.of("<!i><gray>Silencer"));
         meta.setCustomModelData(1);

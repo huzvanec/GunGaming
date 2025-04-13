@@ -11,7 +11,7 @@ public abstract class Grenade extends Throwable {
         addTags("grenade");
     }
 
-    protected final @NotNull Key throwSoundKey = GunGaming.namespaced("item.grenade.throw");
+    protected final @NotNull Key throwSoundKey = GunGaming.key("item.grenade.throw");
     protected final @NotNull Sound throwSound = Sound.sound(throwSoundKey, Sound.Source.PLAYER, 1.9F, 1);
 
     @Override
@@ -19,7 +19,7 @@ public abstract class Grenade extends Throwable {
         return throwSound;
     }
 
-    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.namespaced("item.grenade.held"), Sound.Source.PLAYER, 1.9F, 1);
+    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.key("item.grenade.held"), Sound.Source.PLAYER, 1.9F, 1);
 
     @Override
     public @NotNull Sound heldSound(final @NotNull ItemStack item) {

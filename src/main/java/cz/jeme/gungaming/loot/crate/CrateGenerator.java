@@ -75,7 +75,7 @@ public enum CrateGenerator {
         // needs to be scheduled, because the cancelling of this event prevents the opening of the inventory
         // 2 ticks are for syncing with the animation
         Bukkit.getScheduler().runTaskLater(
-                GunGaming.plugin(),
+                GunGaming.instance(),
                 () -> player.openInventory(info.inventory()),
                 2L
         );

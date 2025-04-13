@@ -23,7 +23,7 @@ public enum Rarity {
 
     Rarity(final @KeyPattern.Value @NotNull String key, final @NotNull String color) {
         this.color = Components.of(color);
-        this.key = GunGaming.namespaced(key);
+        this.key = GunGaming.key(key);
     }
 
     public @NotNull Component color() {

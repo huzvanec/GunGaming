@@ -48,7 +48,7 @@ final class Generation extends BukkitRunnable {
         z = zMin;
         world = location.getWorld();
         startTime = System.currentTimeMillis();
-        runTaskTimer(GunGaming.plugin(), 0L, 1L);
+        runTaskTimer(GunGaming.instance(), 0L, 1L);
     }
 
     @Override

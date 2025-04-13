@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public final class BlockEventHandler {
-    public static final @NotNull Data<Byte, Boolean> ITEM_MODIFIED_DATA = Data.ofBoolean(GunGaming.namespaced("item_modified"));
+    public static final @NotNull Data<Byte, Boolean> ITEM_MODIFIED_DATA = Data.ofBoolean(GunGaming.key("item_modified"));
 
     private BlockEventHandler() {
         throw new AssertionError();

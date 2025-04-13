@@ -81,7 +81,7 @@ public class AirStrikeStrobe extends Throwable {
         return List.of();
     }
 
-    private static final @NotNull Sound PLANE_SOUND = Sound.sound(GunGaming.namespaced("entity.air_strike.ambient"), Sound.Source.MASTER, 9.4F, 1);
+    private static final @NotNull Sound PLANE_SOUND = Sound.sound(GunGaming.key("entity.air_strike.ambient"), Sound.Source.MASTER, 9.4F, 1);
 
     private static final int BOMBS = 25; // the amount of bombs that is dropped in one wave
     private static final int BOMB_SPACING = 2; // spacing between separate bombs in blocks
@@ -136,7 +136,7 @@ public class AirStrikeStrobe extends Throwable {
                 world.spawnParticle(Particle.DUST, particleLocation, 10, .5, PARTICLE_OFFSET_Y, .5, 0, DUST_OPTIONS);
                 counter++;
             }
-        }.runTaskTimer(GunGaming.plugin(), 0L, 1L);
+        }.runTaskTimer(GunGaming.instance(), 0L, 1L);
         // bombs
         for (int i = 0; i < BOMB_WAVES; i++) {
             final long delay = i * BOMB_WAVE_TIME + BOMB_DELAY;
@@ -171,7 +171,7 @@ public class AirStrikeStrobe extends Throwable {
                     );
                     multiplier++;
                 }
-            }.runTaskTimer(GunGaming.plugin(), delay, BOMB_TIME);
+            }.runTaskTimer(GunGaming.instance(), delay, BOMB_TIME);
         }
     }
 }

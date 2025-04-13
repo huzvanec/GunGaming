@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class Scope extends Attachment {
-    public static final @NotNull Data<String, String> GUN_SCOPE_KEY_DATA = Data.ofString(GunGaming.namespaced("gun_scope_key"));
+    public static final @NotNull Data<String, String> GUN_SCOPE_KEY_DATA = Data.ofString(GunGaming.key("gun_scope_key"));
     private static final @NotNull ItemStack PLACEHOLDER = PlaceholderHelper.placeholder(meta -> {
         meta.displayName(Components.of("<!i><gray>Scope"));
         meta.setCustomModelData(3);

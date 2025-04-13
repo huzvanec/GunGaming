@@ -21,8 +21,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public final class AirDropRunnable extends GameRunnable {
     private final @NotNull Random random = ThreadLocalRandom.current();
 
-    public static final @NotNull Sound AIR_DROP_AMBIENT_SOUND = Sound.sound(GunGaming.namespaced("game.air_drop"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound AIR_DROP_PING_SOUND = Sound.sound(GunGaming.namespaced("game.ping.air_drop"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound AIR_DROP_AMBIENT_SOUND = Sound.sound(GunGaming.key("game.air_drop"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound AIR_DROP_PING_SOUND = Sound.sound(GunGaming.key("game.ping.air_drop"), Sound.Source.MASTER, 1, 1);
 
     private static final int MIN_BORDER_RADIUS = 10;
 
@@ -33,7 +33,7 @@ public final class AirDropRunnable extends GameRunnable {
         this.game = game;
         this.world = game.world();
         final long duration = random.nextLong(GameConfig.AIR_DROP_MIN_SECONDS.get(), GameConfig.AIR_DROP_MAX_SECONDS.get()) * 20;
-        runTaskLater(GunGaming.plugin(), duration);
+        runTaskLater(GunGaming.instance(), duration);
     }
 
     public void spawnAirDrop() {
@@ -73,7 +73,7 @@ public final class AirDropRunnable extends GameRunnable {
         for (final Player player : Bukkit.getOnlinePlayers())
             player.playSound(AIR_DROP_AMBIENT_SOUND, player);
         Bukkit.getScheduler().runTaskLater(
-                GunGaming.plugin(),
+                GunGaming.instance(),
                 this::spawnAirDrop,
                 220
         );

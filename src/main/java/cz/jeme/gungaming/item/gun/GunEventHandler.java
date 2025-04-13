@@ -113,7 +113,7 @@ public final class GunEventHandler {
         if (block == null) {
             // needs to be scheduled after 1 tick, because the location of the bullet has not yet been processed by the server
             Bukkit.getScheduler().runTask(
-                    GunGaming.plugin(),
+                    GunGaming.instance(),
                     () -> gun.onBulletHit(event, bullet)
             );
             bullet.remove();
@@ -136,7 +136,7 @@ public final class GunEventHandler {
         }
 
         // needs to be scheduled after 1 tick, because the location of the bullet has not yet been processed by the server
-        Bukkit.getScheduler().runTask(GunGaming.plugin(), () -> {
+        Bukkit.getScheduler().runTask(GunGaming.instance(), () -> {
             final Location location = bullet.getLocation();
             world.spawnParticle(Particle.BLOCK, location, 5, 0, 0, 0, .05, block.getBlockData());
             gun.onBulletHit(event, bullet);

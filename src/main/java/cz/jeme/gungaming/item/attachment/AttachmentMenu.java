@@ -20,8 +20,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public final class AttachmentMenu {
-    private static final @NotNull Sound APPLY_SOUND = Sound.sound(GunGaming.namespaced("item.attachment.apply"), Sound.Source.PLAYER, 1, 1);
-    private static final @NotNull Sound REMOVE_SOUND = Sound.sound(GunGaming.namespaced("item.attachment.remove"), Sound.Source.PLAYER, 1, 1);
+    private static final @NotNull Sound APPLY_SOUND = Sound.sound(GunGaming.key("item.attachment.apply"), Sound.Source.PLAYER, 1, 1);
+    private static final @NotNull Sound REMOVE_SOUND = Sound.sound(GunGaming.key("item.attachment.remove"), Sound.Source.PLAYER, 1, 1);
 
     private final @NotNull HumanEntity player;
     private final @NotNull ItemStack gunItem;
@@ -188,7 +188,7 @@ public final class AttachmentMenu {
         player.playSound(REMOVE_SOUND, player);
         if (!setPlaceholder) return;
         Bukkit.getScheduler().runTaskLater(
-                GunGaming.plugin(),
+                GunGaming.instance(),
                 () -> inventory.setItem(slot, slotToPlaceholder(slot)),
                 0L
         );

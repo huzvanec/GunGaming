@@ -21,7 +21,7 @@ final class Eating extends BukkitRunnable {
         this.hand = hand;
         item = player.getInventory().getItem(hand);
         sound = Consumable.of(item).eatSound(item);
-        runTaskTimer(GunGaming.plugin(), 9L, 4L);
+        runTaskTimer(GunGaming.instance(), 9L, 4L);
     }
 
     @Override

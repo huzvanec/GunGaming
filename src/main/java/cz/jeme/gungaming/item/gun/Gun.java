@@ -41,14 +41,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Gun extends Weapon {
-    public static final @NotNull Data<Integer, Integer> MAX_AMMO_DATA = Data.ofInteger(GunGaming.namespaced("gun_max_ammo"));
-    public static final @NotNull Data<Integer, Integer> SHOOT_COOLDOWN_DATA = Data.ofInteger(GunGaming.namespaced("gun_shoot_cooldown"));
-    public static final @NotNull Data<Integer, Integer> RELOAD_DURATION_DATA = Data.ofInteger(GunGaming.namespaced("gun_reload_duration"));
-    public static final @NotNull Data<Double, Double> DAMAGE_DATA = Data.ofDouble(GunGaming.namespaced("gun_damage"));
-    public static final @NotNull Data<Double, Double> BULLET_VELOCITY_DATA = Data.ofDouble(GunGaming.namespaced("gun_bullet_velocity"));
-    public static final @NotNull Data<Double, Double> RECOIL_DATA = Data.ofDouble(GunGaming.namespaced("gun_recoil"));
-    public static final @NotNull Data<Double, Double> INACCURACY_DATA = Data.ofDouble(GunGaming.namespaced("gun_inaccuracy"));
-    public static final @NotNull Data<Integer, Integer> CURRENT_AMMO_DATA = Data.ofInteger(GunGaming.namespaced("gun_current_ammo"));
+    public static final @NotNull Data<Integer, Integer> MAX_AMMO_DATA = Data.ofInteger(GunGaming.key("gun_max_ammo"));
+    public static final @NotNull Data<Integer, Integer> SHOOT_COOLDOWN_DATA = Data.ofInteger(GunGaming.key("gun_shoot_cooldown"));
+    public static final @NotNull Data<Integer, Integer> RELOAD_DURATION_DATA = Data.ofInteger(GunGaming.key("gun_reload_duration"));
+    public static final @NotNull Data<Double, Double> DAMAGE_DATA = Data.ofDouble(GunGaming.key("gun_damage"));
+    public static final @NotNull Data<Double, Double> BULLET_VELOCITY_DATA = Data.ofDouble(GunGaming.key("gun_bullet_velocity"));
+    public static final @NotNull Data<Double, Double> RECOIL_DATA = Data.ofDouble(GunGaming.key("gun_recoil"));
+    public static final @NotNull Data<Double, Double> INACCURACY_DATA = Data.ofDouble(GunGaming.key("gun_inaccuracy"));
+    public static final @NotNull Data<Integer, Integer> CURRENT_AMMO_DATA = Data.ofInteger(GunGaming.key("gun_current_ammo"));
 
     private static final double RECOIL_Y_MULTIPLIER = .28;
 
@@ -292,7 +292,7 @@ public abstract class Gun extends Weapon {
         }
 
         Bukkit.getScheduler().runTaskLater(
-                GunGaming.plugin(),
+                GunGaming.instance(),
                 () -> shootRound(event, round + 1),
                 bulletCooldown);
     }
@@ -338,11 +338,11 @@ public abstract class Gun extends Weapon {
 
     // sounds
 
-    protected final @NotNull Key shootSoundKey = GunGaming.namespaced("item." + key.value() + ".shoot");
-    protected final @NotNull Key reloadSoundKey = GunGaming.namespaced("item." + key.value() + ".reload");
-    protected static final @NotNull Key OUT_OF_AMMO_SOUND_KEY = GunGaming.namespaced("item.gun.out_of_ammo");
-    protected static final @NotNull Key RELOAD_REQUIRED_SOUND_KEY = GunGaming.namespaced("item.gun.reload_required");
-    protected static final @NotNull Key RELOAD_ABORTED_SOUND_KEY = GunGaming.namespaced("item.gun.reload_aborted");
+    protected final @NotNull Key shootSoundKey = GunGaming.key("item." + key.value() + ".shoot");
+    protected final @NotNull Key reloadSoundKey = GunGaming.key("item." + key.value() + ".reload");
+    protected static final @NotNull Key OUT_OF_AMMO_SOUND_KEY = GunGaming.key("item.gun.out_of_ammo");
+    protected static final @NotNull Key RELOAD_REQUIRED_SOUND_KEY = GunGaming.key("item.gun.reload_required");
+    protected static final @NotNull Key RELOAD_ABORTED_SOUND_KEY = GunGaming.key("item.gun.reload_aborted");
 
     protected final @NotNull Sound shootSound = Sound.sound(shootSoundKey, Sound.Source.PLAYER, 6.3F, 1);
     protected final @NotNull Sound reloadSound = Sound.sound(reloadSoundKey, Sound.Source.PLAYER, 2.5F, 1);

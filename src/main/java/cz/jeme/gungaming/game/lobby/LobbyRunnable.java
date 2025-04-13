@@ -11,7 +11,7 @@ final class LobbyRunnable extends BukkitRunnable {
     private int counter = 0;
 
     public LobbyRunnable() {
-        runTaskTimer(GunGaming.plugin(), 0L, 4L);
+        runTaskTimer(GunGaming.instance(), 0L, 4L);
     }
 
     @Override
@@ -22,7 +22,7 @@ final class LobbyRunnable extends BukkitRunnable {
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    private static final @NotNull String GUN_GAMING_TEXT = "GunGaming v" + GunGaming.plugin().getPluginMeta().getVersion();
+    private static final @NotNull String GUN_GAMING_TEXT = "GunGaming v" + GunGaming.instance().getPluginMeta().getVersion();
     private static final int DOT_REPETITIONS = 30;
 
     private @NotNull String message() {

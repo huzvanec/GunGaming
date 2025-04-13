@@ -55,7 +55,7 @@ final class Reload extends BukkitRunnable {
         final ItemStack offHand = inventory.getItemInOffHand();
         final boolean offHandTracker = offHand != item && CustomItem.is(offHand, PlayerTracker.class);
         actionRunnable = mainHandTracker || offHandTracker ? null : new ActionRunnable();
-        runTaskTimer(GunGaming.plugin(), reloadCooldown, reloadCooldown);
+        runTaskTimer(GunGaming.instance(), reloadCooldown, reloadCooldown);
     }
 
     @Override
@@ -116,7 +116,7 @@ final class Reload extends BukkitRunnable {
         private static final @NotNull DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("0.0");
 
         private ActionRunnable() {
-            runTaskTimer(GunGaming.plugin(), 0L, 2L);
+            runTaskTimer(GunGaming.instance(), 0L, 2L);
         }
 
         @Override

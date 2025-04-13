@@ -46,7 +46,10 @@ tasks {
     }
 
     shadowJar {
-        archiveClassifier = "all"
+        archiveClassifier = ""
+        enableRelocation = true
+        relocationPrefix = "cz.jeme.gungaming.shaded"
+        minimize()
     }
 
     build { dependsOn(shadowJar) }

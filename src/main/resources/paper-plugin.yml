@@ -1,6 +1,7 @@
 name: GunGaming
 version: '${version}'
 main: cz.jeme.gungaming.GunGaming
+bootstrapper: cz.jeme.gungaming.GunGamingBootstrapper
 api-version: '1.21'
 author: XD_CZ
 description: 'Transforms Minecraft into a battle royale game'

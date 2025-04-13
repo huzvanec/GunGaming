@@ -56,7 +56,7 @@ public enum ZoomManager {
         setZoom(player, zoom);
         nightVisions.put(uuid, player.getPotionEffect(PotionEffectType.NIGHT_VISION));
         Bukkit.getScheduler().runTaskLater(
-                GunGaming.plugin(),
+                GunGaming.instance(),
                 () -> player.addPotionEffect(NIGHT_VISION),
                 1L
         );

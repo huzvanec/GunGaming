@@ -99,7 +99,7 @@ public class ThermalGoggles extends Helmet {
         }
 
         public Updater() {
-            runTaskTimer(GunGaming.plugin(), 0L, 40L);
+            runTaskTimer(GunGaming.instance(), 0L, 40L);
         }
 
         @Override

@@ -41,23 +41,23 @@ import java.time.Duration;
 import java.util.*;
 
 public final class Game {
-    public static final @NotNull Data<Byte, Boolean> FROZEN_DATA = Data.ofBoolean(GunGaming.namespaced("frozen"));
-    public static final @NotNull Data<Byte, Boolean> GLIDING_DATA = Data.ofBoolean(GunGaming.namespaced("gliding"));
-    public static final @NotNull Data<Byte, Boolean> INVULNERABLE_DATA = Data.ofBoolean(GunGaming.namespaced("invulnerable"));
+    public static final @NotNull Data<Byte, Boolean> FROZEN_DATA = Data.ofBoolean(GunGaming.key("frozen"));
+    public static final @NotNull Data<Byte, Boolean> GLIDING_DATA = Data.ofBoolean(GunGaming.key("gliding"));
+    public static final @NotNull Data<Byte, Boolean> INVULNERABLE_DATA = Data.ofBoolean(GunGaming.key("invulnerable"));
 
-    public static final @NotNull Sound START_SOUND = Sound.sound(GunGaming.namespaced("game.start"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound DING_SOUND = Sound.sound(GunGaming.namespaced("game.ping.ding"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound DONG_SOUND = Sound.sound(GunGaming.namespaced("game.ping.dong"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound WARNING_SOUND = Sound.sound(GunGaming.namespaced("game.ping.warning"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound INFO_SOUND = Sound.sound(GunGaming.namespaced("game.ping.info"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound END_SOUND = Sound.sound(GunGaming.namespaced("game.end"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound START_SOUND = Sound.sound(GunGaming.key("game.start"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound DING_SOUND = Sound.sound(GunGaming.key("game.ping.ding"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound DONG_SOUND = Sound.sound(GunGaming.key("game.ping.dong"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound WARNING_SOUND = Sound.sound(GunGaming.key("game.ping.warning"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound INFO_SOUND = Sound.sound(GunGaming.key("game.ping.info"), Sound.Source.MASTER, 1, 1);
+    public static final @NotNull Sound END_SOUND = Sound.sound(GunGaming.key("game.end"), Sound.Source.MASTER, 1, 1);
 
     private static @Nullable Game instance = null;
 
     @SuppressWarnings("UnstableApiUsage")
     private final @NotNull BossBar bossBar = BossBar.bossBar(
             Components.of("<b><#6786C8>Gun</#6786C8><#4C618D>Gaming</#4C618D> <#717B95>v"
-                          + GunGaming.plugin().getPluginMeta().getVersion()
+                          + GunGaming.instance().getPluginMeta().getVersion()
             ),
             1,
             BossBar.Color.BLUE,
@@ -159,7 +159,7 @@ public final class Game {
         scoreboard.getObjectives().forEach(Objective::unregister);
         scoreboard.getTeams().forEach(Team::unregister);
         kills = scoreboard.registerNewObjective(
-                GunGaming.namespaced("kills").asString(),
+                GunGaming.key("kills").asString(),
                 Criteria.DUMMY,
                 Components.of("<#00FFFF><b>" + Components.latinString("Kills"))
         );
@@ -215,7 +215,7 @@ public final class Game {
             public void run() {
                 generateCrates();
             }
-        }.runTaskLater(GunGaming.plugin(), GameConfig.TEAM_ANNOUNCE_SECONDS.get() * 20);
+        }.runTaskLater(GunGaming.instance(), GameConfig.TEAM_ANNOUNCE_SECONDS.get() * 20);
     }
 
     @ApiStatus.Internal
@@ -468,7 +468,7 @@ public final class Game {
     boolean removePlayer(final @NotNull Player player) {
         final boolean contained = players.remove(player);
         Bukkit.getScheduler().runTask(
-                GunGaming.plugin(),
+                GunGaming.instance(),
                 () -> {
                     if (contained) {
                         final GameTeam team = GameTeam.ofPlayer(player);

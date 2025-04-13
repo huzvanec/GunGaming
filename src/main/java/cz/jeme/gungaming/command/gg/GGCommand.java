@@ -205,7 +205,7 @@ public final class GGCommand {
     }
 
     private static int version(final @NotNull CommandContext<CommandSourceStack> ctx) {
-        ctx.getSource().getSender().sendMessage(Components.prefix("<green>Running <#6786C8>Gun</#6786C8><#4C618D>Gaming</#4C618D> v" + GunGaming.plugin().getPluginMeta().getVersion()));
+        ctx.getSource().getSender().sendMessage(Components.prefix("<green>Running <#6786C8>Gun</#6786C8><#4C618D>Gaming</#4C618D> v" + GunGaming.instance().getPluginMeta().getVersion()));
         return SUCCESS;
     }
 

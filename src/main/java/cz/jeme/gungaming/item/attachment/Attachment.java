@@ -70,7 +70,7 @@ public abstract class Attachment extends CustomItem {
         return "attachment";
     }
 
-    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.namespaced("item.attachment.held"), Sound.Source.PLAYER, 1.9F, 1);
+    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.key("item.attachment.held"), Sound.Source.PLAYER, 1.9F, 1);
 
     @Override
     public @NotNull Sound heldSound(final @NotNull ItemStack item) {

@@ -92,7 +92,7 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
         return "rocket_launcher";
     }
 
-    protected static final @NotNull Sound ROCKET_SOUND = Sound.sound(GunGaming.namespaced("entity.rocket.ambient"), Sound.Source.HOSTILE, 3F, 1F);
+    protected static final @NotNull Sound ROCKET_SOUND = Sound.sound(GunGaming.key("entity.rocket.ambient"), Sound.Source.HOSTILE, 3F, 1F);
 
     @Override
     protected void onShoot(final @NotNull PlayerInteractEvent event, final @NotNull AbstractArrow bullet) {
@@ -119,7 +119,7 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
                     cancel();
                 }
             }
-        }.runTaskTimer(GunGaming.plugin(), 0L, 5L);
+        }.runTaskTimer(GunGaming.instance(), 0L, 5L);
     }
 
     @Override

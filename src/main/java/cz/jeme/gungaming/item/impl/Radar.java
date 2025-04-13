@@ -28,13 +28,13 @@ import org.bukkit.map.*;
 import org.jetbrains.annotations.NotNull;
 
 public class Radar extends CustomItem implements SingleLoot {
-    public static final @NotNull Data<Byte, Boolean> RADAR_INITIALIZED_DATA = Data.ofBoolean(GunGaming.namespaced("radar_initialized"));
+    public static final @NotNull Data<Byte, Boolean> RADAR_INITIALIZED_DATA = Data.ofBoolean(GunGaming.key("radar_initialized"));
 
     protected Radar() {
         item.editMeta(meta -> meta.setMaxStackSize(1));
 
         Bukkit.getScheduler().runTaskTimer(
-                GunGaming.plugin(),
+                GunGaming.instance(),
                 () -> {
                     for (final Player player : Bukkit.getOnlinePlayers()) {
                         final PlayerInventory inventory = player.getInventory();

@@ -21,7 +21,7 @@ public abstract class Countdown extends GameRunnable {
         this.bossBar = bossBar;
         this.duration = duration;
         counter = duration;
-        runTaskTimer(GunGaming.plugin(), 0L, 20L);
+        runTaskTimer(GunGaming.instance(), 0L, 20L);
     }
 
     @Override

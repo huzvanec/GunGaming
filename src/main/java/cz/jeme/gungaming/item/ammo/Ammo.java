@@ -25,7 +25,7 @@ public abstract class Ammo extends CustomItem {
         return "ammo";
     }
 
-    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.namespaced("item.ammo.held"), Sound.Source.PLAYER, 1.9F, 1);
+    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.key("item.ammo.held"), Sound.Source.PLAYER, 1.9F, 1);
 
     @Override
     public @NotNull Sound heldSound(final @NotNull ItemStack item) {

@@ -22,8 +22,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public abstract class Throwable extends CustomItem {
-    public static final @NotNull Data<Integer, Integer> THROW_COOLDOWN_DATA = Data.ofInteger(GunGaming.namespaced("throwable_throw_cooldown"));
-    public static final @NotNull Data<Double, Double> MAX_DAMAGE_DATA = Data.ofDouble(GunGaming.namespaced("throwable_max_damage"));
+    public static final @NotNull Data<Integer, Integer> THROW_COOLDOWN_DATA = Data.ofInteger(GunGaming.key("throwable_throw_cooldown"));
+    public static final @NotNull Data<Double, Double> MAX_DAMAGE_DATA = Data.ofDouble(GunGaming.key("throwable_max_damage"));
 
     protected final int throwCooldown = provideThrowCooldown();
     protected final double maxDamage = provideMaxDamage();
@@ -134,8 +134,8 @@ public abstract class Throwable extends CustomItem {
 
     // sounds
 
-    protected final @NotNull Key throwSoundKey = GunGaming.namespaced("item." + key.value() + ".throw");
-    protected final @NotNull Key hitSoundKey = GunGaming.namespaced("entity." + key.value() + ".hit");
+    protected final @NotNull Key throwSoundKey = GunGaming.key("item." + key.value() + ".throw");
+    protected final @NotNull Key hitSoundKey = GunGaming.key("entity." + key.value() + ".hit");
 
     protected final @NotNull Sound throwSound = Sound.sound(throwSoundKey, Sound.Source.PLAYER, 1.9F, 1);
     protected final @NotNull Sound hitSound = Sound.sound(hitSoundKey, Sound.Source.HOSTILE, 9.4F, 1);

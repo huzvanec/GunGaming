@@ -13,42 +13,46 @@ import net.kyori.adventure.key.KeyPattern;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
-import java.util.Objects;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 
+@NullMarked
 public final class GunGaming extends JavaPlugin {
-    private static @Nullable GunGaming instance;
-    public static final @NotNull String NAMESPACE = "gungaming";
-    private static @Nullable Logger logger;
+    private static final GunGaming INSTANCE = new GunGaming();
+    public static final String NAMESPACE = INSTANCE.getName().toLowerCase(Locale.ROOT);
+
+    private GunGaming() {
+    }
 
     @Override
     public void onEnable() {
         final long start = System.currentTimeMillis();
-        if (instance != null)
-            throw new IllegalStateException("Gungaming instance already exists! Something is very wrong!");
-        instance = this;
-        logger = getLogger();
         ElementManager.INSTANCE.registerElements(
-                "cz.jeme.programu.gungaming.item",
-                "cz.jeme.programu.gungaming.loot.crate"
+                "cz.jeme.gungaming.item",
+                "cz.jeme.gungaming.loot.crate"
         );
+
         registerCommands();
+
         try {
             Class.forName(ResourcePackEventHandler.class.getName()); // load resource pack hash
-        } catch (final ClassNotFoundException ignored) {
+        } catch (final ClassNotFoundException e) {
+            throw new AssertionError(e);
         }
+
         Bukkit.getPluginManager().registerEvents(EventDistributor.INSTANCE, this);
-        final long initDuration = System.currentTimeMillis() - start;
-        logger.info("Successfully enabled. (took %s ms)".formatted(initDuration));
+
+        getLogger().info("Successfully enabled (took %sms)".formatted(
+                System.currentTimeMillis() - start
+        ));
     }
 
     @SuppressWarnings("UnstableApiUsage")
     private void registerCommands() {
-        logger().info("Registering commands...");
+        getLogger().info("Registering commands...");
         getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
             GGCommand.register(this, commands);
@@ -65,15 +69,15 @@ public final class GunGaming extends JavaPlugin {
         if (Game.running()) Game.instance().stopGame();
     }
 
-    public static @NotNull GunGaming plugin() {
-        return Objects.requireNonNull(instance, "GunGaming has not yet been initialized!");
+    public static NamespacedKey key(final @KeyPattern.Value String key) {
+        return new NamespacedKey(INSTANCE, key);
     }
 
-    public static @NotNull NamespacedKey namespaced(final @KeyPattern.Value @NotNull String key) {
-        return new NamespacedKey(NAMESPACE, key);
+    public static GunGaming instance() {
+        return INSTANCE;
     }
 
-    public static @NotNull Logger logger() {
-        return Objects.requireNonNull(logger, "GunGaming has not yet been initialized!");
+    public static Logger logger() {
+        return INSTANCE.getLogger();
     }
 }

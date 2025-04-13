@@ -32,10 +32,10 @@ public class Mine extends CustomBlock {
     public static final double BULLET_CHECK_RADIUS = 3; // blocks
     private static final @NotNull Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(Color.RED, 1);
 
-    private static final @NotNull Sound ACTIVATING_SOUND = Sound.sound(GunGaming.namespaced("block.mine.activating"), Sound.Source.BLOCK, 2, 1);
-    private static final @NotNull Sound ACTIVATED_SOUND = Sound.sound(GunGaming.namespaced("block.mine.activated"), Sound.Source.BLOCK, 2, 1);
-    private static final @NotNull Sound WARNING_SOUND = Sound.sound(GunGaming.namespaced("block.mine.warning"), Sound.Source.BLOCK, 2, 1);
-    private static final @NotNull Sound EXPLOSION_SOUND = Sound.sound(GunGaming.namespaced("block.mine.explosion"), Sound.Source.BLOCK, 9.4F, 1);
+    private static final @NotNull Sound ACTIVATING_SOUND = Sound.sound(GunGaming.key("block.mine.activating"), Sound.Source.BLOCK, 2, 1);
+    private static final @NotNull Sound ACTIVATED_SOUND = Sound.sound(GunGaming.key("block.mine.activated"), Sound.Source.BLOCK, 2, 1);
+    private static final @NotNull Sound WARNING_SOUND = Sound.sound(GunGaming.key("block.mine.warning"), Sound.Source.BLOCK, 2, 1);
+    private static final @NotNull Sound EXPLOSION_SOUND = Sound.sound(GunGaming.key("block.mine.explosion"), Sound.Source.BLOCK, 9.4F, 1);
 
     private static final @NotNull Queue<ActiveMine> MINES = new ConcurrentLinkedQueue<>();
 
@@ -122,7 +122,7 @@ public class Mine extends CustomBlock {
                 world.spawnParticle(Particle.DUST, particleLocation, 10, .2, .2, .2, 0, DUST_OPTIONS);
                 counter++;
             }
-        }.runTaskTimer(GunGaming.plugin(), 0L, 1L);
+        }.runTaskTimer(GunGaming.instance(), 0L, 1L);
     }
 
     public static void explode(final @NotNull ActiveMine mine) {
@@ -132,7 +132,7 @@ public class Mine extends CustomBlock {
         world.playSound(WARNING_SOUND, location.x(), location.y(), location.z());
         world.spawnParticle(Particle.DUST, location.clone().add(.5, .5, .5), 200, .2, .2, .2, 0, DUST_OPTIONS);
         Bukkit.getScheduler().runTaskLater(
-                GunGaming.plugin(),
+                GunGaming.instance(),
                 () -> {
                     final MineThrowable throwable = CustomElement.of(MineThrowable.class);
                     final Snowball damager = mine.placer().launchProjectile(
@@ -159,7 +159,7 @@ public class Mine extends CustomBlock {
 
     private static class MineCheckRunnable extends BukkitRunnable {
         public MineCheckRunnable() {
-            runTaskTimer(GunGaming.plugin(), 0L, 1L);
+            runTaskTimer(GunGaming.instance(), 0L, 1L);
         }
 
         @Override

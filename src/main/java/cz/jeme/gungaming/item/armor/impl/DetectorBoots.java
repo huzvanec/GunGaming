@@ -25,7 +25,7 @@ public class DetectorBoots extends Boots {
     private static final double MINE_RANGE = Mine.ENTITY_CHECK_RADIUS;
     private static final double DETECTION_RANGE = MINE_RANGE + 15;
     private static final @NotNull DecimalFormat FORMATTER = new DecimalFormat("00.00");
-    private static final @NotNull Sound WARNING_SOUND = Sound.sound(GunGaming.namespaced("item.detector_boots.warning"), Sound.Source.PLAYER, 1, 1);
+    private static final @NotNull Sound WARNING_SOUND = Sound.sound(GunGaming.key("item.detector_boots.warning"), Sound.Source.PLAYER, 1, 1);
 
     protected DetectorBoots() {
         new Updater();
@@ -79,7 +79,7 @@ public class DetectorBoots extends Boots {
 
     private static final class Updater extends BukkitRunnable {
         public Updater() {
-            runTaskTimer(GunGaming.plugin(), 0L, 10L);
+            runTaskTimer(GunGaming.instance(), 0L, 10L);
         }
 
         @Override

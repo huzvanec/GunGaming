@@ -25,8 +25,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class GrapplingHook extends CustomItem implements SingleLoot {
-    public static final @NotNull Data<Byte, Boolean> HOOKED_DATA = Data.ofBoolean(GunGaming.namespaced("hooked"));
-    public static final @NotNull Data<Long, Long> GRAPPLING_TIME_DATA = Data.ofLong(GunGaming.namespaced("grappling_time"));
+    public static final @NotNull Data<Byte, Boolean> HOOKED_DATA = Data.ofBoolean(GunGaming.key("hooked"));
+    public static final @NotNull Data<Long, Long> GRAPPLING_TIME_DATA = Data.ofLong(GunGaming.key("grappling_time"));
 
     private static final int FALL_RESISTANCE = 6000; // fall resistance after using the grappling hook, in millis
 
@@ -134,7 +134,7 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
                     hook.setVelocity(VERTICAL_DISTURBANCE);
                 }
             }
-        }.runTaskTimer(GunGaming.plugin(), 0L, 1L);
+        }.runTaskTimer(GunGaming.instance(), 0L, 1L);
     }
 
     private void onSubtract(@NotNull final PlayerFishEvent event) {

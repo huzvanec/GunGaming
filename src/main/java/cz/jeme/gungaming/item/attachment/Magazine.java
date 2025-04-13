@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class Magazine extends Attachment {
-    public static final @NotNull Data<String, String> GUN_MAGAZINE_KEY_DATA = Data.ofString(GunGaming.namespaced("gun_magazine_key"));
+    public static final @NotNull Data<String, String> GUN_MAGAZINE_KEY_DATA = Data.ofString(GunGaming.key("gun_magazine_key"));
     private static final @NotNull ItemStack PLACEHOLDER = PlaceholderHelper.placeholder(meta -> {
         meta.displayName(Components.of("<!i><gray>Magazine"));
         meta.setCustomModelData(4);

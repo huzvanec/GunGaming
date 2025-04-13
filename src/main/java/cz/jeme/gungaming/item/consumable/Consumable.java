@@ -51,8 +51,8 @@ public abstract class Consumable extends CustomItem {
 
     // sounds
 
-    protected final @NotNull Key eatSoundKey = GunGaming.namespaced("item." + key.value() + ".eat");
-    protected final @NotNull Key burpSoundKey = GunGaming.namespaced("item." + key.value() + ".burp");
+    protected final @NotNull Key eatSoundKey = GunGaming.key("item." + key.value() + ".eat");
+    protected final @NotNull Key burpSoundKey = GunGaming.key("item." + key.value() + ".burp");
 
     protected final @NotNull Sound eatSound = Sound.sound(eatSoundKey, Sound.Source.PLAYER, 1, 1);
     protected final @NotNull Sound burpSound = Sound.sound(burpSoundKey, Sound.Source.PLAYER, 1, 1);

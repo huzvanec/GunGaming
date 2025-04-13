@@ -25,7 +25,7 @@ final class TrackerRunnable extends BukkitRunnable {
 
     public TrackerRunnable() {
         running = true;
-        runTaskTimer(GunGaming.plugin(), 0L, 20L);
+        runTaskTimer(GunGaming.instance(), 0L, 20L);
     }
 
     private static final @NotNull DecimalFormat FORMATTER = new DecimalFormat("00.00");

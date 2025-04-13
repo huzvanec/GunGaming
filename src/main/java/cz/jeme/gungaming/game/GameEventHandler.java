@@ -58,7 +58,7 @@ public final class GameEventHandler {
         if (!groundMaterial.isEmpty()) {
             Game.GLIDING_DATA.write(player, false);
             Bukkit.getScheduler().runTaskLater(
-                    GunGaming.plugin(),
+                    GunGaming.instance(),
                     () -> Game.INVULNERABLE_DATA.write(player, false),
                     20 * 3
             );

@@ -26,7 +26,7 @@ public abstract class Armor extends CustomItem implements SingleLoot {
                     meta.addAttributeModifier(
                             Attribute.ARMOR,
                             new AttributeModifier(
-                                    GunGaming.namespaced(key.value() + "_armor"),
+                                    GunGaming.key(key.value() + "_armor"),
                                     armor,
                                     AttributeModifier.Operation.ADD_NUMBER,
                                     slot
@@ -35,7 +35,7 @@ public abstract class Armor extends CustomItem implements SingleLoot {
                     meta.addAttributeModifier(
                             Attribute.ARMOR_TOUGHNESS,
                             new AttributeModifier(
-                                    GunGaming.namespaced(key.value() + "_armor_toughness"),
+                                    GunGaming.key(key.value() + "_armor_toughness"),
                                     toughness,
                                     AttributeModifier.Operation.ADD_NUMBER,
                                     slot
@@ -73,7 +73,7 @@ public abstract class Armor extends CustomItem implements SingleLoot {
         return 1;
     }
 
-    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.namespaced("item.armor.held"), Sound.Source.PLAYER, 1.9F, 1);
+    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.key("item.armor.held"), Sound.Source.PLAYER, 1.9F, 1);
 
     @Override
     public @NotNull Sound heldSound(final @NotNull ItemStack item) {

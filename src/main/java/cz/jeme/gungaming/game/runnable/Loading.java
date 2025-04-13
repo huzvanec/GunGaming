@@ -20,7 +20,7 @@ public final class Loading extends GameRunnable {
 
     public Loading(final @NotNull Game game) {
         this.game = game;
-        runTaskTimer(GunGaming.plugin(), 0L, 20L);
+        runTaskTimer(GunGaming.instance(), 0L, 20L);
     }
 
     @Override

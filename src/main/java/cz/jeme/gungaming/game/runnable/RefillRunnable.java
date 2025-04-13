@@ -12,7 +12,7 @@ import org.jetbrains.annotations.ApiStatus;
 public final class RefillRunnable extends GameRunnable {
     public RefillRunnable() {
         final int duration = GameConfig.REFILL_SECONDS.get() * 20;
-        runTaskTimer(GunGaming.plugin(), duration, duration);
+        runTaskTimer(GunGaming.instance(), duration, duration);
     }
 
     @Override

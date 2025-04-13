@@ -96,6 +96,6 @@ public class PoisonousGrenade extends Grenade {
                 }
                 counter++;
             }
-        }.runTaskTimer(GunGaming.plugin(), 0L, 1L);
+        }.runTaskTimer(GunGaming.instance(), 0L, 1L);
     }
 }

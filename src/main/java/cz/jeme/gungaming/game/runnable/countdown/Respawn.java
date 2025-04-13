@@ -52,7 +52,7 @@ public final class Respawn extends Countdown {
         Game.INVULNERABLE_DATA.write(player, true);
         player.setGameMode(GameMode.SURVIVAL);
         Bukkit.getScheduler().runTaskLater(
-                GunGaming.plugin(),
+                GunGaming.instance(),
                 () -> {
                     if (!player.isValid()) return;
                     Game.INVULNERABLE_DATA.write(player, false);

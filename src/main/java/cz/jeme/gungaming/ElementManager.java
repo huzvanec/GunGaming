@@ -34,6 +34,7 @@ public enum ElementManager {
 
     public void registerElements(final String @NotNull ... packageNames) {
         final long start = System.currentTimeMillis();
+
         GunGaming.logger().info("Registering elements: " + Arrays.toString(packageNames));
         try (final ScanResult result = new ClassGraph()
                 .acceptPackages(packageNames)
@@ -48,8 +49,10 @@ public enum ElementManager {
             }
             construct(elements);
         }
-        final long duration = System.currentTimeMillis() - start;
-        GunGaming.logger().info("Elements registered successfully. (took %s ms)".formatted(duration));
+
+        GunGaming.logger().info("Elements registered successfully (took %sms)".formatted(
+                System.currentTimeMillis() - start
+        ));
     }
 
     private void construct(final @NotNull List<Set<Class<? extends CustomElement>>> elements) {

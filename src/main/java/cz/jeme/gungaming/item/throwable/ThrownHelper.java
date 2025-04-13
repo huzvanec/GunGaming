@@ -6,8 +6,8 @@ import org.bukkit.entity.Snowball;
 import org.jetbrains.annotations.NotNull;
 
 public final class ThrownHelper {
-    public static final @NotNull Data<String, String> THROWABLE_KEY_DATA = Data.ofString(GunGaming.namespaced("thrown_throwable_key"));
-    public static final @NotNull Data<Double, Double> MAX_DAMAGE_DATA = Data.ofDouble(GunGaming.namespaced("thrown_max_damage"));
+    public static final @NotNull Data<String, String> THROWABLE_KEY_DATA = Data.ofString(GunGaming.key("thrown_throwable_key"));
+    public static final @NotNull Data<Double, Double> MAX_DAMAGE_DATA = Data.ofDouble(GunGaming.key("thrown_max_damage"));
 
     private ThrownHelper() {
         throw new AssertionError();

@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class PlayerTracker extends CustomItem implements SingleLoot {
-    public static final @NotNull Data<Byte, Boolean> TRACKER_ACTIVE_DATA = Data.ofBoolean(GunGaming.namespaced("player_tracker"));
+    public static final @NotNull Data<Byte, Boolean> TRACKER_ACTIVE_DATA = Data.ofBoolean(GunGaming.key("player_tracker"));
 
     protected final int inactiveCustomModelData = provideInactiveCustomModelData();
     protected final int activeCustomModelData = provideActiveCustomModelData();
@@ -57,7 +57,7 @@ public abstract class PlayerTracker extends CustomItem implements SingleLoot {
         return 1;
     }
 
-    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.namespaced("item.tracker.held"), Sound.Source.PLAYER, 1.9F, 1);
+    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.key("item.tracker.held"), Sound.Source.PLAYER, 1.9F, 1);
 
     @Override
     public @NotNull Sound heldSound(final @NotNull ItemStack item) {

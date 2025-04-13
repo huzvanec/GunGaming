@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public final class PlaceholderHelper {
-    public static final @NotNull Data<Byte, Boolean> PLACEHOLDER_DATA = Data.ofBoolean(GunGaming.namespaced("placeholder"));
-    public static final @NotNull Data<Byte, Boolean> DISABLED_DATA = Data.ofBoolean(GunGaming.namespaced("disabled"));
+    public static final @NotNull Data<Byte, Boolean> PLACEHOLDER_DATA = Data.ofBoolean(GunGaming.key("placeholder"));
+    public static final @NotNull Data<Byte, Boolean> DISABLED_DATA = Data.ofBoolean(GunGaming.key("disabled"));
 
     private static final @NotNull ItemStack DISABLED = ItemStack.of(Material.WHITE_STAINED_GLASS_PANE);
 
