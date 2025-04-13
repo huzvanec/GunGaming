@@ -158,7 +158,7 @@ public interface PersistentData<P, C> extends Keyed {
 
     boolean check(final @Nullable PersistentDataContainerView container);
 
-    default boolean check(final @Nullable PersistentDataHolder holder) {
+    default boolean check(final @Nullable PersistentDataViewHolder holder) {
         return holder != null && check(holder.getPersistentDataContainer());
     }
 
