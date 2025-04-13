@@ -1,32 +1,39 @@
 package cz.jeme.gungaming.item.tool;
 
-import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.loot.SingleLoot;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.inventory.EquipmentSlotGroup;
-import org.jetbrains.annotations.NotNull;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.Tool.Builder;
+import org.bukkit.Material;
+import org.jspecify.annotations.NullMarked;
 
+import static io.papermc.paper.datacomponent.item.Tool.tool;
+
+@NullMarked
 public abstract class Tool extends CustomItem implements SingleLoot {
-    protected final double attackSpeed = provideAttackSpeed();
+    protected int durability = provideDurability();
 
     @SuppressWarnings("UnstableApiUsage")
     protected Tool() {
         addTags("tool");
-        item.editMeta(meta -> meta.addAttributeModifier(
-                Attribute.ATTACK_SPEED,
-                new AttributeModifier(
-                        GunGaming.key(key.value() + "_generic_attack_speed"),
-                        attackSpeed,
-                        AttributeModifier.Operation.ADD_NUMBER,
-                        EquipmentSlotGroup.MAINHAND
-                )
-        ));
+
+        final var builder = tool();
+        buildTool(builder);
+        item.setData(DataComponentTypes.TOOL, builder.build());
+
+        item.editMeta(meta -> meta.setMaxStackSize(1));
+
+        item.setData(DataComponentTypes.DAMAGE, 0);
+        if (durability <= 0) item.unsetData(DataComponentTypes.MAX_DAMAGE);
+        else item.setData(DataComponentTypes.MAX_DAMAGE, durability);
     }
 
-    protected double provideAttackSpeed() {
-        return -3;
+    protected int provideDurability() {
+        return -1;
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    protected void buildTool(final Builder builder) {
     }
 
     @Override
@@ -40,11 +47,12 @@ public abstract class Tool extends CustomItem implements SingleLoot {
     }
 
     @Override
-    protected final @NotNull String provideType() {
+    protected final String provideType() {
         return "tool";
     }
 
-    public final double attackSpeed() {
-        return attackSpeed;
+    @Override
+    protected final Material provideMaterial() {
+        return Material.POPPED_CHORUS_FRUIT;
     }
 }

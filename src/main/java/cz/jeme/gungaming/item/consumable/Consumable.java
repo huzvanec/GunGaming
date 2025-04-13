@@ -15,10 +15,10 @@ import org.jspecify.annotations.Nullable;
 
 import static io.papermc.paper.datacomponent.item.Consumable.consumable;
 
-@SuppressWarnings("UnstableApiUsage")
 @NullMarked
 public abstract class Consumable extends CustomItem {
 
+    @SuppressWarnings("UnstableApiUsage")
     protected Consumable() {
         addTags("consumable");
 
@@ -28,6 +28,7 @@ public abstract class Consumable extends CustomItem {
         item.setData(DataComponentTypes.CONSUMABLE, builder.build());
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     protected void buildConsumable(final Builder builder) {
     }
 
