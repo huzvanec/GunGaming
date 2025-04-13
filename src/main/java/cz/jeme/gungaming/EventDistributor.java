@@ -34,6 +34,7 @@ public enum EventDistributor implements Listener {
     @EventHandler
     private static void onPlayerInteract(final @NotNull PlayerInteractEvent event) {
         if (event.getPlayer().getGameMode() == GameMode.SPECTATOR) return;
+        ResourcePackEventHandler.onPlayerInteract(event);
         ItemEventHandler.onPlayerInteract(event);
         CrateEventHandler.onPlayerInteract(event);
         LobbyEventHandler.onPlayerInteract(event);
@@ -104,6 +105,7 @@ public enum EventDistributor implements Listener {
 
     @EventHandler
     private static void onEntityDamage(final @NotNull EntityDamageEvent event) {
+        ResourcePackEventHandler.onEntityDamage(event);
         GlobalEventHandler.onEntityDamage(event);
         GrapplingHook.onEntityDamage(event);
         GameEventHandler.onEntityDamage(event);
