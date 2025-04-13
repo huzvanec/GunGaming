@@ -1,7 +1,7 @@
 name: GunGaming
-version: ${version}
+version: '${version}'
 main: cz.jeme.programu.gungaming.GunGaming
 api-version: '1.21'
-authors: [ XD_CZ ]
-description: "„Let's add guns to minecraft!“ - Hužva"
+author: XD_CZ
+description: 'Transforms Minecraft into a battle royale game'
 load: STARTUP
