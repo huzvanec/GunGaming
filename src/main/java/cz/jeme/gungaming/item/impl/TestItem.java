@@ -59,6 +59,11 @@ public final class TestItem extends CustomItem {
 
     @Override
     protected void onLeftClick(final @NotNull PlayerInteractEvent event) {
-        event.getPlayer().sendMessage(Components.of("<red>Left click!"));
+        event.getPlayer().sendMessage(Components.of("<red>[Test Item]: Left click!"));
+    }
+
+    @Override
+    protected void onRightClick(final @NotNull PlayerInteractEvent event) {
+        event.getPlayer().sendMessage(Components.of("<red>[Test Item]: Right click!"));
     }
 }
