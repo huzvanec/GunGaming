@@ -1,0 +1,50 @@
+package cz.jeme.gungaming.item.tracker;
+
+import cz.jeme.gungaming.config.GameConfig;
+import cz.jeme.gungaming.game.Game;
+import cz.jeme.gungaming.game.GameTeam;
+import cz.jeme.gungaming.loot.Rarity;
+import cz.jeme.gungaming.loot.SingleLoot;
+import net.kyori.adventure.key.KeyPattern;
+import net.kyori.adventure.text.Component;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
+public class TeammateTracker extends PlayerTracker implements SingleLoot {
+    @Override
+    protected @NotNull Component provideName() {
+        return Component.text("Teammate Tracker");
+    }
+
+    @Override
+    protected @NotNull String provideDescription() {
+        return "Hold this in your hand to track the nearest teammate";
+    }
+
+    @Override
+    protected @NotNull Rarity provideRarity() {
+        return Rarity.UNOBTAINABLE;
+    }
+
+    @Override
+    protected @KeyPattern.Value @NotNull String provideKey() {
+        return "teammate_tracker";
+    }
+
+    @Override
+    protected boolean validate(final @NotNull Player player, final @NotNull Player trackPlayer) {
+        return Game.running() &&
+               GameConfig.TEAM_PLAYERS.get() > 1 &&
+               GameTeam.ofPlayer(player).players().contains(trackPlayer);
+    }
+
+    @Override
+    protected int provideInactiveCustomModelData() {
+        return 3;
+    }
+
+    @Override
+    protected int provideActiveCustomModelData() {
+        return 4;
+    }
+}

@@ -1,6 +1,6 @@
 name: GunGaming
 version: '${version}'
-main: cz.jeme.programu.gungaming.GunGaming
+main: cz.jeme.gungaming.GunGaming
 api-version: '1.21'
 author: XD_CZ
 description: 'Transforms Minecraft into a battle royale game'
