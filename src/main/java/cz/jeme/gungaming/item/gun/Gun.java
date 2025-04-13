@@ -3,7 +3,6 @@ package cz.jeme.gungaming.item.gun;
 import cz.jeme.gungaming.CustomElement;
 import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.config.GenerationConfig;
-import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.item.Weapon;
 import cz.jeme.gungaming.item.ammo.Ammo;
@@ -13,6 +12,7 @@ import cz.jeme.gungaming.item.attachment.Scope;
 import cz.jeme.gungaming.item.attachment.ZoomManager;
 import cz.jeme.gungaming.item.attachment.impl.Silencer;
 import cz.jeme.gungaming.loot.crate.Crate;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.util.*;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
@@ -34,25 +34,26 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.CrossbowMeta;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@NullMarked
 public abstract class Gun extends Weapon {
-    public static final @NotNull PersistentData<Integer, Integer> MAX_AMMO_DATA = PersistentData.ofInteger(GunGaming.key("gun_max_ammo"));
-    public static final @NotNull PersistentData<Integer, Integer> SHOOT_COOLDOWN_DATA = PersistentData.ofInteger(GunGaming.key("gun_shoot_cooldown"));
-    public static final @NotNull PersistentData<Integer, Integer> RELOAD_DURATION_DATA = PersistentData.ofInteger(GunGaming.key("gun_reload_duration"));
-    public static final @NotNull PersistentData<Double, Double> DAMAGE_DATA = PersistentData.ofDouble(GunGaming.key("gun_damage"));
-    public static final @NotNull PersistentData<Double, Double> BULLET_VELOCITY_DATA = PersistentData.ofDouble(GunGaming.key("gun_bullet_velocity"));
-    public static final @NotNull PersistentData<Double, Double> RECOIL_DATA = PersistentData.ofDouble(GunGaming.key("gun_recoil"));
-    public static final @NotNull PersistentData<Double, Double> INACCURACY_DATA = PersistentData.ofDouble(GunGaming.key("gun_inaccuracy"));
-    public static final @NotNull PersistentData<Integer, Integer> CURRENT_AMMO_DATA = PersistentData.ofInteger(GunGaming.key("gun_current_ammo"));
+    public static final PersistentData<Integer, Integer> MAX_AMMO_DATA = PersistentData.ofInteger(GunGaming.key("gun_max_ammo"));
+    public static final PersistentData<Integer, Integer> SHOOT_COOLDOWN_DATA = PersistentData.ofInteger(GunGaming.key("gun_shoot_cooldown"));
+    public static final PersistentData<Integer, Integer> RELOAD_DURATION_DATA = PersistentData.ofInteger(GunGaming.key("gun_reload_duration"));
+    public static final PersistentData<Double, Double> DAMAGE_DATA = PersistentData.ofDouble(GunGaming.key("gun_damage"));
+    public static final PersistentData<Double, Double> BULLET_VELOCITY_DATA = PersistentData.ofDouble(GunGaming.key("gun_bullet_velocity"));
+    public static final PersistentData<Double, Double> RECOIL_DATA = PersistentData.ofDouble(GunGaming.key("gun_recoil"));
+    public static final PersistentData<Double, Double> INACCURACY_DATA = PersistentData.ofDouble(GunGaming.key("gun_inaccuracy"));
+    public static final PersistentData<Integer, Integer> CURRENT_AMMO_DATA = PersistentData.ofInteger(GunGaming.key("gun_current_ammo"));
 
     private static final double RECOIL_Y_MULTIPLIER = .28;
 
-    static final @NotNull List<ItemStack> PROJECTILES = List.of(ItemStack.of(Material.ARROW));
+    static final List<ItemStack> PROJECTILES = List.of(ItemStack.of(Material.ARROW));
 
     protected final int maxAmmo = provideMaxAmmo();
     protected final int shootCooldown = provideShootCooldown();
@@ -64,9 +65,9 @@ public abstract class Gun extends Weapon {
     protected final int bulletsPerShot = provideBulletsPerShot();
     protected final int bulletCooldown = provideBulletCooldown();
     protected final boolean magazineless = provideMagazineless();
-    protected final @NotNull Class<? extends AbstractArrow> arrowType = provideArrowType();
-    protected final @NotNull Class<? extends Ammo> ammoType = provideAmmoType();
-    protected final @NotNull Ammo ammo;
+    protected final Class<? extends AbstractArrow> arrowType = provideArrowType();
+    protected final Class<? extends Ammo> ammoType = provideAmmoType();
+    protected final Ammo ammo;
 
     protected Gun() {
         if (maxAmmo < 1)
@@ -108,7 +109,7 @@ public abstract class Gun extends Weapon {
 
     // providers
 
-    protected @NotNull Class<? extends AbstractArrow> provideArrowType() {
+    protected Class<? extends AbstractArrow> provideArrowType() {
         return Arrow.class;
     }
 
@@ -138,11 +139,11 @@ public abstract class Gun extends Weapon {
         return false;
     }
 
-    protected abstract @NotNull Class<? extends Ammo> provideAmmoType();
+    protected abstract Class<? extends Ammo> provideAmmoType();
 
     // getters
 
-    public final @NotNull Class<? extends AbstractArrow> arrowType() {
+    public final Class<? extends AbstractArrow> arrowType() {
         return arrowType;
     }
 
@@ -182,11 +183,11 @@ public abstract class Gun extends Weapon {
         return bulletCooldown;
     }
 
-    public final @NotNull Class<? extends Ammo> ammoType() {
+    public final Class<? extends Ammo> ammoType() {
         return ammoType;
     }
 
-    public final @NotNull Ammo ammo() {
+    public final Ammo ammo() {
         return ammo;
     }
 
@@ -201,12 +202,12 @@ public abstract class Gun extends Weapon {
     // shooting
 
     @Override
-    protected final void onUse(final @NotNull PlayerInteractEvent event) {
+    protected final void onUse(final PlayerInteractEvent event) {
         event.setCancelled(true);
         shoot(event);
     }
 
-    private void shoot(final @NotNull PlayerInteractEvent event) {
+    private void shoot(final PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         final ItemStack item = event.getItem();
         assert item != null;
@@ -225,18 +226,18 @@ public abstract class Gun extends Weapon {
         shootRound(event, 1);
     }
 
-    private void noAmmo(final @NotNull Player player, final @NotNull ItemStack item) {
+    private void noAmmo(final Player player, final ItemStack item) {
         if (Inventories.count(player.getInventory(), ammo.item()) == 0) {
             player.sendActionBar(Components.of("<red>Out of ammo!"));
             player.getWorld().playSound(outOfAmmoSound(item), player);
         } else {
-            player.sendActionBar(Components.of("<red>Press <yellow>F</yellow> to reload!"));
+            player.sendActionBar(Components.of("<red>Press <yellow><key:key.swapOffhand></yellow> to reload!"));
             player.getWorld().playSound(reloadRequiredSound(item), player);
         }
     }
 
 
-    private void shootRound(final @NotNull PlayerInteractEvent event, final int round) {
+    private void shootRound(final PlayerInteractEvent event, final int round) {
         final Player player = event.getPlayer();
         final ItemStack item = event.getItem();
         assert item != null;
@@ -297,32 +298,32 @@ public abstract class Gun extends Weapon {
                 bulletCooldown);
     }
 
-    private static void randomizeVector(final @NotNull Vector vector, final double inaccuracy) {
+    private static void randomizeVector(final Vector vector, final double inaccuracy) {
         final double rad = Math.toRadians(inaccuracy);
         vector.rotateAroundX(RandomUtils.nextAxis(rad));
         vector.rotateAroundY(RandomUtils.nextAxis(rad));
         vector.rotateAroundZ(RandomUtils.nextAxis(rad));
     }
 
-    protected void onShoot(final @NotNull PlayerInteractEvent event, final @NotNull AbstractArrow bullet) {
+    protected void onShoot(final PlayerInteractEvent event, final AbstractArrow bullet) {
     }
 
-    protected void onBulletHit(final @NotNull ProjectileHitEvent event, final @NotNull AbstractArrow bullet) {
+    protected void onBulletHit(final ProjectileHitEvent event, final AbstractArrow bullet) {
     }
 
     // scope
 
     @Override
-    protected void onLeftClickAir(final @NotNull PlayerInteractEvent event) {
+    protected void onLeftClickAir(final PlayerInteractEvent event) {
         zoom(event);
     }
 
     @Override
-    protected void onLeftClickBlock(final @NotNull PlayerInteractEvent event) {
+    protected void onLeftClickBlock(final PlayerInteractEvent event) {
         if (event.getPlayer().isSneaking()) zoom(event);
     }
 
-    private void zoom(final @NotNull PlayerInteractEvent event) {
+    private void zoom(final PlayerInteractEvent event) {
         final ItemStack item = event.getItem();
         assert item != null;
         final Player player = event.getPlayer();
@@ -338,19 +339,19 @@ public abstract class Gun extends Weapon {
 
     // sounds
 
-    protected final @NotNull Key shootSoundKey = GunGaming.key("item." + key.value() + ".shoot");
-    protected final @NotNull Key reloadSoundKey = GunGaming.key("item." + key.value() + ".reload");
-    protected static final @NotNull Key OUT_OF_AMMO_SOUND_KEY = GunGaming.key("item.gun.out_of_ammo");
-    protected static final @NotNull Key RELOAD_REQUIRED_SOUND_KEY = GunGaming.key("item.gun.reload_required");
-    protected static final @NotNull Key RELOAD_ABORTED_SOUND_KEY = GunGaming.key("item.gun.reload_aborted");
+    protected final Key shootSoundKey = GunGaming.key("item." + key.value() + ".shoot");
+    protected final Key reloadSoundKey = GunGaming.key("item." + key.value() + ".reload");
+    protected static final Key OUT_OF_AMMO_SOUND_KEY = GunGaming.key("item.gun.out_of_ammo");
+    protected static final Key RELOAD_REQUIRED_SOUND_KEY = GunGaming.key("item.gun.reload_required");
+    protected static final Key RELOAD_ABORTED_SOUND_KEY = GunGaming.key("item.gun.reload_aborted");
 
-    protected final @NotNull Sound shootSound = Sound.sound(shootSoundKey, Sound.Source.PLAYER, 6.3F, 1);
-    protected final @NotNull Sound reloadSound = Sound.sound(reloadSoundKey, Sound.Source.PLAYER, 2.5F, 1);
-    protected static final @NotNull Sound OUT_OF_AMMO_SOUND = Sound.sound(OUT_OF_AMMO_SOUND_KEY, Sound.Source.PLAYER, 2.5F, 1);
-    protected static final @NotNull Sound RELOAD_REQUIRED_SOUND = Sound.sound(RELOAD_REQUIRED_SOUND_KEY, Sound.Source.PLAYER, 2.5F, 1);
-    protected static final @NotNull Sound RELOAD_ABORTED_SOUND = Sound.sound(RELOAD_ABORTED_SOUND_KEY, Sound.Source.PLAYER, 2.5F, 1);
+    protected final Sound shootSound = Sound.sound(shootSoundKey, Sound.Source.PLAYER, 6.3F, 1);
+    protected final Sound reloadSound = Sound.sound(reloadSoundKey, Sound.Source.PLAYER, 2.5F, 1);
+    protected static final Sound OUT_OF_AMMO_SOUND = Sound.sound(OUT_OF_AMMO_SOUND_KEY, Sound.Source.PLAYER, 2.5F, 1);
+    protected static final Sound RELOAD_REQUIRED_SOUND = Sound.sound(RELOAD_REQUIRED_SOUND_KEY, Sound.Source.PLAYER, 2.5F, 1);
+    protected static final Sound RELOAD_ABORTED_SOUND = Sound.sound(RELOAD_ABORTED_SOUND_KEY, Sound.Source.PLAYER, 2.5F, 1);
 
-    public @NotNull Sound shootSound(final @NotNull ItemStack item) {
+    public Sound shootSound(final ItemStack item) {
         return Silencer.GUN_SILENCER_KEY_DATA.read(item)
                 .map(key -> Sound.sound(
                                 shootSoundKey,
@@ -362,7 +363,7 @@ public abstract class Gun extends Weapon {
                 .orElse(shootSound);
     }
 
-    public @NotNull Sound reloadSound(final @NotNull ItemStack item) {
+    public Sound reloadSound(final ItemStack item) {
         return Magazine.GUN_MAGAZINE_KEY_DATA.read(item)
                 .map(key -> Sound.sound(
                                 reloadSoundKey,
@@ -374,22 +375,22 @@ public abstract class Gun extends Weapon {
                 .orElse(reloadSound);
     }
 
-    public @NotNull Sound outOfAmmoSound(final @NotNull ItemStack item) {
+    public Sound outOfAmmoSound(final ItemStack item) {
         return OUT_OF_AMMO_SOUND;
     }
 
-    public @NotNull Sound reloadRequiredSound(final @NotNull ItemStack item) {
+    public Sound reloadRequiredSound(final ItemStack item) {
         return RELOAD_REQUIRED_SOUND;
     }
 
-    public @NotNull Sound reloadAbortedSound(final @NotNull ItemStack item) {
+    public Sound reloadAbortedSound(final ItemStack item) {
         return RELOAD_ABORTED_SOUND;
     }
 
     // override stuff
 
     @Override
-    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+    protected List<String> update(final ItemStack item) {
         // gun damage
         final short maxDamage = item.getType().getMaxDurability();
         final int maxAmmo = MAX_AMMO_DATA.require(item);
@@ -427,7 +428,7 @@ public abstract class Gun extends Weapon {
     }
 
     @Override
-    public void generated(final @NotNull ItemStack item, final @NotNull Crate crate) {
+    public void generated(final ItemStack item, final Crate crate) {
         final int maxAmmo = MAX_AMMO_DATA.require(item);
         final double chance = GenerationConfig.GUN_AMMO_PERCENTAGE.get() / 100D;
         final int ammo = RandomUtils.nextChanced(chance, maxAmmo);
@@ -435,18 +436,18 @@ public abstract class Gun extends Weapon {
     }
 
     @Override
-    protected final @NotNull Material provideMaterial() {
+    protected final Material provideMaterial() {
         return Material.CROSSBOW;
     }
 
     @Override
-    protected final @NotNull String provideType() {
+    protected final String provideType() {
         return "gun";
     }
 
     // ammo utils
 
-    public static void setAmmo(final @NotNull ItemStack item, final int ammo) {
+    public static void setAmmo(final ItemStack item, final int ammo) {
         if (ammo < 0)
             throw new IllegalArgumentException("Ammo cannot be negative!");
         final Gun gun = Gun.of(item);
@@ -457,30 +458,30 @@ public abstract class Gun extends Weapon {
         gun.updateItem(item);
     }
 
-    public static void setMaxAmmo(final @NotNull ItemStack item) {
+    public static void setMaxAmmo(final ItemStack item) {
         setAmmo(item, Gun.MAX_AMMO_DATA.require(item));
     }
 
-    public static void addAmmo(final @NotNull ItemStack item, final int ammo) {
+    public static void addAmmo(final ItemStack item, final int ammo) {
         final int currentAmmo = Gun.CURRENT_AMMO_DATA.require(item);
         setAmmo(item, currentAmmo + ammo);
     }
 
-    public static void removeAmmo(final @NotNull ItemStack item, final int ammo) {
+    public static void removeAmmo(final ItemStack item, final int ammo) {
         addAmmo(item, -ammo);
     }
 
     // static accessors
 
-    public static @NotNull Gun of(final @NotNull String keyStr) {
+    public static Gun of(final String keyStr) {
         return CustomElement.of(keyStr, Gun.class);
     }
 
-    public static @NotNull Gun of(final @NotNull ItemStack item) {
+    public static Gun of(final ItemStack item) {
         return CustomItem.of(item, Gun.class);
     }
 
-    public static boolean is(final @NotNull String keyStr) {
+    public static boolean is(final String keyStr) {
         return CustomElement.is(keyStr, Gun.class);
     }
 
