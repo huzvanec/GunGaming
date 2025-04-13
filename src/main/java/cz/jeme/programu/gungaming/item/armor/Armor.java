@@ -24,7 +24,7 @@ public abstract class Armor extends CustomItem implements SingleLoot {
         addTags("armor");
         item.editMeta(meta -> {
                     meta.addAttributeModifier(
-                            Attribute.GENERIC_ARMOR,
+                            Attribute.ARMOR,
                             new AttributeModifier(
                                     GunGaming.namespaced(key.value() + "_armor"),
                                     armor,
@@ -33,7 +33,7 @@ public abstract class Armor extends CustomItem implements SingleLoot {
                             )
                     );
                     meta.addAttributeModifier(
-                            Attribute.GENERIC_ARMOR_TOUGHNESS,
+                            Attribute.ARMOR_TOUGHNESS,
                             new AttributeModifier(
                                     GunGaming.namespaced(key.value() + "_armor_toughness"),
                                     toughness,

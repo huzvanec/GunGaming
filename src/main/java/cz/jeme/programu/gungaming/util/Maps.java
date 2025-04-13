@@ -88,15 +88,15 @@ public final class Maps {
                                             mutableBlockPos.set(r + v, 0, s + w);
                                             int x = levelChunk.getHeight(Heightmap.Types.WORLD_SURFACE, mutableBlockPos.getX(), mutableBlockPos.getZ()) + 1;
                                             BlockState blockState3;
-                                            if (x <= world.getMinBuildHeight() + 1) {
+                                            if (x <= world.getMinY() + 1) {
                                                 blockState3 = Blocks.BEDROCK.defaultBlockState();
                                             } else {
                                                 do {
                                                     mutableBlockPos.setY(--x);
                                                     blockState3 = levelChunk.getBlockState(mutableBlockPos);
-                                                } while (blockState3.getMapColor(world, mutableBlockPos) == MapColor.NONE && x > world.getMinBuildHeight());
+                                                } while (blockState3.getMapColor(world, mutableBlockPos) == MapColor.NONE && x > world.getMinY());
 
-                                                if (x > world.getMinBuildHeight() && !blockState3.getFluidState().isEmpty()) {
+                                                if (x > world.getMinY() && !blockState3.getFluidState().isEmpty()) {
                                                     int y = x - 1;
                                                     mutableBlockPos2.set(mutableBlockPos);
 
@@ -105,7 +105,7 @@ public final class Maps {
                                                         mutableBlockPos2.setY(y--);
                                                         blockState2 = levelChunk.getBlockState(mutableBlockPos2);
                                                         t++;
-                                                    } while (y > world.getMinBuildHeight() && !blockState2.getFluidState().isEmpty());
+                                                    } while (y > world.getMinY() && !blockState2.getFluidState().isEmpty());
 
                                                     blockState3 = getCorrectStateForFluidBlock(world, blockState3, mutableBlockPos);
                                                 }

@@ -26,7 +26,7 @@ public abstract class Melee extends Weapon {
     protected Melee() {
         item.editMeta(meta -> {
             meta.addAttributeModifier(
-                    Attribute.GENERIC_ATTACK_DAMAGE,
+                    Attribute.ATTACK_DAMAGE,
                     new AttributeModifier(
                             GunGaming.namespaced(key.value() + "_generic_attack_damage"),
                             damage - 1,
@@ -35,7 +35,7 @@ public abstract class Melee extends Weapon {
                     )
             );
             meta.addAttributeModifier(
-                    Attribute.GENERIC_ATTACK_KNOCKBACK,
+                    Attribute.ATTACK_KNOCKBACK,
                     new AttributeModifier(
                             GunGaming.namespaced(key.value() + "_generic_attack_knockback"),
                             knockback,
@@ -44,7 +44,7 @@ public abstract class Melee extends Weapon {
                     )
             );
             meta.addAttributeModifier(
-                    Attribute.GENERIC_ATTACK_SPEED,
+                    Attribute.ATTACK_SPEED,
                     new AttributeModifier(
                             GunGaming.namespaced(key.value() + "_generic_attack_speed"),
                             attackSpeed,

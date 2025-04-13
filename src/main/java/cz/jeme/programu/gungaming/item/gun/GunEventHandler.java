@@ -4,6 +4,7 @@ import cz.jeme.programu.gungaming.GlobalEventHandler;
 import cz.jeme.programu.gungaming.GunGaming;
 import cz.jeme.programu.gungaming.util.Materials;
 import net.kyori.adventure.sound.SoundStop;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.InventoryMenu;
 import org.bukkit.*;
 import org.bukkit.block.Block;

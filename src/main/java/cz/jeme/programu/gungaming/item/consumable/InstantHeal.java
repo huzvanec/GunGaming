@@ -30,7 +30,7 @@ public abstract class InstantHeal extends Consumable {
     protected void onConsume(final @NotNull PlayerItemConsumeEvent event) {
         final Player player = event.getPlayer();
         final double health = player.getHealth() + healAmount;
-        final AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        final AttributeInstance attribute = player.getAttribute(Attribute.MAX_HEALTH);
         final double maxHealth = attribute == null ? health : attribute.getValue();
         player.setHealth(Math.min(maxHealth, health));
     }
@@ -39,7 +39,7 @@ public abstract class InstantHeal extends Consumable {
     protected void onUse(final @NotNull PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         final double health = player.getHealth();
-        final AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        final AttributeInstance attribute = player.getAttribute(Attribute.MAX_HEALTH);
         final double maxHealth = attribute == null ? health : attribute.getValue();
         if (health >= maxHealth) {
             event.setCancelled(true);

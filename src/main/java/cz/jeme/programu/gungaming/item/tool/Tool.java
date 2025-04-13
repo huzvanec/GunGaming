@@ -15,7 +15,7 @@ public abstract class Tool extends CustomItem implements SingleLoot {
     protected Tool() {
         addTags("tool");
         item.editMeta(meta -> meta.addAttributeModifier(
-                Attribute.GENERIC_ATTACK_SPEED,
+                Attribute.ATTACK_SPEED,
                 new AttributeModifier(
                         GunGaming.namespaced(key.value() + "_generic_attack_speed"),
                         attackSpeed,

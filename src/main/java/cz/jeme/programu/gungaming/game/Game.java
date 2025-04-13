@@ -244,7 +244,7 @@ public final class Game {
         inventory.clear();
         inventory.setHeldItemSlot(0);
         player.setHealth(20);
-        Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).setBaseValue(20);
+        Objects.requireNonNull(player.getAttribute(Attribute.MAX_HEALTH)).setBaseValue(20);
         player.setAbsorptionAmount(0);
         player.setFoodLevel(20);
         player.setExp(0);
