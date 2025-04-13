@@ -15,7 +15,6 @@ import cz.jeme.gungaming.item.tracker.TrackerEventHandler;
 import cz.jeme.gungaming.loot.crate.CrateEventHandler;
 import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import io.papermc.paper.event.player.PlayerStopUsingItemEvent;
 import org.bukkit.GameMode;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -135,11 +134,6 @@ public enum EventDistributor implements Listener {
         MeleeEventHandler.onPlayerItemConsume(event);
         if (event.isCancelled()) return;
         ConsumableEventHandler.onPlayerItemConsume(event);
-    }
-
-    @EventHandler
-    private static void onPlayerStopUsingItem(final @NotNull PlayerStopUsingItemEvent event) {
-        ConsumableEventHandler.onPlayerStopUsingItem(event);
     }
 
     @EventHandler

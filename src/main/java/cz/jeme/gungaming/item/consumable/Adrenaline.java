@@ -29,6 +29,7 @@ public abstract class Adrenaline extends Consumable {
 
     @Override
     protected void onConsume(final @NotNull PlayerItemConsumeEvent event) {
+        
         final Player player = event.getPlayer();
         for (final PotionEffect effect : effects) {
             final PotionEffect current = player.getPotionEffect(effect.getType());

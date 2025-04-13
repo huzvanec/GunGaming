@@ -1,5 +1,6 @@
 package cz.jeme.gungaming.item.consumable;
 
+import cz.jeme.gungaming.util.Components;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
@@ -43,6 +44,7 @@ public abstract class InstantHeal extends Consumable {
         final double maxHealth = attribute == null ? health : attribute.getValue();
         if (health >= maxHealth) {
             event.setCancelled(true);
+            player.sendActionBar(Components.of("<red>You are at full health!"));
             return;
         }
         super.onUse(event);

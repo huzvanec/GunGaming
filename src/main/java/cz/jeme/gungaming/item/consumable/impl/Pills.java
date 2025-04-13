@@ -2,6 +2,7 @@ package cz.jeme.gungaming.item.consumable.impl;
 
 import cz.jeme.gungaming.item.consumable.Adrenaline;
 import cz.jeme.gungaming.loot.Rarity;
+import io.papermc.paper.datacomponent.item.Consumable;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.potion.PotionEffect;
@@ -31,6 +32,12 @@ public class Pills extends Adrenaline {
                         false
                 )
         );
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    @Override
+    protected void buildConsumable(final Consumable.Builder builder) {
+        builder.consumeSeconds(5);
     }
 
     @Override

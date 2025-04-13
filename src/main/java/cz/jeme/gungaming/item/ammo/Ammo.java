@@ -17,7 +17,7 @@ public abstract class Ammo extends CustomItem {
 
     @Override
     protected final @NotNull Material provideMaterial() {
-        return Material.WHITE_DYE;
+        return Material.POPPED_CHORUS_FRUIT;
     }
 
     @Override

@@ -3,91 +3,82 @@ package cz.jeme.gungaming.item.consumable;
 import cz.jeme.gungaming.CustomElement;
 import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.item.CustomItem;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.Consumable.Builder;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
+import static io.papermc.paper.datacomponent.item.Consumable.consumable;
+
+@SuppressWarnings("UnstableApiUsage")
+@NullMarked
 public abstract class Consumable extends CustomItem {
 
     protected Consumable() {
         addTags("consumable");
+
+        final var builder = consumable()
+                .sound(eatSoundKey);
+        buildConsumable(builder);
+        item.setData(DataComponentTypes.CONSUMABLE, builder.build());
+    }
+
+    protected void buildConsumable(final Builder builder) {
     }
 
     // consuming
 
-    @Override
-    protected void onUse(final @NotNull PlayerInteractEvent event) {
-        startConsume(event);
-    }
-
-    private void startConsume(final @NotNull PlayerInteractEvent event) {
-        final ItemStack item = event.getItem();
-        final EquipmentSlot hand = event.getHand();
-        assert item != null;
-        assert hand != null;
-        EatManager.INSTANCE.startEating(event.getPlayer(), hand);
-    }
-
-    final void consume(final @NotNull PlayerItemConsumeEvent event) {
-        event.setCancelled(true);
-        final Player player = event.getPlayer();
-        final ItemStack item = player.getInventory().getItem(event.getHand());
-        if (player.getGameMode() != GameMode.CREATIVE)
-            item.setAmount(item.getAmount() - 1);
-
+    final void consume(final PlayerItemConsumeEvent event) {
         onConsume(event);
     }
 
-    protected void onConsume(final @NotNull PlayerItemConsumeEvent event) {
+    protected void onConsume(final PlayerItemConsumeEvent event) {
     }
 
     // sounds
 
-    protected final @NotNull Key eatSoundKey = GunGaming.key("item." + key.value() + ".eat");
-    protected final @NotNull Key burpSoundKey = GunGaming.key("item." + key.value() + ".burp");
+    protected final Key eatSoundKey = GunGaming.key("item." + key.value() + ".eat");
+    protected final Key burpSoundKey = GunGaming.key("item." + key.value() + ".burp");
 
-    protected final @NotNull Sound eatSound = Sound.sound(eatSoundKey, Sound.Source.PLAYER, 1, 1);
-    protected final @NotNull Sound burpSound = Sound.sound(burpSoundKey, Sound.Source.PLAYER, 1, 1);
+    protected final Sound eatSound = Sound.sound(eatSoundKey, Sound.Source.PLAYER, 1, 1);
+    protected final Sound burpSound = Sound.sound(burpSoundKey, Sound.Source.PLAYER, 1, 1);
 
-    public @NotNull Sound eatSound(final @NotNull ItemStack item) {
+    public Sound eatSound(final ItemStack item) {
         return eatSound;
     }
 
-    public @NotNull Sound burpSound(final @NotNull ItemStack item) {
+    public Sound burpSound(final ItemStack item) {
         return burpSound;
     }
 
     // override stuff
 
     @Override
-    protected final @NotNull Material provideMaterial() {
-        return Material.CHORUS_FRUIT;
+    protected final Material provideMaterial() {
+        return Material.POPPED_CHORUS_FRUIT;
     }
 
     @Override
-    protected final @NotNull String provideType() {
+    protected final String provideType() {
         return "consumable";
     }
 
     // static accessors
 
-    public static @NotNull Consumable of(final @NotNull String keyStr) {
+    public static Consumable of(final String keyStr) {
         return CustomElement.of(keyStr, Consumable.class);
     }
 
-    public static @NotNull Consumable of(final @NotNull ItemStack item) {
+    public static Consumable of(final ItemStack item) {
         return CustomItem.of(item, Consumable.class);
     }
 
-    public static boolean is(final @NotNull String keyStr) {
+    public static boolean is(final String keyStr) {
         return CustomElement.is(keyStr, Consumable.class);
     }
 
