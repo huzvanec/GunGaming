@@ -1,7 +1,7 @@
 package cz.jeme.gungaming.item.attachment;
 
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.data.Data;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.item.attachment.disable.*;
 import cz.jeme.gungaming.item.attachment.impl.Silencer;
@@ -168,7 +168,7 @@ public final class AttachmentMenu {
     }
 
     private void apply(final int slot, final @NotNull ItemStack attachmentItem) {
-        final Data<String, String> keyData = slotToData(slot);
+        final PersistentData<String, String> keyData = slotToData(slot);
         final Attachment attachment = Attachment.of(attachmentItem);
 //        player.sendMessage(Component.text("Applied: ").append(attachment.name()));
         keyData.write(gunItem, attachment.key().asString());
@@ -221,7 +221,7 @@ public final class AttachmentMenu {
         };
     }
 
-    private @NotNull Data<String, String> slotToData(final int slot) {
+    private @NotNull PersistentData<String, String> slotToData(final int slot) {
         return switch (slot) {
             case 0 -> Silencer.GUN_SILENCER_KEY_DATA;
             case 1 -> Grip.GUN_GRIP_KEY_DATA;

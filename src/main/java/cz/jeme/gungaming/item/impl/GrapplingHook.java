@@ -1,7 +1,7 @@
 package cz.jeme.gungaming.item.impl;
 
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.data.Data;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.loot.Rarity;
 import cz.jeme.gungaming.loot.SingleLoot;
@@ -25,8 +25,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class GrapplingHook extends CustomItem implements SingleLoot {
-    public static final @NotNull Data<Byte, Boolean> HOOKED_DATA = Data.ofBoolean(GunGaming.key("hooked"));
-    public static final @NotNull Data<Long, Long> GRAPPLING_TIME_DATA = Data.ofLong(GunGaming.key("grappling_time"));
+    public static final @NotNull PersistentData<Byte, Boolean> HOOKED_DATA = PersistentData.ofBoolean(GunGaming.key("hooked"));
+    public static final @NotNull PersistentData<Long, Long> GRAPPLING_TIME_DATA = PersistentData.ofLong(GunGaming.key("grappling_time"));
 
     private static final int FALL_RESISTANCE = 6000; // fall resistance after using the grappling hook, in millis
 

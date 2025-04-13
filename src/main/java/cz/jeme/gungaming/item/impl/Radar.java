@@ -2,7 +2,7 @@ package cz.jeme.gungaming.item.impl;
 
 import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.config.GameConfig;
-import cz.jeme.gungaming.data.Data;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.game.Game;
 import cz.jeme.gungaming.game.GameTeam;
 import cz.jeme.gungaming.item.CustomItem;
@@ -28,7 +28,7 @@ import org.bukkit.map.*;
 import org.jetbrains.annotations.NotNull;
 
 public class Radar extends CustomItem implements SingleLoot {
-    public static final @NotNull Data<Byte, Boolean> RADAR_INITIALIZED_DATA = Data.ofBoolean(GunGaming.key("radar_initialized"));
+    public static final @NotNull PersistentData<Byte, Boolean> RADAR_INITIALIZED_DATA = PersistentData.ofBoolean(GunGaming.key("radar_initialized"));
 
     protected Radar() {
         item.editMeta(meta -> meta.setMaxStackSize(1));

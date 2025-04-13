@@ -1,13 +1,13 @@
 package cz.jeme.gungaming.item.gun;
 
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.data.Data;
+import cz.jeme.gungaming.persistence.PersistentData;
 import org.bukkit.entity.AbstractArrow;
 import org.jetbrains.annotations.NotNull;
 
 public final class BulletHelper {
-    public static final @NotNull Data<String, String> GUN_KEY_DATA = Data.ofString(GunGaming.key("bullet_gun_key"));
-    public static final @NotNull Data<Double, Double> DAMAGE_DATA = Data.ofDouble(GunGaming.key("bullet_damage"));
+    public static final @NotNull PersistentData<String, String> GUN_KEY_DATA = PersistentData.ofString(GunGaming.key("bullet_gun_key"));
+    public static final @NotNull PersistentData<Double, Double> DAMAGE_DATA = PersistentData.ofDouble(GunGaming.key("bullet_damage"));
     // TODO knockback?
 
     private BulletHelper() {

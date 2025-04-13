@@ -4,7 +4,7 @@ import cz.jeme.gungaming.CustomElement;
 import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.config.GameConfig;
 import cz.jeme.gungaming.config.GenerationConfig;
-import cz.jeme.gungaming.data.Data;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.game.lobby.Lobby;
 import cz.jeme.gungaming.game.runnable.AirDropRunnable;
 import cz.jeme.gungaming.game.runnable.GameRunnable;
@@ -34,28 +34,31 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scoreboard.*;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.time.Duration;
 import java.util.*;
 
+@NullMarked
 public final class Game {
-    public static final @NotNull Data<Byte, Boolean> FROZEN_DATA = Data.ofBoolean(GunGaming.key("frozen"));
-    public static final @NotNull Data<Byte, Boolean> GLIDING_DATA = Data.ofBoolean(GunGaming.key("gliding"));
-    public static final @NotNull Data<Byte, Boolean> INVULNERABLE_DATA = Data.ofBoolean(GunGaming.key("invulnerable"));
+    public static final PersistentData<Byte, Boolean> FROZEN_DATA = PersistentData.ofBoolean(GunGaming.key("frozen"));
+    public static final PersistentData<Byte, Boolean> GLIDING_DATA = PersistentData.ofBoolean(GunGaming.key("gliding"));
+    public static final PersistentData<Byte, Boolean> INVULNERABLE_DATA = PersistentData.ofBoolean(GunGaming.key("invulnerable"));
 
-    public static final @NotNull Sound START_SOUND = Sound.sound(GunGaming.key("game.start"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound DING_SOUND = Sound.sound(GunGaming.key("game.ping.ding"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound DONG_SOUND = Sound.sound(GunGaming.key("game.ping.dong"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound WARNING_SOUND = Sound.sound(GunGaming.key("game.ping.warning"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound INFO_SOUND = Sound.sound(GunGaming.key("game.ping.info"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound END_SOUND = Sound.sound(GunGaming.key("game.end"), Sound.Source.MASTER, 1, 1);
+    public static final Sound START_SOUND = Sound.sound(GunGaming.key("game.start"), Sound.Source.MASTER, 1, 1);
+    public static final Sound DING_SOUND = Sound.sound(GunGaming.key("game.ping.ding"), Sound.Source.MASTER, 1, 1);
+    public static final Sound DONG_SOUND = Sound.sound(GunGaming.key("game.ping.dong"), Sound.Source.MASTER, 1, 1);
+    public static final Sound WARNING_SOUND = Sound.sound(GunGaming.key("game.ping.warning"), Sound.Source.MASTER, 1, 1);
+    public static final Sound INFO_SOUND = Sound.sound(GunGaming.key("game.ping.info"), Sound.Source.MASTER, 1, 1);
+    public static final Sound END_SOUND = Sound.sound(GunGaming.key("game.end"), Sound.Source.MASTER, 1, 1);
+
+    public static final int TEAM_COMPASS_SLOT = 8;
 
     private static @Nullable Game instance = null;
 
     @SuppressWarnings("UnstableApiUsage")
-    private final @NotNull BossBar bossBar = BossBar.bossBar(
+    private final BossBar bossBar = BossBar.bossBar(
             Components.of("<b><#6786C8>Gun</#6786C8><#4C618D>Gaming</#4C618D> <#717B95>v"
                           + GunGaming.instance().getPluginMeta().getVersion()
             ),
@@ -64,9 +67,9 @@ public final class Game {
             BossBar.Overlay.PROGRESS
     );
 
-    private final @NotNull Audience audience;
-    private final @NotNull Location audienceLocation;
-    private final @NotNull World world;
+    private final Audience audience;
+    private final Location audienceLocation;
+    private final World world;
     private final int duration = GameConfig.GAME_SECONDS.get();
     private final int size = GameConfig.SIZE.get();
     private final int teamPlayerCount = GameConfig.TEAM_PLAYERS.get();
@@ -76,10 +79,10 @@ public final class Game {
     private final int zMin;
     private final int xMax;
     private final int zMax;
-    private final @NotNull Location spawn;
-    private final @NotNull Objective kills;
-    private final @NotNull Scoreboard scoreboard;
-    private final @NotNull List<Player> players;
+    private final Location spawn;
+    private final Objective kills;
+    private final Scoreboard scoreboard;
+    private final List<Player> players;
     private boolean gracePeriod = true;
 
     public enum ChatMode {
@@ -87,22 +90,22 @@ public final class Game {
         ALL;
 
         @Override
-        public @NotNull String toString() {
+        public String toString() {
             return name().toLowerCase();
         }
 
-        private static final @NotNull List<ChatMode> CACHED = List.of(values());
+        private static final List<ChatMode> CACHED = List.of(values());
 
-        public static @NotNull List<ChatMode> cached() {
+        public static List<ChatMode> cached() {
             return CACHED;
         }
     }
 
-    private final @NotNull Map<UUID, ChatMode> chatModes = new HashMap<>();
+    private final Map<UUID, ChatMode> chatModes = new HashMap<>();
 
 
     @SuppressWarnings("UnstableApiUsage")
-    public Game(final @NotNull CommandSourceStack source) {
+    public Game(final CommandSourceStack source) {
         this.audience = source.getSender();
         // error handling
         if (running()) {
@@ -197,7 +200,7 @@ public final class Game {
             player.setScoreboard(scoreboard);
             if (GameTeam.ofPlayer(player).size() > 1) {
                 chatModes.put(player.getUniqueId(), ChatMode.TEAM);
-                player.getInventory().setItem(8, teammateTracker);
+                player.getInventory().setItem(TEAM_COMPASS_SLOT, teammateTracker);
             }
         }
 
@@ -219,7 +222,7 @@ public final class Game {
     }
 
     @ApiStatus.Internal
-    public static void worldSetup(final @NotNull World world) {
+    public static void worldSetup(final World world) {
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         world.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
         world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
@@ -235,7 +238,7 @@ public final class Game {
     }
 
     @ApiStatus.Internal
-    public static void playerSetup(final @NotNull Player player) {
+    public static void playerSetup(final Player player) {
         player.spigot().respawn();
         player.clearTitle();
         player.closeInventory();
@@ -393,7 +396,7 @@ public final class Game {
         }
     }
 
-    private static @NotNull String rankToColor(final int rank) {
+    private static String rankToColor(final int rank) {
         return switch (rank) {
             case 0 -> throw new IllegalArgumentException("Rank must be >= 1!");
             case 1 -> "<#D4AF37>"; // gold
@@ -403,7 +406,7 @@ public final class Game {
         };
     }
 
-    private static @NotNull Component parseRank(final int rank) {
+    private static Component parseRank(final int rank) {
         final String color = rankToColor(rank);
         return switch (rank) {
             case 1 -> Components.of(color + "1" + Components.latinString("st"));
@@ -465,7 +468,7 @@ public final class Game {
         stop();
     }
 
-    boolean removePlayer(final @NotNull Player player) {
+    boolean removePlayer(final Player player) {
         final boolean contained = players.remove(player);
         Bukkit.getScheduler().runTask(
                 GunGaming.instance(),
@@ -489,7 +492,7 @@ public final class Game {
         return contained;
     }
 
-    public static @NotNull Game instance() {
+    public static Game instance() {
         return Objects.requireNonNull(instance, "Game is not running!");
     }
 
@@ -497,11 +500,11 @@ public final class Game {
         return instance != null;
     }
 
-    public @NotNull BossBar bossBar() {
+    public BossBar bossBar() {
         return bossBar;
     }
 
-    public @NotNull World world() {
+    public World world() {
         return world;
     }
 
@@ -521,7 +524,7 @@ public final class Game {
         return centerZ;
     }
 
-    public @NotNull Location spawn() {
+    public Location spawn() {
         return spawn;
     }
 
@@ -545,11 +548,11 @@ public final class Game {
         return gracePeriod;
     }
 
-    public @NotNull ChatMode chatMode(final @NotNull Player player) {
+    public ChatMode chatMode(final Player player) {
         return chatModes.getOrDefault(player.getUniqueId(), ChatMode.ALL);
     }
 
-    public void chatMode(final @NotNull Player player, final @NotNull ChatMode chatMode) {
+    public void chatMode(final Player player, final ChatMode chatMode) {
         chatModes.put(player.getUniqueId(), chatMode);
     }
 }

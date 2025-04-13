@@ -1,7 +1,7 @@
 package cz.jeme.gungaming.item.tracker;
 
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.data.Data;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.loot.SingleLoot;
 import net.kyori.adventure.sound.Sound;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class PlayerTracker extends CustomItem implements SingleLoot {
-    public static final @NotNull Data<Byte, Boolean> TRACKER_ACTIVE_DATA = Data.ofBoolean(GunGaming.key("player_tracker"));
+    public static final @NotNull PersistentData<Byte, Boolean> TRACKER_ACTIVE_DATA = PersistentData.ofBoolean(GunGaming.key("player_tracker"));
 
     protected final int inactiveCustomModelData = provideInactiveCustomModelData();
     protected final int activeCustomModelData = provideActiveCustomModelData();

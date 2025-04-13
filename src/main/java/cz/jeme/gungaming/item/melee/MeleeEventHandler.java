@@ -38,6 +38,6 @@ public final class MeleeEventHandler {
     public static void onPlayerItemConsume(final @NotNull PlayerItemConsumeEvent event) {
         if (!CustomItem.is(event.getItem(), Fish.class)) return;
         event.setCancelled(true);
-        event.getPlayer().setHealth(1);
+        event.getPlayer().setHealth(0.1);
     }
 }

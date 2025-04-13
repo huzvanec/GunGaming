@@ -2,7 +2,7 @@ package cz.jeme.gungaming.item.attachment;
 
 import cz.jeme.gungaming.CustomElement;
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.data.Data;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.item.gun.Gun;
 import cz.jeme.gungaming.util.Components;
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class Stock extends Attachment {
-    public static final @NotNull Data<String, String> GUN_STOCK_KEY_DATA = Data.ofString(GunGaming.key("gun_stock_key"));
+    public static final @NotNull PersistentData<String, String> GUN_STOCK_KEY_DATA = PersistentData.ofString(GunGaming.key("gun_stock_key"));
     private static final @NotNull ItemStack PLACEHOLDER = PlaceholderHelper.placeholder(meta -> {
         meta.displayName(Components.of("<!i><gray>Stock"));
         meta.setCustomModelData(5);

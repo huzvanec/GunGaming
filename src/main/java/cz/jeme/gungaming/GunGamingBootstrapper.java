@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("UnstableApiUsage")
 @NullMarked
-public class GunGamingBootstrapper implements PluginBootstrap {
+public final class GunGamingBootstrapper implements PluginBootstrap {
     private final Logger logger = LoggerFactory.getLogger(GunGamingBootstrapper.class.getSimpleName());
 
     @Override

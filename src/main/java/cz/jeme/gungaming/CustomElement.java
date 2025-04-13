@@ -1,6 +1,6 @@
 package cz.jeme.gungaming;
 
-import cz.jeme.gungaming.data.Data;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.loot.Rarity;
 import cz.jeme.gungaming.util.Components;
 import net.kyori.adventure.key.Key;
@@ -9,7 +9,7 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class CustomElement {
-    public static final @NotNull Data<String, String> KEY_DATA = Data.ofString(GunGaming.key("element_key"));
+    public static final @NotNull PersistentData<String, String> KEY_DATA = PersistentData.ofString(GunGaming.key("element_key"));
 
     protected final @NotNull Key key = GunGaming.key(provideKey());
     protected final @NotNull Rarity rarity = provideRarity();

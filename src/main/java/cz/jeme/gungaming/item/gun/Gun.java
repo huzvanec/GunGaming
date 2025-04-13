@@ -3,7 +3,7 @@ package cz.jeme.gungaming.item.gun;
 import cz.jeme.gungaming.CustomElement;
 import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.config.GenerationConfig;
-import cz.jeme.gungaming.data.Data;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.item.Weapon;
 import cz.jeme.gungaming.item.ammo.Ammo;
@@ -41,14 +41,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Gun extends Weapon {
-    public static final @NotNull Data<Integer, Integer> MAX_AMMO_DATA = Data.ofInteger(GunGaming.key("gun_max_ammo"));
-    public static final @NotNull Data<Integer, Integer> SHOOT_COOLDOWN_DATA = Data.ofInteger(GunGaming.key("gun_shoot_cooldown"));
-    public static final @NotNull Data<Integer, Integer> RELOAD_DURATION_DATA = Data.ofInteger(GunGaming.key("gun_reload_duration"));
-    public static final @NotNull Data<Double, Double> DAMAGE_DATA = Data.ofDouble(GunGaming.key("gun_damage"));
-    public static final @NotNull Data<Double, Double> BULLET_VELOCITY_DATA = Data.ofDouble(GunGaming.key("gun_bullet_velocity"));
-    public static final @NotNull Data<Double, Double> RECOIL_DATA = Data.ofDouble(GunGaming.key("gun_recoil"));
-    public static final @NotNull Data<Double, Double> INACCURACY_DATA = Data.ofDouble(GunGaming.key("gun_inaccuracy"));
-    public static final @NotNull Data<Integer, Integer> CURRENT_AMMO_DATA = Data.ofInteger(GunGaming.key("gun_current_ammo"));
+    public static final @NotNull PersistentData<Integer, Integer> MAX_AMMO_DATA = PersistentData.ofInteger(GunGaming.key("gun_max_ammo"));
+    public static final @NotNull PersistentData<Integer, Integer> SHOOT_COOLDOWN_DATA = PersistentData.ofInteger(GunGaming.key("gun_shoot_cooldown"));
+    public static final @NotNull PersistentData<Integer, Integer> RELOAD_DURATION_DATA = PersistentData.ofInteger(GunGaming.key("gun_reload_duration"));
+    public static final @NotNull PersistentData<Double, Double> DAMAGE_DATA = PersistentData.ofDouble(GunGaming.key("gun_damage"));
+    public static final @NotNull PersistentData<Double, Double> BULLET_VELOCITY_DATA = PersistentData.ofDouble(GunGaming.key("gun_bullet_velocity"));
+    public static final @NotNull PersistentData<Double, Double> RECOIL_DATA = PersistentData.ofDouble(GunGaming.key("gun_recoil"));
+    public static final @NotNull PersistentData<Double, Double> INACCURACY_DATA = PersistentData.ofDouble(GunGaming.key("gun_inaccuracy"));
+    public static final @NotNull PersistentData<Integer, Integer> CURRENT_AMMO_DATA = PersistentData.ofInteger(GunGaming.key("gun_current_ammo"));
 
     private static final double RECOIL_Y_MULTIPLIER = .28;
 

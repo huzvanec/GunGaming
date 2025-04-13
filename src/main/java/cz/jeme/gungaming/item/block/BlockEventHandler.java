@@ -1,7 +1,7 @@
 package cz.jeme.gungaming.item.block;
 
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.data.Data;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.loot.Rarity;
 import cz.jeme.gungaming.util.Components;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public final class BlockEventHandler {
-    public static final @NotNull Data<Byte, Boolean> ITEM_MODIFIED_DATA = Data.ofBoolean(GunGaming.key("item_modified"));
+    public static final @NotNull PersistentData<Byte, Boolean> ITEM_MODIFIED_DATA = PersistentData.ofBoolean(GunGaming.key("item_modified"));
 
     private BlockEventHandler() {
         throw new AssertionError();

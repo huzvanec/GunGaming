@@ -2,7 +2,7 @@ package cz.jeme.gungaming.item.throwable;
 
 import cz.jeme.gungaming.CustomElement;
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.data.Data;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.util.Lores;
 import net.kyori.adventure.key.Key;
@@ -22,8 +22,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public abstract class Throwable extends CustomItem {
-    public static final @NotNull Data<Integer, Integer> THROW_COOLDOWN_DATA = Data.ofInteger(GunGaming.key("throwable_throw_cooldown"));
-    public static final @NotNull Data<Double, Double> MAX_DAMAGE_DATA = Data.ofDouble(GunGaming.key("throwable_max_damage"));
+    public static final @NotNull PersistentData<Integer, Integer> THROW_COOLDOWN_DATA = PersistentData.ofInteger(GunGaming.key("throwable_throw_cooldown"));
+    public static final @NotNull PersistentData<Double, Double> MAX_DAMAGE_DATA = PersistentData.ofDouble(GunGaming.key("throwable_max_damage"));
 
     protected final int throwCooldown = provideThrowCooldown();
     protected final double maxDamage = provideMaxDamage();

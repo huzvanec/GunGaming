@@ -17,6 +17,7 @@ import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import io.papermc.paper.event.player.PlayerStopUsingItemEvent;
 import org.bukkit.GameMode;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -35,9 +36,13 @@ public enum EventDistributor implements Listener {
     private static void onPlayerInteract(final @NotNull PlayerInteractEvent event) {
         if (event.getPlayer().getGameMode() == GameMode.SPECTATOR) return;
         ResourcePackEventHandler.onPlayerInteract(event);
+        if (event.useInteractedBlock() == Event.Result.DENY &&
+            event.useItemInHand() == Event.Result.DENY) return;
+        LobbyEventHandler.onPlayerInteract(event);
+        if (event.useInteractedBlock() == Event.Result.DENY &&
+            event.useItemInHand() == Event.Result.DENY) return;
         ItemEventHandler.onPlayerInteract(event);
         CrateEventHandler.onPlayerInteract(event);
-        LobbyEventHandler.onPlayerInteract(event);
     }
 
     @EventHandler
@@ -55,6 +60,7 @@ public enum EventDistributor implements Listener {
     @EventHandler
     private static void onPlayerMove(final @NotNull PlayerMoveEvent event) {
         ResourcePackEventHandler.onPlayerMove(event);
+        if (event.isCancelled()) return;
         GameEventHandler.onPlayerMove(event);
     }
 
@@ -65,15 +71,16 @@ public enum EventDistributor implements Listener {
 
     @EventHandler
     private static void onPlayerDropItem(final @NotNull PlayerDropItemEvent event) {
+        TrackerEventHandler.onPlayerDropItem(event);
+        if (event.isCancelled()) return;
         GunEventHandler.onPlayerDropItem(event);
         AttachmentEventHandler.onPlayerDropItem(event);
-        TrackerEventHandler.onPlayerDropItem(event);
     }
 
     @EventHandler
     private static void onPlayerItemHeld(final @NotNull PlayerItemHeldEvent event) {
-        GunEventHandler.onPlayerItemHeld(event);
         ItemEventHandler.onPlayerItemHeld(event);
+        GunEventHandler.onPlayerItemHeld(event);
         AttachmentEventHandler.onPlayerItemHeld(event);
     }
 
@@ -84,9 +91,11 @@ public enum EventDistributor implements Listener {
 
     @EventHandler
     private static void onInventoryClick(final @NotNull InventoryClickEvent event) {
-        GunEventHandler.onInventoryClick(event);
-        AttachmentEventHandler.onInventoryClick(event);
         TrackerEventHandler.onInventoryClick(event);
+        if (event.isCancelled()) return;
+        AttachmentEventHandler.onInventoryClick(event);
+        if (event.isCancelled()) return;
+        GunEventHandler.onInventoryClick(event);
     }
 
     @EventHandler
@@ -100,16 +109,19 @@ public enum EventDistributor implements Listener {
         GunEventHandler.onEntityDamageByEntity(event);
         ThrowableEventHandler.onEntityDamageByEntity(event);
         MeleeEventHandler.onEntityDamageByEntity(event);
-        GameEventHandler.onEntityDamageByEntity(event);
+        GameEventHandler.onEntityDamageByEntity(event); // important! must go last
     }
 
     @EventHandler
     private static void onEntityDamage(final @NotNull EntityDamageEvent event) {
-        ResourcePackEventHandler.onEntityDamage(event);
-        GlobalEventHandler.onEntityDamage(event);
-        GrapplingHook.onEntityDamage(event);
-        GameEventHandler.onEntityDamage(event);
+        GlobalEventHandler.onEntityDamage(event); // monitor-ish
         LobbyEventHandler.onEntityDamage(event);
+        if (event.isCancelled()) return;
+        GameEventHandler.onEntityDamage(event);
+        if (event.isCancelled()) return;
+        ResourcePackEventHandler.onEntityDamage(event);
+        if (event.isCancelled()) return;
+        GrapplingHook.onEntityDamage(event);
     }
 
     @EventHandler
@@ -120,8 +132,9 @@ public enum EventDistributor implements Listener {
 
     @EventHandler
     private static void onPlayerItemConsume(final @NotNull PlayerItemConsumeEvent event) {
-        ConsumableEventHandler.onPlayerItemConsume(event);
         MeleeEventHandler.onPlayerItemConsume(event);
+        if (event.isCancelled()) return;
+        ConsumableEventHandler.onPlayerItemConsume(event);
     }
 
     @EventHandler
@@ -178,6 +191,7 @@ public enum EventDistributor implements Listener {
     @EventHandler
     private static void onFoodLevelChange(final @NotNull FoodLevelChangeEvent event) {
         GameEventHandler.onFoodLevelChange(event);
+        if (event.isCancelled()) return;
         LobbyEventHandler.onFoodLevelChange(event);
     }
 
@@ -189,6 +203,7 @@ public enum EventDistributor implements Listener {
     @EventHandler
     private static void onPlayerAdvancementCriterionGrant(final @NotNull PlayerAdvancementCriterionGrantEvent event) {
         GameEventHandler.onPlayerAdvancementCriterionGrant(event);
+        if (event.isCancelled()) return;
         LobbyEventHandler.onPlayerAdvancementCriterionGrant(event);
     }
 
@@ -200,6 +215,7 @@ public enum EventDistributor implements Listener {
     @EventHandler
     private static void onPlayerRecipeDiscover(final @NotNull PlayerRecipeDiscoverEvent event) {
         GameEventHandler.onPlayerRecipeDiscover(event);
+        if (event.isCancelled()) return;
         LobbyEventHandler.onPlayerRecipeDiscover(event);
     }
 
@@ -211,6 +227,7 @@ public enum EventDistributor implements Listener {
     @EventHandler
     private static void onPlayerPortal(final @NotNull PlayerPortalEvent event) {
         GameEventHandler.onPlayerPortal(event);
+        if (event.isCancelled()) return;
         LobbyEventHandler.onPlayerPortal(event);
     }
 

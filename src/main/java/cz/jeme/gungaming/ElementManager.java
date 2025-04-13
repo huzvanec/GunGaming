@@ -6,36 +6,38 @@ import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.ScanResult;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+@NullMarked
 public enum ElementManager {
     INSTANCE;
 
-    private final @NotNull Map<Class<? extends CustomElement>, CustomElement> classified = new HashMap<>();
-    private final @NotNull Map<String, CustomElement> keyed = new HashMap<>();
-    private final @NotNull Map<String, Set<CustomItem>> tagged = new HashMap<>();
+    private final Map<Class<? extends CustomElement>, CustomElement> classified = new HashMap<>();
+    private final Map<String, CustomElement> keyed = new HashMap<>();
+    private final Map<String, Set<CustomItem>> tagged = new HashMap<>();
 
-    private static final @NotNull List<Class<? extends CustomElement>> ORDER = List.of(
-            Ammo.class, // load ammo before all other items (guns need it to register)
+    private static final List<Class<? extends CustomElement>> ORDER = List.of(
+            Ammo.class, // load ammo before all other items (guns need it to register correctly)
             CustomItem.class,
             CustomElement.class
     );
 
-    private static int getOrder(final @NotNull Class<? extends CustomElement> clazz) {
+    private static int getOrder(final Class<? extends CustomElement> clazz) {
         for (int i = 0; i < ORDER.size(); i++) {
             if (ORDER.get(i).isAssignableFrom(clazz)) return i;
         }
         throw new RuntimeException(clazz.getName() + " was not found in order list!");
     }
 
-    public void registerElements(final String @NotNull ... packageNames) {
+    public void registerElements(final String... packageNames) {
         final long start = System.currentTimeMillis();
 
         GunGaming.logger().info("Registering elements: " + Arrays.toString(packageNames));
+
         try (final ScanResult result = new ClassGraph()
                 .acceptPackages(packageNames)
                 .scan()) {
@@ -55,7 +57,7 @@ public enum ElementManager {
         ));
     }
 
-    private void construct(final @NotNull List<Set<Class<? extends CustomElement>>> elements) {
+    private void construct(final List<Set<Class<? extends CustomElement>>> elements) {
         for (final Set<Class<? extends CustomElement>> elementSet : elements) {
             for (final Class<? extends CustomElement> elementClass : elementSet) {
                 try {
@@ -66,8 +68,10 @@ public enum ElementManager {
                     keyed.put(element.key().asString(), element);
                     if (element instanceof final CustomItem customItem) {
                         for (final String tag : customItem.tags()) {
-                            tagged.putIfAbsent(tag, new HashSet<>());
-                            tagged.get(tag).add(customItem);
+                            tagged.computeIfAbsent(
+                                    tag,
+                                    k -> new HashSet<>()
+                            ).add(customItem);
                         }
                         customItem.init();
                     }
@@ -77,25 +81,25 @@ public enum ElementManager {
                     throw new RuntimeException("Could not create new instance of \"" + elementClass.getCanonicalName() + "\"", e);
                 } catch (final InstantiationException e) {
                     // this should never happen
-                    throw new RuntimeException("Could not instantiate \"" + elementClass.getCanonicalName() + "\"", e);
+                    throw new AssertionError("Could not instantiate \"" + elementClass.getCanonicalName() + "\"", e);
                 } catch (final IllegalAccessException e) {
                     // this should never happen
-                    throw new RuntimeException("Could not access constructor of class \"" + elementClass.getCanonicalName() + "\"", e);
+                    throw new AssertionError("Could not access constructor of class \"" + elementClass.getCanonicalName() + "\"", e);
                 }
             }
         }
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends CustomElement> @NotNull Optional<T> getElement(final @NotNull Class<T> elementClass) {
+    public <T extends CustomElement> Optional<T> getElement(final Class<T> elementClass) {
         return (Optional<T>) Optional.ofNullable(classified.get(elementClass));
     }
 
-    public @NotNull Optional<? extends CustomElement> getElement(final @NotNull String keyStr) {
+    public Optional<? extends CustomElement> getElement(final String keyStr) {
         return Optional.ofNullable(keyed.get(keyStr));
     }
 
-    public <T extends CustomElement> @NotNull Optional<T> getElement(final @NotNull String keyStr, final @NotNull Class<T> elementClass) {
+    public <T extends CustomElement> Optional<T> getElement(final String keyStr, final Class<T> elementClass) {
         final CustomElement element = keyed.get(keyStr);
         if (element == null) return Optional.empty();
         if (!elementClass.isInstance(element)) return Optional.empty();
@@ -103,39 +107,39 @@ public enum ElementManager {
         return Optional.of(tElement);
     }
 
-    public boolean existsElement(final @NotNull Class<? extends CustomElement> elementClass) {
+    public boolean existsElement(final Class<? extends CustomElement> elementClass) {
         return classified.containsKey(elementClass);
     }
 
-    public boolean existsElement(final @NotNull String keyStr) {
+    public boolean existsElement(final String keyStr) {
         return keyed.containsKey(keyStr);
     }
 
-    public boolean existsElement(final @NotNull String keyStr, final @NotNull Class<? extends CustomElement> elementClass) {
+    public boolean existsElement(final String keyStr, final Class<? extends CustomElement> elementClass) {
         final CustomElement element = keyed.get(keyStr);
         if (element == null) return false;
         return elementClass.isInstance(element);
     }
 
-    public boolean existsTag(final @NotNull String tag) {
+    public boolean existsTag(final String tag) {
         return tagged.containsKey(tag);
     }
 
-    public @NotNull Set<CustomItem> getItems(final @NotNull String tag) {
+    public Set<CustomItem> getItems(final String tag) {
         return existsTag(tag)
                 ? new HashSet<>(tagged.get(tag))
                 : Set.of();
     }
 
-    public @NotNull Set<String> keys() {
+    public Set<String> keys() {
         return new HashSet<>(keyed.keySet());
     }
 
-    public @NotNull Set<CustomElement> elements() {
+    public Set<CustomElement> elements() {
         return new HashSet<>(classified.values());
     }
 
-    public @NotNull Set<String> tags() {
+    public Set<String> tags() {
         return new HashSet<>(tagged.keySet());
     }
 }

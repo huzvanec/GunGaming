@@ -1,7 +1,7 @@
 package cz.jeme.gungaming.item.attachment.impl;
 
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.data.Data;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.attachment.Attachment;
 import cz.jeme.gungaming.item.attachment.PlaceholderHelper;
 import cz.jeme.gungaming.item.gun.Gun;
@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class Silencer extends Attachment {
-    public static final @NotNull Data<String, String> GUN_SILENCER_KEY_DATA = Data.ofString(GunGaming.key("gun_silencer_key"));
+    public static final @NotNull PersistentData<String, String> GUN_SILENCER_KEY_DATA = PersistentData.ofString(GunGaming.key("gun_silencer_key"));
     private static final @NotNull ItemStack PLACEHOLDER = PlaceholderHelper.placeholder(meta -> {
         meta.displayName(Components.of("<!i><gray>Silencer"));
         meta.setCustomModelData(1);

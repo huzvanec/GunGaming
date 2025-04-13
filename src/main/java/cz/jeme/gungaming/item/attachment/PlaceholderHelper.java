@@ -1,7 +1,7 @@
 package cz.jeme.gungaming.item.attachment;
 
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.data.Data;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.attachment.impl.Silencer;
 import cz.jeme.gungaming.util.Components;
 import org.bukkit.Material;
@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public final class PlaceholderHelper {
-    public static final @NotNull Data<Byte, Boolean> PLACEHOLDER_DATA = Data.ofBoolean(GunGaming.key("placeholder"));
-    public static final @NotNull Data<Byte, Boolean> DISABLED_DATA = Data.ofBoolean(GunGaming.key("disabled"));
+    public static final @NotNull PersistentData<Byte, Boolean> PLACEHOLDER_DATA = PersistentData.ofBoolean(GunGaming.key("placeholder"));
+    public static final @NotNull PersistentData<Byte, Boolean> DISABLED_DATA = PersistentData.ofBoolean(GunGaming.key("disabled"));
 
     private static final @NotNull ItemStack DISABLED = ItemStack.of(Material.WHITE_STAINED_GLASS_PANE);
 
