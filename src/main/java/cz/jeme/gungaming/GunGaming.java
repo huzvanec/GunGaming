@@ -7,7 +7,6 @@ import cz.jeme.gungaming.game.lobby.Lobby;
 import cz.jeme.gungaming.item.attachment.ZoomManager;
 import cz.jeme.gungaming.item.gun.ReloadManager;
 import cz.jeme.gungaming.loot.crate.CrateGenerator;
-import cz.jeme.gungaming.util.Components;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.kyori.adventure.key.KeyPattern;
@@ -49,9 +48,6 @@ public final class GunGaming extends JavaPlugin {
         getLogger().info("Successfully enabled (took %sms)".formatted(
                 System.currentTimeMillis() - start
         ));
-
-        System.out.println(Components.latinString("buff"));
-        System.out.println(Components.latinString("nerf"));
     }
 
     @SuppressWarnings("UnstableApiUsage")
