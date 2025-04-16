@@ -1,657 +1,389 @@
 {
-    "item.gun.out_of_ammo": {
-        "sounds": [
-            "gungaming:item/gun/out_of_ammo"
-        ]
-    },
-    "item.gun.reload_required": {
-        "sounds": [
-            "gungaming:item/gun/reload_required"
-        ]
-    },
-    "item.gun.reload_aborted": {
-        "sounds": [
-            "gungaming:item/gun/reload_aborted"
-        ]
-    },
-    "item.beretta_m9.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/beretta_m9"
-        ]
-    },
-    "item.beretta_m9.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/beretta_m9"
-        ]
-    },
-    "item.beretta_m9.held": {
-        "sounds": [
-            "gungaming:item/held/beretta_m9"
-        ]
-    },
-    "item.nagant_m1895.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/nagant_m1895"
-        ]
-    },
-    "item.nagant_m1895.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/nagant_m1895"
-        ]
-    },
-    "item.nagant_m1895.held": {
-        "sounds": [
-            "gungaming:item/held/nagant_m1895"
-        ]
-    },
-    "item.m134_minigun.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/m134_minigun"
-        ]
-    },
-    "item.m134_minigun.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/m134_minigun"
-        ]
-    },
-    "item.m134_minigun.held": {
-        "sounds": [
-            "gungaming:item/held/m134_minigun"
-        ]
-    },
-    "item.remington_m870.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/remington_m870"
-        ]
-    },
-    "item.remington_m870.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/remington_m870"
-        ]
-    },
-    "item.remington_m870.held": {
-        "sounds": [
-            "gungaming:item/held/remington_m870"
-        ]
-    },
-    "item.ak-47.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/ak-47"
-        ]
-    },
-    "item.ak-47.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/ak-47"
-        ]
-    },
-    "item.ak-47.held": {
-        "sounds": [
-            "gungaming:item/held/ak-47"
-        ]
-    },
-    "item.dragunov_svu.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/dragunov_svu"
-        ]
-    },
-    "item.dragunov_svu.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/dragunov_svu"
-        ]
-    },
-    "item.dragunov_svu.held": {
-        "sounds": [
-            "gungaming:item/held/dragunov_svu"
-        ]
-    },
-    "item.sv-98.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/sv-98"
-        ]
-    },
-    "item.sv-98.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/sv-98"
-        ]
-    },
-    "item.sv-98.held": {
-        "sounds": [
-            "gungaming:item/held/sv-98"
-        ]
-    },
-    "item.prickskyttegevar_90.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/prickskyttegevar_90"
-        ]
-    },
-    "item.prickskyttegevar_90.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/prickskyttegevar_90"
-        ]
-    },
-    "item.prickskyttegevar_90.held": {
-        "sounds": [
-            "gungaming:item/held/prickskyttegevar_90"
-        ]
-    },
-    "item.rocket_launcher.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/rocket_launcher"
-        ]
-    },
-    "item.rocket_launcher.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/rocket_launcher"
-        ]
-    },
-    "item.rocket_launcher.held": {
-        "sounds": [
-            "gungaming:item/held/rocket_launcher"
-        ]
-    },
-    "item.mp5.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/mp5"
-        ]
-    },
-    "item.mp5.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/mp5"
-        ]
-    },
-    "item.mp5.held": {
-        "sounds": [
-            "gungaming:item/held/mp5"
-        ]
-    },
-    "item.mac-10.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/mac-10"
-        ]
-    },
-    "item.mac-10.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/mac-10"
-        ]
-    },
-    "item.mac-10.held": {
-        "sounds": [
-            "gungaming:item/held/mac-10"
-        ]
-    },
-    "item.ump9.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/ump9"
-        ]
-    },
-    "item.ump9.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/ump9"
-        ]
-    },
-    "item.ump9.held": {
-        "sounds": [
-            "gungaming:item/held/ump9"
-        ]
-    },
-    "item.remington_m1100.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/remington_m1100"
-        ]
-    },
-    "item.remington_m1100.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/remington_m1100"
-        ]
-    },
-    "item.remington_m1100.held": {
-        "sounds": [
-            "gungaming:item/held/remington_m1100"
-        ]
-    },
-    "item.spas-12.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/spas-12"
-        ]
-    },
-    "item.spas-12.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/spas-12"
-        ]
-    },
-    "item.spas-12.held": {
-        "sounds": [
-            "gungaming:item/held/spas-12"
-        ]
-    },
-    "item.kriss_vector.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/kriss_vector"
-        ]
-    },
-    "item.kriss_vector.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/kriss_vector"
-        ]
-    },
-    "item.kriss_vector.held": {
-        "sounds": [
-            "gungaming:item/held/kriss_vector"
-        ]
-    },
-    "item.scar-h.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/scar-h"
-        ]
-    },
-    "item.scar-h.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/scar-h"
-        ]
-    },
-    "item.scar-h.held": {
-        "sounds": [
-            "gungaming:item/held/scar-h"
-        ]
-    },
-    "item.glock_18c.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/glock_18c"
-        ]
-    },
-    "item.glock_18c.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/glock_18c"
-        ]
-    },
-    "item.glock_18c.held": {
-        "sounds": [
-            "gungaming:item/held/glock_18c"
-        ]
-    },
-    "item.desert_eagle.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/desert_eagle"
-        ]
-    },
-    "item.desert_eagle.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/desert_eagle"
-        ]
-    },
-    "item.desert_eagle.held": {
-        "sounds": [
-            "gungaming:item/held/desert_eagle"
-        ]
-    },
-    "item.baikal_mp220.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/baikal_mp220"
-        ]
-    },
-    "item.baikal_mp220.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/baikal_mp220"
-        ]
-    },
-    "item.baikal_mp220.held": {
-        "sounds": [
-            "gungaming:item/held/baikal_mp220"
-        ]
-    },
-    "item.saiga-12.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/saiga-12"
-        ]
-    },
-    "item.saiga-12.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/saiga-12"
-        ]
-    },
-    "item.saiga-12.held": {
-        "sounds": [
-            "gungaming:item/held/saiga-12"
-        ]
-    },
-    "item.beretta_93r.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/beretta_93r"
-        ]
-    },
-    "item.beretta_93r.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/beretta_93r"
-        ]
-    },
-    "item.beretta_93r.held": {
-        "sounds": [
-            "gungaming:item/held/beretta_93r"
-        ]
-    },
-    "item.steyr_elite.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/steyr_elite"
-        ]
-    },
-    "item.steyr_elite.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/steyr_elite"
-        ]
-    },
-    "item.steyr_elite.held": {
-        "sounds": [
-            "gungaming:item/held/steyr_elite"
-        ]
-    },
-    "item.m1918_bar.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/m1918_bar"
-        ]
-    },
-    "item.m1918_bar.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/m1918_bar"
-        ]
-    },
-    "item.m1918_bar.held": {
-        "sounds": [
-            "gungaming:item/held/m1918_bar"
-        ]
-    },
-    "item.famas.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/famas"
-        ]
-    },
-    "item.famas.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/famas"
-        ]
-    },
-    "item.famas.held": {
-        "sounds": [
-            "gungaming:item/held/famas"
-        ]
-    },
-    "item.hk416.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/hk416"
-        ]
-    },
-    "item.hk416.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/hk416"
-        ]
-    },
-    "item.hk416.held": {
-        "sounds": [
-            "gungaming:item/held/hk416"
-        ]
-    },
-    "item.qbz-95.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/qbz-95"
-        ]
-    },
-    "item.qbz-95.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/qbz-95"
-        ]
-    },
-    "item.qbz-95.held": {
-        "sounds": [
-            "gungaming:item/held/qbz-95"
-        ]
-    },
-    "item.m249_saw.shoot": {
-        "sounds": [
-            "gungaming:item/gun/shoot/m249_saw"
-        ]
-    },
-    "item.m249_saw.reload": {
-        "sounds": [
-            "gungaming:item/gun/reload/m249_saw"
-        ]
-    },
-    "item.m249_saw.held": {
-        "sounds": [
-            "gungaming:item/held/m249_saw"
-        ]
-    },
-    "entity.rocket.ambient": {
-        "sounds": [
-            "gungaming:entity/ambient/rocket"
-        ]
-    },
-    "entity.rocket_throwable.hit": {
-        "sounds": [
-            "gungaming:entity/hit/rocket_throwable"
-        ]
-    },
-    "entity.frag_grenade.hit": {
-        "sounds": [
-            "gungaming:entity/hit/frag_grenade"
-        ]
-    },
-    "entity.mirv_grenade.hit": {
-        "sounds": [
-            "gungaming:entity/hit/mirv_grenade"
-        ]
-    },
-    "entity.small_grenade.hit": {
-        "sounds": [
-            "gungaming:entity/hit/small_grenade"
-        ]
-    },
-    "entity.smoke_grenade.hit": {
-        "sounds": [
-            "gungaming:entity/hit/smoke_grenade"
-        ]
-    },
-    "entity.air_strike_strobe.hit": {
-        "sounds": [
-            "gungaming:entity/hit/air_strike_strobe"
-        ]
-    },
-    "entity.air_strike_bomb.hit": {
-        "sounds": [
-            "gungaming:entity/hit/air_strike_bomb"
-        ]
-    },
-    "entity.molotov_cocktail.hit": {
-        "sounds": [
-            "gungaming:entity/hit/molotov_cocktail"
-        ]
-    },
-    "entity.poisonous_grenade.hit": {
-        "sounds": [
-            "gungaming:entity/hit/poisonous_grenade"
-        ]
-    },
-    "entity.air_strike.ambient": {
-        "sounds": [
-            "gungaming:entity/ambient/air_strike"
-        ]
-    },
-    "item.grenade.throw": {
-        "sounds": [
-            "gungaming:item/throwable/throw/grenade"
-        ]
-    },
-    "item.molotov_cocktail.throw": {
-        "sounds": [
-            "gungaming:item/throwable/throw/molotov_cocktail"
-        ]
-    },
-    "item.wind_pearl.throw": {
-        "sounds": [
-            "gungaming:item/throwable/throw/wind_pearl"
-        ]
-    },
-    "item.air_strike_strobe.throw": {
-        "sounds": [
-            "gungaming:item/throwable/throw/air_strike_strobe"
-        ]
-    },
-    "item.soda.eat": {
-        "sounds": [
-            "gungaming:item/consumable/eat/soda"
-        ]
-    },
-    "item.pills.eat": {
-        "sounds": [
-            "gungaming:item/consumable/eat/pills"
-        ]
-    },
-    "item.medkit.eat": {
-        "sounds": [
-            "gungaming:item/consumable/eat/medkit"
-        ]
-    },
-    "item.bandage.eat": {
-        "sounds": [
-            "gungaming:item/consumable/eat/bandage"
-        ]
-    },
-    "item.soda.burp": {
-        "sounds": [
-            "gungaming:item/consumable/burp/soda"
-        ]
-    },
-    "item.pills.burp": {
-        "sounds": [
-            "gungaming:item/consumable/burp/pills"
-        ]
-    },
-    "item.medkit.burp": {
-        "sounds": [
-            "gungaming:item/consumable/burp/medkit"
-        ]
-    },
-    "item.bandage.burp": {
-        "sounds": [
-            "gungaming:item/consumable/burp/bandage"
-        ]
-    },
-    "item.soda.held": {
-        "sounds": [
-            "gungaming:item/held/soda"
-        ]
-    },
-    "item.pills.held": {
-        "sounds": [
-            "gungaming:item/held/pills"
-        ]
-    },
-    "item.medkit.held": {
-        "sounds": [
-            "gungaming:item/held/medkit"
-        ]
-    },
-    "item.bandage.held": {
-        "sounds": [
-            "gungaming:item/held/bandage"
-        ]
-    },
-    "item.ammo.held": {
-        "sounds": [
-            "gungaming:item/held/ammo"
-        ]
-    },
-    "item.grenade.held": {
-        "sounds": [
-            "gungaming:item/held/grenade"
-        ]
-    },
-    "item.tracker.held": {
-        "sounds": [
-            "gungaming:item/held/tracker"
-        ]
-    },
-    "item.armor.held": {
-        "sounds": [
-            "gungaming:item/held/armor"
-        ]
-    },
-    "item.attachment.held": {
-        "sounds": [
-            "gungaming:item/held/attachment"
-        ]
-    },
-    "item.attachment.apply": {
-        "sounds": [
-            "gungaming:item/attachment/apply"
-        ]
-    },
-    "item.attachment.remove": {
-        "sounds": [
-            "gungaming:item/attachment/remove"
-        ]
-    },
-    "item.detector_boots.warning": {
-        "sounds": [
-            "gungaming:item/detector_boots_warning"
-        ]
-    },
-    "game.start": {
-        "sounds": [
-            "gungaming:game/start"
-        ]
-    },
-    "game.end": {
-        "sounds": [
-            "gungaming:game/end"
-        ]
-    },
-    "game.ping.dong": {
-        "sounds": [
-            "gungaming:game/ping/dong"
-        ]
-    },
-    "game.ping.ding": {
-        "sounds": [
-            "gungaming:game/ping/ding"
-        ]
-    },
-    "game.ping.warning": {
-        "sounds": [
-            "gungaming:game/ping/warning"
-        ]
-    },
-    "game.ping.info": {
-        "sounds": [
-            "gungaming:game/ping/info"
-        ]
-    },
-    "game.air_drop": {
-        "sounds": [
-            "gungaming:game/air_drop"
-        ]
-    },
-    "game.ping.air_drop": {
-        "sounds": [
-            "gungaming:game/ping/air_drop"
-        ]
-    },
-    "block.mine.activating": {
-        "sounds": [
-            "gungaming:block/mine/activating"
-        ]
-    },
-    "block.mine.activated": {
-        "sounds": [
-            "gungaming:block/mine/activated"
-        ]
-    },
-    "block.mine.warning": {
-        "sounds": [
-            "gungaming:block/mine/warning"
-        ]
-    },
-    "block.mine.explosion": {
-        "sounds": [
-            "gungaming:block/mine/explosion"
-        ]
-    }
+  "item.gun.out_of_ammo": {
+    "sounds": ["gungaming:item/gun/out_of_ammo"]
+  },
+  "item.gun.reload_required": {
+    "sounds": ["gungaming:item/gun/reload_required"]
+  },
+  "item.gun.reload_aborted": {
+    "sounds": ["gungaming:item/gun/reload_aborted"]
+  },
+  "item.beretta_m9.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/beretta_m9"]
+  },
+  "item.beretta_m9.reload": {
+    "sounds": ["gungaming:item/gun/reload/beretta_m9"]
+  },
+  "item.beretta_m9.held": {
+    "sounds": ["gungaming:item/held/beretta_m9"]
+  },
+  "item.nagant_m1895.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/nagant_m1895"]
+  },
+  "item.nagant_m1895.reload": {
+    "sounds": ["gungaming:item/gun/reload/nagant_m1895"]
+  },
+  "item.nagant_m1895.held": {
+    "sounds": ["gungaming:item/held/nagant_m1895"]
+  },
+  "item.m134_minigun.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/m134_minigun"]
+  },
+  "item.m134_minigun.reload": {
+    "sounds": ["gungaming:item/gun/reload/m134_minigun"]
+  },
+  "item.m134_minigun.held": {
+    "sounds": ["gungaming:item/held/m134_minigun"]
+  },
+  "item.remington_m870.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/remington_m870"]
+  },
+  "item.remington_m870.reload": {
+    "sounds": ["gungaming:item/gun/reload/remington_m870"]
+  },
+  "item.remington_m870.held": {
+    "sounds": ["gungaming:item/held/remington_m870"]
+  },
+  "item.ak-47.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/ak-47"]
+  },
+  "item.ak-47.reload": {
+    "sounds": ["gungaming:item/gun/reload/ak-47"]
+  },
+  "item.ak-47.held": {
+    "sounds": ["gungaming:item/held/ak-47"]
+  },
+  "item.dragunov_svu.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/dragunov_svu"]
+  },
+  "item.dragunov_svu.reload": {
+    "sounds": ["gungaming:item/gun/reload/dragunov_svu"]
+  },
+  "item.dragunov_svu.held": {
+    "sounds": ["gungaming:item/held/dragunov_svu"]
+  },
+  "item.sv-98.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/sv-98"]
+  },
+  "item.sv-98.reload": {
+    "sounds": ["gungaming:item/gun/reload/sv-98"]
+  },
+  "item.sv-98.held": {
+    "sounds": ["gungaming:item/held/sv-98"]
+  },
+  "item.prickskyttegevar_90.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/prickskyttegevar_90"]
+  },
+  "item.prickskyttegevar_90.reload": {
+    "sounds": ["gungaming:item/gun/reload/prickskyttegevar_90"]
+  },
+  "item.prickskyttegevar_90.held": {
+    "sounds": ["gungaming:item/held/prickskyttegevar_90"]
+  },
+  "item.rocket_launcher.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/rocket_launcher"]
+  },
+  "item.rocket_launcher.reload": {
+    "sounds": ["gungaming:item/gun/reload/rocket_launcher"]
+  },
+  "item.rocket_launcher.held": {
+    "sounds": ["gungaming:item/held/rocket_launcher"]
+  },
+  "item.mp5.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/mp5"]
+  },
+  "item.mp5.reload": {
+    "sounds": ["gungaming:item/gun/reload/mp5"]
+  },
+  "item.mp5.held": {
+    "sounds": ["gungaming:item/held/mp5"]
+  },
+  "item.mac-10.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/mac-10"]
+  },
+  "item.mac-10.reload": {
+    "sounds": ["gungaming:item/gun/reload/mac-10"]
+  },
+  "item.mac-10.held": {
+    "sounds": ["gungaming:item/held/mac-10"]
+  },
+  "item.ump9.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/ump9"]
+  },
+  "item.ump9.reload": {
+    "sounds": ["gungaming:item/gun/reload/ump9"]
+  },
+  "item.ump9.held": {
+    "sounds": ["gungaming:item/held/ump9"]
+  },
+  "item.remington_m1100.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/remington_m1100"]
+  },
+  "item.remington_m1100.reload": {
+    "sounds": ["gungaming:item/gun/reload/remington_m1100"]
+  },
+  "item.remington_m1100.held": {
+    "sounds": ["gungaming:item/held/remington_m1100"]
+  },
+  "item.spas-12.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/spas-12"]
+  },
+  "item.spas-12.reload": {
+    "sounds": ["gungaming:item/gun/reload/spas-12"]
+  },
+  "item.spas-12.held": {
+    "sounds": ["gungaming:item/held/spas-12"]
+  },
+  "item.kriss_vector.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/kriss_vector"]
+  },
+  "item.kriss_vector.reload": {
+    "sounds": ["gungaming:item/gun/reload/kriss_vector"]
+  },
+  "item.kriss_vector.held": {
+    "sounds": ["gungaming:item/held/kriss_vector"]
+  },
+  "item.scar-h.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/scar-h"]
+  },
+  "item.scar-h.reload": {
+    "sounds": ["gungaming:item/gun/reload/scar-h"]
+  },
+  "item.scar-h.held": {
+    "sounds": ["gungaming:item/held/scar-h"]
+  },
+  "item.glock_18c.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/glock_18c"]
+  },
+  "item.glock_18c.reload": {
+    "sounds": ["gungaming:item/gun/reload/glock_18c"]
+  },
+  "item.glock_18c.held": {
+    "sounds": ["gungaming:item/held/glock_18c"]
+  },
+  "item.desert_eagle.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/desert_eagle"]
+  },
+  "item.desert_eagle.reload": {
+    "sounds": ["gungaming:item/gun/reload/desert_eagle"]
+  },
+  "item.desert_eagle.held": {
+    "sounds": ["gungaming:item/held/desert_eagle"]
+  },
+  "item.baikal_mp220.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/baikal_mp220"]
+  },
+  "item.baikal_mp220.reload": {
+    "sounds": ["gungaming:item/gun/reload/baikal_mp220"]
+  },
+  "item.baikal_mp220.held": {
+    "sounds": ["gungaming:item/held/baikal_mp220"]
+  },
+  "item.saiga-12.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/saiga-12"]
+  },
+  "item.saiga-12.reload": {
+    "sounds": ["gungaming:item/gun/reload/saiga-12"]
+  },
+  "item.saiga-12.held": {
+    "sounds": ["gungaming:item/held/saiga-12"]
+  },
+  "item.beretta_93r.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/beretta_93r"]
+  },
+  "item.beretta_93r.reload": {
+    "sounds": ["gungaming:item/gun/reload/beretta_93r"]
+  },
+  "item.beretta_93r.held": {
+    "sounds": ["gungaming:item/held/beretta_93r"]
+  },
+  "item.steyr_elite.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/steyr_elite"]
+  },
+  "item.steyr_elite.reload": {
+    "sounds": ["gungaming:item/gun/reload/steyr_elite"]
+  },
+  "item.steyr_elite.held": {
+    "sounds": ["gungaming:item/held/steyr_elite"]
+  },
+  "item.m1918_bar.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/m1918_bar"]
+  },
+  "item.m1918_bar.reload": {
+    "sounds": ["gungaming:item/gun/reload/m1918_bar"]
+  },
+  "item.m1918_bar.held": {
+    "sounds": ["gungaming:item/held/m1918_bar"]
+  },
+  "item.famas.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/famas"]
+  },
+  "item.famas.reload": {
+    "sounds": ["gungaming:item/gun/reload/famas"]
+  },
+  "item.famas.held": {
+    "sounds": ["gungaming:item/held/famas"]
+  },
+  "item.hk416.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/hk416"]
+  },
+  "item.hk416.reload": {
+    "sounds": ["gungaming:item/gun/reload/hk416"]
+  },
+  "item.hk416.held": {
+    "sounds": ["gungaming:item/held/hk416"]
+  },
+  "item.qbz-95.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/qbz-95"]
+  },
+  "item.qbz-95.reload": {
+    "sounds": ["gungaming:item/gun/reload/qbz-95"]
+  },
+  "item.qbz-95.held": {
+    "sounds": ["gungaming:item/held/qbz-95"]
+  },
+  "item.m249_saw.shoot": {
+    "sounds": ["gungaming:item/gun/shoot/m249_saw"]
+  },
+  "item.m249_saw.reload": {
+    "sounds": ["gungaming:item/gun/reload/m249_saw"]
+  },
+  "item.m249_saw.held": {
+    "sounds": ["gungaming:item/held/m249_saw"]
+  },
+  "entity.rocket.ambient": {
+    "sounds": ["gungaming:entity/ambient/rocket"]
+  },
+  "entity.rocket_throwable.hit": {
+    "sounds": ["gungaming:entity/hit/rocket_throwable"]
+  },
+  "entity.frag_grenade.hit": {
+    "sounds": ["gungaming:entity/hit/frag_grenade"]
+  },
+  "entity.mirv_grenade.hit": {
+    "sounds": ["gungaming:entity/hit/mirv_grenade"]
+  },
+  "entity.small_grenade.hit": {
+    "sounds": ["gungaming:entity/hit/small_grenade"]
+  },
+  "entity.smoke_grenade.hit": {
+    "sounds": ["gungaming:entity/hit/smoke_grenade"]
+  },
+  "entity.air_strike_strobe.hit": {
+    "sounds": ["gungaming:entity/hit/air_strike_strobe"]
+  },
+  "entity.air_strike_bomb.hit": {
+    "sounds": ["gungaming:entity/hit/air_strike_bomb"]
+  },
+  "entity.molotov_cocktail.hit": {
+    "sounds": ["gungaming:entity/hit/molotov_cocktail"]
+  },
+  "entity.poisonous_grenade.hit": {
+    "sounds": ["gungaming:entity/hit/poisonous_grenade"]
+  },
+  "entity.mine_throwable.hit": {
+    "sounds": ["gungaming:entity/hit/mine_throwable"]
+  },
+  "entity.air_strike.ambient": {
+    "sounds": ["gungaming:entity/ambient/air_strike"]
+  },
+  "item.grenade.throw": {
+    "sounds": ["gungaming:item/throwable/throw/grenade"]
+  },
+  "item.generic_throwable.throw": {
+    "sounds": ["gungaming:item/throwable/throw/generic"]
+  },
+  "item.soda.eat": {
+    "sounds": ["gungaming:item/consumable/eat/soda"]
+  },
+  "item.pills.eat": {
+    "sounds": ["gungaming:item/consumable/eat/pills"]
+  },
+  "item.medkit.eat": {
+    "sounds": ["gungaming:item/consumable/eat/medkit"]
+  },
+  "item.bandage.eat": {
+    "sounds": ["gungaming:item/consumable/eat/bandage"]
+  },
+  "item.soda.burp": {
+    "sounds": ["gungaming:item/consumable/burp/soda"]
+  },
+  "item.pills.burp": {
+    "sounds": ["gungaming:item/consumable/burp/pills"]
+  },
+  "item.medkit.burp": {
+    "sounds": ["gungaming:item/consumable/burp/medkit"]
+  },
+  "item.bandage.burp": {
+    "sounds": ["gungaming:item/consumable/burp/bandage"]
+  },
+  "item.soda.held": {
+    "sounds": ["gungaming:item/held/soda"]
+  },
+  "item.pills.held": {
+    "sounds": ["gungaming:item/held/pills"]
+  },
+  "item.medkit.held": {
+    "sounds": ["gungaming:item/held/medkit"]
+  },
+  "item.bandage.held": {
+    "sounds": ["gungaming:item/held/bandage"]
+  },
+  "item.ammo.held": {
+    "sounds": ["gungaming:item/held/ammo"]
+  },
+  "item.grenade.held": {
+    "sounds": ["gungaming:item/held/grenade"]
+  },
+  "item.tracker.held": {
+    "sounds": ["gungaming:item/held/tracker"]
+  },
+  "item.armor.held": {
+    "sounds": ["gungaming:item/held/armor"]
+  },
+  "item.attachment.held": {
+    "sounds": ["gungaming:item/held/attachment"]
+  },
+  "item.attachment.apply": {
+    "sounds": ["gungaming:item/attachment/apply"]
+  },
+  "item.attachment.remove": {
+    "sounds": ["gungaming:item/attachment/remove"]
+  },
+  "item.detector_boots.warning": {
+    "sounds": ["gungaming:item/detector_boots_warning"]
+  },
+  "game.start": {
+    "sounds": ["gungaming:game/start"]
+  },
+  "game.end": {
+    "sounds": ["gungaming:game/end"]
+  },
+  "game.ping.dong": {
+    "sounds": ["gungaming:game/ping/dong"]
+  },
+  "game.ping.ding": {
+    "sounds": ["gungaming:game/ping/ding"]
+  },
+  "game.ping.warning": {
+    "sounds": ["gungaming:game/ping/warning"]
+  },
+  "game.ping.info": {
+    "sounds": ["gungaming:game/ping/info"]
+  },
+  "game.air_drop": {
+    "sounds": ["gungaming:game/air_drop"]
+  },
+  "game.ping.air_drop": {
+    "sounds": ["gungaming:game/ping/air_drop"]
+  },
+  "block.mine.activating": {
+    "sounds": ["gungaming:block/mine/activating"]
+  },
+  "block.mine.activated": {
+    "sounds": ["gungaming:block/mine/activated"]
+  },
+  "block.mine.warning": {
+    "sounds": ["gungaming:block/mine/warning"]
+  }
 }

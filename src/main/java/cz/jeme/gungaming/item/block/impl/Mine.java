@@ -36,7 +36,6 @@ public class Mine extends CustomBlock {
     private static final Sound ACTIVATING_SOUND = Sound.sound(GunGaming.key("block.mine.activating"), Sound.Source.BLOCK, 2, 1);
     private static final Sound ACTIVATED_SOUND = Sound.sound(GunGaming.key("block.mine.activated"), Sound.Source.BLOCK, 2, 1);
     private static final Sound WARNING_SOUND = Sound.sound(GunGaming.key("block.mine.warning"), Sound.Source.BLOCK, 2, 1);
-    private static final Sound EXPLOSION_SOUND = Sound.sound(GunGaming.key("block.mine.explosion"), Sound.Source.BLOCK, 9.4F, 1);
 
     private static final Queue<ActiveMine> MINES = new ConcurrentLinkedQueue<>();
 
@@ -148,7 +147,6 @@ public class Mine extends CustomBlock {
                     );
                     damager.hitEntity(damager); // explode
                     damager.remove();
-                    world.playSound(EXPLOSION_SOUND, location.x(), location.y(), location.z());
                 },
                 19
         );

@@ -135,7 +135,7 @@ public abstract class Throwable extends CustomItem {
 
     // sounds
 
-    protected final Key throwSoundKey = GunGaming.key("item." + key.value() + ".throw");
+    protected final Key throwSoundKey = GunGaming.key("item.generic_throwable.throw");
     protected final Key hitSoundKey = GunGaming.key("entity." + key.value() + ".hit");
 
     protected final Sound throwSound = Sound.sound(throwSoundKey, Sound.Source.PLAYER, 1.9F, 1);
