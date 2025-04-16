@@ -9,3 +9,5 @@ build/
 *.iws
 *.iml
 *.ipr
+
+changelog.md

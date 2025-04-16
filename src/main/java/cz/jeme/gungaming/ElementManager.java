@@ -3,6 +3,7 @@ package cz.jeme.gungaming;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.item.ammo.Ammo;
 import cz.jeme.gungaming.item.armor.impl.StealthHelmet;
+import cz.jeme.gungaming.item.throwable.impl.RocketThrowable;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ClassInfoList;
@@ -23,8 +24,9 @@ public enum ElementManager {
     private final Map<String, Set<CustomItem>> tagged = new HashMap<>();
 
     private static final List<Class<? extends CustomElement>> ORDER = List.of(
-            Ammo.class, // load ammo before guns
+            Ammo.class, // load all ammo before guns
             StealthHelmet.class, // load stealth helmet before radar and player trackers
+            RocketThrowable.class, // load rocket throwable before rocket launcher
             CustomItem.class,
             CustomElement.class
     );

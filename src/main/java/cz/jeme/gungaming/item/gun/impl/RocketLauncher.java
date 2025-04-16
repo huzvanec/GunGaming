@@ -31,6 +31,8 @@ import java.util.Objects;
 
 @NullMarked
 public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDisabled {
+    private final RocketThrowable rocketThrowable = CustomElement.of(RocketThrowable.class);
+
     public static final double MAX_DAMAGE = 30;
 
     @Override
@@ -126,18 +128,17 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
     @Override
     protected void onBulletHit(final ProjectileHitEvent event, final AbstractArrow bullet) {
         final Location location = bullet.getLocation();
-        final RocketThrowable throwable = CustomElement.of(RocketThrowable.class);
         final Entity hit = event.getHitEntity();
         Objects.requireNonNull(bullet.getShooter(), "Shooter is null!").launchProjectile(
                 Snowball.class,
                 hit == null ? bullet.getVelocity() : null,
                 snowball -> {
-                    ThrownHelper.THROWABLE_KEY_DATA.write(snowball, throwable.key().asString());
-                    ThrownHelper.MAX_DAMAGE_DATA.write(snowball, throwable.maxDamage());
-                    snowball.setItem(throwable.item());
+                    ThrownHelper.THROWABLE_KEY_DATA.write(snowball, rocketThrowable.key().asString());
+                    ThrownHelper.MAX_DAMAGE_DATA.write(snowball, rocketThrowable.maxDamage());
+                    snowball.setItem(rocketThrowable.item());
                     snowball.teleport(location);
-                    if (hit == null) return;
-                    snowball.hitEntity(hit);
+                    snowball.hitEntity(snowball);
+                    snowball.remove();
                 }
         );
         bullet.getWorld().stopSound(ROCKET_SOUND);
