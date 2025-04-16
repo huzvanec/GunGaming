@@ -1,10 +1,10 @@
 package cz.jeme.gungaming.item.impl;
 
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.loot.Rarity;
 import cz.jeme.gungaming.loot.SingleLoot;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.util.Components;
 import cz.jeme.gungaming.util.Lores;
 import net.kyori.adventure.key.KeyPattern;
@@ -20,13 +20,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.List;
 
+@NullMarked
 public class GrapplingHook extends CustomItem implements SingleLoot {
-    public static final @NotNull PersistentData<Byte, Boolean> HOOKED_DATA = PersistentData.ofBoolean(GunGaming.key("hooked"));
-    public static final @NotNull PersistentData<Long, Long> GRAPPLING_TIME_DATA = PersistentData.ofLong(GunGaming.key("grappling_time"));
+    public static final PersistentData<Byte, Boolean> HOOKED_DATA = PersistentData.ofBoolean(GunGaming.key("hooked"));
+    public static final PersistentData<Long, Long> GRAPPLING_TIME_DATA = PersistentData.ofLong(GunGaming.key("grappling_time"));
 
     private static final int FALL_RESISTANCE = 6000; // fall resistance after using the grappling hook, in millis
 
@@ -35,22 +36,22 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Grappling Hook");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "I don't think this is used for fishing...";
     }
 
     @Override
-    protected @NotNull Material provideMaterial() {
+    protected Material provideMaterial() {
         return Material.FISHING_ROD;
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 
@@ -65,17 +66,12 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "grappling_hook";
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 1;
-    }
-
-    @Override
-    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+    protected List<String> update(final ItemStack item) {
         final Damageable meta = (Damageable) item.getItemMeta();
         final int damage = meta.getDamage();
         final int maxDamage = meta.getMaxDamage();
@@ -85,7 +81,7 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
         );
     }
 
-    public void onPlayerFish(@NotNull final PlayerFishEvent event) {
+    public void onPlayerFish(final PlayerFishEvent event) {
         final EquipmentSlot hand = event.getHand();
         if (hand == null) return;
         final Player player = event.getPlayer();
@@ -101,14 +97,14 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
         }
     }
 
-    private void onThrow(@NotNull final PlayerFishEvent event) {
+    private void onThrow(final PlayerFishEvent event) {
         final FishHook hook = event.getHook();
         hook.setVelocity(hook.getVelocity().multiply(1.4));
         new BukkitRunnable() {
-            private final @NotNull World world = hook.getWorld();
+            private final World world = hook.getWorld();
             private boolean hooked = false;
             private static final float RANGE = 0.3f;
-            private static final @NotNull Vector VERTICAL_DISTURBANCE = new Vector(0f, 0.0302f, 0f);
+            private static final Vector VERTICAL_DISTURBANCE = new Vector(0f, 0.0302f, 0f);
 
             @Override
             public void run() {
@@ -137,7 +133,7 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
         }.runTaskTimer(GunGaming.instance(), 0L, 1L);
     }
 
-    private void onSubtract(@NotNull final PlayerFishEvent event) {
+    private void onSubtract(final PlayerFishEvent event) {
         assert event.getHand() != null;
         final ItemStack fishingRod = event.getPlayer().getInventory().getItem(event.getHand());
         final FishHook hook = event.getHook();
@@ -167,7 +163,7 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
         GRAPPLING_TIME_DATA.write(player, System.currentTimeMillis());
     }
 
-    public static void onEntityDamage(final @NotNull EntityDamageEvent event) {
+    public static void onEntityDamage(final EntityDamageEvent event) {
         if (event.getCause() != EntityDamageEvent.DamageCause.FALL) return;
         if (!GRAPPLING_TIME_DATA.check(event.getEntity())) return;
         final long grapplingTime = GRAPPLING_TIME_DATA.require(event.getEntity());

@@ -5,6 +5,7 @@ import cz.jeme.gungaming.CustomElement;
 import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.loot.crate.Crate;
 import cz.jeme.gungaming.util.Components;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
@@ -13,27 +14,27 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 
+@NullMarked
 public abstract class CustomItem extends CustomElement {
-    private final @NotNull Set<String> tags = new HashSet<>();
+    private final Set<String> tags = new HashSet<>();
 
-    protected final @NotNull String description = Components.strip(provideDescription());
-    protected final @NotNull Material material = provideMaterial();
-    protected final @NotNull ItemStack item = ItemStack.of(material);
-    protected final @Nullable Integer customModelData = provideCustomModelData();
+    protected final String description = Components.strip(provideDescription());
+    protected final Material material = provideMaterial();
+    protected final ItemStack item = ItemStack.of(material);
     protected final int minAmount = provideMinAmount();
     protected final int maxAmount = provideMaxAmount();
-    protected final @NotNull String type = Components.strip(provideType());
+    protected final String type = Components.strip(provideType());
 
+    @SuppressWarnings("UnstableApiUsage")
     protected CustomItem() {
         addTags("item");
         item.editMeta(meta -> {
             meta.itemName(name);
-            meta.setCustomModelData(customModelData);
             meta.setAttributeModifiers(HashMultimap.create());
             meta.addItemFlags(
                     ItemFlag.HIDE_ATTRIBUTES,
@@ -41,6 +42,8 @@ public abstract class CustomItem extends CustomElement {
             );
             KEY_DATA.write(meta, key.asString());
         });
+        if (!provideUsesDefaultModel())
+            item.setData(DataComponentTypes.ITEM_MODEL, key);
     }
 
     @ApiStatus.Internal
@@ -49,13 +52,13 @@ public abstract class CustomItem extends CustomElement {
         updateItem(item);
     }
 
-    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+    protected List<String> update(final ItemStack item) {
         return List.of();
     }
 
-    private static final @NotNull String LORE_PREFIX = "<!i><white>";
+    private static final String LORE_PREFIX = "<!i><white>";
 
-    public final void updateItem(final @NotNull ItemStack item) {
+    public final void updateItem(final ItemStack item) {
         if (!CustomItem.is(item, getClass()))
             throw new IllegalArgumentException("The provided item is not this CustomItem!");
         final List<Component> lore = new ArrayList<>();
@@ -75,58 +78,48 @@ public abstract class CustomItem extends CustomElement {
         item.editMeta(meta -> meta.lore(lore));
     }
 
-    protected final void addTags(final String @NotNull ... addTags) {
+    protected final void addTags(final String... addTags) {
         tags.addAll(Arrays.asList(addTags));
     }
 
     @ApiStatus.Internal
-    public void generated(final @NotNull ItemStack item, final @NotNull Crate crate) {
+    public void generated(final ItemStack item, final Crate crate) {
     }
 
     // providers
 
-    protected abstract @NotNull String provideDescription();
-
-    protected abstract @NotNull Material provideMaterial();
-
-    protected @Nullable Integer provideCustomModelData() {
-        return null;
+    protected boolean provideUsesDefaultModel() {
+        return false;
     }
+
+    protected abstract String provideDescription();
+
+    protected abstract Material provideMaterial();
 
     protected abstract int provideMinAmount();
 
     protected abstract int provideMaxAmount();
 
-    protected @NotNull String provideType() {
+    protected String provideType() {
         return "item";
     }
 
     // getters
 
-    public final @NotNull Set<String> tags() {
+    public final Set<String> tags() {
         return new HashSet<>(tags);
     }
 
-    public final @NotNull Material material() {
+    public final Material material() {
         return material;
     }
 
-    public final @NotNull String description() {
+    public final String description() {
         return description;
     }
 
-    public final @NotNull ItemStack item() {
+    public final ItemStack item() {
         return item.clone();
-    }
-
-    public final boolean hasCustomModelData() {
-        return customModelData != null;
-    }
-
-    public final int customModelData() {
-        if (customModelData == null)
-            throw new IllegalStateException("This custom item has no customModelData!");
-        return customModelData;
     }
 
     public final int minAmount() {
@@ -137,55 +130,55 @@ public abstract class CustomItem extends CustomElement {
         return maxAmount;
     }
 
-    public final @NotNull String type() {
+    public final String type() {
         return type;
     }
 
-    protected void onLeftClick(final @NotNull PlayerInteractEvent event) {
+    protected void onLeftClick(final PlayerInteractEvent event) {
     }
 
-    protected void onLeftClickAir(final @NotNull PlayerInteractEvent event) {
+    protected void onLeftClickAir(final PlayerInteractEvent event) {
     }
 
-    protected void onLeftClickBlock(final @NotNull PlayerInteractEvent event) {
+    protected void onLeftClickBlock(final PlayerInteractEvent event) {
     }
 
-    protected void onRightClick(final @NotNull PlayerInteractEvent event) {
+    protected void onRightClick(final PlayerInteractEvent event) {
     }
 
-    protected void onRightClickAir(final @NotNull PlayerInteractEvent event) {
+    protected void onRightClickAir(final PlayerInteractEvent event) {
     }
 
-    protected void onRightClickBlock(final @NotNull PlayerInteractEvent event) {
+    protected void onRightClickBlock(final PlayerInteractEvent event) {
     }
 
-    protected void onUse(final @NotNull PlayerInteractEvent event) {
+    protected void onUse(final PlayerInteractEvent event) {
     }
 
     // sound
 
-    protected final @NotNull Key heldSoundKey = GunGaming.key("item." + key.value() + ".held");
-    protected final @NotNull Sound heldSound = Sound.sound(heldSoundKey, Sound.Source.PLAYER, 1.9F, 1);
+    protected final Key heldSoundKey = GunGaming.key("item." + key.value() + ".held");
+    protected final Sound heldSound = Sound.sound(heldSoundKey, Sound.Source.PLAYER, 1.9F, 1);
 
-    public @NotNull Sound heldSound(final @NotNull ItemStack item) {
+    public Sound heldSound(final ItemStack item) {
         return heldSound;
     }
 
     // static accessors
 
-    public static @NotNull CustomItem of(final @NotNull String keyStr) {
+    public static CustomItem of(final String keyStr) {
         return CustomElement.of(keyStr, CustomItem.class);
     }
 
-    public static boolean is(final @NotNull String keyStr) {
+    public static boolean is(final String keyStr) {
         return CustomElement.is(keyStr, CustomItem.class);
     }
 
-    public static <T extends CustomItem> @NotNull T of(final @NotNull ItemStack item, final @NotNull Class<T> itemClass) {
+    public static <T extends CustomItem> T of(final ItemStack item, final Class<T> itemClass) {
         return CustomElement.of(CustomElement.KEY_DATA.require(item), itemClass);
     }
 
-    public static @NotNull CustomItem of(final @NotNull ItemStack item) {
+    public static CustomItem of(final ItemStack item) {
         return CustomItem.of(item, CustomItem.class);
     }
 
@@ -197,7 +190,7 @@ public abstract class CustomItem extends CustomElement {
                 .orElse(false);
     }
 
-    public static boolean is(final @Nullable ItemStack item, final @NotNull Class<? extends CustomItem> itemClass) {
+    public static boolean is(final @Nullable ItemStack item, final Class<? extends CustomItem> itemClass) {
         if (item == null) return false;
         return CustomElement.KEY_DATA.read(item)
                 .map(keyStr -> CustomElement.is(keyStr, itemClass))
@@ -205,7 +198,7 @@ public abstract class CustomItem extends CustomElement {
     }
 
     @Override
-    public @NotNull String toString() {
+    public String toString() {
         return Components.strip(name);
     }
 }

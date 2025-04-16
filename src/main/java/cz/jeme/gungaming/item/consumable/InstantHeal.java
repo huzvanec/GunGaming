@@ -6,8 +6,9 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public abstract class InstantHeal extends Consumable {
     protected double healAmount = provideHealAmount();
 
@@ -28,7 +29,7 @@ public abstract class InstantHeal extends Consumable {
     // healing
 
     @Override
-    protected void onConsume(final @NotNull PlayerItemConsumeEvent event) {
+    protected void onConsume(final PlayerItemConsumeEvent event) {
         final Player player = event.getPlayer();
         final double health = player.getHealth() + healAmount;
         final AttributeInstance attribute = player.getAttribute(Attribute.MAX_HEALTH);
@@ -37,7 +38,7 @@ public abstract class InstantHeal extends Consumable {
     }
 
     @Override
-    protected void onUse(final @NotNull PlayerInteractEvent event) {
+    protected void onUse(final PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         final double health = player.getHealth();
         final AttributeInstance attribute = player.getAttribute(Attribute.MAX_HEALTH);

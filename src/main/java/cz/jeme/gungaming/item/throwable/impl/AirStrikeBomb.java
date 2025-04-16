@@ -7,8 +7,9 @@ import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class AirStrikeBomb extends Throwable implements MineChainTrigger {
     @Override
     protected int provideThrowCooldown() {
@@ -21,7 +22,7 @@ public class AirStrikeBomb extends Throwable implements MineChainTrigger {
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Explosive used for the air strike bombing";
     }
 
@@ -36,27 +37,22 @@ public class AirStrikeBomb extends Throwable implements MineChainTrigger {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "air_strike_bomb";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.UNOBTAINABLE;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Air Strike Bomb");
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 8;
-    }
-
-    @Override
-    protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
+    protected void onThrownHit(final ProjectileHitEvent event, final Snowball thrown) {
         thrown.getLocation().createExplosion(thrown, 5F, false, true);
     }
 

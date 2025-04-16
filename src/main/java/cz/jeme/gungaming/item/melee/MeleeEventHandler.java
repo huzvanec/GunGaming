@@ -9,14 +9,15 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public final class MeleeEventHandler {
     private MeleeEventHandler() {
         throw new AssertionError();
     }
 
-    public static void onEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent event) {
+    public static void onEntityDamageByEntity(final EntityDamageByEntityEvent event) {
         final EntityDamageEvent.DamageCause cause = event.getCause();
         if (cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK && cause != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)
             return;
@@ -35,7 +36,7 @@ public final class MeleeEventHandler {
         Melee.of(item).onHit(event, item);
     }
 
-    public static void onPlayerItemConsume(final @NotNull PlayerItemConsumeEvent event) {
+    public static void onPlayerItemConsume(final PlayerItemConsumeEvent event) {
         if (!CustomItem.is(event.getItem(), Fish.class)) return;
         event.setCancelled(true);
         event.getPlayer().setHealth(0.1);

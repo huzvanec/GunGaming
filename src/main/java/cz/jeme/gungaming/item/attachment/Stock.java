@@ -2,23 +2,24 @@ package cz.jeme.gungaming.item.attachment;
 
 import cz.jeme.gungaming.CustomElement;
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.item.gun.Gun;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.util.Components;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
+@NullMarked
 public abstract class Stock extends Attachment {
-    public static final @NotNull PersistentData<String, String> GUN_STOCK_KEY_DATA = PersistentData.ofString(GunGaming.key("gun_stock_key"));
-    private static final @NotNull ItemStack PLACEHOLDER = PlaceholderHelper.placeholder(meta -> {
-        meta.displayName(Components.of("<!i><gray>Stock"));
-        meta.setCustomModelData(5);
-    });
+    public static final PersistentData<String, String> GUN_STOCK_KEY_DATA = PersistentData.ofString(GunGaming.key("gun_stock_key"));
+    private static final ItemStack PLACEHOLDER = PlaceholderHelper.placeholder(
+            GunGaming.key("stock_placeholder"),
+            meta -> meta.displayName(Components.of("<!i><gray>Stock"))
+    );
 
-    public static @NotNull ItemStack placeholder(final @NotNull ItemStack gunItem) {
+    public static ItemStack placeholder(final ItemStack gunItem) {
         return PLACEHOLDER.clone();
     }
 
@@ -35,26 +36,26 @@ public abstract class Stock extends Attachment {
     }
 
     @Override
-    public void apply(final @NotNull HumanEntity player, final @NotNull ItemStack gunItem) {
+    public void apply(final HumanEntity player, final ItemStack gunItem) {
         final Gun gun = Gun.of(gunItem);
         Gun.RECOIL_DATA.write(gunItem, gun.recoil() * recoilMultiplier);
     }
 
     @Override
-    public void remove(final @NotNull HumanEntity player, final @NotNull ItemStack gunItem) {
+    public void remove(final HumanEntity player, final ItemStack gunItem) {
         final Gun gun = Gun.of(gunItem);
         Gun.RECOIL_DATA.write(gunItem, gun.recoil());
     }
 
-    public static @NotNull Stock of(final @NotNull String keyStr) {
+    public static Stock of(final String keyStr) {
         return CustomElement.of(keyStr, Stock.class);
     }
 
-    public static @NotNull Stock of(final @NotNull ItemStack item) {
+    public static Stock of(final ItemStack item) {
         return CustomItem.of(item, Stock.class);
     }
 
-    public static boolean is(final @NotNull String keyStr) {
+    public static boolean is(final String keyStr) {
         return CustomElement.is(keyStr, Stock.class);
     }
 

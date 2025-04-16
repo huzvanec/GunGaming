@@ -4,11 +4,12 @@ import cz.jeme.gungaming.item.ammo.Ammo;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class FiveZeroActionExpress extends Ammo {
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Ammo for the Desert Eagle";
     }
 
@@ -23,22 +24,18 @@ public class FiveZeroActionExpress extends Ammo {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return ".50_action_express";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.RARE;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text(".50 Action Express");
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 6;
-    }
 }

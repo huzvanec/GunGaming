@@ -4,25 +4,26 @@ import cz.jeme.gungaming.GunGaming;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public abstract class Grenade extends Throwable {
     protected Grenade() {
         addTags("grenade");
     }
 
-    protected final @NotNull Key throwSoundKey = GunGaming.key("item.grenade.throw");
-    protected final @NotNull Sound throwSound = Sound.sound(throwSoundKey, Sound.Source.PLAYER, 1.9F, 1);
+    protected final Key throwSoundKey = GunGaming.key("item.grenade.throw");
+    protected final Sound throwSound = Sound.sound(throwSoundKey, Sound.Source.PLAYER, 1.9F, 1);
 
     @Override
-    public @NotNull Sound throwSound(final @NotNull ItemStack item) {
+    public Sound throwSound(final ItemStack item) {
         return throwSound;
     }
 
-    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.key("item.grenade.held"), Sound.Source.PLAYER, 1.9F, 1);
+    protected final Sound heldSound = Sound.sound(GunGaming.key("item.grenade.held"), Sound.Source.PLAYER, 1.9F, 1);
 
     @Override
-    public @NotNull Sound heldSound(final @NotNull ItemStack item) {
+    public Sound heldSound(final ItemStack item) {
         return heldSound;
     }
 }

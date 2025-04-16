@@ -16,12 +16,13 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class PoisonousGrenade extends Grenade {
     public static final int EFFECTS_DURATION = 200; // Duration of effects in ticks
-    private static final @NotNull Color COLOR = Color.fromRGB(164, 183, 41);
-    private static final @NotNull Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(COLOR, 6);
+    private static final Color COLOR = Color.fromRGB(164, 183, 41);
+    private static final Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(COLOR, 6);
 
     @Override
     protected int provideThrowCooldown() {
@@ -34,17 +35,17 @@ public class PoisonousGrenade extends Grenade {
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Poisonous Grenade");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Releases highly poisonous clouds";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.RARE;
     }
 
@@ -59,17 +60,12 @@ public class PoisonousGrenade extends Grenade {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "poisonous_grenade";
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 10;
-    }
-
-    @Override
-    protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
+    protected void onThrownHit(final ProjectileHitEvent event, final Snowball thrown) {
         final Location location = thrown.getLocation();
         new BukkitRunnable() {
             private int counter = 0;

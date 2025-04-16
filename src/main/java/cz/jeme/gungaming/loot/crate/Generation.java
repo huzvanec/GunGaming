@@ -11,16 +11,17 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
+@NullMarked
 final class Generation extends BukkitRunnable {
-    private static final @NotNull DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("00.00");
-    private final @NotNull Audience audience;
+    private static final DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("00.00");
+    private final Audience audience;
     private final int xMin;
     private final int xMax;
     private final int zMin;
@@ -28,16 +29,16 @@ final class Generation extends BukkitRunnable {
     private final int bps;
     private int x;
     private int z;
-    private final @NotNull World world;
-    private final @NotNull Set<Crate> crates = ElementManager.INSTANCE.elements().stream()
+    private final World world;
+    private final Set<Crate> crates = ElementManager.INSTANCE.elements().stream()
             .filter(Crate.class::isInstance)
             .map(Crate.class::cast)
             .collect(Collectors.toSet());
     private final long startTime;
     private int cratesCount = 0;
-    private final @NotNull Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+    private final Collection<? extends Player> players = Bukkit.getOnlinePlayers();
 
-    public Generation(final @NotNull Audience audience, final @NotNull Location location, final int x1, final int z1, final int x2, final int z2, final int bps) {
+    public Generation(final Audience audience, final Location location, final int x1, final int z1, final int x2, final int z2, final int bps) {
         this.audience = audience;
         this.bps = bps;
         xMin = Math.min(x1, x2);
@@ -98,9 +99,9 @@ final class Generation extends BukkitRunnable {
         super.cancel();
     }
 
-    private final @NotNull Random random = ThreadLocalRandom.current();
+    private final Random random = ThreadLocalRandom.current();
 
-    private void generate(final @NotNull Crate crate, final int x, final int z) {
+    private void generate(final Crate crate, final int x, final int z) {
         final List<Integer> heights = new ArrayList<>();
         boolean lastOccluding = false;
         for (int y = world.getMinHeight(); y < world.getMaxHeight() - 1; y++) {

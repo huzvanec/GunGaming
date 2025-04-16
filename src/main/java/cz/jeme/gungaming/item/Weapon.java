@@ -1,7 +1,9 @@
 package cz.jeme.gungaming.item;
 
 import cz.jeme.gungaming.loot.SingleLoot;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public abstract class Weapon extends CustomItem implements SingleLoot {
     protected Weapon() {
         addTags("weapon");

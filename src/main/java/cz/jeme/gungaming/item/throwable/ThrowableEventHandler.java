@@ -9,14 +9,15 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public final class ThrowableEventHandler {
     private ThrowableEventHandler() {
         throw new AssertionError();
     }
 
-    public static void onProjectileHit(final @NotNull ProjectileHitEvent event) {
+    public static void onProjectileHit(final ProjectileHitEvent event) {
         if (!(event.getEntity() instanceof final Snowball thrown)) return;
         if (!ThrownHelper.isThrown(thrown)) return;
         final Throwable throwable = ThrownHelper.getThrowable(thrown);
@@ -27,7 +28,7 @@ public final class ThrowableEventHandler {
         throwable.thrownHit(event, thrown);
     }
 
-    public static void onEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent event) {
+    public static void onEntityDamageByEntity(final EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof final Snowball thrown) || !ThrownHelper.isThrown(thrown)) {
             if (event.getDamager() instanceof Projectile)
                 GlobalEventHandler.resetNoDamageTicks(event.getDamager());
@@ -46,7 +47,7 @@ public final class ThrowableEventHandler {
         event.setDamage(damage);
     }
 
-    public static void onBlockPreDispense(final @NotNull BlockPreDispenseEvent event) {
+    public static void onBlockPreDispense(final BlockPreDispenseEvent event) {
         if (Throwable.is(event.getItemStack())) event.setCancelled(true);
     }
 }

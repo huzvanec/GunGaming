@@ -1,16 +1,17 @@
 package cz.jeme.gungaming.util;
 
 import org.bukkit.Material;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.Set;
 
+@NullMarked
 public final class Materials {
     private Materials() {
         throw new AssertionError();
     }
 
-    private static final @NotNull Set<Material> OTHER_ACTION_BLOCKS = Set.of(
+    private static final Set<Material> OTHER_ACTION_BLOCKS = Set.of(
             Material.BARREL, Material.SMOKER, Material.DISPENSER,
             Material.DROPPER, Material.HOPPER, Material.GRINDSTONE,
             Material.LOOM, Material.STONECUTTER, Material.BREWING_STAND,
@@ -20,7 +21,7 @@ public final class Materials {
             Material.CRAFTER, Material.CHISELED_BOOKSHELF
     );
 
-    public static boolean isGunBreakable(final @NotNull Material material) {
+    public static boolean isGunBreakable(final Material material) {
         return switch (material) {
             case GLASS, GLASS_PANE,
                  WHITE_STAINED_GLASS, WHITE_STAINED_GLASS_PANE,
@@ -44,7 +45,7 @@ public final class Materials {
         };
     }
 
-    public static boolean isShulkerBox(final @NotNull Material material) {
+    public static boolean isShulkerBox(final Material material) {
         return switch (material) {
             case SHULKER_BOX, BLACK_SHULKER_BOX, BLUE_SHULKER_BOX,
                  BROWN_SHULKER_BOX, CYAN_SHULKER_BOX, GRAY_SHULKER_BOX,
@@ -56,14 +57,14 @@ public final class Materials {
         };
     }
 
-    public static boolean isChest(final @NotNull Material material) {
+    public static boolean isChest(final Material material) {
         return switch (material) {
             case CHEST, ENDER_CHEST, TRAPPED_CHEST -> true;
             default -> false;
         };
     }
 
-    public static boolean hasAction(final @NotNull Material material) {
+    public static boolean hasAction(final Material material) {
         if (!material.isBlock()) return false;
         final String name = material.toString();
 //        Shulker boxes

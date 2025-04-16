@@ -1,6 +1,6 @@
 package cz.jeme.gungaming.item.melee.impl;
 
-import cz.jeme.gungaming.item.melee.Melee;
+import cz.jeme.gungaming.item.melee.Sword;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
@@ -10,46 +10,42 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
-public class DirtySword extends Melee {
+@NullMarked
+public class DirtySword extends Sword {
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Dirty Sword");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Poisons enemies on hit";
     }
 
     @Override
-    protected @NotNull Material provideMaterial() {
+    protected Material provideMaterial() {
         return Material.IRON_SWORD;
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.RARE;
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "dirty_sword";
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 1;
+    protected double provideDamageBonus() {
+        return 7;
     }
 
     @Override
-    protected double provideDamage() {
-        return 8;
-    }
-
-    @Override
-    protected void onHit(final @NotNull EntityDamageEvent event, final @NotNull ItemStack item) {
+    protected void onHit(final EntityDamageEvent event, final ItemStack item) {
         if (!(event.getEntity() instanceof final LivingEntity livingEntity)) return;
         livingEntity.addPotionEffect(new PotionEffect(
                 PotionEffectType.POISON,

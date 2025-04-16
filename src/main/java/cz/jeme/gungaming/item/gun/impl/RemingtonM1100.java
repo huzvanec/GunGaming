@@ -7,8 +7,9 @@ import cz.jeme.gungaming.item.gun.Gun;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class RemingtonM1100 extends Gun implements MagazineDisabled {
 
     @Override
@@ -18,7 +19,7 @@ public class RemingtonM1100 extends Gun implements MagazineDisabled {
 
     @Override
     protected int provideShootCooldown() {
-        return 8;
+        return 10;
     }
 
     @Override
@@ -28,7 +29,7 @@ public class RemingtonM1100 extends Gun implements MagazineDisabled {
 
     @Override
     protected double provideDamage() {
-        return 1.3;
+        return 1.1;
     }
 
     @Override
@@ -47,22 +48,22 @@ public class RemingtonM1100 extends Gun implements MagazineDisabled {
     }
 
     @Override
-    protected @NotNull Class<? extends Ammo> provideAmmoType() {
+    protected Class<? extends Ammo> provideAmmoType() {
         return TwelveGauge.class;
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "remington_m1100";
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Remington M1100");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "OK shotgun with big spread";
     }
 
@@ -82,12 +83,7 @@ public class RemingtonM1100 extends Gun implements MagazineDisabled {
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 13;
-    }
-
-    @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.UNCOMMON;
     }
 }

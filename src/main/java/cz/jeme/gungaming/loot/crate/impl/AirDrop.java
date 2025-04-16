@@ -10,13 +10,14 @@ import cz.jeme.gungaming.loot.crate.Crate;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.Map;
 
+@NullMarked
 public class AirDrop extends Crate {
     @Override
-    protected @NotNull Map<Rarity, Integer> provideRarityChances() {
+    protected Map<Rarity, Integer> provideRarityChances() {
         return Map.of(
                 Rarity.RARE, 1,
                 Rarity.EPIC, 3,
@@ -25,7 +26,7 @@ public class AirDrop extends Crate {
     }
 
     @Override
-    protected @NotNull Material provideMaterial() {
+    protected Material provideMaterial() {
         return Material.CHAIN_COMMAND_BLOCK;
     }
 
@@ -40,22 +41,22 @@ public class AirDrop extends Crate {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "air_drop";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.LEGENDARY;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Air Drop");
     }
 
     @Override
-    protected @NotNull Map<Class<? extends CustomItem>, Integer> provideLimits() {
+    protected Map<Class<? extends CustomItem>, Integer> provideLimits() {
         return Map.of(
                 Attachment.class, 3,
                 Gun.class, 3,

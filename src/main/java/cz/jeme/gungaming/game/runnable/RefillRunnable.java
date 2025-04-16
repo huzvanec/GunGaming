@@ -7,8 +7,10 @@ import cz.jeme.gungaming.loot.crate.CrateGenerator;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
+import org.jspecify.annotations.NullMarked;
 
 @ApiStatus.Internal
+@NullMarked
 public final class RefillRunnable extends GameRunnable {
     public RefillRunnable() {
         final int duration = GameConfig.REFILL_SECONDS.get() * 20;

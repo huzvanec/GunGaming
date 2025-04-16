@@ -1,12 +1,15 @@
 package cz.jeme.gungaming.item.armor.impl;
 
+import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.item.armor.Leggings;
 import cz.jeme.gungaming.loot.Rarity;
+import io.papermc.paper.registry.keys.SoundEventKeys;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class TitaniumLeggings extends Leggings {
     @Override
     protected double provideArmor() {
@@ -19,32 +22,38 @@ public class TitaniumLeggings extends Leggings {
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "leggings forged from raw titanium";
     }
 
     @Override
-    protected @NotNull Material provideMaterial() {
-        return Material.NETHERITE_LEGGINGS;
+    protected Key provideArmorKey() {
+        return GunGaming.key("titanium");
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected Key provideEquipSound() {
+        return SoundEventKeys.ITEM_ARMOR_EQUIP_NETHERITE;
+    }
+
+    @Override
+    protected int provideDurability() {
+        return 555;
+    }
+
+    @Override
+    protected @KeyPattern.Value String provideKey() {
         return "titanium_leggings";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.LEGENDARY;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Titanium Leggings");
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 1;
-    }
 }

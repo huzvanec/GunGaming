@@ -7,13 +7,14 @@ import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.Set;
 
+@NullMarked
 public class Pills extends Adrenaline {
     @Override
-    protected @NotNull Set<PotionEffect> provideEffects() {
+    protected Set<PotionEffect> provideEffects() {
         return Set.of(
                 new PotionEffect(
                         PotionEffectType.REGENERATION,
@@ -41,27 +42,22 @@ public class Pills extends Adrenaline {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "pills";
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Pills");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Adds 60 seconds of adrenaline";
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 3;
-    }
-
-    @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.RARE;
     }
 

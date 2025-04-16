@@ -2,14 +2,15 @@ package cz.jeme.gungaming.util;
 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public final class Inventories {
     private Inventories() {
         throw new AssertionError();
     }
 
-    public static int count(final @NotNull Inventory inventory, final @NotNull ItemStack item) {
+    public static int count(final Inventory inventory, final ItemStack item) {
         int count = 0;
         for (final ItemStack invItem : inventory) {
             if (invItem == null || !invItem.isSimilar(item)) continue;
@@ -18,7 +19,7 @@ public final class Inventories {
         return count;
     }
 
-    public static int remove(final @NotNull Inventory inventory, final @NotNull ItemStack item, final int count) {
+    public static int remove(final Inventory inventory, final ItemStack item, final int count) {
         int left = count;
         for (final ItemStack invItem : inventory) {
             if (invItem == null || !invItem.isSimilar(item)) continue;

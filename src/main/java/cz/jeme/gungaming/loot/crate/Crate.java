@@ -7,17 +7,18 @@ import cz.jeme.gungaming.util.Components;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+@NullMarked
 public abstract class Crate extends CustomElement {
-    protected final @NotNull Map<Rarity, Integer> rarityChances;
-    protected final @NotNull Map<Class<? extends CustomItem>, Integer> limits = Collections.unmodifiableMap(provideLimits());
-    protected final @NotNull CrateFilter filter = provideFilter();
-    protected final @NotNull Material material = provideMaterial();
+    protected final Map<Rarity, Integer> rarityChances;
+    protected final Map<Class<? extends CustomItem>, Integer> limits = Collections.unmodifiableMap(provideLimits());
+    protected final CrateFilter filter = provideFilter();
+    protected final Material material = provideMaterial();
     protected final double fillPercentage = provideFillPercentage();
     protected final double spawnPercentage = provideSpawnPercentage();
     private final boolean modifyContents = provideModifyContents();
@@ -35,17 +36,17 @@ public abstract class Crate extends CustomElement {
 
     // providers
 
-    protected abstract @NotNull Map<Rarity, Integer> provideRarityChances();
+    protected abstract Map<Rarity, Integer> provideRarityChances();
 
-    protected @NotNull Map<Class<? extends CustomItem>, Integer> provideLimits() {
+    protected Map<Class<? extends CustomItem>, Integer> provideLimits() {
         return Map.of();
     }
 
-    protected @NotNull CrateFilter provideFilter() {
+    protected CrateFilter provideFilter() {
         return CrateFilter.empty();
     }
 
-    protected abstract @NotNull Material provideMaterial();
+    protected abstract Material provideMaterial();
 
     protected abstract double provideFillPercentage();
 
@@ -57,19 +58,19 @@ public abstract class Crate extends CustomElement {
 
     // getters
 
-    public final @NotNull Map<Rarity, Integer> rarityChances() {
+    public final Map<Rarity, Integer> rarityChances() {
         return rarityChances;
     }
 
-    public final @NotNull Map<Class<? extends CustomItem>, Integer> limits() {
+    public final Map<Class<? extends CustomItem>, Integer> limits() {
         return limits;
     }
 
-    public final @NotNull CrateFilter filter() {
+    public final CrateFilter filter() {
         return new CrateFilter(filter);
     }
 
-    public final @NotNull Material material() {
+    public final Material material() {
         return material;
     }
 
@@ -85,11 +86,11 @@ public abstract class Crate extends CustomElement {
         return modifyContents;
     }
 
-    protected void generated(final @NotNull Block block, final @NotNull Inventory inventory) {
+    protected void generated(final Block block, final Inventory inventory) {
     }
 
     @Override
-    public @NotNull String toString() {
+    public String toString() {
         return Components.strip(name);
     }
 }

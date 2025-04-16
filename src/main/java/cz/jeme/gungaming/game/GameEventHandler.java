@@ -5,7 +5,7 @@ import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.config.GameConfig;
 import cz.jeme.gungaming.game.runnable.countdown.Respawn;
 import cz.jeme.gungaming.item.CustomItem;
-import cz.jeme.gungaming.item.tracker.TeammateTracker;
+import cz.jeme.gungaming.item.tracker.impl.TeammateTracker;
 import cz.jeme.gungaming.util.Components;
 import cz.jeme.gungaming.util.RandomUtils;
 import io.papermc.paper.event.player.AsyncChatEvent;
@@ -19,7 +19,7 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -27,13 +27,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-
+@NullMarked
 public final class GameEventHandler {
     private GameEventHandler() {
         throw new AssertionError();
     }
 
-    public static void onPlayerMove(final @NotNull PlayerMoveEvent event) {
+    public static void onPlayerMove(final PlayerMoveEvent event) {
         if (!Game.running()) return;
         if (!event.hasChangedPosition()) return;
         final Location to = event.getTo();
@@ -45,12 +45,12 @@ public final class GameEventHandler {
         event.setCancelled(true);
     }
 
-    public static void onEntityDamage(final @NotNull EntityDamageEvent event) {
+    public static void onEntityDamage(final EntityDamageEvent event) {
         if (!Game.INVULNERABLE_DATA.read(event.getEntity()).orElse(false)) return;
         event.setCancelled(true);
     }
 
-    public static void onEntityToggleGlide(final @NotNull EntityToggleGlideEvent event) {
+    public static void onEntityToggleGlide(final EntityToggleGlideEvent event) {
         if (!(event.getEntity() instanceof final Player player)) return;
         if (!Game.GLIDING_DATA.read(player).orElse(false)) return;
         event.setCancelled(true);
@@ -65,12 +65,12 @@ public final class GameEventHandler {
         }
     }
 
-    public static void onPrepareItemCraft(final @NotNull PrepareItemCraftEvent event) {
+    public static void onPrepareItemCraft(final PrepareItemCraftEvent event) {
         if (!Game.running()) return;
         event.getInventory().setResult(ItemStack.empty());
     }
 
-    public static void onPlayerDeath(final @NotNull PlayerDeathEvent event) {
+    public static void onPlayerDeath(final PlayerDeathEvent event) {
         if (!Game.running()) return;
         event.setCancelled(true);
         final Player player = event.getPlayer();
@@ -99,15 +99,15 @@ public final class GameEventHandler {
         }
     }
 
-    public static void onFoodLevelChange(final @NotNull FoodLevelChangeEvent event) {
+    public static void onFoodLevelChange(final FoodLevelChangeEvent event) {
         if (!Game.running()) return;
         event.setCancelled(true);
     }
 
-    private static final @NotNull Map<UUID, Integer> HEALING = new HashMap<>();
+    private static final Map<UUID, Integer> HEALING = new HashMap<>();
     private static final int HEALING_TICKS = 4; // how many ticks of real healing are required for the player to heal in game
 
-    public static void onEntityRegainHealth(final @NotNull EntityRegainHealthEvent event) {
+    public static void onEntityRegainHealth(final EntityRegainHealthEvent event) {
         if (event.getRegainReason() != EntityRegainHealthEvent.RegainReason.SATIATED) return;
         if (!Game.running()) return;
         if (!(event.getEntity() instanceof final Player player)) return;
@@ -124,7 +124,7 @@ public final class GameEventHandler {
         HEALING.put(uuid, HEALING.get(uuid) + 1);
     }
 
-    public static void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
+    public static void onPlayerJoin(final PlayerJoinEvent event) {
         if (!Game.running()) return;
         final Player player = event.getPlayer();
         player.clearTitle();
@@ -150,7 +150,7 @@ public final class GameEventHandler {
         ));
     }
 
-    public static void onPlayerQuit(final @NotNull PlayerQuitEvent event) {
+    public static void onPlayerQuit(final PlayerQuitEvent event) {
         if (!Game.running()) return;
         final Player player = event.getPlayer();
         final boolean gamePlayer = Game.instance().removePlayer(player);
@@ -179,13 +179,13 @@ public final class GameEventHandler {
         }
     }
 
-    public static void onPlayerAdvancementCriterionGrant(final @NotNull PlayerAdvancementCriterionGrantEvent event) {
+    public static void onPlayerAdvancementCriterionGrant(final PlayerAdvancementCriterionGrantEvent event) {
         if (!Game.running()) return;
         event.setCancelled(true);
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    public static void onEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent event) {
+    public static void onEntityDamageByEntity(final EntityDamageByEntityEvent event) {
         if (!Game.running()) return;
         if (!(event.getEntity() instanceof final Player hurt)) return;
         if (!(event.getDamageSource().getCausingEntity() instanceof final Player damager)) return;
@@ -200,17 +200,17 @@ public final class GameEventHandler {
         }
     }
 
-    public static void onPlayerRecipeDiscover(final @NotNull PlayerRecipeDiscoverEvent event) {
+    public static void onPlayerRecipeDiscover(final PlayerRecipeDiscoverEvent event) {
         if (!Game.running()) return;
         event.setCancelled(true);
     }
 
-    public static void onPlayerPortal(final @NotNull PlayerPortalEvent event) {
+    public static void onPlayerPortal(final PlayerPortalEvent event) {
         if (!Game.running()) return;
         event.setCancelled(true);
     }
 
-    public static void onAsyncChat(final @NotNull AsyncChatEvent event) {
+    public static void onAsyncChat(final AsyncChatEvent event) {
         if (!Game.running()) return;
         event.setCancelled(true);
         final Player player = event.getPlayer();

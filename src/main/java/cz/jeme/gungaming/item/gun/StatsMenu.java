@@ -1,10 +1,13 @@
 package cz.jeme.gungaming.item.gun;
 
+import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.item.attachment.*;
 import cz.jeme.gungaming.item.attachment.impl.Silencer;
 import cz.jeme.gungaming.util.Components;
 import cz.jeme.gungaming.util.Lores;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,19 +17,20 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
+@NullMarked
 public final class StatsMenu {
-    private final @NotNull HumanEntity player;
-    private final @NotNull ItemStack gunItem;
-    private final @NotNull ItemStack gunItemBackup;
-    private final @NotNull Gun gun;
-    private final @NotNull Inventory inventory;
+    private final HumanEntity player;
+    private final ItemStack gunItem;
+    private final ItemStack gunItemBackup;
+    private final Gun gun;
+    private final Inventory inventory;
 
-    public StatsMenu(final @NotNull HumanEntity player, final @NotNull ItemStack gunItem) {
+    public StatsMenu(final HumanEntity player, final ItemStack gunItem) {
         this.player = player;
         this.gunItem = gunItem;
         gunItemBackup = gunItem.clone();
@@ -43,28 +47,29 @@ public final class StatsMenu {
         player.playSound(gun.heldSound(gunItem), player);
     }
 
-    private static @NotNull ItemStack statItem(final @NotNull String name, final @NotNull List<String> lore, final @Nullable Integer customModelData) {
+    @SuppressWarnings("UnstableApiUsage")
+    private static ItemStack statItem(final Key key, final String name, final List<String> lore) {
         final ItemStack item = ItemStack.of(Material.WHITE_STAINED_GLASS_PANE);
         item.editMeta(meta -> {
             meta.displayName(Components.of("<!i>" + name));
             meta.lore(lore.stream()
                     .map(str -> Components.of("<!i><white>" + str))
                     .toList());
-            meta.setCustomModelData(customModelData);
         });
+        item.setData(DataComponentTypes.ITEM_MODEL, key);
         return item;
     }
 
-    private static @NotNull String loreStat(final @NotNull String key, final @NotNull String value, final @Nullable String modification) {
+    private static String loreStat(final String key, final String value, final @Nullable String modification) {
         if (modification == null) return loreStat(key, value);
         return "<#77A5FF>" + Components.latinString(key) + ": <st><#A3ABBB>" + value + "</st> " + modification;
     }
 
-    private static @NotNull String loreStat(final @NotNull String key, final @NotNull String value) {
+    private static String loreStat(final String key, final String value) {
         return "<#77A5FF>" + Components.latinString(key) + ": <#CADCFF>" + value;
     }
 
-    private static @Nullable String loreModification(final @NotNull String prefix, final @Nullable String value, final @Nullable Attachment attachment) {
+    private static @Nullable String loreModification(final String prefix, final @Nullable String value, final @Nullable Attachment attachment) {
         if (value == null || attachment == null) return null;
         return prefix + value + " (" + Components.latinString(Components.strip(attachment.name())) + ")";
     }
@@ -89,12 +94,13 @@ public final class StatsMenu {
         );
         final String magazinelessStr = loreStat("Magazineless", String.valueOf(gun.magazineless()));
         final ItemStack basicInfo = statItem(
+                GunGaming.key("basic_info_icon"),
                 "Basic Info",
-                List.of(nameStr, descriptionStr, scopeStr, magazinelessStr),
-                8
+                List.of(nameStr, descriptionStr, scopeStr, magazinelessStr)
         );
         inventory.setItem(0, basicInfo);
         final boolean shotgun = gun.shotgun();
+        final int realBulletsPerShot = shotgun ? gun.bulletsPerShot() : 1;
         // damage
         final double damage = Gun.DAMAGE_DATA.require(gunItem);
         final Silencer silencer = Silencer.GUN_SILENCER_KEY_DATA.read(gunItem)
@@ -119,33 +125,41 @@ public final class StatsMenu {
                         silencer
                 )
         );
+        final String damageShotStr = loreStat(
+                "Per Shot",
+                Lores.STATS_FORMATTER.format(gun.damage() * realBulletsPerShot),
+                loreModification(
+                        "<red>",
+                        Lores.STATS_FORMATTER.format(damage * realBulletsPerShot),
+                        silencer
+                )
+        );
         final ItemStack damageInfo = statItem(
+                GunGaming.key("damage_icon"),
                 "Damage",
-                List.of(damageStr, dpsStr),
-                9
+                List.of(damageStr, damageShotStr, dpsStr)
         );
         inventory.setItem(1, damageInfo);
         // durations
         final String shootDurationStr = loreStat("Shooting", Lores.STATS_FORMATTER.format(
                 Gun.SHOOT_COOLDOWN_DATA.require(gunItem) / 20D / (shotgun ? 1 : gun.bulletsPerShot())
         ) + "s");
-        final int reloadModifier = shotgun ? gun.bulletsPerShot() : 1;
         final Magazine magazine = Magazine.GUN_MAGAZINE_KEY_DATA.read(gunItem)
                 .map(Magazine::of)
                 .orElse(null);
         final String reloadDurationStr = loreStat(
                 "Reloading",
-                Lores.STATS_FORMATTER.format(gun.reloadDuration() / 20D * reloadModifier) + "s",
+                Lores.STATS_FORMATTER.format(gun.reloadDuration() / 20D * realBulletsPerShot) + "s",
                 loreModification(
                         "<red>",
-                        Lores.STATS_FORMATTER.format(Gun.RELOAD_DURATION_DATA.require(gunItem) / 20D * reloadModifier) + "s",
+                        Lores.STATS_FORMATTER.format(Gun.RELOAD_DURATION_DATA.require(gunItem) / 20D * realBulletsPerShot) + "s",
                         magazine
                 )
         );
         final ItemStack durationInfo = statItem(
+                GunGaming.key("durations_icon"),
                 "Durations",
-                List.of(shootDurationStr, reloadDurationStr),
-                10
+                List.of(shootDurationStr, reloadDurationStr)
         );
         inventory.setItem(2, durationInfo);
         // stability
@@ -174,9 +188,9 @@ public final class StatsMenu {
                 )
         );
         final ItemStack stabilityInfo = statItem(
+                GunGaming.key("stability_icon"),
                 "Stability",
-                List.of(recoilStr, spreadStr),
-                11
+                List.of(recoilStr, spreadStr)
         );
         inventory.setItem(3, stabilityInfo);
         // ammo
@@ -196,25 +210,25 @@ public final class StatsMenu {
                 Lores.STATS_FORMATTER.format(Gun.BULLET_VELOCITY_DATA.require(gunItem))
         );
         final ItemStack ammoInfo = statItem(
+                GunGaming.key("ammo_icon"),
                 "Ammo",
-                List.of(ammoTypeStr, currentAmmoStr, maxAmmoStr, bulletSpeedStr),
-                12
+                List.of(ammoTypeStr, currentAmmoStr, maxAmmoStr, bulletSpeedStr)
         );
         inventory.setItem(4, ammoInfo);
     }
 
-    void inventoryClick(final @NotNull InventoryClickEvent event) {
+    void inventoryClick(final InventoryClickEvent event) {
         if (event.getClickedInventory() == inventory)
             event.setCancelled(true);
     }
 
-    void playerDropItem(final @NotNull PlayerDropItemEvent event) {
+    void playerDropItem(final PlayerDropItemEvent event) {
         if (event.getItemDrop().getItemStack().equals(gunItemBackup))
             player.closeInventory();
     }
 
 
-    public @NotNull Inventory inventory() {
+    public Inventory inventory() {
         return inventory;
     }
 }

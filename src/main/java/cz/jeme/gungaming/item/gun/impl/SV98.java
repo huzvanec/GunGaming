@@ -7,8 +7,9 @@ import cz.jeme.gungaming.item.gun.Gun;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class SV98 extends Gun implements GripDisabled {
     @Override
     protected int provideMaxAmmo() {
@@ -46,32 +47,28 @@ public class SV98 extends Gun implements GripDisabled {
     }
 
     @Override
-    protected @NotNull Class<? extends Ammo> provideAmmoType() {
+    protected Class<? extends Ammo> provideAmmoType() {
         return SevenSixTwoMillimeter.class;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("SV-98");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Very powerful sniper rifle";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.LEGENDARY;
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "sv-98";
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 8;
-    }
 }

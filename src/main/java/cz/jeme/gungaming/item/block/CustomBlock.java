@@ -5,14 +5,15 @@ import cz.jeme.gungaming.item.CustomItem;
 import org.bukkit.Material;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@NullMarked
 public abstract class CustomBlock extends CustomItem {
-    static final @NotNull Map<Material, CustomBlock> BLOCK_REGISTRY = new HashMap<>();
+    static final Map<Material, CustomBlock> BLOCK_REGISTRY = new HashMap<>();
 
     protected CustomBlock() {
         if (!material.isBlock())
@@ -24,24 +25,29 @@ public abstract class CustomBlock extends CustomItem {
     }
 
     @Override
-    protected final @NotNull String provideType() {
+    protected final String provideType() {
         return "block";
     }
 
-    protected void onPlace(final @NotNull BlockPlaceEvent event) {
+    @Override
+    protected boolean provideUsesDefaultModel() {
+        return true;
+    }
+
+    protected void onPlace(final BlockPlaceEvent event) {
     }
 
     // static accessors
 
-    public static @NotNull CustomBlock of(final @NotNull String keyStr) {
+    public static CustomBlock of(final String keyStr) {
         return CustomElement.of(keyStr, CustomBlock.class);
     }
 
-    public static @NotNull CustomBlock of(final @NotNull ItemStack item) {
+    public static CustomBlock of(final ItemStack item) {
         return CustomItem.of(item, CustomBlock.class);
     }
 
-    public static boolean is(final @NotNull String keyStr) {
+    public static boolean is(final String keyStr) {
         return CustomElement.is(keyStr, CustomBlock.class);
     }
 

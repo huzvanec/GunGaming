@@ -3,13 +3,14 @@ package cz.jeme.gungaming.item.consumable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.potion.PotionEffect;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.Collections;
 import java.util.Set;
 
+@NullMarked
 public abstract class Adrenaline extends Consumable {
-    protected final @NotNull Set<PotionEffect> effects = Collections.unmodifiableSet(provideEffects());
+    protected final Set<PotionEffect> effects = Collections.unmodifiableSet(provideEffects());
 
     protected Adrenaline() {
         addTags("adrenaline");
@@ -17,19 +18,19 @@ public abstract class Adrenaline extends Consumable {
 
     // providers
 
-    protected abstract @NotNull Set<PotionEffect> provideEffects();
+    protected abstract Set<PotionEffect> provideEffects();
 
     // getters
 
-    public final @NotNull Set<PotionEffect> effects() {
+    public final Set<PotionEffect> effects() {
         return effects;
     }
 
     // adrenaline
 
     @Override
-    protected void onConsume(final @NotNull PlayerItemConsumeEvent event) {
-        
+    protected void onConsume(final PlayerItemConsumeEvent event) {
+
         final Player player = event.getPlayer();
         for (final PotionEffect effect : effects) {
             final PotionEffect current = player.getPotionEffect(effect.getType());

@@ -5,8 +5,9 @@ import cz.jeme.gungaming.util.Components;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 final class LobbyRunnable extends BukkitRunnable {
     private int counter = 0;
 
@@ -22,10 +23,10 @@ final class LobbyRunnable extends BukkitRunnable {
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    private static final @NotNull String GUN_GAMING_TEXT = "GunGaming v" + GunGaming.instance().getPluginMeta().getVersion();
+    private static final String GUN_GAMING_TEXT = "GunGaming v" + GunGaming.instance().getPluginMeta().getVersion();
     private static final int DOT_REPETITIONS = 30;
 
-    private @NotNull String message() {
+    private String message() {
         if (counter - DOT_REPETITIONS * 3 >= GUN_GAMING_TEXT.length()) counter = 0;
         if (counter <= DOT_REPETITIONS * 3)
             return "<aqua>" + Components.latinString("Waiting for players") + ".".repeat(counter % 3 + 1);

@@ -1,50 +1,47 @@
 package cz.jeme.gungaming.item.tracker;
 
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.loot.SingleLoot;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+
+@NullMarked
 public abstract class PlayerTracker extends CustomItem implements SingleLoot {
-    public static final @NotNull PersistentData<Byte, Boolean> TRACKER_ACTIVE_DATA = PersistentData.ofBoolean(GunGaming.key("player_tracker"));
+    protected final Key inactiveKey = provideInactiveKey();
 
-    protected final int inactiveCustomModelData = provideInactiveCustomModelData();
-    protected final int activeCustomModelData = provideActiveCustomModelData();
-
+    @SuppressWarnings("UnstableApiUsage")
     protected PlayerTracker() {
         addTags("tracker");
-        TRACKER_ACTIVE_DATA.write(item, false);
-        if (TrackerRunnable.running()) return;
-        new TrackerRunnable();
+
+        item.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, false);
+        item.setData(DataComponentTypes.ITEM_MODEL, inactiveKey);
+
+        if (!TrackerRunnable.running()) new TrackerRunnable();
     }
 
-    protected abstract boolean validate(final @NotNull Player player, final @NotNull Player trackPlayer);
-
-    protected abstract int provideInactiveCustomModelData();
-
-    protected abstract int provideActiveCustomModelData();
-
-    public final int activeCustomModelData() {
-        return activeCustomModelData;
-    }
-
-    public final int inactiveCustomModelData() {
-        return inactiveCustomModelData;
-    }
+    protected abstract boolean validate(final Player player, final Player trackPlayer);
 
     @Override
-    protected final @NotNull Integer provideCustomModelData() {
-        return provideInactiveCustomModelData();
+    protected final Material provideMaterial() {
+        return Material.POPPED_CHORUS_FRUIT;
     }
 
-    @Override
-    protected final @NotNull Material provideMaterial() {
-        return Material.COMPASS;
+    protected Key provideInactiveKey() {
+        return Key.key(
+                key.namespace(),
+                key.value() + "_inactive"
+        );
+    }
+
+    public final Key inactiveKey() {
+        return inactiveKey;
     }
 
     @Override
@@ -57,10 +54,10 @@ public abstract class PlayerTracker extends CustomItem implements SingleLoot {
         return 1;
     }
 
-    protected final @NotNull Sound heldSound = Sound.sound(GunGaming.key("item.tracker.held"), Sound.Source.PLAYER, 1.9F, 1);
+    protected final Sound heldSound = Sound.sound(GunGaming.key("item.tracker.held"), Sound.Source.PLAYER, 1.9F, 1);
 
     @Override
-    public @NotNull Sound heldSound(final @NotNull ItemStack item) {
+    public Sound heldSound(final ItemStack item) {
         return heldSound;
     }
 }

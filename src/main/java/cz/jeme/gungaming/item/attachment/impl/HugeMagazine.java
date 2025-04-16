@@ -4,10 +4,11 @@ import cz.jeme.gungaming.item.attachment.Magazine;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.List;
 
+@NullMarked
 public class HugeMagazine extends Magazine {
 
     @Override
@@ -16,41 +17,36 @@ public class HugeMagazine extends Magazine {
     }
 
     @Override
-    protected @NotNull List<String> provideBuffs() {
+    protected List<String> provideBuffs() {
         return List.of(
-                "+50% ammo"
+                "+50% ammo capacity"
         );
     }
 
     @Override
-    protected @NotNull List<String> provideDebuffs() {
+    protected List<String> provideDebuffs() {
         return List.of(
                 "-50% reload speed"
         );
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "huge_magazine";
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Huge Magazine");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Huge extended storage for ammo";
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 10;
-    }
-
-    @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.LEGENDARY;
     }
 }

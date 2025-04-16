@@ -9,17 +9,19 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@NullMarked
 public enum ReloadManager {
     INSTANCE;
-    private final @NotNull Map<UUID, Reload> reloads = new HashMap<>();
 
-    public void reload(final @NotNull Player player, final @NotNull ItemStack item) {
+    private final Map<UUID, Reload> reloads = new HashMap<>();
+
+    public void reload(final Player player, final ItemStack item) {
         if (reloads.containsKey(player.getUniqueId())) return;
         if (player.hasCooldown(item.getType())) return;
         final int currentAmmo = Gun.CURRENT_AMMO_DATA.require(item);
@@ -50,7 +52,7 @@ public enum ReloadManager {
         reloads.put(player.getUniqueId(), reload);
     }
 
-    public void abortReload(final @NotNull Player player, final boolean actionNotify) {
+    public void abortReload(final Player player, final boolean actionNotify) {
         final UUID uuid = player.getUniqueId();
         final Reload reload = reloads.get(uuid);
         if (reload == null) return;
@@ -65,13 +67,13 @@ public enum ReloadManager {
         Bukkit.getOnlinePlayers().forEach(player -> abortReload(player, actionNotify));
     }
 
-    public void removeReload(final @NotNull Player player) {
+    public void removeReload(final Player player) {
         final UUID uuid = player.getUniqueId();
         reloads.remove(uuid);
         player.sendActionBar(Component.text(""));
     }
 
-    public boolean isReloading(final @NotNull Player player) {
+    public boolean isReloading(final Player player) {
         return reloads.containsKey(player.getUniqueId());
     }
 }

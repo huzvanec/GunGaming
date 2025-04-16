@@ -12,24 +12,25 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @ApiStatus.Internal
+@NullMarked
 public final class AirDropRunnable extends GameRunnable {
-    private final @NotNull Random random = ThreadLocalRandom.current();
+    private final Random random = ThreadLocalRandom.current();
 
-    public static final @NotNull Sound AIR_DROP_AMBIENT_SOUND = Sound.sound(GunGaming.key("game.air_drop"), Sound.Source.MASTER, 1, 1);
-    public static final @NotNull Sound AIR_DROP_PING_SOUND = Sound.sound(GunGaming.key("game.ping.air_drop"), Sound.Source.MASTER, 1, 1);
+    public static final Sound AIR_DROP_AMBIENT_SOUND = Sound.sound(GunGaming.key("game.air_drop"), Sound.Source.MASTER, 1, 1);
+    public static final Sound AIR_DROP_PING_SOUND = Sound.sound(GunGaming.key("game.ping.air_drop"), Sound.Source.MASTER, 1, 1);
 
     private static final int MIN_BORDER_RADIUS = 10;
 
-    private final @NotNull Game game;
-    private final @NotNull World world;
+    private final Game game;
+    private final World world;
 
-    public AirDropRunnable(final @NotNull Game game) {
+    public AirDropRunnable(final Game game) {
         this.game = game;
         this.world = game.world();
         final long duration = random.nextLong(GameConfig.AIR_DROP_MIN_SECONDS.get(), GameConfig.AIR_DROP_MAX_SECONDS.get()) * 20;

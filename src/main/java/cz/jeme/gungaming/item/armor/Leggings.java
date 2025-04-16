@@ -1,28 +1,21 @@
 package cz.jeme.gungaming.item.armor;
 
-import org.bukkit.inventory.EquipmentSlotGroup;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.inventory.EquipmentSlot;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public abstract class Leggings extends Armor {
     protected Leggings() {
         addTags("leggings");
-        switch (material) {
-            case CHAINMAIL_LEGGINGS, DIAMOND_LEGGINGS,
-                 GOLDEN_LEGGINGS, IRON_LEGGINGS,
-                 LEATHER_LEGGINGS, NETHERITE_LEGGINGS -> {
-            }
-            default -> throw new IllegalArgumentException("Material must be leggings!");
-        }
     }
 
     @Override
-    protected final @NotNull String provideType() {
+    protected final String provideType() {
         return "leggings";
     }
 
-    @SuppressWarnings("UnstableApiUsage")
     @Override
-    protected final @NotNull EquipmentSlotGroup provideSlot() {
-        return EquipmentSlotGroup.LEGS;
+    protected final EquipmentSlot provideSlot() {
+        return EquipmentSlot.LEGS;
     }
 }

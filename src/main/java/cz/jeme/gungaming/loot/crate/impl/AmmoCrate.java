@@ -10,13 +10,14 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.CommandBlock;
 import org.bukkit.inventory.Inventory;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.Map;
 
+@NullMarked
 public class AmmoCrate extends Crate {
     @Override
-    protected @NotNull Map<Rarity, Integer> provideRarityChances() {
+    protected Map<Rarity, Integer> provideRarityChances() {
         return Map.of(
                 Rarity.COMMON, 22,
                 Rarity.UNCOMMON, 19,
@@ -27,7 +28,7 @@ public class AmmoCrate extends Crate {
     }
 
     @Override
-    protected @NotNull Material provideMaterial() {
+    protected Material provideMaterial() {
         return Material.COMMAND_BLOCK;
     }
 
@@ -42,29 +43,29 @@ public class AmmoCrate extends Crate {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "ammo_crate";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.RARE;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Ammo Crate");
     }
 
     @Override
-    protected void generated(final @NotNull Block block, final @NotNull Inventory inventory) {
+    protected void generated(final Block block, final Inventory inventory) {
         final CommandBlock data = (CommandBlock) block.getBlockData();
         data.setConditional(true);
         block.setBlockData(data);
     }
 
     @Override
-    protected @NotNull CrateFilter provideFilter() {
+    protected CrateFilter provideFilter() {
         return new CrateFilter(CrateFilter.CrateFilterType.WHITELIST)
                 .add(Ammo.class);
     }

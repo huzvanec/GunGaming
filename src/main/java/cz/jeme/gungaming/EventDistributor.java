@@ -20,19 +20,21 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.command.UnknownCommandEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.*;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public enum EventDistributor implements Listener {
     INSTANCE;
 
     @EventHandler
-    private static void onPlayerInteract(final @NotNull PlayerInteractEvent event) {
+    private static void onPlayerInteract(final PlayerInteractEvent event) {
         if (event.getPlayer().getGameMode() == GameMode.SPECTATOR) return;
         ResourcePackEventHandler.onPlayerInteract(event);
         if (event.useInteractedBlock() == Event.Result.DENY &&
@@ -45,31 +47,31 @@ public enum EventDistributor implements Listener {
     }
 
     @EventHandler
-    private static void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
+    private static void onPlayerJoin(final PlayerJoinEvent event) {
         GameEventHandler.onPlayerJoin(event);
         LobbyEventHandler.onPlayerJoin(event);
         ResourcePackEventHandler.onPlayerJoin(event); // important: has to go last
     }
 
     @EventHandler
-    private static void onPlayerResourcePackStatus(final @NotNull PlayerResourcePackStatusEvent event) {
+    private static void onPlayerResourcePackStatus(final PlayerResourcePackStatusEvent event) {
         ResourcePackEventHandler.onPlayerResourcePackStatus(event);
     }
 
     @EventHandler
-    private static void onPlayerMove(final @NotNull PlayerMoveEvent event) {
+    private static void onPlayerMove(final PlayerMoveEvent event) {
         ResourcePackEventHandler.onPlayerMove(event);
         if (event.isCancelled()) return;
         GameEventHandler.onPlayerMove(event);
     }
 
     @EventHandler
-    private static void onPlayerSwapHandItems(final @NotNull PlayerSwapHandItemsEvent event) {
+    private static void onPlayerSwapHandItems(final PlayerSwapHandItemsEvent event) {
         GunEventHandler.onPlayerSwapHandItems(event);
     }
 
     @EventHandler
-    private static void onPlayerDropItem(final @NotNull PlayerDropItemEvent event) {
+    private static void onPlayerDropItem(final PlayerDropItemEvent event) {
         TrackerEventHandler.onPlayerDropItem(event);
         if (event.isCancelled()) return;
         GunEventHandler.onPlayerDropItem(event);
@@ -77,19 +79,19 @@ public enum EventDistributor implements Listener {
     }
 
     @EventHandler
-    private static void onPlayerItemHeld(final @NotNull PlayerItemHeldEvent event) {
+    private static void onPlayerItemHeld(final PlayerItemHeldEvent event) {
         ItemEventHandler.onPlayerItemHeld(event);
         GunEventHandler.onPlayerItemHeld(event);
         AttachmentEventHandler.onPlayerItemHeld(event);
     }
 
     @EventHandler
-    private static void onInventoryOpenEvent(final @NotNull InventoryOpenEvent event) {
+    private static void onInventoryOpenEvent(final InventoryOpenEvent event) {
         GunEventHandler.onInventoryOpenEvent(event);
     }
 
     @EventHandler
-    private static void onInventoryClick(final @NotNull InventoryClickEvent event) {
+    private static void onInventoryClick(final InventoryClickEvent event) {
         TrackerEventHandler.onInventoryClick(event);
         if (event.isCancelled()) return;
         AttachmentEventHandler.onInventoryClick(event);
@@ -98,13 +100,13 @@ public enum EventDistributor implements Listener {
     }
 
     @EventHandler
-    private static void onProjectileHit(final @NotNull ProjectileHitEvent event) {
+    private static void onProjectileHit(final ProjectileHitEvent event) {
         GunEventHandler.onProjectileHit(event);
         ThrowableEventHandler.onProjectileHit(event);
     }
 
     @EventHandler
-    private static void onEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent event) {
+    private static void onEntityDamageByEntity(final EntityDamageByEntityEvent event) {
         GunEventHandler.onEntityDamageByEntity(event);
         ThrowableEventHandler.onEntityDamageByEntity(event);
         MeleeEventHandler.onEntityDamageByEntity(event);
@@ -112,7 +114,7 @@ public enum EventDistributor implements Listener {
     }
 
     @EventHandler
-    private static void onEntityDamage(final @NotNull EntityDamageEvent event) {
+    private static void onEntityDamage(final EntityDamageEvent event) {
         GlobalEventHandler.onEntityDamage(event); // monitor-ish
         LobbyEventHandler.onEntityDamage(event);
         if (event.isCancelled()) return;
@@ -124,114 +126,119 @@ public enum EventDistributor implements Listener {
     }
 
     @EventHandler
-    private static void onPrepareItemCraft(final @NotNull PrepareItemCraftEvent event) {
+    private static void onPrepareItemCraft(final PrepareItemCraftEvent event) {
         ItemEventHandler.onPrepareItemCraft(event);
         GameEventHandler.onPrepareItemCraft(event);
     }
 
     @EventHandler
-    private static void onPlayerItemConsume(final @NotNull PlayerItemConsumeEvent event) {
+    private static void onPlayerItemConsume(final PlayerItemConsumeEvent event) {
         MeleeEventHandler.onPlayerItemConsume(event);
         if (event.isCancelled()) return;
         ConsumableEventHandler.onPlayerItemConsume(event);
     }
 
     @EventHandler
-    private static void onInventoryClose(final @NotNull InventoryCloseEvent event) {
+    private static void onInventoryClose(final InventoryCloseEvent event) {
         AttachmentEventHandler.onInventoryClose(event);
         GunEventHandler.onInventoryClose(event);
     }
 
     @EventHandler
-    private static void onPlayerQuit(final @NotNull PlayerQuitEvent event) {
+    private static void onPlayerQuit(final PlayerQuitEvent event) {
         AttachmentEventHandler.onPlayerQuit(event);
         GameEventHandler.onPlayerQuit(event);
     }
 
     @EventHandler
-    private static void onPlayerGameModeChange(final @NotNull PlayerGameModeChangeEvent event) {
+    private static void onPlayerGameModeChange(final PlayerGameModeChangeEvent event) {
         AttachmentEventHandler.onPlayerGameModeChange(event);
     }
 
     @EventHandler
-    private static void onPlayerDeath(final @NotNull PlayerDeathEvent event) {
+    private static void onPlayerDeath(final PlayerDeathEvent event) {
         AttachmentEventHandler.onPlayerDeath(event);
         GunEventHandler.onPlayerDeath(event);
         GameEventHandler.onPlayerDeath(event);
     }
 
     @EventHandler
-    private static void onPlayerItemDamage(final @NotNull PlayerItemDamageEvent event) {
+    private static void onPlayerItemDamage(final PlayerItemDamageEvent event) {
         GunEventHandler.onPlayerItemDamage(event);
     }
 
     @EventHandler
-    private static void onEntityShootBow(final @NotNull EntityShootBowEvent event) {
+    private static void onEntityShootBow(final EntityShootBowEvent event) {
         GunEventHandler.onEntityShootBow(event);
     }
 
-    private static final @NotNull GrapplingHook GRAPPLING_HOOK = CustomElement.of(GrapplingHook.class);
+    private static final GrapplingHook GRAPPLING_HOOK = CustomElement.of(GrapplingHook.class);
 
     @EventHandler
-    private static void onPlayerFish(final @NotNull PlayerFishEvent event) {
+    private static void onPlayerFish(final PlayerFishEvent event) {
         GRAPPLING_HOOK.onPlayerFish(event);
     }
 
     @EventHandler
-    private static void onEntityToggleGlide(final @NotNull EntityToggleGlideEvent event) {
+    private static void onEntityToggleGlide(final EntityToggleGlideEvent event) {
         GameEventHandler.onEntityToggleGlide(event);
     }
 
     @EventHandler
-    private static void onFoodLevelChange(final @NotNull FoodLevelChangeEvent event) {
+    private static void onFoodLevelChange(final FoodLevelChangeEvent event) {
         GameEventHandler.onFoodLevelChange(event);
         if (event.isCancelled()) return;
         LobbyEventHandler.onFoodLevelChange(event);
     }
 
     @EventHandler
-    private static void onEntityRegainHealth(final @NotNull EntityRegainHealthEvent event) {
+    private static void onEntityRegainHealth(final EntityRegainHealthEvent event) {
         GameEventHandler.onEntityRegainHealth(event);
     }
 
     @EventHandler
-    private static void onPlayerAdvancementCriterionGrant(final @NotNull PlayerAdvancementCriterionGrantEvent event) {
+    private static void onPlayerAdvancementCriterionGrant(final PlayerAdvancementCriterionGrantEvent event) {
         GameEventHandler.onPlayerAdvancementCriterionGrant(event);
         if (event.isCancelled()) return;
         LobbyEventHandler.onPlayerAdvancementCriterionGrant(event);
     }
 
     @EventHandler
-    private static void onItemSpawn(final @NotNull ItemSpawnEvent event) {
+    private static void onItemSpawn(final ItemSpawnEvent event) {
         BlockEventHandler.onItemSpawn(event);
     }
 
     @EventHandler
-    private static void onPlayerRecipeDiscover(final @NotNull PlayerRecipeDiscoverEvent event) {
+    private static void onPlayerRecipeDiscover(final PlayerRecipeDiscoverEvent event) {
         GameEventHandler.onPlayerRecipeDiscover(event);
         if (event.isCancelled()) return;
         LobbyEventHandler.onPlayerRecipeDiscover(event);
     }
 
     @EventHandler
-    private static void onBlockPreDispense(final @NotNull BlockPreDispenseEvent event) {
+    private static void onBlockPreDispense(final BlockPreDispenseEvent event) {
         ThrowableEventHandler.onBlockPreDispense(event);
     }
 
     @EventHandler
-    private static void onPlayerPortal(final @NotNull PlayerPortalEvent event) {
+    private static void onPlayerPortal(final PlayerPortalEvent event) {
         GameEventHandler.onPlayerPortal(event);
         if (event.isCancelled()) return;
         LobbyEventHandler.onPlayerPortal(event);
     }
 
     @EventHandler
-    private static void onAsyncChat(final @NotNull AsyncChatEvent event) {
+    private static void onAsyncChat(final AsyncChatEvent event) {
         GameEventHandler.onAsyncChat(event);
     }
 
     @EventHandler
-    private static void onBlockPlace(final @NotNull BlockPlaceEvent event) {
+    private static void onBlockPlace(final BlockPlaceEvent event) {
         BlockEventHandler.onBlockPlace(event);
+    }
+
+    @EventHandler
+    private static void onUnknownCommand(final UnknownCommandEvent event) {
+        GlobalEventHandler.onUnknownCommand(event);
     }
 }

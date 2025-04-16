@@ -15,8 +15,9 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class SmokeGrenade extends Grenade {
     public static final int EFFECTS_DURATION = 400; // Duration of effects in ticks
 
@@ -31,17 +32,17 @@ public class SmokeGrenade extends Grenade {
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Smoke Grenade");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "blinds enemies, provides good cover";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.UNCOMMON;
     }
 
@@ -56,17 +57,12 @@ public class SmokeGrenade extends Grenade {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "smoke_grenade";
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 2;
-    }
-
-    @Override
-    protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
+    protected void onThrownHit(final ProjectileHitEvent event, final Snowball thrown) {
         final Location location = thrown.getLocation();
         new BukkitRunnable() {
             private int counter = 0;

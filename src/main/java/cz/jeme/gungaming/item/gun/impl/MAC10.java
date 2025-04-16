@@ -8,8 +8,9 @@ import cz.jeme.gungaming.item.gun.Gun;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class MAC10 extends Gun implements GripDisabled, ScopeDisabled {
 
     @Override
@@ -48,27 +49,27 @@ public class MAC10 extends Gun implements GripDisabled, ScopeDisabled {
     }
 
     @Override
-    protected @NotNull Class<? extends Ammo> provideAmmoType() {
+    protected Class<? extends Ammo> provideAmmoType() {
         return NineMillimeter.class;
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "high fire rate SMG with low accuracy";
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "mac-10";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.RARE;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("MAC-10");
     }
 
@@ -77,8 +78,4 @@ public class MAC10 extends Gun implements GripDisabled, ScopeDisabled {
         return 4;
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 11;
-    }
 }

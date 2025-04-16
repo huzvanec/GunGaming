@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "gungaming:item/tracker/teammate_tracker_inactive"
+  }
+}

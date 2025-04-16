@@ -1,11 +1,11 @@
 package cz.jeme.gungaming.item.attachment;
 
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.item.attachment.disable.*;
 import cz.jeme.gungaming.item.attachment.impl.Silencer;
 import cz.jeme.gungaming.item.gun.Gun;
+import cz.jeme.gungaming.persistence.PersistentData;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -16,21 +16,22 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
+@NullMarked
 public final class AttachmentMenu {
-    private static final @NotNull Sound APPLY_SOUND = Sound.sound(GunGaming.key("item.attachment.apply"), Sound.Source.PLAYER, 1, 1);
-    private static final @NotNull Sound REMOVE_SOUND = Sound.sound(GunGaming.key("item.attachment.remove"), Sound.Source.PLAYER, 1, 1);
+    private static final Sound APPLY_SOUND = Sound.sound(GunGaming.key("item.attachment.apply"), Sound.Source.PLAYER, 1, 1);
+    private static final Sound REMOVE_SOUND = Sound.sound(GunGaming.key("item.attachment.remove"), Sound.Source.PLAYER, 1, 1);
 
-    private final @NotNull HumanEntity player;
-    private final @NotNull ItemStack gunItem;
-    private @NotNull ItemStack gunItemBackup;
-    private final @NotNull Gun gun;
-    private final @NotNull Inventory inventory;
+    private final HumanEntity player;
+    private final ItemStack gunItem;
+    private ItemStack gunItemBackup;
+    private final Gun gun;
+    private final Inventory inventory;
 
 
-    public AttachmentMenu(final @NotNull HumanEntity player, final @NotNull ItemStack gunItem) {
+    public AttachmentMenu(final HumanEntity player, final ItemStack gunItem) {
         this.player = player;
         this.gunItem = gunItem;
         gunItemBackup = gunItem.clone();
@@ -80,7 +81,7 @@ public final class AttachmentMenu {
         inventory.setItem(4, stock);
     }
 
-    void inventoryClick(final @NotNull InventoryClickEvent event) {
+    void inventoryClick(final InventoryClickEvent event) {
         if (inventory == event.getClickedInventory()) {
             menuClick(event);
             return;
@@ -91,7 +92,7 @@ public final class AttachmentMenu {
         }
     }
 
-    private void menuClick(final @NotNull InventoryClickEvent event) {
+    private void menuClick(final InventoryClickEvent event) {
         final ItemStack clickedItem = event.getCurrentItem();
         if (clickedItem == null) return;
         final int slot = event.getSlot();
@@ -151,7 +152,7 @@ public final class AttachmentMenu {
         }
     }
 
-    private void playerInventoryClick(final @NotNull InventoryClickEvent event) {
+    private void playerInventoryClick(final InventoryClickEvent event) {
         assert event.getClickedInventory() != null;
         final ItemStack clickedItem = event.getCurrentItem();
         switch (event.getClick()) {
@@ -167,7 +168,7 @@ public final class AttachmentMenu {
         }
     }
 
-    private void apply(final int slot, final @NotNull ItemStack attachmentItem) {
+    private void apply(final int slot, final ItemStack attachmentItem) {
         final PersistentData<String, String> keyData = slotToData(slot);
         final Attachment attachment = Attachment.of(attachmentItem);
 //        player.sendMessage(Component.text("Applied: ").append(attachment.name()));
@@ -178,7 +179,7 @@ public final class AttachmentMenu {
         player.playSound(APPLY_SOUND, player);
     }
 
-    private void remove(final int slot, final @NotNull ItemStack attachmentItem, final boolean setPlaceholder) {
+    private void remove(final int slot, final ItemStack attachmentItem, final boolean setPlaceholder) {
         slotToData(slot).delete(gunItem);
         gunItemBackup = gunItem.clone();
         final Attachment attachment = Attachment.of(attachmentItem);
@@ -194,12 +195,12 @@ public final class AttachmentMenu {
         );
     }
 
-    void playerDropItem(final @NotNull PlayerDropItemEvent event) {
+    void playerDropItem(final PlayerDropItemEvent event) {
         if (event.getItemDrop().getItemStack().equals(gunItemBackup))
             player.closeInventory();
     }
 
-    private static @NotNull Class<? extends Attachment> slotToClass(final int slot) {
+    private static Class<? extends Attachment> slotToClass(final int slot) {
         return switch (slot) {
             case 0 -> Silencer.class;
             case 1 -> Grip.class;
@@ -210,7 +211,7 @@ public final class AttachmentMenu {
         };
     }
 
-    private @NotNull ItemStack slotToPlaceholder(final int slot) {
+    private ItemStack slotToPlaceholder(final int slot) {
         return switch (slot) {
             case 0 -> Silencer.placeholder(gunItem);
             case 1 -> Grip.placeholder(gunItem);
@@ -221,7 +222,7 @@ public final class AttachmentMenu {
         };
     }
 
-    private @NotNull PersistentData<String, String> slotToData(final int slot) {
+    private PersistentData<String, String> slotToData(final int slot) {
         return switch (slot) {
             case 0 -> Silencer.GUN_SILENCER_KEY_DATA;
             case 1 -> Grip.GUN_GRIP_KEY_DATA;
@@ -232,7 +233,7 @@ public final class AttachmentMenu {
         };
     }
 
-    private int attachmentToSlot(final @NotNull Attachment attachment) {
+    private int attachmentToSlot(final Attachment attachment) {
         return switch (attachment) {
             case final Silencer ignored -> 0;
             case final Grip ignored -> 1;
@@ -248,7 +249,7 @@ public final class AttachmentMenu {
         return CustomItem.is(item, slotToClass(slot));
     }
 
-    public @NotNull Inventory inventory() {
+    public Inventory inventory() {
         return inventory;
     }
 }

@@ -3,6 +3,7 @@ package cz.jeme.gungaming.item.attachment;
 import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.util.Components;
 import cz.jeme.gungaming.util.Packets;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.protocol.game.ClientboundPlayerAbilitiesPacket;
 import net.minecraft.world.entity.player.Abilities;
@@ -15,15 +16,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 
+@NullMarked
 public enum ZoomManager {
     INSTANCE;
 
-    private static final @NotNull ItemStack PUMPKIN = ItemStack.of(Material.CARVED_PUMPKIN);
-    private static final @NotNull PotionEffect NIGHT_VISION = new PotionEffect(
+    private static final ItemStack PUMPKIN = ItemStack.of(Material.CARVED_PUMPKIN);
+    private static final PotionEffect NIGHT_VISION = new PotionEffect(
             PotionEffectType.NIGHT_VISION,
             -1,
             255,
@@ -38,15 +41,16 @@ public enum ZoomManager {
         PUMPKIN.editMeta(meta -> {
             meta.displayName(Component.empty());
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            meta.setCustomModelData(1);
         });
+        //noinspection UnstableApiUsage
+        PUMPKIN.setData(DataComponentTypes.ITEM_MODEL, GunGaming.key("scope_overlay"));
     }
 
-    private final @NotNull Map<UUID, ItemStack> helmetItems = new HashMap<>();
-    private final @NotNull Map<UUID, PotionEffect> nightVisions = new HashMap<>();
-    private final @NotNull Set<UUID> zoomedIn = new HashSet<>();
+    private final Map<UUID, @Nullable ItemStack> helmetItems = new HashMap<>();
+    private final Map<UUID, @Nullable PotionEffect> nightVisions = new HashMap<>();
+    private final Set<UUID> zoomedIn = new HashSet<>();
 
-    public void zoomIn(final @NotNull Player player, final double zoom) {
+    public void zoomIn(final Player player, final double zoom) {
         final UUID uuid = player.getUniqueId();
         if (zoomedIn.contains(uuid)) return;
         if (player.isFlying()) {
@@ -66,7 +70,7 @@ public enum ZoomManager {
         zoomedIn.add(uuid);
     }
 
-    public void zoomOut(final @NotNull Player player) {
+    public void zoomOut(final Player player) {
         final UUID uuid = player.getUniqueId();
         if (!zoomedIn.contains(uuid)) return;
         setZoom(player, 1);
@@ -87,13 +91,13 @@ public enum ZoomManager {
         }
     }
 
-    public void nextZoom(final @NotNull Player player, final double zoom) {
+    public void nextZoom(final Player player, final double zoom) {
         final UUID uuid = player.getUniqueId();
         if (zoomedIn.contains(uuid)) zoomOut(player);
         else zoomIn(player, zoom);
     }
 
-    private void setZoom(final @NotNull Player player, final double zoom) {
+    private void setZoom(final Player player, final double zoom) {
         final Abilities abilities = new Abilities();
         abilities.setWalkingSpeed(calcZoom(zoom));
         Packets.send(player, new ClientboundPlayerAbilitiesPacket(abilities));

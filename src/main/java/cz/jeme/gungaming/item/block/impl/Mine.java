@@ -18,26 +18,27 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+@NullMarked
 public class Mine extends CustomBlock {
     public static final int MAX_DAMAGE = 30;
     public static final int ACTIVATION_TIME = 6 * 20; // ticks
     public static final double ENTITY_CHECK_RADIUS = 3; // blocks
     public static final double BULLET_CHECK_RADIUS = 3; // blocks
-    private static final @NotNull Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(Color.RED, 1);
+    private static final Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(Color.RED, 1);
 
-    private static final @NotNull Sound ACTIVATING_SOUND = Sound.sound(GunGaming.key("block.mine.activating"), Sound.Source.BLOCK, 2, 1);
-    private static final @NotNull Sound ACTIVATED_SOUND = Sound.sound(GunGaming.key("block.mine.activated"), Sound.Source.BLOCK, 2, 1);
-    private static final @NotNull Sound WARNING_SOUND = Sound.sound(GunGaming.key("block.mine.warning"), Sound.Source.BLOCK, 2, 1);
-    private static final @NotNull Sound EXPLOSION_SOUND = Sound.sound(GunGaming.key("block.mine.explosion"), Sound.Source.BLOCK, 9.4F, 1);
+    private static final Sound ACTIVATING_SOUND = Sound.sound(GunGaming.key("block.mine.activating"), Sound.Source.BLOCK, 2, 1);
+    private static final Sound ACTIVATED_SOUND = Sound.sound(GunGaming.key("block.mine.activated"), Sound.Source.BLOCK, 2, 1);
+    private static final Sound WARNING_SOUND = Sound.sound(GunGaming.key("block.mine.warning"), Sound.Source.BLOCK, 2, 1);
+    private static final Sound EXPLOSION_SOUND = Sound.sound(GunGaming.key("block.mine.explosion"), Sound.Source.BLOCK, 9.4F, 1);
 
-    private static final @NotNull Queue<ActiveMine> MINES = new ConcurrentLinkedQueue<>();
+    private static final Queue<ActiveMine> MINES = new ConcurrentLinkedQueue<>();
 
 
     protected Mine() {
@@ -46,12 +47,12 @@ public class Mine extends CustomBlock {
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "unpleasant surprise for enemies";
     }
 
     @Override
-    protected @NotNull Material provideMaterial() {
+    protected Material provideMaterial() {
         return Material.POLISHED_BLACKSTONE_BUTTON;
     }
 
@@ -66,35 +67,35 @@ public class Mine extends CustomBlock {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "mine";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.RARE;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Mine");
     }
 
 
     @Override
-    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+    protected List<String> update(final ItemStack item) {
         return List.of(
                 Lores.loreStat("Damage", Lores.STATS_FORMATTER.format(MAX_DAMAGE))
         );
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 1;
+    protected boolean provideUsesDefaultModel() {
+        return false;
     }
 
     @Override
-    protected void onPlace(final @NotNull BlockPlaceEvent event) {
+    protected void onPlace(final BlockPlaceEvent event) {
         final Block block = event.getBlock();
         block.setType(Material.AIR);
         final Player player = event.getPlayer();
@@ -125,7 +126,7 @@ public class Mine extends CustomBlock {
         }.runTaskTimer(GunGaming.instance(), 0L, 1L);
     }
 
-    public static void explode(final @NotNull ActiveMine mine) {
+    public static void explode(final ActiveMine mine) {
         MINES.remove(mine);
         final Location location = mine.location();
         final World world = location.getWorld();
@@ -153,7 +154,7 @@ public class Mine extends CustomBlock {
         );
     }
 
-    public static @NotNull Queue<ActiveMine> activeMines() {
+    public static Queue<ActiveMine> activeMines() {
         return MINES;
     }
 
@@ -176,15 +177,15 @@ public class Mine extends CustomBlock {
     }
 
     public record ActiveMine(
-            @NotNull Location location,
-            @NotNull Player placer
+            Location location,
+            Player placer
     ) {
         @Override
         public boolean equals(final @Nullable Object o) {
             if (this == o) return true;
-            if (!(o instanceof final ActiveMine that)) return false;
+            if (!(o instanceof ActiveMine(final Location thatLocation, final Player thatPlacer))) return false;
 
-            return placer.equals(that.placer) && location.equals(that.location);
+            return placer.equals(thatPlacer) && location.equals(thatLocation);
         }
 
         @Override

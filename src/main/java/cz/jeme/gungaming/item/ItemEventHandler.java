@@ -8,14 +8,15 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public final class ItemEventHandler {
     private ItemEventHandler() {
         throw new AssertionError();
     }
 
-    public static void onPlayerInteract(final @NotNull PlayerInteractEvent event) {
+    public static void onPlayerInteract(final PlayerInteractEvent event) {
         if (!event.hasItem()) return;
         final ItemStack item = event.getItem();
         assert item != null;
@@ -50,7 +51,7 @@ public final class ItemEventHandler {
 
     }
 
-    public static void onPlayerItemHeld(final @NotNull PlayerItemHeldEvent event) {
+    public static void onPlayerItemHeld(final PlayerItemHeldEvent event) {
         final Player player = event.getPlayer();
         final ItemStack newItem = player.getInventory().getItem(event.getNewSlot());
         if (!CustomItem.is(newItem)) return;
@@ -59,7 +60,7 @@ public final class ItemEventHandler {
     }
 
     // prevent using custom items in crafting
-    public static void onPrepareItemCraft(final @NotNull PrepareItemCraftEvent event) {
+    public static void onPrepareItemCraft(final PrepareItemCraftEvent event) {
         final CraftingInventory inventory = event.getInventory();
         for (final ItemStack item : inventory.getMatrix())
             if (CustomItem.is(item)) {

@@ -2,7 +2,6 @@ package cz.jeme.gungaming.item.impl;
 
 import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.config.GameConfig;
-import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.game.Game;
 import cz.jeme.gungaming.game.GameTeam;
 import cz.jeme.gungaming.item.CustomItem;
@@ -11,6 +10,7 @@ import cz.jeme.gungaming.loot.Rarity;
 import cz.jeme.gungaming.loot.SingleLoot;
 import cz.jeme.gungaming.loot.crate.CrateGenerator;
 import cz.jeme.gungaming.loot.crate.CrateLocation;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.util.Components;
 import cz.jeme.gungaming.util.Maps;
 import net.kyori.adventure.key.KeyPattern;
@@ -18,19 +18,30 @@ import net.kyori.adventure.text.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.*;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
-public class Radar extends CustomItem implements SingleLoot {
-    public static final @NotNull PersistentData<Byte, Boolean> RADAR_INITIALIZED_DATA = PersistentData.ofBoolean(GunGaming.key("radar_initialized"));
+@NullMarked
+public final class Radar extends CustomItem implements SingleLoot {
+    public static final PersistentData<Byte, Boolean> RADAR_INITIALIZED_DATA = PersistentData.ofBoolean(GunGaming.key("radar_initialized"));
 
-    protected Radar() {
+    private final StealthHelmet stealthHelmet = CustomItem.of(StealthHelmet.class);
+    private final Component stealthHelmetWarning = Components.of("<red>You cannot use ")
+            .append(name)
+            .append(Component.text(" while wearing a "))
+            .append(stealthHelmet.name())
+            .append(Component.text("!"));
+
+    private Radar() {
         item.editMeta(meta -> meta.setMaxStackSize(1));
 
         Bukkit.getScheduler().runTaskTimer(
@@ -49,7 +60,7 @@ public class Radar extends CustomItem implements SingleLoot {
         );
     }
 
-    private void updateRadar(final @NotNull Player player, final @NotNull ItemStack item) {
+    private void updateRadar(final Player player, final ItemStack item) {
         if (!CustomItem.is(item, Radar.class)) return;
         if (RADAR_INITIALIZED_DATA.read(item).orElse(false)) return;
         item.editMeta(MapMeta.class, meta -> {
@@ -57,27 +68,27 @@ public class Radar extends CustomItem implements SingleLoot {
             final MapView map = Bukkit.createMap(player.getWorld());
             meta.setMapView(map);
             map.getRenderers().forEach(map::removeRenderer);
-            map.addRenderer(Renderer.INSTANCE);
+            map.addRenderer(new Renderer());
         });
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Radar");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Scans the surroundings for players and air drops";
     }
 
     @Override
-    protected @NotNull Material provideMaterial() {
+    protected Material provideMaterial() {
         return Material.FILLED_MAP;
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.LEGENDARY;
     }
 
@@ -92,26 +103,16 @@ public class Radar extends CustomItem implements SingleLoot {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "radar";
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 1;
-    }
-
-    private static final class Renderer extends MapRenderer {
-        public static final @NotNull Renderer INSTANCE = new Renderer();
-
-        private Renderer() {
-        }
-
+    private final class Renderer extends MapRenderer {
         private static final int MAP_SIZE = 128; // do not change, it wont work, because Maps#update works only for a small radius around the player
 
         @SuppressWarnings("deprecation")
         @Override
-        public void render(final @NotNull MapView map, final @NotNull MapCanvas canvas, final @NotNull Player player) {
+        public void render(final MapView map, final MapCanvas canvas, final Player player) {
             final PlayerInventory inventory = player.getInventory();
             final ItemStack mainHand = inventory.getItemInMainHand();
             final ItemStack offHand = inventory.getItemInOffHand();
@@ -121,14 +122,14 @@ public class Radar extends CustomItem implements SingleLoot {
                 for (int y = 0; y < MAP_SIZE; y++)
                     for (int x = 0; x < MAP_SIZE; x++)
                         canvas.setPixel(x, y, (byte) 0);
-                player.sendActionBar(StealthHelmet.WARNING);
+                player.sendActionBar(stealthHelmetWarning);
                 return;
             }
             renderCursors(map, canvas, player);
             renderWorld(map, canvas, player);
         }
 
-        private static void renderCursors(final @NotNull MapView map, final @NotNull MapCanvas canvas, final @NotNull Player player) {
+        private static void renderCursors(final MapView map, final MapCanvas canvas, final Player player) {
             final MapCursorCollection cursors = new MapCursorCollection();
             final Location playerLocation = player.getLocation();
             // add the main player cursor
@@ -181,7 +182,7 @@ public class Radar extends CustomItem implements SingleLoot {
         }
 
         @SuppressWarnings("deprecation")
-        private static void renderWorld(final @NotNull MapView map, final @NotNull MapCanvas canvas, final @NotNull Player player) {
+        private static void renderWorld(final MapView map, final MapCanvas canvas, final Player player) {
             final Location location = player.getLocation();
             // create a new map data that will get updated
             final ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();

@@ -6,13 +6,14 @@ import net.kyori.adventure.bossbar.BossBar;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 @ApiStatus.Internal
+@NullMarked
 public final class GracePeriodCountdown extends Countdown {
-    private final @NotNull Game game;
+    private final Game game;
 
-    public GracePeriodCountdown(final @NotNull Game game) {
+    public GracePeriodCountdown(final Game game) {
         super(GameConfig.GRACE_PERIOD_SECONDS.get(), game.bossBar());
         this.game = game;
         game.bossBar().color(BossBar.Color.RED);

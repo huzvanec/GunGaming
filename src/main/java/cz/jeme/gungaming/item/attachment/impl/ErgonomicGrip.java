@@ -4,10 +4,11 @@ import cz.jeme.gungaming.item.attachment.Grip;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.List;
 
+@NullMarked
 public class ErgonomicGrip extends Grip {
     @Override
     protected double provideInaccuracyMultiplier() {
@@ -15,39 +16,34 @@ public class ErgonomicGrip extends Grip {
     }
 
     @Override
-    protected @NotNull List<String> provideBuffs() {
+    protected List<String> provideBuffs() {
         return List.of(
                 "+90% accuracy"
         );
     }
 
     @Override
-    protected @NotNull List<String> provideDebuffs() {
+    protected List<String> provideDebuffs() {
         return List.of();
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "ergonomic_grip";
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Ergonomic Grip");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Awesome weapon accuracy";
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 4;
-    }
-
-    @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.LEGENDARY;
     }
 }

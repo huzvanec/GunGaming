@@ -5,52 +5,37 @@ import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class Fish extends Melee {
     @Override
-    protected double provideDamage() {
-        return 1;
-    }
-
-    @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Fish");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "may or may not have knockback 1500";
     }
 
     @Override
-    protected @NotNull Material provideMaterial() {
+    protected Material provideMaterial() {
         return Material.CHORUS_FRUIT;
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "fish";
     }
 
     @Override
-    protected double provideKnockback() {
+    protected double provideKnockbackBonus() {
         return 1500;
-    }
-
-    @Override
-    protected double provideAttackSpeed() {
-        return 0;
-    }
-
-    @Override
-    protected @Nullable Integer provideCustomModelData() {
-        return 5;
     }
 }

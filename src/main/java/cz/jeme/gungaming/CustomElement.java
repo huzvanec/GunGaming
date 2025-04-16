@@ -1,79 +1,80 @@
 package cz.jeme.gungaming;
 
-import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.loot.Rarity;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.util.Components;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public abstract class CustomElement {
-    public static final @NotNull PersistentData<String, String> KEY_DATA = PersistentData.ofString(GunGaming.key("element_key"));
+    public static final PersistentData<String, String> KEY_DATA = PersistentData.ofString(GunGaming.key("element_key"));
 
-    protected final @NotNull Key key = GunGaming.key(provideKey());
-    protected final @NotNull Rarity rarity = provideRarity();
-    protected final @NotNull Component name = rarity.color().append(provideName());
-    protected final @NotNull Component strippedName = Component.text(Components.strip(name));
+    protected final Key key = GunGaming.key(provideKey());
+    protected final Rarity rarity = provideRarity();
+    protected final Component name = rarity.color().append(provideName());
+    protected final Component strippedName = Component.text(Components.strip(name));
 
     // providers
 
-    protected abstract @KeyPattern.Value @NotNull String provideKey();
+    protected abstract @KeyPattern.Value String provideKey();
 
-    protected abstract @NotNull Rarity provideRarity();
+    protected abstract Rarity provideRarity();
 
-    protected abstract @NotNull Component provideName();
+    protected abstract Component provideName();
 
     // getters
 
-    public final @NotNull Key key() {
+    public final Key key() {
         return key;
     }
 
-    public final @NotNull Rarity rarity() {
+    public final Rarity rarity() {
         return rarity;
     }
 
-    public final @NotNull Component name() {
+    public final Component name() {
         return name;
     }
 
-    public final @NotNull Component strippedName() {
+    public final Component strippedName() {
         return strippedName;
     }
 
     // static accessors
 
-    public static <T extends CustomElement> @NotNull T of(final @NotNull Class<T> elementClass) {
+    public static <T extends CustomElement> T of(final Class<T> elementClass) {
         return ElementManager.INSTANCE.getElement(elementClass)
                 .orElseThrow(() -> new IllegalArgumentException("No registered CustomElement of class \""
                                                                 + elementClass.getCanonicalName() + "\" exists!"));
     }
 
 
-    public static @NotNull CustomElement of(final @NotNull String keyStr) {
+    public static CustomElement of(final String keyStr) {
         return ElementManager.INSTANCE.getElement(keyStr)
                 .orElseThrow(() -> new IllegalArgumentException("No registered CustomElement of key \""
                                                                 + keyStr + "\" exists!"));
     }
 
 
-    public static boolean is(final @NotNull Class<? extends CustomElement> elementClass) {
+    public static boolean is(final Class<? extends CustomElement> elementClass) {
         return ElementManager.INSTANCE.existsElement(elementClass);
     }
 
-    public static boolean is(final @NotNull String keyStr) {
+    public static boolean is(final String keyStr) {
         return ElementManager.INSTANCE.existsElement(keyStr);
     }
 
-    public static <T extends CustomElement> @NotNull T of(final @NotNull String keyStr, final @NotNull Class<T> elementClass) {
+    public static <T extends CustomElement> T of(final String keyStr, final Class<T> elementClass) {
         return ElementManager.INSTANCE.getElement(keyStr, elementClass)
                 .orElseThrow(() -> new IllegalArgumentException("No registered CustomElement of class \""
                                                                 + elementClass.getCanonicalName() + "\" and key \""
                                                                 + keyStr + "\" exists!"));
     }
 
-    public static boolean is(final @NotNull String keyStr, final @NotNull Class<? extends CustomElement> elementClass) {
+    public static boolean is(final String keyStr, final Class<? extends CustomElement> elementClass) {
         return ElementManager.INSTANCE.existsElement(keyStr, elementClass);
     }
 }

@@ -1,9 +1,9 @@
 package cz.jeme.gungaming.item.block;
 
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.loot.Rarity;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.util.Components;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -12,18 +12,19 @@ import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.List;
 
+@NullMarked
 public final class BlockEventHandler {
-    public static final @NotNull PersistentData<Byte, Boolean> ITEM_MODIFIED_DATA = PersistentData.ofBoolean(GunGaming.key("item_modified"));
+    public static final PersistentData<Byte, Boolean> ITEM_MODIFIED_DATA = PersistentData.ofBoolean(GunGaming.key("item_modified"));
 
     private BlockEventHandler() {
         throw new AssertionError();
     }
 
-    public static void onItemSpawn(final @NotNull ItemSpawnEvent event) {
+    public static void onItemSpawn(final ItemSpawnEvent event) {
         final ItemStack item = event.getEntity().getItemStack();
         if (CustomItem.is(item)) return;
         final Material material = item.getType();
@@ -54,7 +55,7 @@ public final class BlockEventHandler {
     // https://github.com/PaperMC/Paper/issues/11040
     // https://github.com/PaperMC/Paper/pull/11049
     @SuppressWarnings("UnstableApiUsage")
-    private static @NotNull Rarity getRarity(final @NotNull Material material) {
+    private static Rarity getRarity(final Material material) {
         final ItemType type = material.asItemType();
         if (type == null) return Rarity.COMMON;
         final ItemRarity rarity = type.getItemRarity();
@@ -67,7 +68,7 @@ public final class BlockEventHandler {
         };
     }
 
-    public static void onBlockPlace(final @NotNull BlockPlaceEvent event) {
+    public static void onBlockPlace(final BlockPlaceEvent event) {
         final ItemStack item = event.getItemInHand();
         if (!CustomBlock.is(item)) return;
         CustomBlock.of(item).onPlace(event);

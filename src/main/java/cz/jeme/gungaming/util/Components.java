@@ -2,17 +2,18 @@ package cz.jeme.gungaming.util;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@NullMarked
 public final class Components {
     private Components() {
         throw new AssertionError();
     }
 
-    private static final @NotNull Map<Character, Character> LATIN = new HashMap<>();
+    private static final Map<Character, Character> LATIN = new HashMap<>();
 
     static {
         LATIN.put('a', 'ᴀ');
@@ -53,25 +54,25 @@ public final class Components {
 //        LATIN.put('0', '₉');
     }
 
-    public static final @NotNull String PREFIX = "<dark_gray>[<b><#6786C8>ɢ</#6786C8><#4C618D>ɢ</#4C618D></b>]</dark_gray> ";
+    public static final String PREFIX = "<dark_gray>[<b><#6786C8>ɢ</#6786C8><#4C618D>ɢ</#4C618D></b>]</dark_gray> ";
 
-    public static @NotNull Component of(final @NotNull String string) {
+    public static Component of(final String string) {
         return MiniMessage.miniMessage().deserialize(string);
     }
 
-    public static @NotNull String toString(final @NotNull Component component) {
+    public static String toString(final Component component) {
         return MiniMessage.miniMessage().serialize(component);
     }
 
-    public static @NotNull Component prefix(final @NotNull String string) {
+    public static Component prefix(final String string) {
         return Components.of(PREFIX + string);
     }
 
-    public static @NotNull Component latin(final @NotNull String string) {
+    public static Component latin(final String string) {
         return Components.of(latinString(string));
     }
 
-    public static @NotNull String latinString(final @NotNull String string) {
+    public static String latinString(final String string) {
         final StringBuilder builder = new StringBuilder();
         for (final char character : string.toCharArray())
             builder.append(latinChar(character));
@@ -82,11 +83,11 @@ public final class Components {
         return LATIN.getOrDefault(Character.toLowerCase(character), character);
     }
 
-    public static @NotNull String strip(final @NotNull String string) {
+    public static String strip(final String string) {
         return MiniMessage.miniMessage().stripTags(string);
     }
 
-    public static @NotNull String strip(final @NotNull Component component) {
+    public static String strip(final Component component) {
         return strip(toString(component));
     }
 }

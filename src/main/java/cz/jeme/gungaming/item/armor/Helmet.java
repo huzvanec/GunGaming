@@ -1,29 +1,21 @@
 package cz.jeme.gungaming.item.armor;
 
-import org.bukkit.inventory.EquipmentSlotGroup;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.inventory.EquipmentSlot;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public abstract class Helmet extends Armor {
     protected Helmet() {
         addTags("helmet");
-        switch (material) {
-            case CHAINMAIL_HELMET, DIAMOND_HELMET,
-                 GOLDEN_HELMET, IRON_HELMET,
-                 LEATHER_HELMET, NETHERITE_HELMET,
-                 TURTLE_HELMET -> {
-            }
-            default -> throw new IllegalArgumentException("Material must be a helmet!");
-        }
     }
 
     @Override
-    protected final @NotNull String provideType() {
+    protected final String provideType() {
         return "helmet";
     }
 
-    @SuppressWarnings("UnstableApiUsage")
     @Override
-    protected final @NotNull EquipmentSlotGroup provideSlot() {
-        return EquipmentSlotGroup.HEAD;
+    protected final EquipmentSlot provideSlot() {
+        return EquipmentSlot.HEAD;
     }
 }

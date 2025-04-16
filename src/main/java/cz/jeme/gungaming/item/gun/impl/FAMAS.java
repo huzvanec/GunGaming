@@ -7,8 +7,9 @@ import cz.jeme.gungaming.item.gun.Gun;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class FAMAS extends Gun implements StockDisabled {
     @Override
     protected int provideMaxAmmo() {
@@ -46,27 +47,27 @@ public class FAMAS extends Gun implements StockDisabled {
     }
 
     @Override
-    protected @NotNull Class<? extends Ammo> provideAmmoType() {
+    protected Class<? extends Ammo> provideAmmoType() {
         return FiveFiveSixMillimeter.class;
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "very accurate 3-round SMG with high fire rate";
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "famas";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("FAMAS");
     }
 
@@ -80,8 +81,4 @@ public class FAMAS extends Gun implements StockDisabled {
         return 2;
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 24;
-    }
 }

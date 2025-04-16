@@ -8,8 +8,9 @@ import cz.jeme.gungaming.item.gun.Gun;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class DesertEagle extends Gun implements GripDisabled, StockDisabled {
     @Override
     protected int provideMaxAmmo() {
@@ -47,32 +48,28 @@ public class DesertEagle extends Gun implements GripDisabled, StockDisabled {
     }
 
     @Override
-    protected @NotNull Class<? extends Ammo> provideAmmoType() {
+    protected Class<? extends Ammo> provideAmmoType() {
         return FiveZeroActionExpress.class;
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Pistol with very high DPS";
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "desert_eagle";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Desert Eagle");
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 18;
-    }
 }

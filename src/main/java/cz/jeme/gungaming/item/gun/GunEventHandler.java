@@ -3,6 +3,7 @@ package cz.jeme.gungaming.item.gun;
 import cz.jeme.gungaming.GlobalEventHandler;
 import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.util.Materials;
+import io.papermc.paper.registry.keys.SoundEventKeys;
 import net.kyori.adventure.sound.SoundStop;
 import net.minecraft.world.inventory.InventoryMenu;
 import org.bukkit.*;
@@ -25,14 +26,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.CrossbowMeta;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public final class GunEventHandler {
     private GunEventHandler() {
         throw new AssertionError();
     }
 
-    public static void onPlayerSwapHandItems(final @NotNull PlayerSwapHandItemsEvent event) {
+    public static void onPlayerSwapHandItems(final PlayerSwapHandItemsEvent event) {
         final Player player = event.getPlayer();
         final PlayerInventory inventory = player.getInventory();
         final ItemStack mainHand = inventory.getItemInMainHand();
@@ -46,11 +48,11 @@ public final class GunEventHandler {
         }
     }
 
-    public static void onInventoryOpenEvent(final @NotNull InventoryOpenEvent event) {
+    public static void onInventoryOpenEvent(final InventoryOpenEvent event) {
         ReloadManager.INSTANCE.abortReload((Player) event.getPlayer(), true);
     }
 
-    public static void onPlayerDropItem(final @NotNull PlayerDropItemEvent event) {
+    public static void onPlayerDropItem(final PlayerDropItemEvent event) {
         final Player player = event.getPlayer();
         ReloadManager.INSTANCE.abortReload(event.getPlayer(), true);
         final StatsMenu menu = StatsMenuManager.INSTANCE.getMenu(player);
@@ -58,11 +60,11 @@ public final class GunEventHandler {
         menu.playerDropItem(event);
     }
 
-    public static void onPlayerItemHeld(final @NotNull PlayerItemHeldEvent event) {
+    public static void onPlayerItemHeld(final PlayerItemHeldEvent event) {
         ReloadManager.INSTANCE.abortReload(event.getPlayer(), true);
     }
 
-    public static void onInventoryClick(final @NotNull InventoryClickEvent event) {
+    public static void onInventoryClick(final InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof final Player player)) return;
         ReloadManager.INSTANCE.abortReload(player, true);
 
@@ -86,7 +88,7 @@ public final class GunEventHandler {
         }
     }
 
-    public static void onInventoryClose(final @NotNull InventoryCloseEvent event) {
+    public static void onInventoryClose(final InventoryCloseEvent event) {
         final HumanEntity player = event.getPlayer();
         final StatsMenu menu = StatsMenuManager.INSTANCE.getMenu(player);
         if (menu == null) return;
@@ -99,11 +101,11 @@ public final class GunEventHandler {
         StatsMenuManager.INSTANCE.removeMenu(player);
     }
 
-    public static void onPlayerDeath(final @NotNull PlayerDeathEvent event) {
+    public static void onPlayerDeath(final PlayerDeathEvent event) {
         ReloadManager.INSTANCE.abortReload(event.getEntity(), false);
     }
 
-    public static void onProjectileHit(final @NotNull ProjectileHitEvent event) {
+    public static void onProjectileHit(final ProjectileHitEvent event) {
         if (!(event.getEntity() instanceof final AbstractArrow bullet)) return;
         if (!BulletHelper.isBullet(bullet)) return;
         final Gun gun = Gun.of(BulletHelper.GUN_KEY_DATA.require(bullet));
@@ -143,7 +145,7 @@ public final class GunEventHandler {
         });
     }
 
-    public static void onEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent event) {
+    public static void onEntityDamageByEntity(final EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof final AbstractArrow bullet) || !BulletHelper.isBullet(bullet)) {
             if (event.getDamager() instanceof Projectile)
                 GlobalEventHandler.resetNoDamageTicks(event.getEntity());
@@ -156,15 +158,15 @@ public final class GunEventHandler {
         event.setDamage(BulletHelper.DAMAGE_DATA.require(bullet));
     }
 
-    public static void onPlayerItemDamage(final @NotNull PlayerItemDamageEvent event) {
+    public static void onPlayerItemDamage(final PlayerItemDamageEvent event) {
         if (!Gun.is(event.getItem())) return;
         event.setCancelled(true);
     }
 
-    public static void onEntityShootBow(final @NotNull EntityShootBowEvent event) {
+    public static void onEntityShootBow(final EntityShootBowEvent event) {
         if (!Gun.is(event.getBow())) return;
         event.setCancelled(true);
         event.getBow().editMeta(CrossbowMeta.class, meta -> meta.setChargedProjectiles(Gun.PROJECTILES));
-        event.getEntity().stopSound(SoundStop.named(org.bukkit.Sound.ITEM_CROSSBOW_SHOOT.key()));
+        event.getEntity().stopSound(SoundStop.named(SoundEventKeys.ITEM_CROSSBOW_SHOOT.key()));
     }
 }

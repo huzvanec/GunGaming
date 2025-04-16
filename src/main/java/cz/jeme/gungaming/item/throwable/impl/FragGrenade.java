@@ -7,8 +7,9 @@ import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class FragGrenade extends Grenade implements MineChainTrigger {
     @Override
     protected int provideThrowCooldown() {
@@ -21,27 +22,22 @@ public class FragGrenade extends Grenade implements MineChainTrigger {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "frag_grenade";
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Frag Grenade");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Highly explosive throwable weapon";
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 1;
-    }
-
-    @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.RARE;
     }
 
@@ -57,7 +53,7 @@ public class FragGrenade extends Grenade implements MineChainTrigger {
 
 
     @Override
-    protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
+    protected void onThrownHit(final ProjectileHitEvent event, final Snowball thrown) {
         thrown.getLocation().createExplosion(thrown, 4, false, true);
     }
 

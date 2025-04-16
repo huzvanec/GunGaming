@@ -13,7 +13,7 @@ import cz.jeme.gungaming.game.runnable.RefillRunnable;
 import cz.jeme.gungaming.game.runnable.countdown.GameCountdown;
 import cz.jeme.gungaming.game.runnable.countdown.GracePeriodCountdown;
 import cz.jeme.gungaming.game.runnable.countdown.StartCountdown;
-import cz.jeme.gungaming.item.tracker.TeammateTracker;
+import cz.jeme.gungaming.item.tracker.impl.TeammateTracker;
 import cz.jeme.gungaming.loot.crate.CrateGenerator;
 import cz.jeme.gungaming.util.Components;
 import io.papermc.paper.command.brigadier.CommandSourceStack;

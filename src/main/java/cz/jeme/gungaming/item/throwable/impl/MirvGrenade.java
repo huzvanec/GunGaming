@@ -14,11 +14,12 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.List;
 import java.util.Objects;
 
+@NullMarked
 public class MirvGrenade extends Grenade implements MineChainTrigger {
     public static final double HORIZONTAL_POWER = 0.4;
     public static final double VERTICAL_POWER = 0.4;
@@ -34,17 +35,17 @@ public class MirvGrenade extends Grenade implements MineChainTrigger {
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("MIRV Grenade");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Explodes into eight small grenades";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 
@@ -59,24 +60,19 @@ public class MirvGrenade extends Grenade implements MineChainTrigger {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "mirv_grenade";
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 3;
-    }
-
-    @Override
-    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+    protected List<String> update(final ItemStack item) {
         final String damageStr = Lores.STATS_FORMATTER.format(maxDamage) + " + 8×"
                                  + Lores.STATS_FORMATTER.format(SmallGrenade.MAX_DAMAGE);
         return List.of(Lores.loreStat("Damage", damageStr));
     }
 
     @Override
-    protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
+    protected void onThrownHit(final ProjectileHitEvent event, final Snowball thrown) {
         final Location location = thrown.getLocation();
         location.createExplosion(thrown, 5F, false, true);
         final SmallGrenade smallGrenade = CustomElement.of(SmallGrenade.class);

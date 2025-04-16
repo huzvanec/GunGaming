@@ -11,20 +11,21 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
 
+@NullMarked
 public final class Lobby {
     private static @Nullable Lobby instance;
-    private final @NotNull Audience audience;
-    private final @NotNull World world;
-    private final @NotNull Location spawn;
-    private final @NotNull LobbyRunnable lobbyRunnable;
+    private final Audience audience;
+    private final World world;
+    private final Location spawn;
+    private final LobbyRunnable lobbyRunnable;
 
     @SuppressWarnings("UnstableApiUsage")
-    public Lobby(final @NotNull CommandSourceStack source) {
+    public Lobby(final CommandSourceStack source) {
         audience = source.getSender();
         if (enabled()) {
             audience.sendMessage(Components.prefix("<red>Lobby is already enabled!"));
@@ -50,7 +51,7 @@ public final class Lobby {
         lobbyRunnable = new LobbyRunnable();
     }
 
-    public void playerSetup(final @NotNull Player player) {
+    public void playerSetup(final Player player) {
         Game.playerSetup(player);
         player.teleport(spawn);
         player.setGameMode(GameMode.ADVENTURE);
@@ -61,7 +62,7 @@ public final class Lobby {
         instance = null;
     }
 
-    public static synchronized @NotNull Lobby instance() {
+    public static synchronized Lobby instance() {
         return Objects.requireNonNull(instance, "Lobby is not enabled!");
     }
 
@@ -69,7 +70,7 @@ public final class Lobby {
         return instance != null;
     }
 
-    public @NotNull Location spawn() {
+    public Location spawn() {
         return spawn;
     }
 }

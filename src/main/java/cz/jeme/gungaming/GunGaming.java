@@ -1,7 +1,7 @@
 package cz.jeme.gungaming;
 
-import cz.jeme.gungaming.command.chat.ChatCommand;
-import cz.jeme.gungaming.command.gg.GGCommand;
+import cz.jeme.gungaming.command.ChatCommand;
+import cz.jeme.gungaming.command.GGCommand;
 import cz.jeme.gungaming.game.Game;
 import cz.jeme.gungaming.game.lobby.Lobby;
 import cz.jeme.gungaming.item.attachment.ZoomManager;
@@ -55,8 +55,8 @@ public final class GunGaming extends JavaPlugin {
         getLogger().info("Registering commands...");
         getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
-            GGCommand.register(this, commands);
-            ChatCommand.register(this, commands);
+            new GGCommand(this, commands);
+            new ChatCommand(this, commands);
         });
     }
 

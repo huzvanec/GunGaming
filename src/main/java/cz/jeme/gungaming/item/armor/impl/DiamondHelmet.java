@@ -1,12 +1,15 @@
 package cz.jeme.gungaming.item.armor.impl;
 
+import cz.jeme.gungaming.GunGaming;
 import cz.jeme.gungaming.item.armor.Helmet;
 import cz.jeme.gungaming.loot.Rarity;
+import io.papermc.paper.registry.keys.SoundEventKeys;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class DiamondHelmet extends Helmet {
     @Override
     protected double provideArmor() {
@@ -19,27 +22,37 @@ public class DiamondHelmet extends Helmet {
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected Key provideArmorKey() {
+        return GunGaming.key("diamond");
+    }
+
+    @Override
+    protected int provideDurability() {
+        return 363;
+    }
+
+    @Override
+    protected Key provideEquipSound() {
+        return SoundEventKeys.ITEM_ARMOR_EQUIP_DIAMOND;
+    }
+
+    @Override
+    protected String provideDescription() {
         return "good helmet";
     }
 
     @Override
-    protected @NotNull Material provideMaterial() {
-        return Material.DIAMOND_HELMET;
-    }
-
-    @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "diamond_helmet";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Diamond Helmet");
     }
 }

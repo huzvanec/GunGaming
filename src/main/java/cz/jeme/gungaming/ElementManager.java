@@ -2,6 +2,7 @@ package cz.jeme.gungaming;
 
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.item.ammo.Ammo;
+import cz.jeme.gungaming.item.armor.impl.StealthHelmet;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ClassInfoList;
@@ -11,6 +12,7 @@ import org.jspecify.annotations.NullMarked;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @NullMarked
 public enum ElementManager {
@@ -21,7 +23,8 @@ public enum ElementManager {
     private final Map<String, Set<CustomItem>> tagged = new HashMap<>();
 
     private static final List<Class<? extends CustomElement>> ORDER = List.of(
-            Ammo.class, // load ammo before all other items (guns need it to register correctly)
+            Ammo.class, // load ammo before guns
+            StealthHelmet.class, // load stealth helmet before radar and player trackers
             CustomItem.class,
             CustomElement.class
     );
@@ -137,6 +140,13 @@ public enum ElementManager {
 
     public Set<CustomElement> elements() {
         return new HashSet<>(classified.values());
+    }
+
+    public Set<CustomItem> items() {
+        return classified.values().stream()
+                .filter(CustomItem.class::isInstance)
+                .map(CustomItem.class::cast)
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     public Set<String> tags() {

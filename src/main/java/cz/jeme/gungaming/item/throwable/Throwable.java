@@ -2,8 +2,8 @@ package cz.jeme.gungaming.item.throwable;
 
 import cz.jeme.gungaming.CustomElement;
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.util.Lores;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
@@ -16,14 +16,15 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
+@NullMarked
 public abstract class Throwable extends CustomItem {
-    public static final @NotNull PersistentData<Integer, Integer> THROW_COOLDOWN_DATA = PersistentData.ofInteger(GunGaming.key("throwable_throw_cooldown"));
-    public static final @NotNull PersistentData<Double, Double> MAX_DAMAGE_DATA = PersistentData.ofDouble(GunGaming.key("throwable_max_damage"));
+    public static final PersistentData<Integer, Integer> THROW_COOLDOWN_DATA = PersistentData.ofInteger(GunGaming.key("throwable_throw_cooldown"));
+    public static final PersistentData<Double, Double> MAX_DAMAGE_DATA = PersistentData.ofDouble(GunGaming.key("throwable_max_damage"));
 
     protected final int throwCooldown = provideThrowCooldown();
     protected final double maxDamage = provideMaxDamage();
@@ -86,12 +87,12 @@ public abstract class Throwable extends CustomItem {
 
 
     @Override
-    protected final void onUse(final @NotNull PlayerInteractEvent event) {
+    protected final void onUse(final PlayerInteractEvent event) {
         event.setCancelled(true);
         doThrow(event);
     }
 
-    private void doThrow(final @NotNull PlayerInteractEvent event) {
+    private void doThrow(final PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         final ItemStack item = event.getItem();
         assert item != null;
@@ -119,63 +120,63 @@ public abstract class Throwable extends CustomItem {
         player.getWorld().playSound(throwSound(item), player);
     }
 
-    protected void onThrow(final @NotNull PlayerInteractEvent event, final @NotNull Snowball thrown) {
+    protected void onThrow(final PlayerInteractEvent event, final Snowball thrown) {
     }
 
-    final void thrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
+    final void thrownHit(final ProjectileHitEvent event, final Snowball thrown) {
         final Location location = thrown.getLocation();
         thrown.getWorld().playSound(hitSound(thrown), location.getX(), location.getY(), location.getZ());
         onThrownHit(event, thrown);
         thrown.remove();
     }
 
-    protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
+    protected void onThrownHit(final ProjectileHitEvent event, final Snowball thrown) {
     }
 
     // sounds
 
-    protected final @NotNull Key throwSoundKey = GunGaming.key("item." + key.value() + ".throw");
-    protected final @NotNull Key hitSoundKey = GunGaming.key("entity." + key.value() + ".hit");
+    protected final Key throwSoundKey = GunGaming.key("item." + key.value() + ".throw");
+    protected final Key hitSoundKey = GunGaming.key("entity." + key.value() + ".hit");
 
-    protected final @NotNull Sound throwSound = Sound.sound(throwSoundKey, Sound.Source.PLAYER, 1.9F, 1);
-    protected final @NotNull Sound hitSound = Sound.sound(hitSoundKey, Sound.Source.HOSTILE, 9.4F, 1);
+    protected final Sound throwSound = Sound.sound(throwSoundKey, Sound.Source.PLAYER, 1.9F, 1);
+    protected final Sound hitSound = Sound.sound(hitSoundKey, Sound.Source.HOSTILE, 9.4F, 1);
 
-    public @NotNull Sound throwSound(final @NotNull ItemStack item) {
+    public Sound throwSound(final ItemStack item) {
         return throwSound;
     }
 
-    public @NotNull Sound hitSound(final @NotNull Snowball thrown) {
+    public Sound hitSound(final Snowball thrown) {
         return hitSound;
     }
 
     // override stuff
 
     @Override
-    protected final @NotNull Material provideMaterial() {
+    protected final Material provideMaterial() {
         return Material.SNOWBALL;
     }
 
     @Override
-    protected final @NotNull String provideType() {
+    protected final String provideType() {
         return "throwable";
     }
 
     @Override
-    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+    protected List<String> update(final ItemStack item) {
         return List.of(Lores.loreStat("Damage", Lores.STATS_FORMATTER.format(maxDamage)));
     }
 
     // static accessors
 
-    public static @NotNull Throwable of(final @NotNull String keyStr) {
+    public static Throwable of(final String keyStr) {
         return CustomElement.of(keyStr, Throwable.class);
     }
 
-    public static @NotNull Throwable of(final @NotNull ItemStack item) {
+    public static Throwable of(final ItemStack item) {
         return CustomItem.of(item, Throwable.class);
     }
 
-    public static boolean is(final @NotNull String keyStr) {
+    public static boolean is(final String keyStr) {
         return CustomElement.is(keyStr, Throwable.class);
     }
 

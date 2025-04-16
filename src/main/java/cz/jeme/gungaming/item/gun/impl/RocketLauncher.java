@@ -25,10 +25,11 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.Objects;
 
+@NullMarked
 public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDisabled {
     public static final double MAX_DAMAGE = 30;
 
@@ -68,34 +69,34 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
     }
 
     @Override
-    protected @NotNull Class<? extends Ammo> provideAmmoType() {
+    protected Class<? extends Ammo> provideAmmoType() {
         return Rocket.class;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Rocket Launcher");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Everything goes KABOOM";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.LEGENDARY;
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "rocket_launcher";
     }
 
-    protected static final @NotNull Sound ROCKET_SOUND = Sound.sound(GunGaming.key("entity.rocket.ambient"), Sound.Source.HOSTILE, 3F, 1F);
+    protected static final Sound ROCKET_SOUND = Sound.sound(GunGaming.key("entity.rocket.ambient"), Sound.Source.HOSTILE, 3F, 1F);
 
     @Override
-    protected void onShoot(final @NotNull PlayerInteractEvent event, final @NotNull AbstractArrow bullet) {
+    protected void onShoot(final PlayerInteractEvent event, final AbstractArrow bullet) {
         BulletHelper.DAMAGE_DATA.write(bullet, 0D); // remove bullet damage, the actual damage is dealt by Rocket Throwable explosion
         ((SpectralArrow) bullet).setGlowingTicks(0);
 
@@ -123,7 +124,7 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
     }
 
     @Override
-    protected void onBulletHit(final @NotNull ProjectileHitEvent event, final @NotNull AbstractArrow bullet) {
+    protected void onBulletHit(final ProjectileHitEvent event, final AbstractArrow bullet) {
         final Location location = bullet.getLocation();
         final RocketThrowable throwable = CustomElement.of(RocketThrowable.class);
         final Entity hit = event.getHitEntity();
@@ -144,12 +145,7 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 4;
-    }
-
-    @Override
-    protected @NotNull Class<? extends AbstractArrow> provideArrowType() {
+    protected Class<? extends AbstractArrow> provideArrowType() {
         return SpectralArrow.class;
     }
 }

@@ -5,11 +5,12 @@ import cz.jeme.gungaming.util.Components;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@NullMarked
 public enum Rarity {
     COMMON("common", "<white>"),
     UNCOMMON("uncommon", "<#22DD22>"),
@@ -18,23 +19,23 @@ public enum Rarity {
     LEGENDARY("legendary", "<#DDDD22>"),
     UNOBTAINABLE("unobtainable", "<#DD2222>");
 
-    private final @NotNull Component color;
-    private final @NotNull Key key;
+    private final Component color;
+    private final Key key;
 
-    Rarity(final @KeyPattern.Value @NotNull String key, final @NotNull String color) {
+    Rarity(final @KeyPattern.Value String key, final String color) {
         this.color = Components.of(color);
         this.key = GunGaming.key(key);
     }
 
-    public @NotNull Component color() {
+    public Component color() {
         return color;
     }
 
-    public @NotNull Key key() {
+    public Key key() {
         return key;
     }
 
-    private static final @NotNull Map<String, Rarity> REGISTRY = new HashMap<>();
+    private static final Map<String, Rarity> REGISTRY = new HashMap<>();
 
     static {
         for (final Rarity rarity : values()) {
@@ -43,7 +44,7 @@ public enum Rarity {
     }
 
 
-    public static @NotNull Rarity of(final @NotNull String keyStr) {
+    public static Rarity of(final String keyStr) {
         final Rarity rarity = REGISTRY.get(keyStr);
         if (rarity == null)
             throw new IllegalArgumentException("No registered Rarity of key \""

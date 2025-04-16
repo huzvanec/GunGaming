@@ -5,14 +5,15 @@ import cz.jeme.gungaming.game.runnable.GameRunnable;
 import cz.jeme.gungaming.util.Components;
 import net.kyori.adventure.bossbar.BossBar;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.text.DecimalFormat;
 
 @ApiStatus.Internal
+@NullMarked
 public abstract class Countdown extends GameRunnable {
-    private static final @NotNull DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("00");
+    private static final DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("00");
     private final long duration;
     private final @Nullable BossBar bossBar;
     private long counter;
@@ -48,7 +49,7 @@ public abstract class Countdown extends GameRunnable {
     protected void tick(final long counter, final float phase) {
     }
 
-    private static @NotNull String translateTime(final long totalSeconds) {
+    private static String translateTime(final long totalSeconds) {
         final long hours = totalSeconds / 3600;
         final long minutes = totalSeconds % 3600 / 60;
         final long seconds = totalSeconds % 60;

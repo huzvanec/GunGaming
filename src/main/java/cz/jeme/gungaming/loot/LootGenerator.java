@@ -5,23 +5,23 @@ import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.loot.crate.Crate;
 import cz.jeme.gungaming.loot.crate.CrateFilter;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
+@NullMarked
 public enum LootGenerator {
     INSTANCE;
 
-    private final @NotNull Random random = ThreadLocalRandom.current();
-    private final @NotNull Set<CustomItem> loot = ElementManager.INSTANCE.elements().stream()
-            .filter(CustomItem.class::isInstance)
-            .map(CustomItem.class::cast)
+    private final Random random = ThreadLocalRandom.current();
+    private final Set<CustomItem> loot = ElementManager.INSTANCE.items().stream()
             .filter(item -> item.rarity() != Rarity.UNOBTAINABLE)
             .collect(Collectors.toSet());
 
-    public ItemStack @NotNull [] generate(final @NotNull Crate crate, final int size) {
+    public ItemStack[] generate(final Crate crate, final int size) {
         final List<CustomItem> lootPool = new ArrayList<>();
         final CrateFilter filter = crate.filter();
         for (final CustomItem customItem : loot) {
@@ -30,7 +30,7 @@ public enum LootGenerator {
             if (chance == 0) continue;
             for (int i = 0; i < chance; i++) lootPool.add(customItem);
         }
-        final List<CustomItem> items = new ArrayList<>();
+        final List<@Nullable CustomItem> items = new ArrayList<>();
         int i = 0;
         while (i < size) {
             if (random.nextDouble() > crate.fillPercentage() || lootPool.isEmpty()) {
@@ -55,7 +55,7 @@ public enum LootGenerator {
     }
 
 
-    private @NotNull CustomItem random(final @NotNull Crate crate, final @NotNull List<CustomItem> lootPool) {
+    private CustomItem random(final Crate crate, final List<CustomItem> lootPool) {
         if (lootPool.isEmpty())
             throw new IllegalArgumentException("Loot pool is empty!");
         return lootPool.size() == 1
@@ -63,7 +63,7 @@ public enum LootGenerator {
                 : lootPool.get(random.nextInt(lootPool.size() - 1));
     }
 
-    private static boolean checkLimits(final @NotNull Crate crate, final @NotNull List<CustomItem> items, final @NotNull CustomItem item) {
+    private static boolean checkLimits(final Crate crate, final List<@Nullable CustomItem> items, final CustomItem item) {
         if (item instanceof SingleLoot && items.contains(item)) return false;
         final Map.Entry<Class<? extends CustomItem>, Integer> limitEntry = crate.limits().entrySet().stream()
                 .filter(entry -> entry.getKey().isAssignableFrom(item.getClass()))
@@ -78,7 +78,7 @@ public enum LootGenerator {
         return occurrences < limit;
     }
 
-    private int randomAmount(@NotNull final CustomItem customItem) {
+    private int randomAmount(final CustomItem customItem) {
         final int min = customItem.minAmount();
         final int max = customItem.maxAmount();
 

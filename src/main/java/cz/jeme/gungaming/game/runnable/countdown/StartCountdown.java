@@ -8,15 +8,16 @@ import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.time.Duration;
 
 @ApiStatus.Internal
+@NullMarked
 public final class StartCountdown extends Countdown {
-    private final @NotNull Game game;
+    private final Game game;
 
-    public StartCountdown(final @NotNull Game game) {
+    public StartCountdown(final Game game) {
         super(GameConfig.COUNTDOWN_SECONDS.get(), null);
         this.game = game;
     }

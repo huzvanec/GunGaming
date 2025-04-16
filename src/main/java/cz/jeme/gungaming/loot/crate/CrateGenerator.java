@@ -18,20 +18,21 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+@NullMarked
 public enum CrateGenerator {
     INSTANCE;
 
 
-    private final @NotNull Map<CrateLocation, CrateInfo> inventories = new HashMap<>();
-    private final @NotNull Set<CrateLocation> airDrops = new HashSet<>();
+    private final Map<CrateLocation, CrateInfo> inventories = new HashMap<>();
+    private final Set<CrateLocation> airDrops = new HashSet<>();
     volatile @Nullable Generation generation = null;
 
     private boolean checkLock(final @Nullable Audience audience) {
@@ -41,8 +42,8 @@ public enum CrateGenerator {
         return true;
     }
 
-    public boolean generate(final @NotNull Audience audience,
-                            final @NotNull Location location,
+    public boolean generate(final Audience audience,
+                            final Location location,
                             final int x1,
                             final int z1,
                             final int x2,
@@ -54,14 +55,14 @@ public enum CrateGenerator {
         return true;
     }
 
-    void addInventory(final @NotNull Block block, final @NotNull Crate crate, final @NotNull Inventory inventory) {
+    void addInventory(final Block block, final Crate crate, final Inventory inventory) {
         final CrateLocation location = new CrateLocation(block);
         inventories.put(location, new CrateInfo(crate, inventory));
         if (crate instanceof AirDrop)
             airDrops.add(location);
     }
 
-    void click(final @NotNull PlayerInteractEvent event) {
+    void click(final PlayerInteractEvent event) {
         final Block block = event.getClickedBlock();
         assert block != null;
         final CrateLocation location = new CrateLocation(block);
@@ -139,7 +140,7 @@ public enum CrateGenerator {
     }
 
     @ApiStatus.Internal
-    public @NotNull Set<CrateLocation> airDrops() {
+    public Set<CrateLocation> airDrops() {
         return airDrops;
     }
 
@@ -160,11 +161,11 @@ public enum CrateGenerator {
         return generation != null;
     }
 
-    public void generateCrate(final @NotNull Crate crate, final @NotNull Location location) {
+    public void generateCrate(final Crate crate, final Location location) {
         generateCrate(crate, location.getBlock());
     }
 
-    public void generateCrate(final @NotNull Crate crate, final @NotNull Block block) {
+    public void generateCrate(final Crate crate, final Block block) {
         block.setType(crate.material());
         final Inventory inventory = Bukkit.createInventory(null, InventoryType.CHEST, crate.strippedName());
         inventory.setContents(LootGenerator.INSTANCE.generate(crate, inventory.getSize()));

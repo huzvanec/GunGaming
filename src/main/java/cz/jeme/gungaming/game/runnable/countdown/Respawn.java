@@ -13,7 +13,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -21,12 +21,13 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @ApiStatus.Internal
+@NullMarked
 public final class Respawn extends Countdown {
-    private final @NotNull Random random = ThreadLocalRandom.current();
-    private final @NotNull Player player;
-    private final @NotNull Game game;
+    private final Random random = ThreadLocalRandom.current();
+    private final Player player;
+    private final Game game;
 
-    public Respawn(final @NotNull Game game, final @NotNull Player player) {
+    public Respawn(final Game game, final Player player) {
         super(GameConfig.RESPAWN_SECONDS.get(), null);
         this.game = game;
         this.player = player;
@@ -47,7 +48,7 @@ public final class Respawn extends Countdown {
 
     private static final int BORDER_BLOCKS = 10; // minimum amount of blocks between the respawn position and the nearest border
 
-    private void respawn(final @NotNull Location location) {
+    private void respawn(final Location location) {
         player.teleport(location);
         Game.INVULNERABLE_DATA.write(player, true);
         player.setGameMode(GameMode.SURVIVAL);

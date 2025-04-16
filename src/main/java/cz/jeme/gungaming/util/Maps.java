@@ -18,8 +18,9 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public final class Maps {
     private Maps() {
         throw new AssertionError();
@@ -38,7 +39,7 @@ public final class Maps {
      * @param entity entity holding (and rendering) the map.
      * @param state  the data of the map.
      */
-    public static void update(final @NotNull Level world, final @NotNull Entity entity, final @NotNull MapItemSavedData state) {
+    public static void update(final Level world, final Entity entity, final MapItemSavedData state) {
         if (world.dimension() == state.dimension && entity instanceof Player) {
             final int i = 1 << state.scale;
             final int j = state.centerX;
@@ -156,7 +157,7 @@ public final class Maps {
     /**
      * Method copied from {@link net.minecraft.world.item.MapItem} to make it static.
      */
-    private static @NotNull BlockState getCorrectStateForFluidBlock(final @NotNull Level world, final @NotNull BlockState state, final @NotNull BlockPos pos) {
+    private static BlockState getCorrectStateForFluidBlock(final Level world, final BlockState state, final BlockPos pos) {
         final FluidState fluidState = state.getFluidState();
         return !fluidState.isEmpty() && !state.isFaceSturdy(world, pos, Direction.UP) ? fluidState.createLegacyBlock() : state;
     }

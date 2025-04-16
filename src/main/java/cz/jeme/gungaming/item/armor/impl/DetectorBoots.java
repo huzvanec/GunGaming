@@ -6,75 +6,64 @@ import cz.jeme.gungaming.item.armor.Boots;
 import cz.jeme.gungaming.item.block.impl.Mine;
 import cz.jeme.gungaming.loot.Rarity;
 import cz.jeme.gungaming.util.Components;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.text.DecimalFormat;
 import java.util.List;
 
+@NullMarked
 public class DetectorBoots extends Boots {
     private static final double MINE_RANGE = Mine.ENTITY_CHECK_RADIUS;
     private static final double DETECTION_RANGE = MINE_RANGE + 15;
-    private static final @NotNull DecimalFormat FORMATTER = new DecimalFormat("00.00");
-    private static final @NotNull Sound WARNING_SOUND = Sound.sound(GunGaming.key("item.detector_boots.warning"), Sound.Source.PLAYER, 1, 1);
+    private static final DecimalFormat FORMATTER = new DecimalFormat("00.00");
+    private static final Sound WARNING_SOUND = Sound.sound(GunGaming.key("item.detector_boots.warning"), Sound.Source.PLAYER, 1, 1);
 
     protected DetectorBoots() {
         new Updater();
-        item.editMeta(Damageable.class, meta -> meta.setMaxDamage(10));
     }
 
     @Override
-    protected double provideArmor() {
-        return 0;
+    protected Key provideArmorKey() {
+        return GunGaming.key("detector");
     }
 
     @Override
-    protected double provideToughness() {
-        return 0;
+    protected int provideDurability() {
+        return 25;
     }
 
     @Override
-    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+    protected List<String> update(final ItemStack item) {
         return List.of();
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "warns you about mines nearby";
     }
 
     @Override
-    protected @NotNull Material provideMaterial() {
-        return Material.CHAINMAIL_BOOTS;
-    }
-
-    @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "detector_boots";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Detector Boots");
-    }
-
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 1;
     }
 
     private static final class Updater extends BukkitRunnable {

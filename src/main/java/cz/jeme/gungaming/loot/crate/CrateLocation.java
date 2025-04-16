@@ -2,18 +2,19 @@ package cz.jeme.gungaming.loot.crate;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.UUID;
 
+@NullMarked
 public record CrateLocation(
         int x,
         int y,
         int z,
-        @NotNull UUID worldUid
+        UUID worldUid
 ) {
-    public CrateLocation(final @NotNull Block block) {
+    public CrateLocation(final Block block) {
         this(
                 block.getX(),
                 block.getY(),
@@ -22,7 +23,7 @@ public record CrateLocation(
         );
     }
 
-    public CrateLocation(final @NotNull Location location) {
+    public CrateLocation(final Location location) {
         this(
                 location.getBlockX(),
                 location.getBlockY(),
@@ -34,9 +35,10 @@ public record CrateLocation(
     @Override
     public boolean equals(final @Nullable Object o) {
         if (this == o) return true;
-        if (!(o instanceof final CrateLocation that)) return false;
+        if (!(o instanceof CrateLocation(final int thatX, final int thatY, final int thatZ, final UUID thatWorldUuid)))
+            return false;
 
-        return x == that.x && y == that.y && z == that.z && worldUid.equals(that.worldUid);
+        return x == thatX && y == thatY && z == thatZ && worldUid.equals(thatWorldUuid);
     }
 
     @Override

@@ -12,29 +12,30 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.text.DecimalFormat;
 
+@NullMarked
 final class Reload extends BukkitRunnable {
-    private final @NotNull ItemStack item;
-    private final @NotNull Material material;
-    private final @NotNull Player player;
+    private final ItemStack item;
+    private final Material material;
+    private final Player player;
     private final int reloadAmmo;
-    private final @NotNull ItemStack ammoItem;
+    private final ItemStack ammoItem;
     private final boolean creative;
     private final boolean magazineless;
     private final int reloadCooldown;
     private int reloaded = 0;
-    private final @NotNull Sound sound;
-    private final @NotNull Gun gun;
+    private final Sound sound;
+    private final Gun gun;
     private long startTime;
 
     private final @Nullable ActionRunnable actionRunnable;
 
-    public Reload(final @NotNull Player player, final @NotNull ItemStack item, final @NotNull Gun gun,
-                  final int reloadAmmo, @NotNull final ItemStack ammoItem, final int reloadCooldown) {
+    public Reload(final Player player, final ItemStack item, final Gun gun,
+                  final int reloadAmmo, final ItemStack ammoItem, final int reloadCooldown) {
         this.item = item;
         this.gun = gun;
         material = item.getType();
@@ -104,16 +105,16 @@ final class Reload extends BukkitRunnable {
         ReloadManager.INSTANCE.removeReload(player);
     }
 
-    public @NotNull ItemStack item() {
+    public ItemStack item() {
         return item;
     }
 
-    public @NotNull Gun gun() {
+    public Gun gun() {
         return gun;
     }
 
     private class ActionRunnable extends BukkitRunnable {
-        private static final @NotNull DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("0.0");
+        private static final DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("0.0");
 
         private ActionRunnable() {
             runTaskTimer(GunGaming.instance(), 0L, 2L);

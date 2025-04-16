@@ -7,10 +7,11 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.List;
 
+@NullMarked
 public class WindPearl extends Throwable {
     @Override
     protected int provideThrowCooldown() {
@@ -23,17 +24,17 @@ public class WindPearl extends Throwable {
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Wind Pearl");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "throw this pearl to fly";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 
@@ -48,23 +49,19 @@ public class WindPearl extends Throwable {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "wind_pearl";
     }
 
     @Override
-    protected void onThrow(final @NotNull PlayerInteractEvent event, final @NotNull Snowball thrown) {
+    protected void onThrow(final PlayerInteractEvent event, final Snowball thrown) {
         thrown.addPassenger(event.getPlayer());
         thrown.setVelocity(thrown.getVelocity().multiply(2));
     }
 
     @Override
-    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+    protected List<String> update(final ItemStack item) {
         return List.of();
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 6;
-    }
 }

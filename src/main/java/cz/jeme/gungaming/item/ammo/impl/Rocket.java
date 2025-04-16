@@ -4,21 +4,22 @@ import cz.jeme.gungaming.item.ammo.Ammo;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class Rocket extends Ammo {
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Rocket");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Ammo for the Rocket Launcher";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 
@@ -33,12 +34,8 @@ public class Rocket extends Ammo {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "rocket";
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 3;
-    }
 }

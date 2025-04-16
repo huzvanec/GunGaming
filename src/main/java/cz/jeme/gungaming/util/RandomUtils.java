@@ -1,8 +1,11 @@
 package cz.jeme.gungaming.util;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+@NullMarked
 public final class RandomUtils {
     private RandomUtils() {
         throw new AssertionError();

@@ -4,10 +4,11 @@ import cz.jeme.gungaming.item.attachment.Scope;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.List;
 
+@NullMarked
 public class MediumScope extends Scope {
     @Override
     protected double provideZoom() {
@@ -15,39 +16,34 @@ public class MediumScope extends Scope {
     }
 
     @Override
-    protected @NotNull List<String> provideBuffs() {
+    protected List<String> provideBuffs() {
         return List.of(
                 "+5× scope"
         );
     }
 
     @Override
-    protected @NotNull List<String> provideDebuffs() {
+    protected List<String> provideDebuffs() {
         return List.of();
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "medium_scope";
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Medium Scope");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Precise scope for mid-range";
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 6;
-    }
-
-    @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 }

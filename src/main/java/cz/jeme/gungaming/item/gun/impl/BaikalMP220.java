@@ -8,8 +8,9 @@ import cz.jeme.gungaming.item.gun.Gun;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class BaikalMP220 extends Gun implements GripDisabled, MagazineDisabled {
     @Override
     protected int provideMaxAmmo() {
@@ -47,27 +48,27 @@ public class BaikalMP220 extends Gun implements GripDisabled, MagazineDisabled {
     }
 
     @Override
-    protected @NotNull Class<? extends Ammo> provideAmmoType() {
+    protected Class<? extends Ammo> provideAmmoType() {
         return TwelveGauge.class;
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "two-round shotgun with fast firing";
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "baikal_mp220";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.RARE;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Baikal MP220");
     }
 
@@ -81,8 +82,4 @@ public class BaikalMP220 extends Gun implements GripDisabled, MagazineDisabled {
         return 0;
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 19;
-    }
 }

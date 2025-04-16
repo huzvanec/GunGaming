@@ -8,45 +8,46 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerRecipeDiscoverEvent;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public final class LobbyEventHandler {
     private LobbyEventHandler() {
         throw new AssertionError();
     }
 
-    public static void onPlayerInteract(final @NotNull PlayerInteractEvent event) {
+    public static void onPlayerInteract(final PlayerInteractEvent event) {
         if (!Lobby.enabled()) return;
         event.setCancelled(true);
     }
 
-    public static void onEntityDamage(final @NotNull EntityDamageEvent event) {
+    public static void onEntityDamage(final EntityDamageEvent event) {
         if (!Lobby.enabled()) return;
         event.setCancelled(true);
     }
 
-    public static void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
+    public static void onPlayerJoin(final PlayerJoinEvent event) {
         if (!Lobby.enabled()) return;
         final Player player = event.getPlayer();
         Lobby.instance().playerSetup(player);
     }
 
-    public static void onFoodLevelChange(final @NotNull FoodLevelChangeEvent event) {
+    public static void onFoodLevelChange(final FoodLevelChangeEvent event) {
         if (!Lobby.enabled()) return;
         event.setCancelled(true);
     }
 
-    public static void onPlayerRecipeDiscover(final @NotNull PlayerRecipeDiscoverEvent event) {
+    public static void onPlayerRecipeDiscover(final PlayerRecipeDiscoverEvent event) {
         if (!Lobby.enabled()) return;
         event.setCancelled(true);
     }
 
-    public static void onPlayerAdvancementCriterionGrant(final @NotNull PlayerAdvancementCriterionGrantEvent event) {
+    public static void onPlayerAdvancementCriterionGrant(final PlayerAdvancementCriterionGrantEvent event) {
         if (!Lobby.enabled()) return;
         event.setCancelled(true);
     }
 
-    public static void onPlayerPortal(final @NotNull PlayerPortalEvent event) {
+    public static void onPlayerPortal(final PlayerPortalEvent event) {
         if (!Lobby.enabled()) return;
         event.setCancelled(true);
     }

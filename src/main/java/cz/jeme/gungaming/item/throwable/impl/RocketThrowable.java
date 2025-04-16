@@ -8,8 +8,9 @@ import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class RocketThrowable extends Throwable implements MineChainTrigger {
     @Override
     protected int provideThrowCooldown() {
@@ -22,17 +23,17 @@ public class RocketThrowable extends Throwable implements MineChainTrigger {
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Rocket Throwable");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Throwable used for the Rocket Launcher explosion";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.UNOBTAINABLE;
     }
 
@@ -47,17 +48,12 @@ public class RocketThrowable extends Throwable implements MineChainTrigger {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "rocket_throwable";
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 9;
-    }
-
-    @Override
-    protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
+    protected void onThrownHit(final ProjectileHitEvent event, final Snowball thrown) {
         thrown.getLocation().createExplosion(thrown, 7F, true, true);
     }
 

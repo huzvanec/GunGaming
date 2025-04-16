@@ -15,14 +15,15 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public final class AttachmentEventHandler {
     private AttachmentEventHandler() {
         throw new AssertionError();
     }
 
-    public static void onInventoryClick(final @NotNull InventoryClickEvent event) {
+    public static void onInventoryClick(final InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof final Player player)) return;
         ZoomManager.INSTANCE.zoomOut(player);
         final ItemStack item = event.getCurrentItem();
@@ -43,7 +44,7 @@ public final class AttachmentEventHandler {
         }
     }
 
-    public static void onInventoryClose(final @NotNull InventoryCloseEvent event) {
+    public static void onInventoryClose(final InventoryCloseEvent event) {
         final HumanEntity player = event.getPlayer();
         final AttachmentMenu menu = AttachmentMenuManager.INSTANCE.getMenu(player);
         if (menu == null) return;
@@ -56,7 +57,7 @@ public final class AttachmentEventHandler {
         AttachmentMenuManager.INSTANCE.removeMenu(player);
     }
 
-    public static void onPlayerDropItem(final @NotNull PlayerDropItemEvent event) {
+    public static void onPlayerDropItem(final PlayerDropItemEvent event) {
         final Player player = event.getPlayer();
         ZoomManager.INSTANCE.zoomOut(player);
         final AttachmentMenu menu = AttachmentMenuManager.INSTANCE.getMenu(player);
@@ -64,19 +65,19 @@ public final class AttachmentEventHandler {
         menu.playerDropItem(event);
     }
 
-    public static void onPlayerQuit(final @NotNull PlayerQuitEvent event) {
+    public static void onPlayerQuit(final PlayerQuitEvent event) {
         ZoomManager.INSTANCE.zoomOut(event.getPlayer());
     }
 
-    public static void onPlayerGameModeChange(final @NotNull PlayerGameModeChangeEvent event) {
+    public static void onPlayerGameModeChange(final PlayerGameModeChangeEvent event) {
         ZoomManager.INSTANCE.zoomOut(event.getPlayer());
     }
 
-    public static void onPlayerDeath(final @NotNull PlayerDeathEvent event) {
+    public static void onPlayerDeath(final PlayerDeathEvent event) {
         ZoomManager.INSTANCE.zoomOut(event.getEntity());
     }
 
-    public static void onPlayerItemHeld(final @NotNull PlayerItemHeldEvent event) {
+    public static void onPlayerItemHeld(final PlayerItemHeldEvent event) {
         ZoomManager.INSTANCE.zoomOut(event.getPlayer());
     }
 }

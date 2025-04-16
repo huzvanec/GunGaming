@@ -8,8 +8,9 @@ import cz.jeme.gungaming.item.gun.Gun;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class Glock18C extends Gun implements GripDisabled, StockDisabled {
     @Override
     protected int provideMaxAmmo() {
@@ -47,27 +48,27 @@ public class Glock18C extends Gun implements GripDisabled, StockDisabled {
     }
 
     @Override
-    protected @NotNull Class<? extends Ammo> provideAmmoType() {
+    protected Class<? extends Ammo> provideAmmoType() {
         return NineMillimeter.class;
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "fully automatic pistol with big spread";
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "glock_18c";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.UNCOMMON;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Glock 18C");
     }
 
@@ -76,8 +77,4 @@ public class Glock18C extends Gun implements GripDisabled, StockDisabled {
         return 4;
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 17;
-    }
 }

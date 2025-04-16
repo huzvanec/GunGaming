@@ -8,8 +8,9 @@ import cz.jeme.gungaming.item.gun.Gun;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class QBZ95 extends Gun implements GripDisabled, StockDisabled {
     @Override
     protected int provideMaxAmmo() {
@@ -47,27 +48,27 @@ public class QBZ95 extends Gun implements GripDisabled, StockDisabled {
     }
 
     @Override
-    protected @NotNull Class<? extends Ammo> provideAmmoType() {
+    protected Class<? extends Ammo> provideAmmoType() {
         return FiveFiveSixMillimeter.class;
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "high dps LMG with a large magazine capacity";
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "qbz-95";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.LEGENDARY;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("QBZ-95");
     }
 
@@ -81,8 +82,4 @@ public class QBZ95 extends Gun implements GripDisabled, StockDisabled {
         return 2;
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 26;
-    }
 }

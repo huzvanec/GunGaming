@@ -3,6 +3,7 @@ package cz.jeme.gungaming.item.tracker;
 import cz.jeme.gungaming.config.GameConfig;
 import cz.jeme.gungaming.game.Game;
 import cz.jeme.gungaming.item.CustomItem;
+import cz.jeme.gungaming.item.tracker.impl.TeammateTracker;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.PlayerInventory;

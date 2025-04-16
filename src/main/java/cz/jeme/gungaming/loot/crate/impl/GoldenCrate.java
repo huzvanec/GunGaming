@@ -13,18 +13,19 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.CommandBlock;
 import org.bukkit.inventory.Inventory;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.Map;
 
+@NullMarked
 public class GoldenCrate extends Crate {
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Golden Crate");
     }
 
     @Override
-    protected @NotNull Map<Rarity, Integer> provideRarityChances() {
+    protected Map<Rarity, Integer> provideRarityChances() {
         return Map.of(
                 Rarity.COMMON, 1,
                 Rarity.UNCOMMON, 1,
@@ -35,7 +36,7 @@ public class GoldenCrate extends Crate {
     }
 
     @Override
-    protected @NotNull Material provideMaterial() {
+    protected Material provideMaterial() {
         return Material.REPEATING_COMMAND_BLOCK;
     }
 
@@ -50,24 +51,24 @@ public class GoldenCrate extends Crate {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "golden_crate";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 
     @Override
-    protected void generated(final @NotNull Block block, final @NotNull Inventory inventory) {
+    protected void generated(final Block block, final Inventory inventory) {
         final CommandBlock data = (CommandBlock) block.getBlockData();
         data.setConditional(true);
         block.setBlockData(data);
     }
 
     @Override
-    protected @NotNull Map<Class<? extends CustomItem>, Integer> provideLimits() {
+    protected Map<Class<? extends CustomItem>, Integer> provideLimits() {
         return Map.of(
                 Gun.class, 2,
                 Melee.class, 1,

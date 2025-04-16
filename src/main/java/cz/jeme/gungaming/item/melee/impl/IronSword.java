@@ -1,40 +1,41 @@
 package cz.jeme.gungaming.item.melee.impl;
 
-import cz.jeme.gungaming.item.melee.Melee;
+import cz.jeme.gungaming.item.melee.Sword;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
-public class IronSword extends Melee {
+@NullMarked
+public class IronSword extends Sword {
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Iron Sword");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "basic sword";
     }
 
     @Override
-    protected @NotNull Material provideMaterial() {
+    protected Material provideMaterial() {
         return Material.IRON_SWORD;
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.COMMON;
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "iron_sword";
     }
 
     @Override
-    protected double provideDamage() {
-        return 8;
+    protected double provideDamageBonus() {
+        return 7;
     }
 }

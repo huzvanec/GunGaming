@@ -9,8 +9,9 @@ import cz.jeme.gungaming.item.gun.Gun;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class NagantM1895 extends Gun implements GripDisabled, MagazineDisabled, StockDisabled {
     @Override
     protected int provideMaxAmmo() {
@@ -48,32 +49,28 @@ public class NagantM1895 extends Gun implements GripDisabled, MagazineDisabled, 
     }
 
     @Override
-    protected @NotNull Class<? extends Ammo> provideAmmoType() {
+    protected Class<? extends Ammo> provideAmmoType() {
         return SevenSixTwoMillimeter.class;
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Basic revolver";
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "nagant_m1895";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.COMMON;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Nagant M1895");
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 2;
-    }
 }

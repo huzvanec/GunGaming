@@ -2,21 +2,22 @@ package cz.jeme.gungaming.item.attachment;
 
 import cz.jeme.gungaming.CustomElement;
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.item.CustomItem;
+import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.util.Components;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
+@NullMarked
 public abstract class Scope extends Attachment {
-    public static final @NotNull PersistentData<String, String> GUN_SCOPE_KEY_DATA = PersistentData.ofString(GunGaming.key("gun_scope_key"));
-    private static final @NotNull ItemStack PLACEHOLDER = PlaceholderHelper.placeholder(meta -> {
-        meta.displayName(Components.of("<!i><gray>Scope"));
-        meta.setCustomModelData(3);
-    });
+    public static final PersistentData<String, String> GUN_SCOPE_KEY_DATA = PersistentData.ofString(GunGaming.key("gun_scope_key"));
+    private static final ItemStack PLACEHOLDER = PlaceholderHelper.placeholder(
+            GunGaming.key("scope_placeholder"),
+            meta -> meta.displayName(Components.of("<!i><gray>Scope"))
+    );
 
-    public static @NotNull ItemStack placeholder(final @NotNull ItemStack gunItem) {
+    public static ItemStack placeholder(final ItemStack gunItem) {
         return PLACEHOLDER.clone();
     }
 
@@ -33,15 +34,15 @@ public abstract class Scope extends Attachment {
     }
 
 
-    public static @NotNull Scope of(final @NotNull String keyStr) {
+    public static Scope of(final String keyStr) {
         return CustomElement.of(keyStr, Scope.class);
     }
 
-    public static @NotNull Scope of(final @NotNull ItemStack item) {
+    public static Scope of(final ItemStack item) {
         return CustomItem.of(item, Scope.class);
     }
 
-    public static boolean is(final @NotNull String keyStr) {
+    public static boolean is(final String keyStr) {
         return CustomElement.is(keyStr, Scope.class);
     }
 

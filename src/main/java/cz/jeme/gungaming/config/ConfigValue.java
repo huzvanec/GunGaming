@@ -4,18 +4,19 @@ import com.mojang.brigadier.arguments.ArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.coordinates.Coordinates;
 import net.minecraft.core.BlockPos;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.regex.Pattern;
 
+@NullMarked
 public final class ConfigValue<T> {
-    private static final @NotNull Pattern NAME_PATTERN = Pattern.compile("[a-z0-9_]+");
+    private static final Pattern NAME_PATTERN = Pattern.compile("[a-z0-9_]+");
 
-    private final @NotNull String name;
-    private final @NotNull ArgumentType<T> type;
-    private @NotNull T value;
+    private final String name;
+    private final ArgumentType<T> type;
+    private T value;
 
-    ConfigValue(final @NotNull String name, final @NotNull ArgumentType<T> type, final @NotNull T defaultValue) {
+    ConfigValue(final String name, final ArgumentType<T> type, final T defaultValue) {
         if (!NAME_PATTERN.matcher(name).matches())
             throw new IllegalArgumentException("Name contains invalid characters!");
         this.name = name;
@@ -23,11 +24,11 @@ public final class ConfigValue<T> {
         this.value = defaultValue;
     }
 
-    public @NotNull T get() {
+    public T get() {
         return value;
     }
 
-    public @NotNull String getString(final @NotNull CommandSourceStack source) {
+    public String getString(final CommandSourceStack source) {
         return switch (value) {
             case final Coordinates coords -> {
                 final BlockPos blockPos = coords.getBlockPos(source);
@@ -37,15 +38,15 @@ public final class ConfigValue<T> {
         };
     }
 
-    public void set(final @NotNull T value) {
+    public void set(final T value) {
         this.value = value;
     }
 
-    public @NotNull ArgumentType<T> type() {
+    public ArgumentType<T> type() {
         return type;
     }
 
-    public @NotNull String name() {
+    public String name() {
         return name;
     }
 }

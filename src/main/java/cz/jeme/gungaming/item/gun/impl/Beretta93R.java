@@ -8,8 +8,9 @@ import cz.jeme.gungaming.item.gun.Gun;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class Beretta93R extends Gun implements GripDisabled, StockDisabled {
     @Override
     protected int provideMaxAmmo() {
@@ -47,27 +48,27 @@ public class Beretta93R extends Gun implements GripDisabled, StockDisabled {
     }
 
     @Override
-    protected @NotNull Class<? extends Ammo> provideAmmoType() {
+    protected Class<? extends Ammo> provideAmmoType() {
         return NineMillimeter.class;
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "basic 3-round burst pistol";
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "beretta_93r";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.UNCOMMON;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Beretta 93R");
     }
 
@@ -81,8 +82,4 @@ public class Beretta93R extends Gun implements GripDisabled, StockDisabled {
         return 2;
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 21;
-    }
 }

@@ -11,16 +11,17 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@NullMarked
 public abstract class Melee extends Weapon {
-    protected final double damage = provideDamage();
-    protected final double knockback = provideKnockback();
-    protected final double attackSpeed = provideAttackSpeed();
+    protected final double damageBonus = provideDamageBonus();
+    protected final double knockbackBonus = provideKnockbackBonus();
+    protected final double attackSpeedBonus = provideAttackSpeedBonus();
 
     @SuppressWarnings("UnstableApiUsage")
     protected Melee() {
@@ -28,8 +29,8 @@ public abstract class Melee extends Weapon {
             meta.addAttributeModifier(
                     Attribute.ATTACK_DAMAGE,
                     new AttributeModifier(
-                            GunGaming.key(key.value() + "_generic_attack_damage"),
-                            damage - 1,
+                            GunGaming.key(key.value() + "_attack_damage"),
+                            damageBonus,
                             AttributeModifier.Operation.ADD_NUMBER,
                             EquipmentSlotGroup.MAINHAND
                     )
@@ -37,8 +38,8 @@ public abstract class Melee extends Weapon {
             meta.addAttributeModifier(
                     Attribute.ATTACK_KNOCKBACK,
                     new AttributeModifier(
-                            GunGaming.key(key.value() + "_generic_attack_knockback"),
-                            knockback,
+                            GunGaming.key(key.value() + "_attack_knockback"),
+                            knockbackBonus,
                             AttributeModifier.Operation.ADD_NUMBER,
                             EquipmentSlotGroup.MAINHAND
                     )
@@ -46,8 +47,8 @@ public abstract class Melee extends Weapon {
             meta.addAttributeModifier(
                     Attribute.ATTACK_SPEED,
                     new AttributeModifier(
-                            GunGaming.key(key.value() + "_generic_attack_speed"),
-                            attackSpeed,
+                            GunGaming.key(key.value() + "_attack_speed"),
+                            attackSpeedBonus,
                             AttributeModifier.Operation.ADD_NUMBER,
                             EquipmentSlotGroup.MAINHAND
                     )
@@ -57,53 +58,55 @@ public abstract class Melee extends Weapon {
     }
 
     @Override
-    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+    protected List<String> update(final ItemStack item) {
         final List<String> lore = new ArrayList<>();
-        lore.add(Lores.loreStat("Damage", Lores.STATS_FORMATTER.format(damage)));
-        lore.add(Lores.loreStat("Attack Speed", Lores.STATS_FORMATTER.format(attackSpeed + 4.1)));
+        lore.add(Lores.loreStat("Damage", Lores.STATS_FORMATTER.format(damageBonus)));
+        lore.add(Lores.loreStat("Attack Speed", Lores.STATS_FORMATTER.format(attackSpeedBonus + 4.1)));
         return lore;
     }
 
-    protected abstract double provideDamage();
-
-    protected double provideKnockback() {
+    protected double provideDamageBonus() {
         return 0;
     }
 
-    protected double provideAttackSpeed() {
-        return -2.5;
+    protected double provideKnockbackBonus() {
+        return 0;
+    }
+
+    protected double provideAttackSpeedBonus() {
+        return 0;
     }
 
     public final double damage() {
-        return damage;
+        return damageBonus;
     }
 
     public final double knockback() {
-        return knockback;
+        return knockbackBonus;
     }
 
     public final double attackSpeed() {
-        return attackSpeed;
+        return attackSpeedBonus;
     }
 
-    protected void onHit(final @NotNull EntityDamageEvent event, final @NotNull ItemStack item) {
+    protected void onHit(final EntityDamageEvent event, final ItemStack item) {
         GlobalEventHandler.resetNoDamageTicks(event.getEntity());
     }
 
     @Override
-    protected final @NotNull String provideType() {
+    protected final String provideType() {
         return "melee weapon";
     }
 
-    public static @NotNull Melee of(final @NotNull String keyStr) {
+    public static Melee of(final String keyStr) {
         return CustomElement.of(keyStr, Melee.class);
     }
 
-    public static @NotNull Melee of(final @NotNull ItemStack item) {
+    public static Melee of(final ItemStack item) {
         return CustomItem.of(item, Melee.class);
     }
 
-    public static boolean is(final @NotNull String keyStr) {
+    public static boolean is(final String keyStr) {
         return CustomElement.is(keyStr, Melee.class);
     }
 

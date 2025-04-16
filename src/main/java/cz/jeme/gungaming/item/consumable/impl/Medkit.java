@@ -5,8 +5,9 @@ import cz.jeme.gungaming.loot.Rarity;
 import io.papermc.paper.datacomponent.item.Consumable;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class Medkit extends InstantHeal {
     protected Medkit() {
         item.editMeta(meta -> meta.setMaxStackSize(1));
@@ -24,27 +25,22 @@ public class Medkit extends InstantHeal {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "medkit";
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Medkit");
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "Instantly heals you to full health";
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 4;
-    }
-
-    @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 

@@ -7,8 +7,9 @@ import cz.jeme.gungaming.item.gun.Gun;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class SPAS12 extends Gun implements MagazineDisabled {
     @Override
     protected int provideMaxAmmo() {
@@ -27,7 +28,7 @@ public class SPAS12 extends Gun implements MagazineDisabled {
 
     @Override
     protected double provideDamage() {
-        return 1.7;
+        return 2.2;
     }
 
     @Override
@@ -46,27 +47,27 @@ public class SPAS12 extends Gun implements MagazineDisabled {
     }
 
     @Override
-    protected @NotNull Class<? extends Ammo> provideAmmoType() {
+    protected Class<? extends Ammo> provideAmmoType() {
         return TwelveGauge.class;
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "very good and accurate shotgun";
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "spas-12";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("SPAS-12");
     }
 
@@ -85,8 +86,4 @@ public class SPAS12 extends Gun implements MagazineDisabled {
         return true;
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 14;
-    }
 }

@@ -5,6 +5,7 @@ import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.item.armor.Helmet;
 import cz.jeme.gungaming.loot.Rarity;
 import cz.jeme.gungaming.util.Packets;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
@@ -14,74 +15,62 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@NullMarked
 public class ThermalGoggles extends Helmet {
     protected ThermalGoggles() {
         new Updater();
-        item.editMeta(Damageable.class, meta -> meta.setMaxDamage(10));
     }
 
     @Override
-    protected double provideArmor() {
-        return 0;
+    protected Key provideArmorKey() {
+        return GunGaming.key("thermal");
     }
 
     @Override
-    protected double provideToughness() {
-        return 0;
+    protected int provideDurability() {
+        return 40;
     }
 
     @Override
-    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+    protected List<String> update(final ItemStack item) {
         return List.of();
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "see players through walls";
     }
 
     @Override
-    protected @NotNull Material provideMaterial() {
-        return Material.CHAINMAIL_HELMET;
-    }
-
-    @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "thermal_goggles";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.EPIC;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Thermal Goggles");
     }
 
-    @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 1;
-    }
-
     private static final class Updater extends BukkitRunnable {
-        private static final @NotNull EntityDataAccessor<Byte> DATA_SHARED_FLAGS_ID;
+        private static final EntityDataAccessor<Byte> DATA_SHARED_FLAGS_ID;
         private static final int FLAG_GLOWING;
 
         static {
@@ -125,7 +114,7 @@ public class ThermalGoggles extends Helmet {
             }
         }
 
-        private static @NotNull ClientboundSetEntityDataPacket glowPacket(final @NotNull Entity entity, final boolean glow) {
+        private static ClientboundSetEntityDataPacket glowPacket(final Entity entity, final boolean glow) {
             final SynchedEntityData data = entity.getEntityData();
             final byte sharedFlags = data.get(DATA_SHARED_FLAGS_ID);
             // copied from Entity#setSharedFlag

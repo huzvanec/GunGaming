@@ -19,13 +19,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.List;
 import java.util.Objects;
 
+@NullMarked
 public class AirStrikeStrobe extends Throwable {
-    private static final @NotNull Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(Color.RED, 6);
+    private static final Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(Color.RED, 6);
 
     protected AirStrikeStrobe() {
         item.editMeta(meta -> meta.setMaxStackSize(1));
@@ -42,7 +43,7 @@ public class AirStrikeStrobe extends Throwable {
     }
 
     @Override
-    protected @NotNull String provideDescription() {
+    protected String provideDescription() {
         return "throw this to call an air strike";
     }
 
@@ -57,31 +58,26 @@ public class AirStrikeStrobe extends Throwable {
     }
 
     @Override
-    protected @KeyPattern.Value @NotNull String provideKey() {
+    protected @KeyPattern.Value String provideKey() {
         return "air_strike_strobe";
     }
 
     @Override
-    protected @NotNull Rarity provideRarity() {
+    protected Rarity provideRarity() {
         return Rarity.LEGENDARY;
     }
 
     @Override
-    protected @NotNull Component provideName() {
+    protected Component provideName() {
         return Component.text("Air Strike Strobe");
     }
 
     @Override
-    protected @NotNull Integer provideCustomModelData() {
-        return 7;
-    }
-
-    @Override
-    protected @NotNull List<String> update(final @NotNull ItemStack item) {
+    protected List<String> update(final ItemStack item) {
         return List.of();
     }
 
-    private static final @NotNull Sound PLANE_SOUND = Sound.sound(GunGaming.key("entity.air_strike.ambient"), Sound.Source.MASTER, 9.4F, 1);
+    private static final Sound PLANE_SOUND = Sound.sound(GunGaming.key("entity.air_strike.ambient"), Sound.Source.MASTER, 9.4F, 1);
 
     private static final int BOMBS = 25; // the amount of bombs that is dropped in one wave
     private static final int BOMB_SPACING = 2; // spacing between separate bombs in blocks
@@ -95,14 +91,14 @@ public class AirStrikeStrobe extends Throwable {
     private static final int CENTER_OFFSET = 5; // the offset of the bombing center (forwards) in blocks
     private static final double PARTICLE_OFFSET_Y = 10;
 
-    private static void randomizeVector(final @NotNull Vector vector) {
+    private static void randomizeVector(final Vector vector) {
         final double rad = Math.toRadians(BOMB_INACCURACY);
         vector.rotateAroundX(RandomUtils.nextAxis(rad));
         vector.rotateAroundZ(RandomUtils.nextAxis(rad));
     }
 
     @Override
-    protected void onThrownHit(final @NotNull ProjectileHitEvent event, final @NotNull Snowball thrown) {
+    protected void onThrownHit(final ProjectileHitEvent event, final Snowball thrown) {
         final Location location = thrown.getLocation();
         final World world = thrown.getWorld();
         final Vector direction = location.getDirection();
