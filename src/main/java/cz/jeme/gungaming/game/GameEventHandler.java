@@ -55,7 +55,7 @@ public final class GameEventHandler {
         if (!Game.GLIDING_DATA.read(player).orElse(false)) return;
         event.setCancelled(true);
         final Material groundMaterial = player.getWorld().getBlockAt(player.getLocation().subtract(0, .4, 0)).getType();
-        if (!groundMaterial.isEmpty()) {
+        if (!groundMaterial.isAir()) {
             Game.GLIDING_DATA.write(player, false);
             Bukkit.getScheduler().runTaskLater(
                     GunGaming.instance(),

@@ -36,10 +36,7 @@ public abstract class CustomItem extends CustomElement {
         item.editMeta(meta -> {
             meta.itemName(name);
             meta.setAttributeModifiers(HashMultimap.create());
-            meta.addItemFlags(
-                    ItemFlag.HIDE_ATTRIBUTES,
-                    ItemFlag.HIDE_ADDITIONAL_TOOLTIP
-            );
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             KEY_DATA.write(meta, key.asString());
         });
         if (!provideUsesDefaultModel())

@@ -110,7 +110,7 @@ final class Generation extends BukkitRunnable {
                 lastOccluding = true;
                 continue;
             }
-            if (lastOccluding && material.isEmpty()) {
+            if (lastOccluding && material.isAir()) {
                 heights.add(y);
             }
             lastOccluding = false;

@@ -14,6 +14,8 @@ import cz.jeme.gungaming.item.attachment.impl.Silencer;
 import cz.jeme.gungaming.loot.crate.Crate;
 import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.util.*;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.minecraft.network.protocol.Packet;
@@ -69,6 +71,7 @@ public abstract class Gun extends Weapon {
     protected final Class<? extends Ammo> ammoType = provideAmmoType();
     protected final Ammo ammo;
 
+    @SuppressWarnings("UnstableApiUsage")
     protected Gun() {
         if (maxAmmo < 1)
             throw new IllegalArgumentException("Max ammo must be positive!");
@@ -103,6 +106,13 @@ public abstract class Gun extends Weapon {
             INACCURACY_DATA.write(meta, inaccuracy);
             CURRENT_AMMO_DATA.write(meta, 0);
         });
+        item.setData(
+                DataComponentTypes.TOOLTIP_DISPLAY,
+                TooltipDisplay.tooltipDisplay()
+                        .hiddenComponents(item.getData(DataComponentTypes.TOOLTIP_DISPLAY).hiddenComponents())
+                        .addHiddenComponents(DataComponentTypes.CHARGED_PROJECTILES)
+                        .build()
+        );
 
         ammo = CustomItem.of(ammoType);
     }

@@ -13,6 +13,8 @@ import cz.jeme.gungaming.loot.crate.CrateLocation;
 import cz.jeme.gungaming.persistence.PersistentData;
 import cz.jeme.gungaming.util.Components;
 import cz.jeme.gungaming.util.Maps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,8 +43,13 @@ public final class Radar extends CustomItem implements SingleLoot {
             .append(stealthHelmet.name())
             .append(Component.text("!"));
 
+    @SuppressWarnings("UnstableApiUsage")
     private Radar() {
-        item.editMeta(meta -> meta.setMaxStackSize(1));
+        item.setData(DataComponentTypes.MAX_STACK_SIZE, 1);
+        item.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .hiddenComponents(item.getData(DataComponentTypes.TOOLTIP_DISPLAY).hiddenComponents())
+                .addHiddenComponents(DataComponentTypes.MAP_ID)
+                .build());
 
         Bukkit.getScheduler().runTaskTimer(
                 GunGaming.instance(),
