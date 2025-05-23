@@ -11,3 +11,4 @@ build/
 *.ipr
 
 changelog.md
+run/

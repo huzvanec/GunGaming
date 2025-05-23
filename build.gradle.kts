@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("xyz.jpenilla.run-paper") version "2.3.1"
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.16"
     id("com.gradleup.shadow") version "9.0.0-beta12"
 }
@@ -9,7 +10,7 @@ version = "1.5.0"
 
 repositories {
     mavenCentral()
-    maven("https://oss.sonatype.org/content/groups/public/") { name = "sonatype" }
+    maven("https://oss.sonatype.org/content/groups/public/")
 }
 
 dependencies {
@@ -27,15 +28,15 @@ java {
     }
 }
 
-tasks.withType<JavaCompile>().configureEach {
-    options.encoding = "UTF-8"
-
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        options.release = targetJavaVersion
-    }
-}
-
 tasks {
+    configureEach {
+        options.encoding = "UTF-8"
+
+        if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+            options.release = targetJavaVersion
+        }
+    }
+    
     processResources {
         val props = mapOf("version" to project.version)
         inputs.properties(props)
