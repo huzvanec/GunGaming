@@ -1,12 +1,12 @@
 plugins {
     id("java")
-    id("xyz.jpenilla.run-paper") version "2.3.1"
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.17"
+    id("xyz.jpenilla.run-paper") version "2.3.1"
     id("com.gradleup.shadow") version "9.0.0-beta13"
 }
 
-group = "cz.jeme.programu"
-version = "1.5.0"
+group = "cz.jeme"
+version = "1.6.0"
 
 repositories {
     mavenCentral()
@@ -14,8 +14,8 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
     implementation("io.github.classgraph:classgraph:4.8.179")
+    paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
 }
 
 val targetJavaVersion = 21
@@ -29,14 +29,16 @@ java {
 }
 
 tasks {
-    configureEach {
-        options.encoding = "UTF-8"
+    withType<JavaCompile> {
+        configureEach {
+            options.encoding = "UTF-8"
 
-        if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-            options.release = targetJavaVersion
+            if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible) {
+                options.release = targetJavaVersion
+            }
         }
     }
-    
+
     processResources {
         val props = mapOf("version" to project.version)
         inputs.properties(props)
