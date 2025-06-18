@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/GunGaming.main.iml" filepath="$PROJECT_DIR$/.idea/modules/GunGaming.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GunGaming.test.iml" filepath="$PROJECT_DIR$/.idea/modules/GunGaming.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cz.jeme.GunGaming.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cz.jeme.GunGaming.main.iml" />
     </modules>
   </component>
