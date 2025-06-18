@@ -1,0 +1,17 @@
+rarities:
+  common:
+    name: '<#FFFFFF>COMMON'
+    color: '#FFF'
+  uncommon:
+    name: '<#22DD22>UNCOMMON'
+    color: '#22DD22'
+
+items:
+  bandage:
+    rarity: uncommon
+    description: 'Instantly heals 2 hearts'
+    heal: 4.0
+    behaviors:
+      consumable: { }
+      bomboclatt: { }
+    

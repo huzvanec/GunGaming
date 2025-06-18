@@ -1,12 +1,12 @@
 plugins {
-    id("java")
+    kotlin("jvm") version "2.1.20"
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.17"
     id("xyz.jpenilla.run-paper") version "2.3.1"
     id("com.gradleup.shadow") version "9.0.0-beta13"
 }
 
 group = "cz.jeme"
-version = "1.6.0"
+version = "2.0.0"
 
 repositories {
     mavenCentral()
@@ -15,17 +15,14 @@ repositories {
 
 dependencies {
     implementation("io.github.classgraph:classgraph:4.8.179")
+    implementation("org.spongepowered:configurate-hocon:4.2.0")
+    implementation("org.spongepowered:configurate-extra-kotlin:4.2.0")
     paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
 }
 
 val targetJavaVersion = 21
-java {
-    val javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
+kotlin {
+    jvmToolchain(targetJavaVersion)
 }
 
 tasks {
@@ -48,12 +45,19 @@ tasks {
         }
     }
 
+    runServer {
+        minecraftVersion("1.21.5")
+    }
+
     shadowJar {
         archiveClassifier = ""
         enableRelocation = true
-        relocationPrefix = "cz.jeme.gungaming.shaded"
-        minimize()
+        relocationPrefix = "${project.group}.${project.name.lowercase()}.shaded"
+
+        dependencies {
+            exclude(dependency("org.jetbrains:annotations:.*"))
+        }
     }
 
-    build { dependsOn(shadowJar) }
+    assemble { dependsOn(shadowJar) }
 }
