@@ -3,8 +3,21 @@
   "extends": [
     "config:recommended"
   ],
-  "baseBranches": [
-    "master",
-    "kotlin"
+  "dependencyDashboard": false,
+  "automergeType": "branch",
+  "packageRules": [
+    {
+      "matchBaseBranches": [
+        "kotlin"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "automerge": true,
+      "ignoreTests": true
+    }
   ]
 }
