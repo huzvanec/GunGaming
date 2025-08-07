@@ -2,7 +2,7 @@ plugins {
     id("java")
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.17"
     id("xyz.jpenilla.run-paper") version "2.3.1"
-    id("com.gradleup.shadow") version "9.0.0-rc1"
+    id("com.gradleup.shadow") version "9.0.0"
 }
 
 group = "cz.jeme"
