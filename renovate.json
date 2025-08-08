@@ -5,6 +5,7 @@
   ],
   "dependencyDashboard": false,
   "automergeType": "branch",
+  "baseBranchPatterns": ["kotlin"]
   "packageRules": [
     {
       "matchBaseBranches": [
