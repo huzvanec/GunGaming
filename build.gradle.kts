@@ -34,7 +34,7 @@ tasks {
     runServer {
         minecraftVersion(minecraftVersion)
     }
-    
+
     withType<JavaCompile> {
         configureEach {
             options.encoding = "UTF-8"
@@ -46,7 +46,10 @@ tasks {
     }
 
     processResources {
-        val props = mapOf("version" to project.version)
+        val props = mapOf(
+            "version" to project.version,
+            "minecraftVersion" to minecraftVersion
+        )
         inputs.properties(props)
         filteringCharset = "UTF-8"
         filesMatching("paper-plugin.yml") {
