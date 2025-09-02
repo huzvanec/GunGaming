@@ -16,7 +16,7 @@ public class Fish extends Melee {
 
     @Override
     protected String provideDescription() {
-        return "may or may not have knockback 1500";
+        return "Knocks enemies off high cliffs, DO NOT EAT!";
     }
 
     @Override

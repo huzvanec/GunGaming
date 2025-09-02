@@ -20,7 +20,7 @@ public class TeammateTracker extends PlayerTracker implements SingleLoot {
 
     @Override
     protected String provideDescription() {
-        return "Hold this in your hand to track the nearest teammate";
+        return "Tracks the nearest teammate";
     }
 
     @Override

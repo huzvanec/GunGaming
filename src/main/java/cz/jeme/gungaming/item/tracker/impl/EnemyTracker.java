@@ -20,7 +20,7 @@ public class EnemyTracker extends PlayerTracker implements SingleLoot {
 
     @Override
     protected String provideDescription() {
-        return "Hold this in your hand to track the nearest enemy";
+        return "Tracks the nearest enemy";
     }
 
     @Override

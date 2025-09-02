@@ -42,7 +42,7 @@ public class GrapplingHook extends CustomItem implements SingleLoot {
 
     @Override
     protected String provideDescription() {
-        return "I don't think this is used for fishing...";
+        return "Go up the sky and fish some towers";
     }
 
     @Override
