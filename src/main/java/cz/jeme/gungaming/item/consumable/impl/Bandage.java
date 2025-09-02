@@ -14,12 +14,6 @@ public class Bandage extends InstantHeal {
         return 4;
     }
 
-    @SuppressWarnings("UnstableApiUsage")
-    @Override
-    protected void buildConsumable(final Consumable.Builder builder) {
-        builder.consumeSeconds(2);
-    }
-
     @Override
     protected @KeyPattern.Value String provideKey() {
         return "bandage";

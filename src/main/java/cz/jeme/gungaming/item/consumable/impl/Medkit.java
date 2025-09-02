@@ -16,7 +16,7 @@ public class Medkit extends InstantHeal {
     @SuppressWarnings("UnstableApiUsage")
     @Override
     protected void buildConsumable(final Consumable.Builder builder) {
-        builder.consumeSeconds(10);
+        builder.consumeSeconds(5);
     }
 
     @Override

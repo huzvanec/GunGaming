@@ -38,7 +38,7 @@ public class Pills extends Adrenaline {
     @SuppressWarnings("UnstableApiUsage")
     @Override
     protected void buildConsumable(final Consumable.Builder builder) {
-        builder.consumeSeconds(5);
+        builder.consumeSeconds(3);
     }
 
     @Override
