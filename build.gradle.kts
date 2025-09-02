@@ -1,8 +1,8 @@
 plugins {
-    id("java")
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.18"
-    id("xyz.jpenilla.run-paper") version "2.3.1"
-    id("com.gradleup.shadow") version "9.0.0-rc1"
+    `java-library`
+    alias(libs.plugins.paperweight.userdev)
+    alias(libs.plugins.run.paper)
+    alias(libs.plugins.shadow)
 }
 
 group = "cz.jeme"
@@ -14,11 +14,11 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.classgraph:classgraph:4.8.180")
-    paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
+    implementation(libs.classgraph)
+    paperweight.paperDevBundle(libs.versions.paper.get())
 }
 
-val targetJavaVersion = 21
+val targetJavaVersion = libs.versions.java.get().toInt()
 java {
     val javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
@@ -50,10 +50,9 @@ tasks {
 
     shadowJar {
         archiveClassifier = ""
-        enableRelocation = true
+        enableAutoRelocation = true
         relocationPrefix = "cz.jeme.gungaming.shaded"
-        minimize()
     }
 
-    build { dependsOn(shadowJar) }
+    assemble { dependsOn(shadowJar) }
 }
