@@ -16,7 +16,6 @@ import org.jspecify.annotations.NullMarked;
 
 import java.util.concurrent.CompletableFuture;
 
-@SuppressWarnings("UnstableApiUsage")
 @NullMarked
 @ApiStatus.Internal
 public final class ChatModeArgument implements CustomArgumentType<Game.ChatMode, String> {

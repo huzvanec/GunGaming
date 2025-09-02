@@ -50,7 +50,6 @@ public final class GunGaming extends JavaPlugin {
         ));
     }
 
-    @SuppressWarnings("UnstableApiUsage")
     private void registerCommands() {
         getLogger().info("Registering commands...");
         getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {

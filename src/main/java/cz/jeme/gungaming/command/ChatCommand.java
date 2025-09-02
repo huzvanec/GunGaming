@@ -18,7 +18,6 @@ import java.util.List;
 import static io.papermc.paper.command.brigadier.Commands.argument;
 import static io.papermc.paper.command.brigadier.Commands.literal;
 
-@SuppressWarnings("UnstableApiUsage")
 @NullMarked
 @ApiStatus.Internal
 public final class ChatCommand {

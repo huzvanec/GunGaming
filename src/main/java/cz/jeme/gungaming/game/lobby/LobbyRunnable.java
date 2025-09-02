@@ -22,7 +22,6 @@ final class LobbyRunnable extends BukkitRunnable {
         counter++;
     }
 
-    @SuppressWarnings("UnstableApiUsage")
     private static final String GUN_GAMING_TEXT = "GunGaming v" + GunGaming.instance().getPluginMeta().getVersion();
     private static final int DOT_REPETITIONS = 30;
 

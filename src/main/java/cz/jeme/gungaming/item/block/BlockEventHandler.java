@@ -54,7 +54,6 @@ public final class BlockEventHandler {
     // using Paper internal api to workaround issues with rarity
     // https://github.com/PaperMC/Paper/issues/11040
     // https://github.com/PaperMC/Paper/pull/11049
-    @SuppressWarnings("UnstableApiUsage")
     private static Rarity getRarity(final Material material) {
         final ItemType type = material.asItemType();
         if (type == null) return Rarity.COMMON;

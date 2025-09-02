@@ -11,7 +11,7 @@ import static io.papermc.paper.datacomponent.item.Tool.tool;
 
 @NullMarked
 public abstract class Tool extends CustomItem implements SingleLoot {
-    protected int durability = provideDurability();
+    protected final int durability = provideDurability();
 
     @SuppressWarnings("UnstableApiUsage")
     protected Tool() {

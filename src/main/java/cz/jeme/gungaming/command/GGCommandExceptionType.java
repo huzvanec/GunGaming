@@ -8,14 +8,8 @@ import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import net.kyori.adventure.text.Component;
 import org.jspecify.annotations.NullMarked;
 
-@SuppressWarnings("UnstableApiUsage")
 @NullMarked
-public class GGCommandExceptionType implements CommandExceptionType {
-    protected final Message message;
-
-    public GGCommandExceptionType(final Message message) {
-        this.message = message;
-    }
+public record GGCommandExceptionType(Message message) implements CommandExceptionType {
 
     public GGCommandExceptionType(final Component message) {
         this(MessageComponentSerializer.message().serialize(message));

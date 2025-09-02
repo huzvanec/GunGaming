@@ -18,7 +18,6 @@ import org.jspecify.annotations.NullMarked;
 
 import java.util.concurrent.CompletableFuture;
 
-@SuppressWarnings("UnstableApiUsage")
 @NullMarked
 @ApiStatus.Internal
 public final class GameTeamArgument implements CustomArgumentType<GameTeam, Key> {

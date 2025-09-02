@@ -23,7 +23,6 @@ public abstract class Melee extends Weapon {
     protected final double knockbackBonus = provideKnockbackBonus();
     protected final double attackSpeedBonus = provideAttackSpeedBonus();
 
-    @SuppressWarnings("UnstableApiUsage")
     protected Melee() {
         item.editMeta(meta -> {
             meta.addAttributeModifier(

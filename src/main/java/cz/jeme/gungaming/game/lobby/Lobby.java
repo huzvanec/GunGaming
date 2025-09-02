@@ -24,7 +24,6 @@ public final class Lobby {
     private final Location spawn;
     private final LobbyRunnable lobbyRunnable;
 
-    @SuppressWarnings("UnstableApiUsage")
     public Lobby(final CommandSourceStack source) {
         audience = source.getSender();
         if (enabled()) {

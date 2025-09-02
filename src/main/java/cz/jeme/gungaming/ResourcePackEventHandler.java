@@ -39,7 +39,6 @@ public final class ResourcePackEventHandler {
             )
     );
 
-    @SuppressWarnings("UnstableApiUsage")
     private static final String VERSION = "v" + GunGaming.instance().getPluginMeta().getVersion();
     private static final String REPO_DOWNLOAD = "https://github.com/huzvanec/GunGaming/releases/download/" + VERSION;
     private static final String RESOURCE_PACK_URL = REPO_DOWNLOAD + "/resource-pack.zip";

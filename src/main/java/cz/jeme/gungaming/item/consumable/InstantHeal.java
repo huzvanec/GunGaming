@@ -10,7 +10,7 @@ import org.jspecify.annotations.NullMarked;
 
 @NullMarked
 public abstract class InstantHeal extends Consumable {
-    protected double healAmount = provideHealAmount();
+    protected final double healAmount = provideHealAmount();
 
     protected InstantHeal() {
         addTags("heal");

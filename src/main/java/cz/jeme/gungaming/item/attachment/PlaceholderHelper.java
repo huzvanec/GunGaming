@@ -22,9 +22,7 @@ public final class PlaceholderHelper {
     private static final ItemStack DISABLED = ItemStack.of(Material.WHITE_STAINED_GLASS_PANE);
 
     static {
-        DISABLED.editMeta(meta -> {
-            DISABLED_DATA.write(meta, true);
-        });
+        DISABLED.editMeta(meta -> DISABLED_DATA.write(meta, true));
         //noinspection UnstableApiUsage
         DISABLED.setData(DataComponentTypes.ITEM_MODEL, GunGaming.key("disabled_attachment"));
     }

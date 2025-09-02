@@ -23,7 +23,7 @@ public abstract class Attachment extends CustomItem {
 
     protected final List<String> buffs = Collections.unmodifiableList(provideBuffs());
     protected final List<String> debuffs = Collections.unmodifiableList(provideDebuffs());
-    protected List<String> modifiers = new ArrayList<>();
+    protected final List<String> modifiers = new ArrayList<>();
 
     protected Attachment() {
         addTags("attachment");

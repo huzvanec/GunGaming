@@ -57,7 +57,6 @@ public final class Game {
 
     private static @Nullable Game instance = null;
 
-    @SuppressWarnings("UnstableApiUsage")
     private final BossBar bossBar = BossBar.bossBar(
             Components.of("<b><#6786C8>Gun</#6786C8><#4C618D>Gaming</#4C618D> <#717B95>v"
                           + GunGaming.instance().getPluginMeta().getVersion()
@@ -104,7 +103,6 @@ public final class Game {
     private final Map<UUID, ChatMode> chatModes = new HashMap<>();
 
 
-    @SuppressWarnings("UnstableApiUsage")
     public Game(final CommandSourceStack source) {
         this.audience = source.getSender();
         // error handling

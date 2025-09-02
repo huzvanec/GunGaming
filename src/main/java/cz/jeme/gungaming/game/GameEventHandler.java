@@ -79,7 +79,6 @@ public final class GameEventHandler {
         final PlayerInventory inventory = player.getInventory();
         final double chance = GameConfig.DEATH_DROP_PERCENTAGE.get() / 100D;
         for (final ItemStack item : inventory) {
-            if (item == null) continue;
             if (CustomItem.is(item, TeammateTracker.class)) continue;
             final int amount = item.getAmount();
             final int dropAmount = RandomUtils.nextChanced(chance, amount);
@@ -159,7 +158,6 @@ public final class GameEventHandler {
         final PlayerInventory inventory = player.getInventory();
         if (gamePlayer) {
             for (final ItemStack item : inventory) {
-                if (item == null) continue;
                 if (CustomItem.is(item, TeammateTracker.class)) continue;
                 world.dropItemNaturally(location, item);
             }
@@ -184,7 +182,6 @@ public final class GameEventHandler {
         event.setCancelled(true);
     }
 
-    @SuppressWarnings("UnstableApiUsage")
     public static void onEntityDamageByEntity(final EntityDamageByEntityEvent event) {
         if (!Game.running()) return;
         if (!(event.getEntity() instanceof final Player hurt)) return;
