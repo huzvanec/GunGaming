@@ -5,7 +5,10 @@
   ],
   "dependencyDashboard": false,
   "automergeType": "branch",
-  "baseBranchPatterns": ["kotlin"],
+  "baseBranchPatterns": [
+    "master",
+    "kotlin"
+  ],
   "packageRules": [
     {
       "matchBaseBranches": [
