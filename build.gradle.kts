@@ -28,7 +28,13 @@ java {
     }
 }
 
+val minecraftVersion = libs.versions.paper.get().substringBefore('-')
+
 tasks {
+    runServer {
+        minecraftVersion(minecraftVersion)
+    }
+    
     withType<JavaCompile> {
         configureEach {
             options.encoding = "UTF-8"
