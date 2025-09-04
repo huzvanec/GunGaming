@@ -39,7 +39,7 @@ public class TitaniumKnife extends Melee {
 
     @Override
     protected double provideDamageBonus() {
-        return 5;
+        return 3;
     }
 
     @Override
