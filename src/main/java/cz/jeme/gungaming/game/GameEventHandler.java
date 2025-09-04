@@ -157,7 +157,8 @@ public final class GameEventHandler {
         final World world = player.getWorld();
         final PlayerInventory inventory = player.getInventory();
         if (gamePlayer) {
-            for (final ItemStack item : inventory) {
+            for (final ItemStack item : inventory.getContents()) {
+                if (item == null) continue;
                 if (CustomItem.is(item, TeammateTracker.class)) continue;
                 world.dropItemNaturally(location, item);
             }
