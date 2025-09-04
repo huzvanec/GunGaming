@@ -35,8 +35,9 @@ public class TeammateTracker extends PlayerTracker implements SingleLoot {
 
     @Override
     protected boolean validate(final Player player, final Player trackPlayer) {
+        final GameTeam team = GameTeam.ofPlayer(player);
         return Game.running() &&
-               GameConfig.TEAM_PLAYERS.get() > 1 &&
-               GameTeam.ofPlayer(player).players().contains(trackPlayer);
+               team.players().size() > 1 &&
+               team.players().contains(trackPlayer);
     }
 }
