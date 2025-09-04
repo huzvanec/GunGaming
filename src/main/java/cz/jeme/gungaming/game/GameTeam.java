@@ -163,7 +163,6 @@ public enum GameTeam {
     public boolean removePlayer(final Player player) {
         if (players.remove(player)) {
             removedPlayers.add(player);
-            System.out.println(players);
             if (players.isEmpty()) {
                 unregister();
                 return true;
