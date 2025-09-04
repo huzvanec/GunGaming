@@ -34,7 +34,7 @@ public enum ReloadManager {
 
         final PlayerInventory inventory = player.getInventory();
 
-        final int ammoFound = Inventories.count(inventory, ammo.item());
+        final int ammoFound = Inventories.count(inventory, ammo.createStack());
         final int ammoNeeded = maxAmmo - currentAmmo;
 
         final boolean creative = player.getGameMode() == GameMode.CREATIVE;
@@ -48,7 +48,7 @@ public enum ReloadManager {
 
         final int reloadAmmo = creative ? ammoNeeded : Math.min(ammoFound, ammoNeeded);
 
-        final Reload reload = new Reload(player, item, gun, reloadAmmo, ammo.item(), reloadCooldown);
+        final Reload reload = new Reload(player, item, gun, reloadAmmo, ammo.createStack(), reloadCooldown);
         reloads.put(player.getUniqueId(), reload);
     }
 

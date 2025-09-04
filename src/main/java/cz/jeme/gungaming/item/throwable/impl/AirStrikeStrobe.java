@@ -116,7 +116,7 @@ public class AirStrikeStrobe extends Throwable {
         final int multiplierStart = multiplierEnd - BOMBS;
 
         final AirStrikeBomb bomb = CustomElement.of(AirStrikeBomb.class);
-        final ItemStack bombItem = bomb.item();
+        final ItemStack bombItem = bomb.createStack();
         final ProjectileSource shooter = Objects.requireNonNull(thrown.getShooter(), "Shooter is null!");
         // particles
         final Location particleLocation = location.clone().add(0, PARTICLE_OFFSET_Y, 0);

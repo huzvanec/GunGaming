@@ -115,7 +115,7 @@ public abstract class CustomItem extends CustomElement {
         return description;
     }
 
-    public final ItemStack item() {
+    public final ItemStack createStack() {
         return item.clone();
     }
 

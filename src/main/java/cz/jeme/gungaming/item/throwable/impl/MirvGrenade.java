@@ -76,7 +76,7 @@ public class MirvGrenade extends Grenade implements MineChainTrigger {
         final Location location = thrown.getLocation();
         location.createExplosion(thrown, 5F, false, true);
         final SmallGrenade smallGrenade = CustomElement.of(SmallGrenade.class);
-        final ItemStack smallGrenadeItem = smallGrenade.item();
+        final ItemStack smallGrenadeItem = smallGrenade.createStack();
         for (int deg = 0; deg < 360; deg += 45) {
             final double rad = Math.toRadians(deg);
             final double x = Math.cos(rad) * HORIZONTAL_POWER;

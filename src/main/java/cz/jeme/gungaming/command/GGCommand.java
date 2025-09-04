@@ -220,7 +220,7 @@ public final class GGCommand {
             return FAILURE;
         }
         final CustomItem customItem = ctx.getArgument("item", CustomItem.class);
-        final ItemStack item = customItem.item();
+        final ItemStack item = customItem.createStack();
         final int maxCount = item.getMaxStackSize() * 100;
         if (count > maxCount) {
             sender.sendMessage(

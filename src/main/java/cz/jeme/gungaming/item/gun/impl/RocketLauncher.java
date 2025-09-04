@@ -135,7 +135,7 @@ public class RocketLauncher extends Gun implements SilencerDisabled, MagazineDis
                 snowball -> {
                     ThrownHelper.THROWABLE_KEY_DATA.write(snowball, rocketThrowable.key().asString());
                     ThrownHelper.MAX_DAMAGE_DATA.write(snowball, rocketThrowable.maxDamage());
-                    snowball.setItem(rocketThrowable.item());
+                    snowball.setItem(rocketThrowable.createStack());
                     snowball.teleport(location);
                     snowball.hitEntity(snowball);
                     snowball.remove();

@@ -52,27 +52,27 @@ public final class AttachmentMenu {
         final ItemStack silencer = gun instanceof SilencerDisabled
                 ? PlaceholderHelper.disabled(Silencer.class)
                 : Silencer.GUN_SILENCER_KEY_DATA.read(gunItem)
-                .map(key -> CustomItem.of(key).item())
+                .map(key -> CustomItem.of(key).createStack())
                 .orElse(Silencer.placeholder(gunItem));
         final ItemStack grip = gun instanceof GripDisabled
                 ? PlaceholderHelper.disabled(Grip.class)
                 : Grip.GUN_GRIP_KEY_DATA.read(gunItem)
-                .map(key -> CustomItem.of(key).item())
+                .map(key -> CustomItem.of(key).createStack())
                 .orElse(Grip.placeholder(gunItem));
         final ItemStack scope = gun instanceof ScopeDisabled
                 ? PlaceholderHelper.disabled(Scope.class)
                 : Scope.GUN_SCOPE_KEY_DATA.read(gunItem)
-                .map(key -> CustomItem.of(key).item())
+                .map(key -> CustomItem.of(key).createStack())
                 .orElse(Scope.placeholder(gunItem));
         final ItemStack magazine = gun instanceof MagazineDisabled
                 ? PlaceholderHelper.disabled(Magazine.class)
                 : Magazine.GUN_MAGAZINE_KEY_DATA.read(gunItem)
-                .map(key -> CustomItem.of(key).item())
+                .map(key -> CustomItem.of(key).createStack())
                 .orElse(Magazine.placeholder(gunItem));
         final ItemStack stock = gun instanceof StockDisabled
                 ? PlaceholderHelper.disabled(Stock.class)
                 : Stock.GUN_STOCK_KEY_DATA.read(gunItem)
-                .map(key -> CustomItem.of(key).item())
+                .map(key -> CustomItem.of(key).createStack())
                 .orElse(Stock.placeholder(gunItem));
         inventory.setItem(0, silencer);
         inventory.setItem(1, grip);

@@ -237,7 +237,7 @@ public abstract class Gun extends Weapon {
     }
 
     private void noAmmo(final Player player, final ItemStack item) {
-        if (Inventories.count(player.getInventory(), ammo.item()) == 0) {
+        if (Inventories.count(player.getInventory(), ammo.createStack()) == 0) {
             player.sendActionBar(Components.of("<red>Out of ammo!"));
             player.getWorld().playSound(outOfAmmoSound(item), player);
         } else {

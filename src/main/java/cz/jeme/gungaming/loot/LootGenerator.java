@@ -21,7 +21,7 @@ public enum LootGenerator {
             .filter(item -> item.rarity() != Rarity.UNOBTAINABLE)
             .collect(Collectors.toSet());
 
-    public ItemStack[] generate(final Crate crate, final int size) {
+    public @Nullable ItemStack[] generate(final Crate crate, final int size) {
         final List<CustomItem> lootPool = new ArrayList<>();
         final CrateFilter filter = crate.filter();
         for (final CustomItem customItem : loot) {
@@ -46,7 +46,7 @@ public enum LootGenerator {
         return items.stream()
                 .map(customItem -> {
                     if (customItem == null) return null;
-                    final ItemStack item = customItem.item();
+                    final ItemStack item = customItem.createStack();
                     item.setAmount(randomAmount(customItem));
                     customItem.generated(item, crate);
                     return item;

@@ -141,7 +141,7 @@ public class Mine extends CustomBlock {
                             snowball -> {
                                 ThrownHelper.THROWABLE_KEY_DATA.write(snowball, throwable.key().asString());
                                 ThrownHelper.MAX_DAMAGE_DATA.write(snowball, throwable.maxDamage());
-                                snowball.setItem(throwable.item());
+                                snowball.setItem(throwable.createStack());
                                 snowball.teleport(location);
                             }
                     );

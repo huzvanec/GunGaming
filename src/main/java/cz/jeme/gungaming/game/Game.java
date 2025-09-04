@@ -42,6 +42,8 @@ import java.util.*;
 
 @NullMarked
 public final class Game {
+    public static boolean singleTeamStart = false;
+
     public static final PersistentData<Byte, Boolean> FROZEN_DATA = PersistentData.ofBoolean(GunGaming.key("frozen"));
     public static final PersistentData<Byte, Boolean> GLIDING_DATA = PersistentData.ofBoolean(GunGaming.key("gliding"));
     public static final PersistentData<Byte, Boolean> INVULNERABLE_DATA = PersistentData.ofBoolean(GunGaming.key("invulnerable"));
@@ -128,7 +130,7 @@ public final class Game {
             throw new IllegalStateException("Not enough players to create teams!");
         }
         final int teamCount = autoTeamPlayers.size() / teamPlayerCount + GameTeam.overrideTeams().size();
-        if (teamCount <= 1) {
+        if (teamCount <= 1 && !singleTeamStart) {
             audience.sendMessage(Components.prefix("<red>There must be at least 2 teams to start a game!"));
             throw new IllegalStateException("Not enough teams to start a game!");
         }
@@ -187,7 +189,7 @@ public final class Game {
             team.addPlayer(player);
         }
 
-        final ItemStack teammateTracker = CustomElement.of(TeammateTracker.class).item();
+        final ItemStack teammateTracker = CustomElement.of(TeammateTracker.class).createStack();
 
         // player init
         for (final Player player : players) {

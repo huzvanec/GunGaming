@@ -60,7 +60,7 @@ public abstract class Magazine extends Attachment {
         final int currentAmmo = Gun.CURRENT_AMMO_DATA.require(gunItem);
         if (currentAmmo <= maxAmmo) return;
         Gun.setAmmo(gunItem, maxAmmo);
-        player.getInventory().addItem(gun.ammo().item().asQuantity(currentAmmo - maxAmmo));
+        player.getInventory().addItem(gun.ammo().createStack().asQuantity(currentAmmo - maxAmmo));
 //        GGCommand.give(player, gun.ammo().item(), currentAmmo - maxAmmo);
     }
 

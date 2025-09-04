@@ -1,5 +1,6 @@
 package cz.jeme.gungaming;
 
+import cz.jeme.gungaming.game.Game;
 import cz.jeme.gungaming.item.CustomItem;
 import cz.jeme.gungaming.util.Components;
 import org.bukkit.entity.Entity;
@@ -44,9 +45,14 @@ public final class GlobalEventHandler {
                 for (final CustomItem item : ElementManager.INSTANCE.items()) {
                     player.getWorld().dropItem(
                             player.getLocation(),
-                            item.item()
+                            item.createStack()
                     );
                 }
+                player.sendMessage(Components.prefix("<gold>Dropped all GunGaming items on the ground"));
+            }
+            case "single_team_start" -> {
+                Game.singleTeamStart = true;
+                player.sendMessage(Components.prefix("<gold>Games may now start with a single team"));
             }
         }
     }

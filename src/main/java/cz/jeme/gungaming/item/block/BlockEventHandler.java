@@ -30,7 +30,7 @@ public final class BlockEventHandler {
         final Material material = item.getType();
         if (CustomBlock.BLOCK_REGISTRY.containsKey(material)) {
             // custom blocks
-            event.getEntity().setItemStack(CustomBlock.BLOCK_REGISTRY.get(material).item());
+            event.getEntity().setItemStack(CustomBlock.BLOCK_REGISTRY.get(material).createStack());
             return;
         }
         if (ITEM_MODIFIED_DATA.read(item).orElse(false)) return;
