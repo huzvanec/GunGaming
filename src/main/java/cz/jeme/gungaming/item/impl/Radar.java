@@ -1,7 +1,6 @@
 package cz.jeme.gungaming.item.impl;
 
 import cz.jeme.gungaming.GunGaming;
-import cz.jeme.gungaming.config.GameConfig;
 import cz.jeme.gungaming.game.Game;
 import cz.jeme.gungaming.game.GameTeam;
 import cz.jeme.gungaming.item.CustomItem;
@@ -31,6 +30,8 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.*;
 import org.jspecify.annotations.NullMarked;
+
+import java.util.List;
 
 @NullMarked
 public final class Radar extends CustomItem implements SingleLoot {
@@ -158,9 +159,10 @@ public final class Radar extends CustomItem implements SingleLoot {
                 final int mapY = (mapPlayerLocation.getBlockZ() - playerLocation.getBlockZ()) * 2;
                 if (Math.abs(mapX) >= MAP_SIZE || Math.abs(mapY) >= MAP_SIZE)
                     continue; // the player is out of this map's scope
+                final List<Player> teamPlayers = GameTeam.ofPlayer(player).players();
                 final boolean teammate = Game.running() &&
-                                         GameConfig.TEAM_PLAYERS.get() > 1 &&
-                                         GameTeam.ofPlayer(player).players().contains(mapPlayer);
+                                         teamPlayers.size() > 1 &&
+                                         teamPlayers.contains(mapPlayer);
                 cursors.addCursor(new MapCursor(
                         (byte) mapX, (byte) mapY,
                         Maps.direction(mapPlayer.getYaw()),
