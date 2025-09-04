@@ -26,7 +26,7 @@ public final class StartCountdown extends Countdown {
     protected void tick(final long counter, final float phase) {
         final Title title = Title.title(
                 Components.of("<transition:#FF0000:#FFFF00:#00FF00:" + phase + ">" + counter),
-                Components.of("<gold><b>" + Components.latinString("The game will start soon")),
+                Components.of("<gold><b>" + Components.latinString("Prepare for drop")),
                 Title.Times.times(Duration.ZERO, Duration.ofSeconds(3), Duration.ZERO)
         );
         for (final Player player : Bukkit.getOnlinePlayers()) {
