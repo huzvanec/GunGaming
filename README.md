@@ -6,7 +6,7 @@ GunGaming is a Minecraft battle royale minigame plugin designed for fast-paced, 
 
 ## Supported versions
 
-✅ **Paper 1.21.5**  
+✅ **Paper 1.21.8**  
 ❌ Bukkit and Spigot are not supported
 
 ## Installation
