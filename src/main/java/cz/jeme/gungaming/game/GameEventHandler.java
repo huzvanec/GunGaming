@@ -79,6 +79,7 @@ public final class GameEventHandler {
         final PlayerInventory inventory = player.getInventory();
         final double chance = GameConfig.DEATH_DROP_PERCENTAGE.get() / 100D;
         for (final ItemStack item : inventory) {
+            if (item == null) continue;
             if (CustomItem.is(item, TeammateTracker.class)) continue;
             final int amount = item.getAmount();
             final int dropAmount = RandomUtils.nextChanced(chance, amount);
@@ -86,6 +87,7 @@ public final class GameEventHandler {
             world.dropItemNaturally(location, item);
             item.setAmount(amount - dropAmount);
         }
+        world.playSound(Game.DEATH_SOUND, player);
         final Component deathMessage = event.deathMessage();
         new Respawn(Game.instance(), player);
         if (deathMessage != null)
@@ -157,7 +159,7 @@ public final class GameEventHandler {
         final World world = player.getWorld();
         final PlayerInventory inventory = player.getInventory();
         if (gamePlayer) {
-            for (final ItemStack item : inventory.getContents()) {
+            for (final ItemStack item : inventory) {
                 if (item == null) continue;
                 if (CustomItem.is(item, TeammateTracker.class)) continue;
                 world.dropItemNaturally(location, item);

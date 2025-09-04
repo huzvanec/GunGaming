@@ -54,6 +54,7 @@ public final class Game {
     public static final Sound WARNING_SOUND = Sound.sound(GunGaming.key("game.ping.warning"), Sound.Source.MASTER, 1, 1);
     public static final Sound INFO_SOUND = Sound.sound(GunGaming.key("game.ping.info"), Sound.Source.MASTER, 1, 1);
     public static final Sound END_SOUND = Sound.sound(GunGaming.key("game.end"), Sound.Source.MASTER, 1, 1);
+    public static final Sound DEATH_SOUND = Sound.sound(GunGaming.key("game.death"), Sound.Source.MASTER, 999, 1);
 
     public static final int TEAM_COMPASS_SLOT = 8;
 

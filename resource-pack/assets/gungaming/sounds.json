@@ -359,6 +359,9 @@
   "game.end": {
     "sounds": ["gungaming:game/end"]
   },
+  "game.death": {
+    "sounds": ["gungaming:game/death"]
+  },
   "game.ping.dong": {
     "sounds": ["gungaming:game/ping/dong"]
   },
