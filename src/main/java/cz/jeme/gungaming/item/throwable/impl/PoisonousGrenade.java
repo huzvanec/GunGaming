@@ -24,7 +24,13 @@ import org.jspecify.annotations.NullMarked;
 @NullMarked
 public class PoisonousGrenade extends Grenade {
     public static final int POISON_AMPLIFIER = 2;
-    public static final int EFFECTS_DURATION = 200; // Duration of effects in ticks
+    public static final int STAY_TICKS = 200;
+    public static final int EXPAND_TICKS = 50;
+
+    // the final amount of blocks the clouds will poison
+    // this works in all direction so value '3' will produce a 6x6x6 cube
+    public static final int MAX_EXPAND_BLOCKS = 3;
+
     private static final Color COLOR = Color.fromRGB(164, 183, 41);
     private static final Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(COLOR, 6);
 
@@ -78,11 +84,11 @@ public class PoisonousGrenade extends Grenade {
 
             @Override
             public void run() {
-                if (counter == EFFECTS_DURATION) {
+                if (counter == STAY_TICKS) {
                     cancel();
                     return;
                 }
-                final double offset = 3D * counter / EFFECTS_DURATION;
+                final double offset = MAX_EXPAND_BLOCKS * Math.min(1, (double) counter / EXPAND_TICKS);
                 final World world = location.getWorld();
                 world.spawnParticle(Particle.DUST, location, 50, offset, offset, offset, 0.02, DUST_OPTIONS);
                 for (final Entity entity : world.getNearbyEntities(location, offset, offset, offset)) {
@@ -94,7 +100,7 @@ public class PoisonousGrenade extends Grenade {
                     ) continue;
                     livingEntity.addPotionEffect(new PotionEffect(
                             PotionEffectType.POISON,
-                            230,
+                            250,
                             POISON_AMPLIFIER,
                             false,
                             false,
@@ -103,6 +109,6 @@ public class PoisonousGrenade extends Grenade {
                 }
                 counter++;
             }
-        }.runTaskTimer(GunGaming.instance(), 0L, 20L);
+        }.runTaskTimer(GunGaming.instance(), 0L, 1L);
     }
 }
