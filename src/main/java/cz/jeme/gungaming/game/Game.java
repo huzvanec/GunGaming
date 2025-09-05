@@ -231,6 +231,7 @@ public final class Game {
         world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, false);
         world.setGameRule(GameRule.DO_TILE_DROPS, true);
         world.setGameRule(GameRule.DO_FIRE_TICK, false);
+        world.setGameRule(GameRule.LOCATOR_BAR, false);
         world.setTime(GameConfig.WORLD_TIME.get());
         world.setClearWeatherDuration(99);
         world.getEntities().stream()
