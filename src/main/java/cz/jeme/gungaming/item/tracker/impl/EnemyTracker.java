@@ -1,6 +1,5 @@
 package cz.jeme.gungaming.item.tracker.impl;
 
-import cz.jeme.gungaming.config.GameConfig;
 import cz.jeme.gungaming.game.Game;
 import cz.jeme.gungaming.game.GameTeam;
 import cz.jeme.gungaming.item.tracker.PlayerTracker;
@@ -36,8 +35,8 @@ public class EnemyTracker extends PlayerTracker implements SingleLoot {
     @Override
     protected boolean validate(final Player player, final Player trackPlayer) {
         final GameTeam team = GameTeam.ofPlayer(player);
-        return !Game.running() ||
-               team.players().size() == 1 ||
-               !team.players().contains(trackPlayer);
+        return !Game.running() || // track any player if game is not running
+               team.players().size() == 1 || // track any player if the player has no teammates
+               !team.contains(trackPlayer); // don't track teammates
     }
 }

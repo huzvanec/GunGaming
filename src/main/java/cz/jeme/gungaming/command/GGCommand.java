@@ -383,7 +383,7 @@ public final class GGCommand {
             sender.sendMessage(Components.prefix("<red>You can't modify teams while a game is running!"));
             return FAILURE;
         }
-        GameTeam.cached().forEach(GameTeam::clearOverrides);
+        GameTeam.entries().forEach(GameTeam::clearOverrides);
         sender.sendMessage(Components.prefix("<green>Team overrides reset successfully"));
         return SUCCESS;
     }

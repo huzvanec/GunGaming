@@ -1,6 +1,5 @@
 package cz.jeme.gungaming.item.tracker.impl;
 
-import cz.jeme.gungaming.config.GameConfig;
 import cz.jeme.gungaming.game.Game;
 import cz.jeme.gungaming.game.GameTeam;
 import cz.jeme.gungaming.item.tracker.PlayerTracker;
@@ -36,8 +35,9 @@ public class TeammateTracker extends PlayerTracker implements SingleLoot {
     @Override
     protected boolean validate(final Player player, final Player trackPlayer) {
         final GameTeam team = GameTeam.ofPlayer(player);
+        // return whether the track player is a teammate of player
         return Game.running() &&
-               team.players().size() > 1 &&
-               team.players().contains(trackPlayer);
+               team.size() > 1 &&
+               team.contains(trackPlayer);
     }
 }

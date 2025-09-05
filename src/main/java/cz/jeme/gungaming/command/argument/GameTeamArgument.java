@@ -46,7 +46,7 @@ public final class GameTeamArgument implements CustomArgumentType<GameTeam, Key>
         reader.setCursor(builder.getStart());
         while (reader.canRead()) reader.skip();
         final String current = reader.getString().substring(builder.getStart(), reader.getCursor());
-        GameTeam.cached().stream()
+        GameTeam.entries().stream()
                 .map(team -> team.key().asString())
                 .filter(keyStr -> keyStr.contains(current.toLowerCase()))
                 .forEach(builder::suggest);

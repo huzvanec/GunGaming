@@ -190,7 +190,7 @@ public final class GameEventHandler {
         if (!(event.getEntity() instanceof final Player hurt)) return;
         if (!(event.getDamageSource().getCausingEntity() instanceof final Player damager)) return;
         if (hurt.getUniqueId().equals(damager.getUniqueId())) return;
-        if (GameTeam.ofPlayer(damager).players().contains(hurt)) { // it's his teammate
+        if (GameTeam.ofPlayer(damager).contains(hurt)) { // it's his teammate
             event.setCancelled(true);
             return;
         }
@@ -222,7 +222,7 @@ public final class GameEventHandler {
             prefix = Components.of("<dark_gray>[").append(
                     team.color().append(Components.of("<b>TEAM"))
             ).append(Component.text("] "));
-            recipients = team.players();
+            recipients = team.players().values();
         } else {
             prefix = Component.empty();
             recipients = Bukkit.getOnlinePlayers();

@@ -67,9 +67,9 @@ public final class Respawn extends Countdown {
         player.clearTitle();
         final GameTeam team = GameTeam.ofPlayer(player);
         if (team.size() > 1) {
-            final Optional<Player> teammate = team.players().stream()
-                    .filter(p -> p.getGameMode() != GameMode.SPECTATOR)
-                    .filter(p -> !p.getUniqueId().equals(player.getUniqueId()))
+            final Optional<Player> teammate = team.players().values().stream()
+                    .filter(p -> p.getGameMode() != GameMode.SPECTATOR) // do not respawn on spectators
+                    .filter(p -> !p.getUniqueId().equals(player.getUniqueId())) // do not respawn on self
                     .findFirst();
             if (teammate.isPresent()) {
                 final Location location = teammate.get().getLocation();
@@ -114,7 +114,7 @@ public final class Respawn extends Countdown {
                 return;
             }
         }
-        new Respawn(game, player);
-        throw new RuntimeException("Could not respawn player in 1000 attempts!");
+        GunGaming.logger().warning("Could not respawn player " + player.getName() + " in 1000 attempts!");
+        new Respawn(game, player); // try again
     }
 }

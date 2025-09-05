@@ -31,8 +31,6 @@ import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.*;
 import org.jspecify.annotations.NullMarked;
 
-import java.util.List;
-
 @NullMarked
 public final class Radar extends CustomItem implements SingleLoot {
     public static final PersistentData<Byte, Boolean> RADAR_INITIALIZED_DATA = PersistentData.ofBoolean(GunGaming.key("radar_initialized"));
@@ -153,16 +151,16 @@ public final class Radar extends CustomItem implements SingleLoot {
                 if (!mapPlayer.isValid()) continue; // don't show dead players
                 if (mapPlayer.getGameMode() == GameMode.SPECTATOR) continue; // don't show spectators
                 if (mapPlayer.getUniqueId().equals(player.getUniqueId())) continue; // it's me lol
-                if (StealthHelmet.hasEquipped(mapPlayer)) continue; // don't track phantom hats
+                if (StealthHelmet.hasEquipped(mapPlayer)) continue; // don't track stealth helmets
                 final Location mapPlayerLocation = mapPlayer.getLocation();
                 final int mapX = (mapPlayerLocation.getBlockX() - playerLocation.getBlockX()) * 2;
                 final int mapY = (mapPlayerLocation.getBlockZ() - playerLocation.getBlockZ()) * 2;
                 if (Math.abs(mapX) >= MAP_SIZE || Math.abs(mapY) >= MAP_SIZE)
                     continue; // the player is out of this map's scope
-                final List<Player> teamPlayers = GameTeam.ofPlayer(player).players();
+                final GameTeam team = GameTeam.ofPlayer(player);
                 final boolean teammate = Game.running() &&
-                                         teamPlayers.size() > 1 &&
-                                         teamPlayers.contains(mapPlayer);
+                                         team.size() > 1 &&
+                                         team.contains(mapPlayer);
                 cursors.addCursor(new MapCursor(
                         (byte) mapX, (byte) mapY,
                         Maps.direction(mapPlayer.getYaw()),
