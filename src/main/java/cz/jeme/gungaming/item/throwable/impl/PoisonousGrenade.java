@@ -29,7 +29,7 @@ public class PoisonousGrenade extends Grenade {
 
     // the final amount of blocks the clouds will poison
     // this works in all direction so value '3' will produce a 6x6x6 cube
-    public static final int MAX_EXPAND_BLOCKS = 3;
+    public static final double MAX_EXPAND_BLOCKS = 3;
 
     private static final Color COLOR = Color.fromRGB(164, 183, 41);
     private static final Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(COLOR, 6);

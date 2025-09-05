@@ -19,7 +19,12 @@ import org.jspecify.annotations.NullMarked;
 
 @NullMarked
 public class SmokeGrenade extends Grenade {
-    public static final int EFFECTS_DURATION = 400; // Duration of effects in ticks
+    public static final int STAY_TICKS = 400;
+    public static final int EXPAND_TICKS = 100;
+
+    // the final amount of blocks the clouds will poison
+    // this works in all direction so value '3' will produce a 6x6x6 cube
+    public static final double MAX_EXPAND_BLOCKS = 3.5;
 
     @Override
     protected int provideThrowCooldown() {
@@ -69,11 +74,11 @@ public class SmokeGrenade extends Grenade {
 
             @Override
             public void run() {
-                if (counter == EFFECTS_DURATION) {
+                if (counter == STAY_TICKS) {
                     cancel();
                     return;
                 }
-                final double offset = 3D * counter / EFFECTS_DURATION;
+                final double offset = MAX_EXPAND_BLOCKS * Math.min(1, (double) counter / EXPAND_TICKS);
                 final World world = location.getWorld();
                 world.spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, location, 50, offset, offset, offset, 0.02);
                 for (final Entity entity : world.getNearbyEntities(location, offset, offset, offset)) {
