@@ -100,14 +100,17 @@ public class PoisonousGrenade extends Grenade {
                             !shooterPlayer.getUniqueId().equals(entity.getUniqueId()) && // do poison self
                             GameTeam.ofPlayer(shooterPlayer).contains(entity.getUniqueId())    // don't poison teammates
                     ) continue;
-                    livingEntity.addPotionEffect(new PotionEffect(
-                            PotionEffectType.POISON,
-                            250,
-                            POISON_AMPLIFIER,
-                            false,
-                            false,
-                            false
-                    ));
+                    if (counter % 10 == 0) {
+                        // apply poison only every 10 ticks so it actually deals damage
+                        livingEntity.addPotionEffect(new PotionEffect(
+                                PotionEffectType.POISON,
+                                250,
+                                POISON_AMPLIFIER,
+                                false,
+                                true,
+                                true
+                        ));
+                    }
                 }
                 counter++;
             }
