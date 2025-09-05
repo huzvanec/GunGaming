@@ -1,12 +1,15 @@
 package cz.jeme.gungaming.item.melee.impl;
 
+import cz.jeme.gungaming.game.Game;
+import cz.jeme.gungaming.game.GameTeam;
 import cz.jeme.gungaming.item.melee.Sword;
 import cz.jeme.gungaming.loot.Rarity;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -45,8 +48,13 @@ public class DirtySword extends Sword {
     }
 
     @Override
-    protected void onHit(final EntityDamageEvent event, final ItemStack item) {
+    protected void onHit(final EntityDamageByEntityEvent event, final ItemStack item) {
         if (!(event.getEntity() instanceof final LivingEntity livingEntity)) return;
+        if (
+                Game.running() &&
+                event.getDamager() instanceof final Player damager &&
+                GameTeam.ofPlayer(damager).contains(livingEntity.getUniqueId())
+        ) return; // don't damage teammates
         livingEntity.addPotionEffect(new PotionEffect(
                 PotionEffectType.POISON,
                 200,

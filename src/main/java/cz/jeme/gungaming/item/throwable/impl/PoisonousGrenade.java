@@ -1,6 +1,7 @@
 package cz.jeme.gungaming.item.throwable.impl;
 
 import cz.jeme.gungaming.GunGaming;
+import cz.jeme.gungaming.game.Game;
 import cz.jeme.gungaming.game.GameTeam;
 import cz.jeme.gungaming.item.throwable.Grenade;
 import cz.jeme.gungaming.loot.Rarity;
@@ -94,6 +95,7 @@ public class PoisonousGrenade extends Grenade {
                 for (final Entity entity : world.getNearbyEntities(location, offset, offset, offset)) {
                     if (!(entity instanceof final LivingEntity livingEntity)) continue;
                     if (
+                            Game.running() &&
                             shooterPlayer != null &&
                             !shooterPlayer.getUniqueId().equals(entity.getUniqueId()) && // do poison self
                             GameTeam.ofPlayer(shooterPlayer).contains(entity.getUniqueId())    // don't poison teammates

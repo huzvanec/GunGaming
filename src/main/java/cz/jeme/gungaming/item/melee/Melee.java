@@ -8,7 +8,7 @@ import cz.jeme.gungaming.item.Weapon;
 import cz.jeme.gungaming.util.Lores;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.jspecify.annotations.NullMarked;
@@ -88,7 +88,7 @@ public abstract class Melee extends Weapon {
         return attackSpeedBonus;
     }
 
-    protected void onHit(final EntityDamageEvent event, final ItemStack item) {
+    protected void onHit(final EntityDamageByEntityEvent event, final ItemStack item) {
         GlobalEventHandler.resetNoDamageTicks(event.getEntity());
     }
 
