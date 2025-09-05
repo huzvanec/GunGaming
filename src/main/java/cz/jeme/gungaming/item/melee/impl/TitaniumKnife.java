@@ -6,7 +6,7 @@ import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jspecify.annotations.NullMarked;
 
@@ -48,7 +48,7 @@ public class TitaniumKnife extends Melee {
     }
 
     @Override
-    protected void onHit(final EntityDamageEvent event, final ItemStack item) {
+    protected void onHit(final EntityDamageByEntityEvent event, final ItemStack item) {
         if (!(event.getEntity() instanceof final LivingEntity livingEntity)) return;
         livingEntity.setMaximumNoDamageTicks(0);
     }
