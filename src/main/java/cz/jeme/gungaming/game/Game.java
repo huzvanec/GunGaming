@@ -17,6 +17,7 @@ import cz.jeme.gungaming.item.tracker.impl.TeammateTracker;
 import cz.jeme.gungaming.loot.crate.CrateGenerator;
 import cz.jeme.gungaming.util.Components;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import it.unimi.dsi.fastutil.Pair;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.sound.Sound;
@@ -115,7 +116,7 @@ public final class Game {
         }
         players = new ArrayList<>(Bukkit.getOnlinePlayers());
         // players that should be auto-assigned to teams
-        final Map<Player, GameTeam> overrideTeamPlayers = new HashMap<>();
+        final List<Pair<Player, GameTeam>> overrideTeamPlayers = new ArrayList<>();
         final List<Player> autoTeamPlayers = new ArrayList<>(players);
         // resort players into auto and override
         final Iterator<Player> autoTeamPlayerIterator = autoTeamPlayers.iterator();
@@ -124,7 +125,7 @@ public final class Game {
             final GameTeam overriden = GameTeam.overrideRegistry().get(player.getUniqueId());
             if (overriden == null) continue;
             autoTeamPlayerIterator.remove();
-            overrideTeamPlayers.put(player, overriden);
+            overrideTeamPlayers.add(Pair.of(player, overriden));
         }
         if (autoTeamPlayers.size() % teamPlayerCount != 0) {
             audience.sendMessage(Components.prefix("<red>Not enough players for this team configuration!"));
@@ -170,14 +171,14 @@ public final class Game {
         // setting up teams
         GameTeam.overrideTeams().forEach(team -> team.register(kills)); // register overriden teams
         // register overriden players
-        for (final Map.Entry<Player, GameTeam> entry : overrideTeamPlayers.entrySet()) {
-            entry.getValue().addPlayer(entry.getKey());
+        for (final Pair<Player, GameTeam> entry : overrideTeamPlayers) {
+            entry.second().addPlayer(entry.first());
         }
         // generate auto teams
         final List<GameTeam> autoTeams = new ArrayList<>();
         int o = 0;
         while (autoTeams.size() < autoTeamPlayers.size() / teamPlayerCount) {
-            final GameTeam team = GameTeam.ofOrdinal(o++);
+            final GameTeam team = GameTeam.entries().get(o++);
             if (team.hasOverrides()) continue;
             team.register(kills);
             autoTeams.add(team);
@@ -313,7 +314,7 @@ public final class Game {
             for (int colId = 0; colId < row; colId++) {
                 final double x = xMin + (colId + 1) * offsetX;
                 final Location location = new Location(world, x, 350, z);
-                teamIterator.next().players().forEach(player -> player.teleport(location));
+                teamIterator.next().players().values().forEach(player -> player.teleport(location));
             }
         }
     }
@@ -322,7 +323,7 @@ public final class Game {
         kills.setDisplaySlot(DisplaySlot.SIDEBAR);
         for (final Player player : players) {
             final GameTeam team = GameTeam.ofPlayer(player);
-            final List<Player> teammates = team.players().stream()
+            final List<Player> teammates = team.players().values().stream()
                     .filter(p -> !p.getUniqueId().equals(player.getUniqueId()))
                     .toList();
             final StringBuilder teammatesStrB = new StringBuilder();
@@ -438,7 +439,7 @@ public final class Game {
             final List<String> players = new ArrayList<>();
             for (final GameTeam team : teams) {
                 final String color = Components.toString(team.color());
-                final List<Player> teamPlayers = new ArrayList<>(team.players());
+                final List<Player> teamPlayers = new ArrayList<>(team.players().values());
                 // title start
                 for (final Player player : teamPlayers) {
                     player.showTitle(Title.title(
@@ -448,7 +449,11 @@ public final class Game {
                     ));
                 }
                 // title end
-                teamPlayers.addAll(team.removedPlayers());
+                teamPlayers.addAll(team.removedPlayers().stream()
+                        .map(Bukkit::getPlayer)
+                        .filter(Objects::nonNull)
+                        .toList()
+                );
                 teamPlayers.forEach(player -> {
                     final String playerScore = team.players().size() > 1 ? "[" + team.score(player) + "] " : "";
                     players.add(color + playerScore + player.getName());

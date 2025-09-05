@@ -6,6 +6,8 @@ import cz.jeme.gungaming.util.Components;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Team;
@@ -39,8 +41,8 @@ public enum GameTeam {
     private final NamedTextColor color;
     private final Component colorComponent;
     private final Set<UUID> overrides = new HashSet<>();
-    private final List<Player> players = new ArrayList<>();
-    private final List<Player> removedPlayers = new ArrayList<>();
+    private final Map<UUID, Player> playerMap = new HashMap<>();
+    private final Set<UUID> removedPlayers = new HashSet<>();
     private @Nullable Team team = null;
     private @Nullable Objective objective = null;
     private int score = 0;
@@ -133,15 +135,17 @@ public enum GameTeam {
     public void unregister() {
         team().unregister();
         team = null;
-        final List<Player> allPlayers = new ArrayList<>(players);
-        allPlayers.addAll(removedPlayers);
-        allPlayers.forEach(player -> {
-            PLAYER_TEAMS.remove(player.getUniqueId());
+        playerMap.forEach((uuid, player) -> {
+            TEAMS_BY_PLAYER_UUID.remove(uuid);
             objective().getScore(player).resetScore();
+        });
+        removedPlayers.forEach(uuid -> {
+            final OfflinePlayer offline = Bukkit.getOfflinePlayer(uuid);
+            objective().getScore(offline).resetScore();
         });
         objective = null;
         ACTIVE_TEAMS.remove(this);
-        players.clear();
+        playerMap.clear();
         removedPlayers.clear();
     }
 
@@ -154,16 +158,19 @@ public enum GameTeam {
     }
 
     public void addPlayer(final Player player) {
+        final UUID uuid = player.getUniqueId();
+        if (playerMap.containsKey(uuid)) throw new IllegalArgumentException("This player is already on this team!");
         team().addPlayer(player);
         objective().getScore(player).setScore(0);
-        players.add(player);
-        PLAYER_TEAMS.put(player.getUniqueId(), this);
+        playerMap.put(uuid, player);
+        TEAMS_BY_PLAYER_UUID.put(uuid, this);
     }
 
-    public boolean removePlayer(final Player player) {
-        if (players.remove(player)) {
-            removedPlayers.add(player);
-            if (players.isEmpty()) {
+    public boolean removePlayer(final UUID uuid) {
+        if (playerMap.remove(uuid) != null) {
+            TEAMS_BY_PLAYER_UUID.remove(uuid);
+            removedPlayers.add(uuid);
+            if (playerMap.isEmpty()) {
                 unregister();
                 return true;
             }
@@ -171,18 +178,22 @@ public enum GameTeam {
         return false;
     }
 
+    public boolean removePlayer(final Player player) {
+        return removePlayer(player.getUniqueId());
+    }
+
     public int score() {
         return score;
     }
 
     public int score(final Player player) {
-        if (!players.contains(player))
+        if (!playerMap.containsKey(player.getUniqueId()))
             throw new IllegalArgumentException("This player is not on this team!");
         return objective().getScore(player).getScore();
     }
 
     public void addScore(final Player player, final int score) {
-        if (!players.contains(player))
+        if (!playerMap.containsKey(player.getUniqueId()))
             throw new IllegalArgumentException("This player is not on this team!");
         objective().getScore(player).setScore(score(player) + score);
         this.score += score;
@@ -192,60 +203,66 @@ public enum GameTeam {
         addScore(player, -score);
     }
 
-    public List<Player> players() {
-        return players;
+    public Map<UUID, Player> players() {
+        return Collections.unmodifiableMap(playerMap);
+    }
+
+    public Set<UUID> removedPlayers() {
+        return Collections.unmodifiableSet(removedPlayers);
     }
 
     public int size() {
-        return players.size();
+        return playerMap.size();
     }
 
-    public List<Player> removedPlayers() {
-        return removedPlayers;
+    public boolean contains(final Player player) {
+        return contains(player.getUniqueId());
     }
 
-    private static final List<GameTeam> VALUES = List.of(values());
-    public static final int COUNT = VALUES.size();
-
-    public static List<GameTeam> cached() {
-        return VALUES;
+    public boolean contains(final UUID playerUuid) {
+        return playerMap.containsKey(playerUuid);
     }
 
-    private static final Map<String, GameTeam> REGISTRY = new HashMap<>();
+    private static final List<GameTeam> ENTRIES = List.of(values());
+    public static final int COUNT = ENTRIES.size();
+
+    public static List<GameTeam> entries() {
+        return ENTRIES;
+    }
+
+    private static final Map<String, GameTeam> TEAMS_BY_KEY = new HashMap<>();
 
     static {
-        VALUES.forEach(team -> REGISTRY.put(team.key.asString(), team));
+        ENTRIES.forEach(team -> TEAMS_BY_KEY.put(team.key.asString(), team));
     }
 
     public static GameTeam ofKey(final String key) {
-        return Objects.requireNonNull(REGISTRY.get(key), "Unknown key!");
+        return Objects.requireNonNull(TEAMS_BY_KEY.get(key), "Unknown key!");
     }
 
     public static boolean exists(final String key) {
-        return REGISTRY.containsKey(key);
+        return TEAMS_BY_KEY.containsKey(key);
     }
 
-    public static GameTeam ofOrdinal(final int ordinal) {
-        if (ordinal < 0 || ordinal >= COUNT)
-            throw new IllegalArgumentException("Invalid ordinal " + ordinal + "!");
-        return VALUES.get(ordinal);
-    }
-
-    private static final Map<UUID, GameTeam> PLAYER_TEAMS = new HashMap<>();
+    private static final Map<UUID, GameTeam> TEAMS_BY_PLAYER_UUID = new HashMap<>();
 
     public static GameTeam ofPlayer(final Player player) {
-        return Objects.requireNonNull(PLAYER_TEAMS.get(player.getUniqueId()), "Unknown player!");
+        return ofPlayerUuid(player.getUniqueId());
+    }
+
+    public static GameTeam ofPlayerUuid(final UUID uuid) {
+        return Objects.requireNonNull(TEAMS_BY_PLAYER_UUID.get(uuid), "Unknown player: '" + uuid + "'");
     }
 
     public static boolean isPlayer(final Player player) {
-        return PLAYER_TEAMS.containsKey(player.getUniqueId());
+        return TEAMS_BY_PLAYER_UUID.containsKey(player.getUniqueId());
     }
 
     public static void unregisterAll() {
-        VALUES.stream()
+        ENTRIES.stream()
                 .filter(GameTeam::registered)
                 .forEach(GameTeam::unregister);
-        PLAYER_TEAMS.clear();
+        TEAMS_BY_PLAYER_UUID.clear();
         ACTIVE_TEAMS.clear();
     }
 
