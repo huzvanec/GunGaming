@@ -3,7 +3,7 @@ paperweight-userdev = "2.0.0-beta.19"
 run-paper = "3.0.1"
 shadow = "9.2.2"
 paper = "1.21.8-R0.1-SNAPSHOT"
-classgraph = "4.8.181"
+classgraph = "4.8.184"
 java = "21"
 
 [plugins]
