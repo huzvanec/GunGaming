@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.classgraph:classgraph:4.8.181")
+    implementation("io.github.classgraph:classgraph:4.8.184")
     implementation("org.spongepowered:configurate-hocon:4.2.0")
     implementation("org.spongepowered:configurate-extra-kotlin:4.2.0")
     paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
