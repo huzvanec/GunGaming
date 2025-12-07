@@ -1,7 +1,7 @@
 [versions]
 paperweight-userdev = "2.0.0-beta.19"
 run-paper = "3.0.2"
-shadow = "9.2.2"
+shadow = "9.3.0"
 paper = "1.21.8-R0.1-SNAPSHOT"
 classgraph = "4.8.184"
 java = "21"
