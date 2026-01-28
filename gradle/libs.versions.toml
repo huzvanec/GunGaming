@@ -2,14 +2,12 @@
 paperweight-userdev = "2.0.0-beta.19"
 run-paper = "3.0.2"
 shadow = "9.3.0"
-paper = "1.21.8-R0.1-SNAPSHOT"
-classgraph = "4.8.184"
+paper = "1.21.11-R0.1-SNAPSHOT"
 java = "21"
+kotlin = "2.3.0"
 
 [plugins]
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }
 run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
-
-[libraries]
-classgraph = { group = "io.github.classgraph", name = "classgraph", version.ref = "classgraph" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
